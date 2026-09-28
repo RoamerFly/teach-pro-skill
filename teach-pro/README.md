@@ -4,7 +4,7 @@
 
 ## 核心特性
 
-- 任意学科自适应教学，不绑定编程或 Agent 开发。
+- 任意学科自适应教学。
 - 每课聚焦一个与 Mission 直接相关的紧密目标，并形成一个可感知的小胜利。
 - 以理解、应用和迁移证据为进度依据；区分短期 Fluency Strength 与长期 Storage Strength。
 - AI 内部状态使用 Markdown，学习者教程统一输出为 HTML 网页。
