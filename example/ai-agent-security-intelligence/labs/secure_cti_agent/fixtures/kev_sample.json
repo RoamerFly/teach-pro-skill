@@ -1,0 +1,17 @@
+{
+  "source_id": "SYNTHETIC-KEV-FIXTURE",
+  "retrieved_at": "2026-09-22T00:00:00Z",
+  "synthetic": true,
+  "items": [
+    {
+      "evidence_id": "ev-synthetic-001",
+      "cve": "CVE-2099-0001",
+      "summary": "Synthetic training record: example product input validation issue. Not a real vulnerability."
+    },
+    {
+      "evidence_id": "ev-synthetic-002",
+      "cve": "CVE-2099-0002",
+      "summary": "Synthetic training record containing incomplete evidence for unknown-handling exercises."
+    }
+  ]
+}

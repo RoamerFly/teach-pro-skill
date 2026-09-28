@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安全 Agent 检查表 | 智鉴 Agent：智能体开发与安全实战</title><meta name="description" content="开发、评审与发布前使用的压缩清单；它不能替代各课的首次学习。"><link rel="stylesheet" href="../assets/style.css"></head><body data-course-key="ai-agent-security-intelligence">
+<a class="skip-link" href="#main-content">跳到正文</a><button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航"><nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav><div class="brand-block"><span class="eyebrow">学习工具</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页"><h2>本页目录</h2><ol class="toc-list" data-toc><li><a href="#design">设计</a></li>
+<li><a href="#tools">工具与数据</a></li>
+<li><a href="#runtime">运行时</a></li>
+<li><a href="#release">发布</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><span class="nav-pending">候选 · 手写一个最小 Agent 运行时</span></li>
+<li><span class="nav-pending">候选 · 工具契约：让模型建议、让程序裁决</span></li>
+<li><span class="nav-pending">候选 · 状态、上下文与记忆：不要混成一个聊天记录</span></li>
+<li><span class="nav-pending">候选 · 规划与编排：何时用工作流，何时用 Agent</span></li>
+<li><span class="nav-pending">候选 · 评测优先：先定义什么叫做真的有效</span></li>
+<li><span class="nav-pending">候选 · 威胁建模：从资产和信任边界开始</span></li>
+<li><span class="nav-pending">候选 · 提示注入：把外部内容当数据，不当命令</span></li>
+<li><span class="nav-pending">候选 · 工具安全：最小权限与策略执行点</span></li>
+<li><span class="nav-pending">候选 · 记忆与 RAG 安全：来源、隔离、过期与投毒</span></li>
+<li><span class="nav-pending">候选 · 护栏与人工审批：把高风险动作变成可控事务</span></li>
+<li><span class="nav-pending">候选 · 可观测性与韧性：日志、预算、熔断和恢复</span></li>
+<li><span class="nav-pending">候选 · 框架映射：用 OpenAI Agents SDK 落地原理</span></li>
+<li><span class="nav-pending">候选 · MCP 与工具生态：连接能力也连接风险</span></li>
+<li><span class="nav-pending">候选 · 安全情报 Agent：领域模型与证据流水线</span></li>
+<li><span class="nav-pending">候选 · 安全采集与归一化：构建只读情报入口</span></li>
+<li><span class="nav-pending">候选 · 研判与报告：可解释评分、引用和不确定性</span></li>
+<li><span class="nav-pending">候选 · 红队验证与发布门禁：证明系统值得信任</span></li></ol></nav></aside>
+<main id="main-content" class="content reference-body"><header class="lesson-hero"><div><span class="eyebrow">可打印学习工具</span><h1>安全 Agent 检查表</h1><p class="lead">开发、评审与发布前使用的压缩清单；它不能替代各课的首次学习。</p></div></header><section id="design"><h2>设计时</h2><ul class="checklist"><li>目标、用户与非目标明确</li><li>优先确定性工作流，局部才用 Agent</li><li>资产、主体、信任边界和滥用场景已画</li><li>外部内容与高权限执行路径隔离</li></ul></section><section id="tools"><h2>工具与数据</h2><ul class="checklist"><li>工具窄、强类型、默认只读</li><li>校验与授权分离并位于模型外</li><li>任意 URL、私网、重定向和响应大小受限</li><li>租户、来源、时间、哈希与 TTL 完整</li></ul></section><section id="runtime"><h2>运行时</h2><ul class="checklist"><li>步数、工具、token、时间、重试有上限</li><li>高影响动作参数绑定审批</li><li>错误不会泄露堆栈、密钥和内部路径</li><li>日志脱敏、可追、有限保留</li></ul></section><section id="release"><h2>发布前</h2><ul class="checklist"><li>单测、轨迹测试、行为评测分层</li><li>注入、越权、投毒、泄露、耗尽均有回归</li><li>高风险不变量零失败</li><li>残余风险、负责人和恢复步骤已记录</li></ul></section><nav class="lesson-pager"><a class="pager-home" href="../index.html">返回课程首页</a></nav></main></div><script src="../assets/course.js"></script></body></html>

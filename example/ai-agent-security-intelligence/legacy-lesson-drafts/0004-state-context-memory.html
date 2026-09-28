@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>4 · 状态、上下文与记忆：不要混成一个聊天记录 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="分清运行状态、上下文窗口、会话记忆与长期知识，避免串线、投毒和不可控增长。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段一 · 通用原理</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#layers">四层状态</a></li>
+<li><a href="#write">谁可以写入记忆</a></li>
+<li><a href="#context">上下文构建器</a></li>
+<li><a href="#poison">从普通错误到持久投毒</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html" aria-current="page">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 4 课 · 阶段一 · 通用原理</span>
+<h1>状态、上下文与记忆：不要混成一个聊天记录</h1><p class="lead">分清运行状态、上下文窗口、会话记忆与长期知识，避免串线、投毒和不可控增长。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>180 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>“把所有历史消息都塞回模型”既不是记忆设计，也不是安全设计。今天你会画出四层状态，并为每层定义写入条件、生命周期和信任等级。</p><ul><li>区分任务状态、上下文、会话记忆和知识库</li><li>只保存能改变未来决策的事实</li><li>为记忆设计租户隔离、TTL、来源与完整性</li></ul></section>
+<article class="lesson-body">
+<section id="layers"><h2>四层状态</h2><figure class="flow-diagram"><div class="diagram-row"><span class="diagram-node">任务状态</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">模型上下文</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">会话记忆</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">长期知识</span></div><figcaption>生命周期逐渐变长，写入门槛也应逐渐提高。</figcaption></figure>
+<p><strong>任务状态</strong>是当前步骤、预算和待处理动作；<strong>模型上下文</strong>是本轮可见的最小信息；<strong>会话记忆</strong>保留跨轮偏好或已确认事实；<strong>长期知识</strong>是可检索、可治理的数据资产。它们不应共用一个无结构的消息数组。</p></section>
+<section id="write"><h2>谁可以写入记忆</h2><p>模型可以<strong>提议</strong>一条记忆，但持久化之前应通过模式、敏感信息、来源和租户检查。用户原话、网页文本和工具输出都属于不可信数据，不能因为模型把它总结成一句话就自动升级为可信事实。</p><pre><code class="language-python">@dataclass(frozen=True)
+class MemoryCandidate:
+    tenant_id: str
+    fact: str
+    source_id: str
+    confidence: float
+    expires_at: str
+
+def accept_memory(candidate, current_tenant):
+    assert candidate.tenant_id == current_tenant
+    assert 0 &lt;= candidate.confidence &lt;= 1
+    assert candidate.source_id
+    return redact_secrets(candidate)</code></pre></section>
+<section id="context"><h2>上下文构建器</h2><p>上下文应由程序按策略组装，而不是让模型自己“读取全部记忆”。一个安全构建器先按租户和权限过滤，再按相关性选择，接着做敏感信息处理和长度预算，最后用明确边界标记数据来源。顺序很重要：不能先检索全库，再期待模型忽略它无权看的内容。</p></section>
+<section id="poison"><h2>从普通错误到持久投毒</h2><p>间接提示注入如果只影响一轮，是临时劫持；如果恶意文本被写入长期记忆，之后每次检索都可能重新触发，就变成持久投毒。防御因此必须覆盖“进入上下文”和“写入记忆”两条路径。</p><div class="callout key"><strong>记忆准则：</strong>默认不写；有明确用途才写；写入带来源、租户、时间和置信度；读取再次按当前权限过滤。</div></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>设计一条记忆的生命周期</h3><p>为“用户关注某产品线漏洞”设计记录：哪些字段需要保存？谁能更新？多久过期？如果来源是一封含提示注入的邮件，会在哪一步被隔离？</p><details><summary>最低完成标准</summary><p>答案包含 tenant_id、source、created_at、expires_at、confidence，并明确原始外部文本不能直接成为系统指令。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#3-memory-context-security" target="_blank" rel="noopener noreferrer">AI Agent Security Cheat Sheet</a></strong>
+    <span class="resource-meta">来源：OWASP · 位置：Memory & Context Security · 预计：12 分钟</span>
+    <p>对照租户隔离、过期、敏感信息和完整性要求。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>状态解决‘系统现在在哪’，上下文解决‘模型这轮看什么’，记忆解决‘未来需要保留什么’，知识库解决‘可治理地查什么’。生命周期越长，写入门槛越高。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>闭眼说出四层状态及生命周期。</li><li><strong>7 天后：</strong>审查一次聊天历史，删除不会改变未来决策的内容。</li><li><strong>阶段末：</strong>为项目记忆写入路径加入来源和 TTL。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0003-tool-contracts.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0005-planning-orchestration.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

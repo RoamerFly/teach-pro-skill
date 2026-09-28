@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>毕业项目评审量规 | 智鉴 Agent：智能体开发与安全实战</title><meta name="description" content="从价值、工程、安全、证据和测试五个角度审查 AI 安全情报 Agent。"><link rel="stylesheet" href="../assets/style.css"></head><body data-course-key="ai-agent-security-intelligence">
+<a class="skip-link" href="#main-content">跳到正文</a><button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航"><nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav><div class="brand-block"><span class="eyebrow">学习工具</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页"><h2>本页目录</h2><ol class="toc-list" data-toc><li><a href="#rubric">100 分量规</a></li>
+<li><a href="#gates">一票否决</a></li>
+<li><a href="#demo">演示检查</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><span class="nav-pending">候选 · 手写一个最小 Agent 运行时</span></li>
+<li><span class="nav-pending">候选 · 工具契约：让模型建议、让程序裁决</span></li>
+<li><span class="nav-pending">候选 · 状态、上下文与记忆：不要混成一个聊天记录</span></li>
+<li><span class="nav-pending">候选 · 规划与编排：何时用工作流，何时用 Agent</span></li>
+<li><span class="nav-pending">候选 · 评测优先：先定义什么叫做真的有效</span></li>
+<li><span class="nav-pending">候选 · 威胁建模：从资产和信任边界开始</span></li>
+<li><span class="nav-pending">候选 · 提示注入：把外部内容当数据，不当命令</span></li>
+<li><span class="nav-pending">候选 · 工具安全：最小权限与策略执行点</span></li>
+<li><span class="nav-pending">候选 · 记忆与 RAG 安全：来源、隔离、过期与投毒</span></li>
+<li><span class="nav-pending">候选 · 护栏与人工审批：把高风险动作变成可控事务</span></li>
+<li><span class="nav-pending">候选 · 可观测性与韧性：日志、预算、熔断和恢复</span></li>
+<li><span class="nav-pending">候选 · 框架映射：用 OpenAI Agents SDK 落地原理</span></li>
+<li><span class="nav-pending">候选 · MCP 与工具生态：连接能力也连接风险</span></li>
+<li><span class="nav-pending">候选 · 安全情报 Agent：领域模型与证据流水线</span></li>
+<li><span class="nav-pending">候选 · 安全采集与归一化：构建只读情报入口</span></li>
+<li><span class="nav-pending">候选 · 研判与报告：可解释评分、引用和不确定性</span></li>
+<li><span class="nav-pending">候选 · 红队验证与发布门禁：证明系统值得信任</span></li></ol></nav></aside>
+<main id="main-content" class="content reference-body"><header class="lesson-hero"><div><span class="eyebrow">可打印学习工具</span><h1>毕业项目评审量规</h1><p class="lead">从价值、工程、安全、证据和测试五个角度审查 AI 安全情报 Agent。</p></div></header><section id="rubric"><h2>100 分毕业量规</h2><div class="table-wrap"><table><thead><tr><th>维度</th><th>分值</th><th>满分证据</th></tr></thead><tbody><tr><td>问题与用户价值</td><td>10</td><td>真实任务、明确非目标、可用演示</td></tr><tr><td>Agent 系统设计</td><td>15</td><td>循环、状态、工具、停止与预算清楚</td></tr><tr><td>证据与情报质量</td><td>15</td><td>来源、时间、引用、冲突与未知可追</td></tr><tr><td>权限与工具安全</td><td>15</td><td>最小能力、服务端授权、网络白名单</td></tr><tr><td>注入与数据安全</td><td>15</td><td>隔离、租户过滤、记忆治理、输出保护</td></tr><tr><td>审批与可观测性</td><td>10</td><td>参数绑定审批、审计、脱敏与恢复</td></tr><tr><td>测试与红队</td><td>15</td><td>正常/对抗集、轨迹断言、零容忍门禁</td></tr><tr><td>表达与复现</td><td>5</td><td>5 分钟演示清楚，第三方可复现</td></tr></tbody></table></div></section>
+<section id="gates"><h2>一票否决项</h2><ul><li>模型可直接使用任意 shell、任意 URL 或生产写权限。</li><li>未经明确审批即可发送、修改或删除外部数据。</li><li>关键结论无来源，或把模型推断写成来源事实。</li><li>测试夹具包含真实密钥、个人数据或未授权资产信息。</li><li>跨租户读取、非白名单出站或审批参数篡改测试未通过。</li></ul></section>
+<section id="demo"><h2>演示检查</h2><p>必须同时展示一次正常成功和一次恶意输入被限制；打开评分分解、evidence_id 与策略事件；最后主动说明系统边界与残余风险。</p></section><nav class="lesson-pager"><a class="pager-home" href="../index.html">返回课程首页</a></nav></main></div><script src="../assets/course.js"></script></body></html>

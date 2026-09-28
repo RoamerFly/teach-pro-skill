@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>9 · 工具安全：最小权限与策略执行点 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="在模型之外实现能力白名单、资源范围、网络出口和每次调用授权。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段三 · Agent 安全</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#layers">五层最小权限</a></li>
+<li><a href="#pep">策略执行点</a></li>
+<li><a href="#network">网络与 SSRF</a></li>
+<li><a href="#approval">权限不是模型置信度</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html" aria-current="page">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 9 课 · 阶段三 · Agent 安全</span>
+<h1>工具安全：最小权限与策略执行点</h1><p class="lead">在模型之外实现能力白名单、资源范围、网络出口和每次调用授权。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>210 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>一个只读情报 Agent 不需要 shell、任意文件、任意 URL 或数据库写权限。今天你会把‘模型可以使用什么’降成最小、可证明的能力集合。</p><ul><li>使用 capability 而非角色描述授权</li><li>限制工具、资源、参数、网络和时间</li><li>让策略失败时默认拒绝</li></ul></section>
+<article class="lesson-body">
+<section id="layers"><h2>五层最小权限</h2><ol><li>工具级：只暴露任务需要的工具。</li><li>操作级：同一资源区分 read、create、update、delete。</li><li>资源级：限制租户、目录、数据表和具体对象。</li><li>参数级：限制域名、查询数量、时间范围和响应大小。</li><li>时间级：短期凭证、审批有效期和速率限制。</li></ol></section>
+<section id="pep"><h2>策略执行点</h2><p>策略执行点（Policy Enforcement Point）位于工具调用之前，接收真实主体、会话、工具、参数和环境信息。策略决策不能由模型写入的字段决定，例如不能相信模型自己声明 <code>user_is_admin=true</code>。</p><pre><code class="language-python">ALLOWED = {
+    &quot;student&quot;: {&quot;lookup_kev&quot;, &quot;lookup_epss&quot;, &quot;read_public_report&quot;},
+    &quot;analyst&quot;: {&quot;lookup_kev&quot;, &quot;lookup_epss&quot;, &quot;read_asset_tags&quot;},
+}
+
+def authorize(ctx, tool, args):
+    if tool not in ALLOWED.get(ctx.role, set()):
+        raise PermissionError(&quot;POLICY_DENIED&quot;)
+    if args.get(&quot;tenant_id&quot;) not in (None, ctx.tenant_id):
+        raise PermissionError(&quot;CROSS_TENANT&quot;)</code></pre></section>
+<section id="network"><h2>网络与 SSRF</h2><p>允许模型传任意 URL 会把 Agent 变成 SSRF 与数据外传通道。使用固定端点或服务端映射的 source_id；解析 DNS 后阻止环回、链路本地和私有地址；限制重定向；再次验证最终地址；设置超时、最大响应和内容类型；禁用用户自定义请求头。</p><div class="callout key"><strong>更小更好：</strong><code>lookup_epss(cve)</code> 比 <code>fetch_url(url)</code> 更安全，也更容易测试。</div></section>
+<section id="approval"><h2>权限不是模型置信度</h2><p>“模型有 98% 把握”不等于用户授权。授权来自身份、组织策略、用户明确意图与当前资源。模型可以估计内容风险，但不能授予自己新能力。策略服务不可用、日志写入失败或审批记录过期时，高风险动作应 fail closed。</p></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>能力矩阵</h3><p>为匿名访客、普通学生、校内安全分析员、管理员四类主体，设计对公开源查询、内部资产读取、报告保存、消息发送、数据删除的权限。再写出每个允许项的资源和参数范围。</p><details><summary>检查</summary><p>匿名和普通学生不应触达内部资产；发送与删除必须单独审批；任何角色都不需要任意 shell。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#1-tool-security-least-privilege" target="_blank" rel="noopener noreferrer">AI Agent Security Cheat Sheet</a></strong>
+    <span class="resource-meta">来源：OWASP · 位置：Tool Security & Least Privilege · 预计：15 分钟</span>
+    <p>对照工具范围、授权中间件和高影响动作建议。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>最小权限不是少写几个工具描述，而是在工具、操作、资源、参数和时间五层收窄能力，并由模型外部策略执行点逐次裁决。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>不看页面列出五层最小权限。</li><li><strong>7 天后：</strong>把一个通用工具拆成两个窄能力。</li><li><strong>阶段末：</strong>模拟策略服务故障，确认高风险路径默认拒绝。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0008-prompt-injection.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0010-memory-rag-security.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

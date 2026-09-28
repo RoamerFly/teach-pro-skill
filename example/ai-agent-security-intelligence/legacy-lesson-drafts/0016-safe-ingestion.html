@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>16 · 安全采集与归一化：构建只读情报入口 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="实现域名固定、响应受限、模式验证、可离线测试的情报采集与归一化层。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段六 · 毕业项目</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#adapter">固定来源适配器</a></li>
+<li><a href="#limits">网络边界</a></li>
+<li><a href="#normalize">规范化不抹去差异</a></li>
+<li><a href="#lab">实验代码路径</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html" aria-current="page">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 16 课 · 阶段六 · 毕业项目</span>
+<h1>安全采集与归一化：构建只读情报入口</h1><p class="lead">实现域名固定、响应受限、模式验证、可离线测试的情报采集与归一化层。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>240 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>先构建只读数据入口，再让 Agent 使用它。今天你会运行课程附带的本地夹具，实现一个无法访问任意 URL 的 source adapter。</p><ul><li>用 source adapter 隐藏 URL 和协议细节</li><li>验证内容类型、大小、状态和 Schema</li><li>保存原始证据哈希并输出统一 Finding</li></ul></section>
+<article class="lesson-body">
+<section id="adapter"><h2>固定来源适配器</h2><pre><code class="language-python">class SourceAdapter(Protocol):
+    source_id: str
+    def fetch(self) -&gt; bytes: ...
+    def parse(self, raw: bytes) -&gt; list[Evidence]: ...
+
+class CisaKevAdapter:
+    source_id = &quot;CISA-KEV&quot;
+    endpoint = &quot;https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json&quot;
+    # endpoint 是程序常量，不由模型或用户传入</code></pre><p>Agent 只看见 <code>refresh_source("CISA-KEV")</code>，source registry 在服务端把 ID 映射到固定 adapter。这样工具参数不会变成通用网络通道。</p></section>
+<section id="limits"><h2>网络边界</h2><p>设置连接/读取超时、最大响应字节、允许 MIME、最多重定向、最终域名复核和速率限制。TLS 错误不能被模型要求忽略。解析前保存哈希；解析失败时保留失败事件，但不要把任意响应正文写进模型上下文。</p></section>
+<section id="normalize"><h2>规范化不抹去差异</h2><p>将 CVE ID、厂商、产品、日期等映射到统一字段，同时保留 source-specific 原始字段和 evidence_id。缺失值为 null，不让模型猜。时间统一到 UTC，但保留原始时区/字符串用于审计。重复记录按 CVE 聚合，不把不同来源的描述互相覆盖。</p></section>
+<section id="lab"><h2>实验代码路径</h2><p>课程目录中的 <code>labs/secure_cti_agent</code> 提供离线安全骨架。先运行：</p><pre><code class="language-text">cd labs/secure_cti_agent
+python -m unittest -v
+python app.py</code></pre><p>应用只读取合成夹具，不发送网络请求。完成课程后再新增真实 adapter，并用依赖注入保留离线测试。</p></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>实现 EPSS adapter</h3><p>接口只接受已验证的 CVE 列表（最多 50 个），固定调用 FIRST endpoint。为超时、非 JSON、缺字段、额外字段、重复 CVE 和超大响应写测试。</p><details><summary>安全检查</summary><p>调用者不能传完整 URL、header 或代理；日志不写 API 凭据；返回记录带查询日期和 source_id。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://nvd.nist.gov/developers/vulnerabilities" target="_blank" rel="noopener noreferrer">NVD Vulnerabilities API</a></strong>
+    <span class="resource-meta">来源：NIST NVD · 位置：CVE API 2.0 参数与响应 · 预计：20 分钟</span>
+    <p>设计 NVD adapter 时核对官方参数、分页和速率要求。</p></article><article class="resource-card"><strong><a href="https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json" target="_blank" rel="noopener noreferrer">Known Exploited Vulnerabilities JSON</a></strong>
+    <span class="resource-meta">来源：CISA · 位置：完整 JSON feed · 预计：10 分钟</span>
+    <p>观察真实字段，但不要在教程核心运行中依赖在线可用性。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>安全采集器把开放互联网压缩成少数固定、受限、可验证的 source adapter；规范化统一比较维度，但永远保留来源和原始证据。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>列出一次安全 HTTP 获取的六个限制。</li><li><strong>7 天后：</strong>用恶意夹具测试解析器不会产生工具调用。</li><li><strong>阶段末：</strong>为新来源建立离线夹具后才接真实网络。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0015-cti-pipeline.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0017-triage-reporting.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

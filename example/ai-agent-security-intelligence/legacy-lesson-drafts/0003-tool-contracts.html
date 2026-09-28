@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3 · 工具契约：让模型建议、让程序裁决 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="把工具设计为窄、强类型、可授权、可审计的能力，而不是给模型一把万能钥匙。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段一 · 通用原理</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#contract">六字段工具契约</a></li>
+<li><a href="#split">按能力而非 API 拆工具</a></li>
+<li><a href="#validation">校验和授权分层</a></li>
+<li><a href="#errors">安全的错误语义</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html" aria-current="page">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 3 课 · 阶段一 · 通用原理</span>
+<h1>工具契约：让模型建议、让程序裁决</h1><p class="lead">把工具设计为窄、强类型、可授权、可审计的能力，而不是给模型一把万能钥匙。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>180 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>大多数严重 Agent 事故不需要模型“越狱”；只要一个正常的模型在错误上下文中调用了权限过大的工具，就足够产生后果。今天你会把一个危险的万能工具拆成安全契约。</p><ul><li>写出工具的输入、输出、权限和副作用契约</li><li>在执行前做结构验证与策略授权</li><li>区分幂等、可逆和不可逆动作</li></ul></section>
+<article class="lesson-body">
+<section id="contract"><h2>六字段工具契约</h2><p>每个工具至少回答六个问题：它做什么、输入模式是什么、输出模式是什么、需要什么权限、是否有副作用、失败时返回什么。描述不是给模型看的广告，而是系统的可执行边界。</p><div class="table-wrap"><table><thead><tr><th>字段</th><th>安全情报例子</th></tr></thead><tbody><tr><td>名称</td><td><code>fetch_cisa_kev</code></td></tr><tr><td>输入</td><td>无，或固定分页参数</td></tr><tr><td>输出</td><td>经过模式验证的漏洞列表</td></tr><tr><td>权限</td><td>仅 GET；域名白名单；无凭据</td></tr><tr><td>副作用</td><td>网络访问与缓存写入</td></tr><tr><td>失败</td><td>超时、源格式变化、验证失败</td></tr></tbody></table></div></section>
+<section id="split"><h2>按能力而不是 API 拆工具</h2><p><code>http_request(method, url, body)</code> 看似通用，却把 SSRF、数据外传和任意写请求都交给模型。更安全的接口是 <code>fetch_kev_catalog()</code>、<code>lookup_epss(cve)</code>、<code>read_asset_tags(asset_id)</code>。这些名称直接表达业务能力，参数空间也小得多。</p><figure class="flow-diagram"><div class="diagram-row"><span class="diagram-node">模型提议</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">Schema 校验</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">策略授权</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">工具执行</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">输出校验</span></div><figcaption>校验输入是否合法；授权判断当前主体是否被允许。两者不能合并。</figcaption></figure></section>
+<section id="validation"><h2>校验和授权分层</h2><pre><code class="language-python">import re
+
+CVE = re.compile(r&quot;^CVE-(1999|2\d{3})-\d{4,}$&quot;)
+
+def validate_lookup(args: dict) -&gt; str:
+    if set(args) != {&quot;cve&quot;}:
+        raise ValueError(&quot;unexpected fields&quot;)
+    cve = args[&quot;cve&quot;].upper()
+    if not CVE.fullmatch(cve):
+        raise ValueError(&quot;invalid CVE id&quot;)
+    return cve
+
+def authorize(ctx, tool_name: str):
+    if tool_name not in ctx.allowed_tools:
+        raise PermissionError(&quot;tool not allowed for this session&quot;)</code></pre><p>Schema 校验解决“形状是否正确”，策略授权解决“这个用户、这个会话、在这个时间、针对这个资源是否能做”。模型不能充当授权器，因为它同时读取潜在恶意内容。</p></section>
+<section id="errors"><h2>安全的错误语义</h2><p>工具应返回稳定的错误码，例如 <code>TIMEOUT</code>、<code>NOT_FOUND</code>、<code>POLICY_DENIED</code>，以及对用户安全的说明。内部异常写入受控日志，但不要把堆栈、文件路径、请求头或密钥原样交给模型。对写操作还要有幂等键，避免模型重试造成重复发送。</p><div class="callout warning"><strong>易错点：</strong>“模型承诺不会调用危险参数”不是控制。真正的控制必须位于模型无法修改的执行路径上。</div></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>拆掉万能 HTTP 工具</h3><p>假设原工具接受 method、url、headers、body。为安全情报 Agent 设计三个窄工具，并为每个工具写：允许域名、HTTP 方法、输入字段、最大响应、超时、是否缓存。</p><details><summary>自评量规</summary><p>优秀答案不会让模型直接传任意 URL；查询参数有格式和数量限制；工具输出还要经过模式验证。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://openai.github.io/openai-agents-python/tools/" target="_blank" rel="noopener noreferrer">Tools</a></strong>
+    <span class="resource-meta">来源：OpenAI Agents SDK · 位置：Function tools 与 Choosing a tool type · 预计：15 分钟</span>
+    <p>观察成熟运行时如何表达工具，但用本课契约评价每类工具的边界。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>工具不是函数列表，而是能力边界。输入模式保证“像不像”，授权策略保证“该不该”，审计记录保证“发生过什么”。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>说出校验与授权的差别。</li><li><strong>7 天后：</strong>检查一个常用 API 包装器是否暴露了多余自由度。</li><li><strong>阶段末：</strong>给毕业项目所有工具标注只读/写入、可逆/不可逆。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0002-minimal-runtime.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0004-state-context-memory.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

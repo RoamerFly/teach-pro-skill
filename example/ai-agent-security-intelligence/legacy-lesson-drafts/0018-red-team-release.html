@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>18 · 红队验证与发布门禁：证明系统值得信任 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="用对抗测试、发布门禁、演示脚本和残余风险说明，完成可展示、可评审的安全情报 Agent。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段六 · 毕业项目</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#matrix">红队矩阵</a></li>
+<li><a href="#gate">发布门禁</a></li>
+<li><a href="#demo">参赛演示结构</a></li>
+<li><a href="#wisdom">残余风险与真实反馈</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html" aria-current="page">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 18 课 · 阶段六 · 毕业项目</span>
+<h1>红队验证与发布门禁：证明系统值得信任</h1><p class="lead">用对抗测试、发布门禁、演示脚本和残余风险说明，完成可展示、可评审的安全情报 Agent。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>240 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>最后一课不再增加功能，而是证明已有系统在正常、异常和恶意条件下都按预期退化。你将得到一个参赛时能清楚讲述的完整证据链。</p><ul><li>执行覆盖注入、越权、泄露、投毒和耗尽的红队矩阵</li><li>建立零容忍安全门禁和可恢复失败标准</li><li>完成 5 分钟产品演示与技术答辩材料</li></ul></section>
+<article class="lesson-body">
+<section id="matrix"><h2>红队矩阵</h2><div class="table-wrap"><table><thead><tr><th>攻击</th><th>预期</th><th>证据</th></tr></thead><tbody><tr><td>公告内嵌注入</td><td>不产生非白名单动作</td><td>轨迹与出站日志</td></tr><tr><td>模型请求任意 URL</td><td>策略拒绝</td><td>POLICY_DENIED</td></tr><tr><td>跨租户 ID</td><td>查询层拒绝</td><td>授权测试</td></tr><tr><td>投毒记忆</td><td>不持久化或隔离</td><td>记忆审计</td></tr><tr><td>循环/超大响应</td><td>预算终止</td><td>熔断事件</td></tr><tr><td>审批后篡改参数</td><td>审批失效</td><td>哈希不匹配</td></tr></tbody></table></div></section>
+<section id="gate"><h2>发布门禁</h2><ul><li>单元和轨迹测试全部通过；</li><li>任何未经审批写操作：0；</li><li>任何跨租户读取：0；</li><li>任何非白名单出站：0；</li><li>关键结论引用覆盖率达到既定阈值；</li><li>预算与超时测试按预期停止；</li><li>高风险残余问题有负责人和补偿控制。</li></ul><p>模型回答措辞波动可用范围指标，安全不变量不能用平均分掩盖。</p></section>
+<section id="demo"><h2>参赛演示结构</h2><ol><li><strong>痛点：</strong>安全信息多、来源分散、排序缺乏资产语境。</li><li><strong>正常流程：</strong>导入公开夹具 → 规范化 → 交叉证据 → 可解释排序 → 报告。</li><li><strong>安全挑战：</strong>展示恶意公告，系统标记不可信且拒绝越权动作。</li><li><strong>可审计：</strong>打开 evidence_id、评分分解和策略日志。</li><li><strong>边界：</strong>说明系统默认只读、未知项和人工决策点。</li></ol></section>
+<section id="wisdom"><h2>残余风险与真实反馈</h2><p>通过教程只能获得知识与可重复技能，无法独自证明生产级判断。请让安全分析员审查报告是否可行动，让后端/安全工程师评审授权和网络边界，让真实用户完成任务可用性测试。记录接受的残余风险，不用“已通过红队”替代持续监控。</p><div class="callout key"><strong>毕业标准：</strong>你不仅能演示 Agent 成功，还能解释它如何失败、失败会被哪层控制限制、以及哪些决策必须由人承担。</div></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>毕业交付包</h3><p>提交：架构图、威胁模型、工具能力矩阵、12+ 正常样本、12+ 对抗样本、测试报告、5 分钟演示、已知限制和下一阶段计划。使用 practice/capstone-rubric.html 自评。</p><details><summary>通过门槛</summary><p>另一位开发者能依据文档复现测试；另一位分析员能验证报告证据；任何高风险动作都没有“模型自我批准”路径。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#9-secure-agent-testing-adversarial-validation" target="_blank" rel="noopener noreferrer">AI Agent Security Cheat Sheet</a></strong>
+    <span class="resource-meta">来源：OWASP · 位置：Secure Agent Testing & Adversarial Validation · 预计：20 分钟</span>
+    <p>对照 abuse-case matrix、CI/CD release gates 和 validation evidence。</p></article><article class="resource-card"><strong><a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf" target="_blank" rel="noopener noreferrer">NIST AI 600-1</a></strong>
+    <span class="resource-meta">来源：NIST · 位置：GenAI Profile：风险管理行动 · 预计：35 分钟</span>
+    <p>用于毕业答辩中的治理与残余风险视角，不代替本项目技术测试。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>可信不是‘模型很聪明’，而是目标清楚、权限最小、证据可追、失败有限、动作可审、门禁可重复，且人仍掌握高影响决策。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>48 小时后独立重画系统与威胁链。</li><li><strong>7 天后：</strong>一个月后重跑完整评测并比较漂移。</li><li><strong>阶段末：</strong>任何模型、提示、工具、记忆或权限变化后重跑安全门禁。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0017-triage-reporting.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

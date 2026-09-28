@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 · 记忆与 RAG 安全：来源、隔离、过期与投毒 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="保护检索与记忆的数据供应链，确保来源可追溯、租户隔离、内容新鲜且不能把指令带入执行层。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段三 · Agent 安全</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#supply">数据供应链</a></li>
+<li><a href="#provenance">证据血缘</a></li>
+<li><a href="#retrieval">检索不是授权</a></li>
+<li><a href="#freshness">时间与冲突</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html" aria-current="page">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 10 课 · 阶段三 · Agent 安全</span>
+<h1>记忆与 RAG 安全：来源、隔离、过期与投毒</h1><p class="lead">保护检索与记忆的数据供应链，确保来源可追溯、租户隔离、内容新鲜且不能把指令带入执行层。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>180 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>RAG 给出的不是事实，而是候选证据。安全情报尤其依赖时间、来源和冲突处理。今天你会为每条证据建立 provenance，并阻止一条恶意文档污染整个系统。</p><ul><li>为文档和记忆记录来源、时间与租户</li><li>把检索相关性与信任度分开</li><li>设计投毒、陈旧和跨租户测试</li></ul></section>
+<article class="lesson-body">
+<section id="supply"><h2>数据供应链</h2><figure class="flow-diagram"><div class="diagram-row"><span class="diagram-node">来源登记</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">安全采集</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">原文存档</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">解析验证</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">索引</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">检索过滤</span></div><figcaption>任一步都可能引入错误或攻击；原文与派生字段必须可关联。</figcaption></figure>
+<p>采集前确认来源身份和允许协议；原文以内容哈希存档；解析结果记录解析器版本；索引前做租户、敏感级别和恶意内容标签；检索时先做访问过滤，再做相关性排序。</p></section>
+<section id="provenance"><h2>证据血缘</h2><pre><code class="language-json">{
+  &quot;claim&quot;: &quot;该漏洞已观察到在野利用&quot;,
+  &quot;source_url&quot;: &quot;https://www.cisa.gov/...&quot;,
+  &quot;publisher&quot;: &quot;CISA&quot;,
+  &quot;retrieved_at&quot;: &quot;2026-09-22T10:00:00Z&quot;,
+  &quot;content_sha256&quot;: &quot;...&quot;,
+  &quot;parser_version&quot;: &quot;1.2.0&quot;,
+  &quot;trust&quot;: &quot;authoritative&quot;,
+  &quot;tenant_id&quot;: &quot;public&quot;
+}</code></pre><p>来源可信不代表每一句都正确；相关不代表有权限；新鲜不代表权威。把这些维度分开，Agent 才能解释为什么采用某条证据。</p></section>
+<section id="retrieval"><h2>检索不是授权</h2><p>向量相似度只回答“文本像不像”，不能判断用户能否读取。必须在检索查询层先施加 tenant_id、classification 和 ACL 过滤。返回的片段要带明确的“外部不可信数据”标记，不能与系统指令混合。</p></section>
+<section id="freshness"><h2>时间与冲突</h2><p>安全情报会变化：评分更新、漏洞进入 KEV、厂商修复建议修订。报告必须显示数据截至时间。来源冲突时不让模型静默选一个，而是保留双方、按来源层级和时间说明差异，并把关键冲突升级给分析员。</p><div class="callout warning"><strong>易错点：</strong>把模型摘要存为“事实”而不保留原始引用，会让后续审计无法区分原文、解析器错误和模型推断。</div></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>设计证据对象</h3><p>为 KEV、NVD、EPSS 和厂商公告设计统一 Evidence 结构。至少包含 source、retrieved_at、hash、trust、claims、citations、tenant 和 expires_at。写出两条来源冲突时的处理规则。</p><details><summary>迁移检查</summary><p>如果把情报源换成邮件附件，哪些字段不变？哪些采集和信任规则必须改变？</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#3-memory-context-security" target="_blank" rel="noopener noreferrer">AI Agent Security Cheat Sheet</a></strong>
+    <span class="resource-meta">来源：OWASP · 位置：Memory & Context Security · 预计：12 分钟</span>
+    <p>复核隔离、过期、审计与敏感数据处理。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>RAG 是证据供应链，不是答案数据库：先授权过滤，再相关性检索；每条派生结论都能追溯到带时间与哈希的原始证据。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>区分相关性、可信度、权限和新鲜度。</li><li><strong>7 天后：</strong>给一条模型摘要补齐 provenance。</li><li><strong>阶段末：</strong>构造跨租户和陈旧数据回归测试。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0009-least-privilege.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0011-guardrails-approval.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

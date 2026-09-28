@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>14 · MCP 与工具生态：连接能力也连接风险 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="理解 MCP 的 host–client–server 架构、能力协商与安全边界，安全接入第三方工具。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段五 · 框架实战</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#architecture">Host–Client–Server</a></li>
+<li><a href="#capability">能力协商与授权</a></li>
+<li><a href="#supply">第三方服务器供应链</a></li>
+<li><a href="#design">情报 Agent 的 MCP 边界</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html" aria-current="page">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 14 课 · 阶段五 · 框架实战</span>
+<h1>MCP 与工具生态：连接能力也连接风险</h1><p class="lead">理解 MCP 的 host–client–server 架构、能力协商与安全边界，安全接入第三方工具。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>180 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>MCP 统一了连接方式，却不会自动让服务器可信。今天你会把 MCP 当成协议与供应链边界，而不是‘装上就能安全使用’的插件市场。</p><ul><li>解释 host、client、server 的职责</li><li>理解 capabilities 不是用户授权</li><li>对第三方 MCP 做来源、权限、网络和输出审查</li></ul></section>
+<article class="lesson-body">
+<section id="architecture"><h2>Host–Client–Server</h2><figure class="flow-diagram"><div class="diagram-row"><span class="diagram-node">Host：策略/同意</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">Client：一对一会话</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">Server：资源/工具/提示</span></div><figcaption>Host 管理多个 client；每个 client 与一个 server 保持隔离连接。</figcaption></figure>
+<p>Host 负责模型集成、权限和用户授权；client 处理协议会话；server 暴露专门能力。按规范的设计原则，server 不应看到完整对话，也不应看到其他 server。上下文最小化是架构能力，但 host 必须正确实施。</p></section>
+<section id="capability"><h2>能力协商与授权</h2><p>初始化时声明支持 tools、resources 或 prompts，只说明“协议上能做什么”，不表示“当前用户被允许做什么”。工具调用仍需主体认证、资源授权、用户同意和参数策略。不要把 tool annotation 或 server 自述当成安全事实。</p></section>
+<section id="supply"><h2>第三方服务器供应链</h2><p>审查发布者、代码与依赖、更新机制、传输、凭据保存、默认权限、日志、域名、数据保留和撤销方式。工具描述可能在更新后变化；因此固定版本或哈希，监测工具清单漂移，并在权限扩大时重新批准。</p><div class="callout warning"><strong>工具结果也是不可信输入：</strong>MCP server 返回的文本可包含间接注入。它不能因为“来自工具”就升级为系统指令。</div></section>
+<section id="design"><h2>情报 Agent 的 MCP 边界</h2><p>如果将 KEV/EPSS 查询包装为 MCP server，让 server 只接受 CVE ID，不接受任意 URL；运行账号无内部资产权限；host 对工具名和结果 Schema 再验证；所有服务器输出带 source_id。内部资产 server 与公开情报 server 使用不同 client、不同身份和不同工具集。</p></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>MCP 接入评审</h3><p>假设要接入一个第三方网页抓取 MCP。写出 12 项准入问题，并做决定：直接拒绝、放进隔离环境，还是缩窄为固定域名工具？</p><details><summary>关键点</summary><p>至少覆盖任意 URL、重定向、私网访问、凭据、工具清单变化、输出注入、日志、更新、撤销、租户隔离、响应大小和超时。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://modelcontextprotocol.io/specification/2025-11-25/architecture" target="_blank" rel="noopener noreferrer">MCP Architecture</a></strong>
+    <span class="resource-meta">来源：Model Context Protocol · 位置：Core Components 与 Design Principles · 预计：18 分钟</span>
+    <p>读取官方架构中 host 的安全职责、client 隔离和 server 最小上下文原则。</p></article><article class="resource-card"><strong><a href="https://openai.github.io/openai-agents-python/mcp/" target="_blank" rel="noopener noreferrer">Model context protocol</a></strong>
+    <span class="resource-meta">来源：OpenAI Agents SDK · 位置：Filtering、guardrails 与 server integrations · 预计：20 分钟</span>
+    <p>理解 SDK 接入时仍需做工具过滤与工具护栏。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>MCP 统一的是上下文与能力交换；Host 仍负责授权、同意和隔离。Capabilities 是协议能力，不是安全许可；Server 是需治理的第三方供应链。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>用一句话说清 host/client/server。</li><li><strong>7 天后：</strong>解释 capability negotiation 与 user authorization 的差别。</li><li><strong>阶段末：</strong>模拟工具清单变化并触发重新评审。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0013-agents-sdk.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0015-cti-pipeline.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1 · Agent 不是聊天机器人：先画清系统闭环 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="建立 Agent 的统一系统模型，能够解释模型、工具、状态、环境与控制循环如何共同产生行为。">
+<link rel="stylesheet" href="../assets/style.css"></head><body data-course-key="ai-agent-security-intelligence">
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航"><nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+<div class="brand-block"><span class="eyebrow">阶段一 · 通用原理</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#scenario">从一次漏洞查询开始</a></li>
+<li><a href="#model">五部分系统模型</a></li>
+<li><a href="#boundary">Agent 与工作流的边界</a></li>
+<li><a href="#security">安全不是附加模块</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">一手阅读与视频</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li>
+<li><a href="#learning-input">学习记录与疑难</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li><li><a href="../reference/resource-learning-center.html">阅读与视频学习中心</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html" aria-current="page">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><span class="nav-pending">候选 · 手写一个最小 Agent 运行时</span></li>
+<li><span class="nav-pending">候选 · 工具契约：让模型建议、让程序裁决</span></li>
+<li><span class="nav-pending">候选 · 状态、上下文与记忆：不要混成一个聊天记录</span></li>
+<li><span class="nav-pending">候选 · 规划与编排：何时用工作流，何时用 Agent</span></li>
+<li><span class="nav-pending">候选 · 评测优先：先定义什么叫做真的有效</span></li>
+<li><span class="nav-pending">候选 · 威胁建模：从资产和信任边界开始</span></li>
+<li><span class="nav-pending">候选 · 提示注入：把外部内容当数据，不当命令</span></li>
+<li><span class="nav-pending">候选 · 工具安全：最小权限与策略执行点</span></li>
+<li><span class="nav-pending">候选 · 记忆与 RAG 安全：来源、隔离、过期与投毒</span></li>
+<li><span class="nav-pending">候选 · 护栏与人工审批：把高风险动作变成可控事务</span></li>
+<li><span class="nav-pending">候选 · 可观测性与韧性：日志、预算、熔断和恢复</span></li>
+<li><span class="nav-pending">候选 · 框架映射：用 OpenAI Agents SDK 落地原理</span></li>
+<li><span class="nav-pending">候选 · MCP 与工具生态：连接能力也连接风险</span></li>
+<li><span class="nav-pending">候选 · 安全情报 Agent：领域模型与证据流水线</span></li>
+<li><span class="nav-pending">候选 · 安全采集与归一化：构建只读情报入口</span></li>
+<li><span class="nav-pending">候选 · 研判与报告：可解释评分、引用和不确定性</span></li>
+<li><span class="nav-pending">候选 · 红队验证与发布门禁：证明系统值得信任</span></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 1 课 · 阶段一 · 通用原理</span>
+<h1>Agent 不是聊天机器人：先画清系统闭环</h1><p class="lead">建立 Agent 的统一系统模型，能够解释模型、工具、状态、环境与控制循环如何共同产生行为。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>150 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>当模型只能回答文字时，它还是一个生成器；当它能观察环境、选择动作、调用工具并根据结果继续决策时，才进入 Agent 系统。今天的小胜利是：你能画出一个 Agent 的闭环，并指出每条边上的安全问题。</p><ul><li>区分模型、工作流与 Agent</li><li>用 Observe–Decide–Act–Evaluate 描述运行循环</li><li>识别动作权限、停止条件和环境反馈三个关键控制点</li></ul></section>
+<article class="lesson-body">
+<section id="scenario"><h2>从一次漏洞查询开始</h2><p>用户问：“最近哪些漏洞最值得修？”普通聊天模型可以写一段看似合理的回答，但它不知道你的资产，也不知道数据是否最新。安全情报 Agent 则需要先读取可信来源、归一化 CVE、查询是否已被利用、结合资产相关性打分，最后给出带证据的结论。关键差别不是“回答更长”，而是它可以在环境中执行动作并承受动作后果。</p>
+<figure class="video-lesson"><video controls playsinline preload="metadata" poster="../media/agent-loop-poster.png" aria-label="51 秒讲解：Agent 闭环与安全控制点"><source src="../media/agent-loop-explained.mp4" type="video/mp4"><track kind="captions" src="../media/agent-loop-explained.vtt" srclang="zh" label="中文字幕">浏览器不支持视频播放时，请阅读下方文字讲解。</video><figcaption><strong>51 秒图解：</strong>先看模型、运行时与工具如何分工，再辨认外部数据与执行权限之间的边界。视频自带画面字幕，可暂停或静音；下面的图文包含同样的核心内容。</figcaption></figure>
+<details class="media-transcript"><summary>阅读视频讲解文字</summary><p>用户提出任务，系统读取环境，模型提出候选动作。运行时检查工具白名单、参数、权限与预算，必要时交给人审批；工具执行后的结果回到观察。网页与情报源只能提供数据，不能授权动作。画系统图时，除了模型，还要画出外部数据、运行时、受控工具、报告输出与信任边界。</p></details>
+<div class="callout warning"><strong>第一条安全公理：</strong>模型输出只是一个不可信的提案。只要输出将触发网络请求、文件写入、消息发送或权限变化，程序就必须再次校验。</div></section>
+<section id="model"><h2>五部分系统模型</h2><figure class="visual-figure"><img src="../assets/agent-loop.svg" loading="lazy" decoding="async" alt="从任务目标到观察、模型提议、运行时校验、工具执行，再把结果反馈给观察的闭环；运行时校验权限、参数和预算。"><figcaption>沿箭头读图：目标 → 观察 → 模型提议 → 运行时校验 → 工具执行 → 再观察。循环必须有停止条件与总预算；模型提议不能跳过校验。</figcaption></figure>
+<p><strong>模型</strong>负责从上下文产生候选决策；<strong>工具</strong>把候选动作映射到外部能力；<strong>状态</strong>记录当前任务和已发生事实；<strong>环境</strong>产生工具结果；<strong>运行时</strong>负责循环、校验、预算、审批和停止。把“Agent”只等同于大模型，会遗漏真正决定可靠性与安全性的运行时。</p>
+<div class="table-wrap"><table><thead><tr><th>组件</th><th>正确职责</th><th>典型失败</th></tr></thead><tbody><tr><td>模型</td><td>提出下一步与参数</td><td>幻觉、被注入、目标漂移</td></tr><tr><td>工具</td><td>执行一个边界清晰的能力</td><td>权限过大、参数未验证</td></tr><tr><td>状态</td><td>保存任务事实与过程</td><td>跨用户串线、投毒</td></tr><tr><td>运行时</td><td>执行策略和停止条件</td><td>无限循环、默认放行</td></tr><tr><td>环境</td><td>返回真实但未必可信的观察</td><td>恶意网页、过期情报</td></tr></tbody></table></div></section>
+<section id="boundary"><h2>Agent 与工作流的边界</h2><p>如果步骤和分支都能预先写清，就优先使用工作流：它更可预测、更容易测试。只有当下一步依赖开放环境、无法穷举分支，且模型决策的收益高于新增风险时，才引入 Agent。一个系统也可以混合：外围使用确定性工作流，局部节点让模型做受限判断。</p>
+<div class="exercise-card" data-quiz data-correct-answer="模型提出结构化动作，运行时校验后调用白名单工具">
+      <h3>下面哪个设计最像受控 Agent？</h3><div class="quiz-options"><label class="quiz-option"><input type="radio" name="q8034081401635019374" data-correct="false" data-feedback="这缺少工具边界、外部策略与停止预算。"><span>模型可直接调用任意命令，直到它判断任务已经完成</span></label><label class="quiz-option"><input type="radio" name="q8034081401635019374" data-correct="true" data-feedback="模型负责建议，运行时负责授权和执行。"><span>模型提出结构化动作，运行时校验后调用白名单工具</span></label><label class="quiz-option"><input type="radio" name="q8034081401635019374" data-correct="false" data-feedback="这是确定性工作流，不是开放决策循环。"><span>程序按固定顺序调用三个 API，不允许改变任何下一步</span></label></div>
+      <button class="quiz-submit" type="button" data-quiz-submit>提交并查看反馈</button>
+      <div class="quiz-feedback" data-quiz-feedback aria-live="polite"></div></div></section>
+<section id="security"><h2>安全不是附加模块</h2><p>Agent 安全的对象不是一句提示词，而是一条完整因果链：谁能影响上下文、模型能提议什么、运行时允许什么、工具拥有什么权限、结果会流向哪里。安全设计的目标不是让模型“永不犯错”，而是让一次错误无法轻易升级为越权、泄露或不可逆操作。</p>
+<figure class="visual-figure"><img src="../assets/trust-boundary.svg" loading="lazy" decoding="async" alt="安全情报 Agent 架构：外部数据经采集解析进入受控运行区，模型研判提出建议，策略执行点校验后才允许受限工具输出报告。"><figcaption>虚线框是受控运行区。请找出两处边界：外部资料进入系统、模型建议变成工具动作。前者要处理来源与内容，后者要处理授权与预算。</figcaption></figure>
+<p>因此，本课程在学习每个开发概念时同步学习相应控制：工具对应最小权限，记忆对应隔离和过期，规划对应深度预算，外部资料对应间接提示注入，评测对应对抗测试。</p></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>画出你的毕业项目第一版系统图</h3><p>在纸上画出：用户、Agent 运行时、模型、CISA/NVD/EPSS 等数据源、本地状态、报告输出。用虚线标出信任边界，并在每条跨边界箭头旁写出“数据”或“动作”。</p><details><summary>完成标准</summary><ul><li>至少 5 个组件；</li><li>至少 2 条信任边界；</li><li>每个动作都有执行者；</li><li>写出一个停止条件和一个预算上限。</li></ul></details></div></section>
+<section id="resources" class="content-section"><h2>本课一手阅读与视频</h2>
+<p class="resource-plan"><strong>本课优先：原理主读 → 安全映射，合计约 35 分钟（含画图与产出，计入本课 150 分钟）。</strong>视频和进阶阅读均为选学，不需要全部完成。将资源产出写进<a href="#lesson-evidence">本课学习记录</a>即可，不新增必填表单。</p>
+<article class="resource-card" data-resource-role="primary"><span class="resource-badge">优先 1 · 原理主读</span><h3><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct: Synergizing Reasoning and Acting in Language Models</a></h3><span class="resource-meta">Yao 等 · 英文 · 2023 年 v3 · 阅读与产出约 20 分钟</span><p><strong>具体看：</strong>论文摘要；从摘要页进入作者项目页，观察示例里的 Thought、Action、Observation。现在不读实验表格，也不要求理解训练细节。</p><p><strong>带着问题读：</strong>只有一次模型回答，和执行工具后继续观察的循环，有什么不同？</p><p><strong>闭卷产出：</strong>用 3 个箭头画出“提出动作 → 环境返回 → 再次决策”，再指出本课增加的运行时授权检查在哪里。ReAct 提供循环思想，不等于完整安全架构。</p><p class="resource-access">摘要及作者项目页已核验（2026-09-27）；看英文困难时，用本课五部分系统图完成同一产出。</p></article>
+<article class="resource-card" data-resource-role="security"><span class="resource-badge">优先 2 · 安全映射</span><h3><a href="https://cheatsheetseries.owasp.org/cheatsheets/AI_Agent_Security_Cheat_Sheet.html#1-tool-security-least-privilege" target="_blank" rel="noopener noreferrer">OWASP AI Agent Security Cheat Sheet</a></h3><span class="resource-meta">OWASP · 英文 · 工具安全与人在回路 · 阅读与产出约 15 分钟</span><p><strong>具体看：</strong>“1. Tool Security &amp; Least Privilege”和“4. Human-in-the-Loop Controls”；先读原则，不照抄中间代码。</p><p><strong>映射任务：</strong>在你的安全情报 Agent 图上标出工具白名单、执行前授权、高风险人工审批各位于哪里。</p><p><strong>完成产出：</strong>写出一条“即使模型提出动作，程序仍必须拒绝”的规则，以及执行这条规则的组件。</p><p class="resource-access">相关正文与定位已核验（2026-09-27）；网络不可用时，使用本课信任边界图完成相同任务。</p></article>
+<details class="resource-optional" data-resource-role="video"><summary>选学 · 视频精学：观察真实框架如何组织循环</summary><h3><a href="https://academy.openai.com/public/clubs/builders-etkn1/videos/unlock-agentic-power-with-the-agents-sdk" target="_blank" rel="noopener noreferrer">Introduction to Agentic Workflows</a></h3><p class="resource-meta">OpenAI Academy · 英文 · 自主观看 20 分钟＋产出 5 分钟；这是学习预算，不是片长</p><p><strong>为什么看：</strong>公开简介覆盖 agents、tools、memory 与 Agents SDK，适合用来观察抽象循环的框架映射。此时不跟敲框架代码。</p><ol><li><strong>看前预测：</strong>画出你认为 agent、tool、memory 在五部分系统图中的位置。</li><li><strong>暂停观察：</strong>遇到工具或记忆相关讲解时暂停；标出“模型建议”和“应用执行”的分界，没讲清的地方打问号。</li><li><strong>看后迁移：</strong>换一种颜色修正图，并写出一项仍需要你的应用负责的安全检查。</li></ol><p class="resource-access"><strong>核验边界：</strong>2026-09-27 已确认标题与公开简介；页面提示登录，未验证完整播放、字幕或精确时间戳，因此不编造分段。无法观看时，用本课 51 秒图解和系统图完成同一映射任务；本地短视频是讲解材料，不是一手视频替代品。</p></details>
+<details class="resource-optional" data-resource-role="extension"><summary>选读 · 进阶辨析：什么时候其实不需要 Agent？</summary><h3><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">Building effective agents</a></h3><p class="resource-meta">Anthropic · 英文 · 2024 年文章 · 阅读与产出约 15 分钟</p><p><strong>具体看：</strong>“What are agents?”和“When (and when not) to use agents”；不要现在展开所有编排模式。</p><p><strong>任务与产出：</strong>分别为“每天固定汇总公开漏洞”和“根据新证据决定继续查什么”选择工作流或 Agent，用两句话解释依据，并列出成本或可预测性的代价。</p><p class="resource-access">指定正文已核验（2026-09-27）；原页提示工具生态已变化，本课仅使用架构辨析，不把旧工具名单当现行选型。不访问外链也可用本课边界辨析完成此题。</p></details>
+<p class="resource-footer"><a href="../reference/resource-learning-center.html">进入阅读与视频学习中心 →</a> 按阶段查看候选资源；后续课仍须依据本课证据生成。</p>
+</section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>Agent = 模型驱动的决策循环 + 受控工具 + 显式状态 + 环境反馈；运行时负责把不可信建议约束为可接受动作。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>不看页面，默画五部分闭环。</li><li><strong>7 天后：</strong>拿一个日常自动化例子，判断该用工作流还是 Agent。</li><li><strong>阶段末：</strong>在毕业项目架构图上补全权限、预算与停止条件。</li></ul></section>
+<section id="learning-input" class="content-section callout note"><h2>本课掌握证据与疑难记录</h2><p>请写下练习结果、你能独立解释的内容，以及尚未解决的问题。从课程启动器打开时，答案自动写入本地课程目录，AI 下次对话会直接读取；仅双击 HTML 时仍保存在浏览器，可下载备份。</p><label for="lesson-evidence">我的练习答案与掌握证据</label><textarea id="lesson-evidence" data-save-key="lesson-0001-evidence" placeholder="贴入练习答案、代码结果或用自己的话解释本课模型。写明哪些是独立完成、哪些需要提示。"></textarea><label for="lesson-questions">疑难与下节课希望解决的问题</label><textarea id="lesson-questions" data-save-key="lesson-0001-questions" placeholder="记录没理解的地方、错误答案、环境问题或希望下节课回答的问题"></textarea><div class="learning-input-actions"><button type="button" data-save-export>下载备份（可选）</button><button type="button" data-save-clear>清空本课记录</button><span class="save-status" data-save-status aria-live="polite">尚未填写</span></div></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a class="pager-home" href="../index.html">返回课程首页</a><span class="pager-pending">下一课依据本课证据生成</span></nav></main></div>
+<script src="../assets/course.js"></script><script src="../assets/sync.js"></script><script src="../assets/tutor.js"></script></body></html>

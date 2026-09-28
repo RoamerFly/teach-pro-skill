@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 470" role="img" aria-labelledby="title desc">
+  <title id="title">安全情报 Agent 的信任边界架构图</title>
+  <desc id="desc">外部情报源是不可信数据，只能进入隔离的采集与解析层；模型可以提出工具调用，但运行时策略层负责授权。受限工具访问数据和生成报告，人工对高影响输出复核。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f5f9fc"/><stop offset="1" stop-color="#eaf6f2"/></linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#278a82"/></marker>
+  </defs>
+  <rect x="1" y="1" width="1118" height="468" rx="20" fill="url(#bg)" stroke="#bad9d6"/>
+  <text x="40" y="52" fill="#173b48" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700">安全情报 Agent：数据可以进入，权限不能跟着进入</text>
+  <text x="40" y="83" fill="#526c74" font-family="Microsoft YaHei, sans-serif" font-size="16">示意架构 · 虚线表示信任边界，实线箭头表示经过控制的数据或动作流。</text>
+  <g font-family="Microsoft YaHei, sans-serif">
+    <rect x="40" y="124" width="216" height="238" rx="17" fill="#fff" stroke="#d3b97f" stroke-width="2"/>
+    <text x="58" y="156" fill="#9b6b22" font-size="14" font-weight="700">外部 · 不可信</text>
+    <text x="58" y="203" fill="#193d49" font-size="21" font-weight="700">CISA / NVD / EPSS</text>
+    <text x="58" y="235" fill="#526c74" font-size="15">网页、接口、文件</text>
+    <text x="58" y="259" fill="#526c74" font-size="15">可提供事实，不能发命令</text>
+    <rect x="292" y="111" width="560" height="262" rx="20" fill="#e7f5f1" stroke="#239487" stroke-width="3" stroke-dasharray="11 8"/>
+    <text x="312" y="142" fill="#087b72" font-size="14" font-weight="700">受控运行区 · 程序负责边界</text>
+    <rect x="312" y="173" width="150" height="143" rx="13" fill="#fff" stroke="#b8d7d0"/>
+    <rect x="493" y="173" width="150" height="143" rx="13" fill="#fff" stroke="#b8d7d0"/>
+    <rect x="674" y="173" width="158" height="143" rx="13" fill="#fff0d8" stroke="#e5b873"/>
+    <text x="331" y="209" fill="#173b48" font-size="19" font-weight="700">采集与解析</text>
+    <text x="331" y="241" fill="#536d75" font-size="15">来源标记</text><text x="331" y="266" fill="#536d75" font-size="15">格式校验</text><text x="331" y="291" fill="#536d75" font-size="15">敏感信息隔离</text>
+    <text x="512" y="209" fill="#173b48" font-size="19" font-weight="700">模型研判</text>
+    <text x="512" y="241" fill="#536d75" font-size="15">提出候选动作</text><text x="512" y="266" fill="#536d75" font-size="15">归纳证据</text><text x="512" y="291" fill="#536d75" font-size="15">不授予自身权限</text>
+    <text x="693" y="209" fill="#92551b" font-size="19" font-weight="700">策略执行点</text>
+    <text x="693" y="241" fill="#664d32" font-size="15">白名单工具</text><text x="693" y="266" fill="#664d32" font-size="15">参数与预算</text><text x="693" y="291" fill="#664d32" font-size="15">审批与审计</text>
+    <rect x="889" y="124" width="190" height="238" rx="17" fill="#fff" stroke="#a5d2c8" stroke-width="2"/>
+    <text x="908" y="156" fill="#087b72" font-size="14" font-weight="700">输出 · 可追溯</text>
+    <text x="908" y="203" fill="#193d49" font-size="21" font-weight="700">受限工具</text>
+    <text x="908" y="235" fill="#526c74" font-size="15">只读查询与报告</text>
+    <text x="908" y="259" fill="#526c74" font-size="15">证据引用与审计</text>
+    <text x="908" y="283" fill="#526c74" font-size="15">高影响结论人工复核</text>
+  </g>
+  <g stroke="#278a82" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M258 245H304"/><path d="M465 245H485"/><path d="M646 245H666"/><path d="M855 245H881"/>
+  </g>
+  <rect x="295" y="392" width="530" height="38" rx="18" fill="#d6eee8"/>
+  <text x="560" y="418" text-anchor="middle" fill="#0a736b" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="700">核心规则：外部内容是数据；模型输出是提议；运行时才有执行权</text>
+</svg>

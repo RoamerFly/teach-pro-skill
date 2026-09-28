@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>安全情报数据模型 | 智鉴 Agent：智能体开发与安全实战</title><meta name="description" content="毕业项目的稳定对象与关键不变量。"><link rel="stylesheet" href="../assets/style.css"></head><body data-course-key="ai-agent-security-intelligence">
+<a class="skip-link" href="#main-content">跳到正文</a><button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航"><nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav><div class="brand-block"><span class="eyebrow">学习工具</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页"><h2>本页目录</h2><ol class="toc-list" data-toc><li><a href="#evidence">Evidence</a></li>
+<li><a href="#finding">Finding</a></li>
+<li><a href="#asset">AssetContext</a></li>
+<li><a href="#decision">PriorityDecision</a></li>
+<li><a href="#rules">不变量</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><span class="nav-pending">候选 · 手写一个最小 Agent 运行时</span></li>
+<li><span class="nav-pending">候选 · 工具契约：让模型建议、让程序裁决</span></li>
+<li><span class="nav-pending">候选 · 状态、上下文与记忆：不要混成一个聊天记录</span></li>
+<li><span class="nav-pending">候选 · 规划与编排：何时用工作流，何时用 Agent</span></li>
+<li><span class="nav-pending">候选 · 评测优先：先定义什么叫做真的有效</span></li>
+<li><span class="nav-pending">候选 · 威胁建模：从资产和信任边界开始</span></li>
+<li><span class="nav-pending">候选 · 提示注入：把外部内容当数据，不当命令</span></li>
+<li><span class="nav-pending">候选 · 工具安全：最小权限与策略执行点</span></li>
+<li><span class="nav-pending">候选 · 记忆与 RAG 安全：来源、隔离、过期与投毒</span></li>
+<li><span class="nav-pending">候选 · 护栏与人工审批：把高风险动作变成可控事务</span></li>
+<li><span class="nav-pending">候选 · 可观测性与韧性：日志、预算、熔断和恢复</span></li>
+<li><span class="nav-pending">候选 · 框架映射：用 OpenAI Agents SDK 落地原理</span></li>
+<li><span class="nav-pending">候选 · MCP 与工具生态：连接能力也连接风险</span></li>
+<li><span class="nav-pending">候选 · 安全情报 Agent：领域模型与证据流水线</span></li>
+<li><span class="nav-pending">候选 · 安全采集与归一化：构建只读情报入口</span></li>
+<li><span class="nav-pending">候选 · 研判与报告：可解释评分、引用和不确定性</span></li>
+<li><span class="nav-pending">候选 · 红队验证与发布门禁：证明系统值得信任</span></li></ol></nav></aside>
+<main id="main-content" class="content reference-body"><header class="lesson-hero"><div><span class="eyebrow">可打印学习工具</span><h1>安全情报数据模型</h1><p class="lead">毕业项目的稳定对象与关键不变量。</p></div></header><section id="evidence"><h2>Evidence</h2><p>不可变的来源证据：<code>evidence_id, source_id, source_url, publisher, retrieved_at, content_hash, raw_ref, claims, trust, tenant_id, expires_at</code>。</p></section><section id="finding"><h2>Finding</h2><p>围绕一个 CVE 的聚合：<code>cve, vendor, products, versions, descriptions_by_source, kev, epss, cvss, evidence_ids, conflicts, unknowns</code>。</p></section><section id="asset"><h2>AssetContext</h2><p>组织语境：<code>tenant_id, asset_id, product, version, internet_exposed, criticality, owner, controls, observed_at, source_id</code>。它不是公开情报，访问必须按租户授权。</p></section><section id="decision"><h2>PriorityDecision</h2><p>可解释决策：<code>score, factor_breakdown, evidence_ids, assumptions, unknowns, recommendation, requires_human_review</code>。</p></section><section id="rules"><h2>不变量</h2><ul><li>Finding 不能覆盖不同来源的原始描述。</li><li>每个关键 claim 至少关联一个 evidence_id。</li><li>unknown 不得默认为 false 或 0。</li><li>公共证据与内部资产上下文分库存储、分权读取。</li></ul></section><nav class="lesson-pager"><a class="pager-home" href="../index.html">返回课程首页</a></nav></main></div><script src="../assets/course.js"></script></body></html>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 430" role="img" aria-labelledby="title desc">
+  <title id="title">Agent 决策闭环与运行时安全门</title>
+  <desc id="desc">目标产生观察，模型提出下一步；运行时校验权限、参数与预算后，工具才执行动作。环境反馈再次进入观察，循环直到停止。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f6fbfa"/><stop offset="1" stop-color="#e8f5f1"/></linearGradient>
+    <linearGradient id="gate" x2="1" y2="1"><stop stop-color="#fff0d7"/><stop offset="1" stop-color="#ffe1b9"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#315963" flood-opacity=".10"/></filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 8 4 0 8Z" fill="#178d83"/></marker>
+  </defs>
+  <rect x="1" y="1" width="1118" height="428" rx="20" fill="url(#bg)" stroke="#bbd9d3"/>
+  <text x="40" y="52" fill="#173b48" font-family="Microsoft YaHei, sans-serif" font-size="27" font-weight="700">一个 Agent 周期发生了什么？</text>
+  <text x="40" y="84" fill="#4d6870" font-family="Microsoft YaHei, sans-serif" font-size="16">模型负责提议；程序负责决定能否执行。</text>
+  <g font-family="Microsoft YaHei, sans-serif" filter="url(#shadow)">
+    <rect x="40" y="124" width="186" height="160" rx="15" fill="#fff" stroke="#a9d6ce"/>
+    <rect x="252" y="124" width="186" height="160" rx="15" fill="#fff" stroke="#a9d6ce"/>
+    <rect x="464" y="124" width="186" height="160" rx="15" fill="#fff" stroke="#a9d6ce"/>
+    <rect x="676" y="124" width="186" height="160" rx="15" fill="url(#gate)" stroke="#e6b169"/>
+    <rect x="888" y="124" width="186" height="160" rx="15" fill="#fff" stroke="#a9d6ce"/>
+  </g>
+  <g fill="#087b72" font-family="Microsoft YaHei, sans-serif" font-size="13" font-weight="700">
+    <text x="58" y="153">01 · 任务目标</text><text x="270" y="153">02 · 观察环境</text><text x="482" y="153">03 · 模型提议</text><text x="694" y="153" fill="#92551b">04 · 运行时校验</text><text x="906" y="153">05 · 工具执行</text>
+  </g>
+  <g fill="#173b48" font-family="Microsoft YaHei, sans-serif" font-size="20" font-weight="700">
+    <text x="58" y="194">要解决什么</text><text x="270" y="194">看到了什么</text><text x="482" y="194">下一步做什么</text><text x="694" y="194">准不准做</text><text x="906" y="194">真实地去做</text>
+  </g>
+  <g fill="#536d75" font-family="Microsoft YaHei, sans-serif" font-size="15">
+    <text x="58" y="231">用户需求与完成条件</text><text x="270" y="231">工具结果、状态、资料</text><text x="482" y="231">动作及其参数</text><text x="694" y="228">权限 · 参数 · 预算</text><text x="906" y="231">受控工具产生结果</text>
+    <text x="694" y="251">必要时人工审批</text>
+  </g>
+  <g stroke="#178d83" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M229 204H245"/><path d="M441 204H457"/><path d="M653 204H669"/><path d="M865 204H881"/>
+    <path d="M982 294v57H348v-59"/>
+  </g>
+  <rect x="386" y="333" width="220" height="36" rx="18" fill="#d4ede7"/>
+  <text x="496" y="357" text-anchor="middle" fill="#0c6f68" font-family="Microsoft YaHei, sans-serif" font-size="16" font-weight="700">结果反馈，再观察</text>
+  <text x="40" y="399" fill="#5c7177" font-family="Microsoft YaHei, sans-serif" font-size="14">循环受显式停止条件和总预算约束；拒绝的动作不得绕过安全门。</text>
+</svg>

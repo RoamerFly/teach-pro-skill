@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11 · 护栏与人工审批：把高风险动作变成可控事务 | 智鉴 Agent：智能体开发与安全实战</title>
+<meta name="description" content="组合输入、工具与输出护栏，并为高影响动作建立参数绑定、可过期、可审计的人工审批。">
+<link rel="stylesheet" href="../assets/style.css"></head><body>
+<a class="skip-link" href="#main-content">跳到正文</a>
+<button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+<div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+<div class="brand-block"><span class="eyebrow">阶段四 · 纵深防御</span><a class="course-title" href="../index.html">智鉴 Agent：智能体开发与安全实战</a></div>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本课目录</h2><ol class="toc-list" data-toc><li><a href="#orientation">本课目标</a></li>
+<li><a href="#placements">三类护栏</a></li>
+<li><a href="#approval">参数绑定审批</a></li>
+<li><a href="#transaction">两阶段动作</a></li>
+<li><a href="#limits">护栏的边界</a></li>
+<li><a href="#practice">练习与产出</a></li>
+<li><a href="#resources">精选资源</a></li>
+<li><a href="#mental-model">心智模型</a></li>
+<li><a href="#review-plan">复习安排</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="相关文件"><h2>相关文件</h2><ol class="course-list">
+<li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="../reference/secure-agent-checklist.html">安全 Agent 检查表</a></li><li><a href="../reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
+<nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-agent-system-model.html">1. Agent 不是聊天机器人：先画清系统闭环</a></li>
+<li><a href="../lessons/0002-minimal-runtime.html">2. 手写一个最小 Agent 运行时</a></li>
+<li><a href="../lessons/0003-tool-contracts.html">3. 工具契约：让模型建议、让程序裁决</a></li>
+<li><a href="../lessons/0004-state-context-memory.html">4. 状态、上下文与记忆：不要混成一个聊天记录</a></li>
+<li><a href="../lessons/0005-planning-orchestration.html">5. 规划与编排：何时用工作流，何时用 Agent</a></li>
+<li><a href="../lessons/0006-evaluation.html">6. 评测优先：先定义什么叫做真的有效</a></li>
+<li><a href="../lessons/0007-threat-modeling.html">7. 威胁建模：从资产和信任边界开始</a></li>
+<li><a href="../lessons/0008-prompt-injection.html">8. 提示注入：把外部内容当数据，不当命令</a></li>
+<li><a href="../lessons/0009-least-privilege.html">9. 工具安全：最小权限与策略执行点</a></li>
+<li><a href="../lessons/0010-memory-rag-security.html">10. 记忆与 RAG 安全：来源、隔离、过期与投毒</a></li>
+<li><a href="../lessons/0011-guardrails-approval.html" aria-current="page">11. 护栏与人工审批：把高风险动作变成可控事务</a></li>
+<li><a href="../lessons/0012-observability-resilience.html">12. 可观测性与韧性：日志、预算、熔断和恢复</a></li>
+<li><a href="../lessons/0013-agents-sdk.html">13. 框架映射：用 OpenAI Agents SDK 落地原理</a></li>
+<li><a href="../lessons/0014-mcp-security.html">14. MCP 与工具生态：连接能力也连接风险</a></li>
+<li><a href="../lessons/0015-cti-pipeline.html">15. 安全情报 Agent：领域模型与证据流水线</a></li>
+<li><a href="../lessons/0016-safe-ingestion.html">16. 安全采集与归一化：构建只读情报入口</a></li>
+<li><a href="../lessons/0017-triage-reporting.html">17. 研判与报告：可解释评分、引用和不确定性</a></li>
+<li><a href="../lessons/0018-red-team-release.html">18. 红队验证与发布门禁：证明系统值得信任</a></li></ol></nav></aside>
+<main id="main-content" class="content lesson-page"><header class="lesson-hero"><div><span class="eyebrow">第 11 课 · 阶段四 · 纵深防御</span>
+<h1>护栏与人工审批：把高风险动作变成可控事务</h1><p class="lead">组合输入、工具与输出护栏，并为高影响动作建立参数绑定、可过期、可审计的人工审批。</p></div><dl class="lesson-meta"><div><dt>预计时间</dt><dd>210 分钟</dd></div><div><dt>学习形式</dt><dd>图解 → 推导 → 代码 → 项目</dd></div></dl></header>
+<section id="orientation" class="content-section learning-objectives"><h2>今天要解决什么</h2><p>护栏不是一个总开关。输入护栏、工具护栏、输出护栏保护不同边界；审批也必须绑定具体动作，不能用一次‘同意’放行整个会话。</p><ul><li>把护栏放到正确边界</li><li>区分阻断式与并行式检查</li><li>设计参数绑定审批和二阶段提交</li></ul></section>
+<article class="lesson-body">
+<section id="placements"><h2>三类护栏</h2><div class="table-wrap"><table><thead><tr><th>位置</th><th>保护对象</th><th>例子</th></tr></thead><tbody><tr><td>输入</td><td>初始用户请求</td><td>范围、数据级别、长度</td></tr><tr><td>工具输入/输出</td><td>每次能力调用</td><td>域名、租户、敏感字段</td></tr><tr><td>最终输出</td><td>交付给用户的内容</td><td>引用、秘密、危险链接</td></tr></tbody></table></div><p>在有副作用工具前，安全检查应阻断式完成。并行护栏虽然延迟低，但主 Agent 可能已经消耗 token，甚至触发工具。</p></section>
+<section id="approval"><h2>参数绑定审批</h2><p>审批记录应包含：主体、工具名、规范化参数哈希、风险说明、创建时间、过期时间、一次性 nonce。执行时重新计算参数哈希并确认策略未变化。把“允许发送报告”保存成会话布尔值是不安全的，因为收件人和内容可能在之后被替换。</p><pre><code class="language-python">def approval_fingerprint(user_id, tool, args, expires_at):
+    payload = canonical_json({
+        &quot;user&quot;: user_id, &quot;tool&quot;: tool,
+        &quot;args&quot;: args, &quot;expires&quot;: expires_at,
+    })
+    return sha256(payload.encode()).hexdigest()</code></pre></section>
+<section id="transaction"><h2>两阶段动作</h2><figure class="flow-diagram"><div class="diagram-row"><span class="diagram-node">准备动作</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">展示影响</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">获得审批</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">再次校验</span><span class="diagram-arrow" aria-hidden="true">→</span><span class="diagram-node">提交/回滚</span></div><figcaption>审批发生在影响可见、参数稳定之后；提交前再次检查权限与时效。</figcaption></figure>
+<p>发送报告、修改工单、写入共享知识库等动作先生成预览，不立即执行。用户看到目标、内容、数据范围和不可逆后果后审批。执行使用幂等键；失败时返回清楚状态，不能让 Agent 猜测是否已成功并盲目重试。</p></section>
+<section id="limits"><h2>护栏的边界</h2><p>模型护栏本身也会犯错，规则护栏也会被新变体绕过。它们是纵深防御的一层，不替代权限、隔离、网络策略和人工审批。高风险路径的原则是：检测不确定时升级或拒绝，关键控制不可由同一个受攻击模型自评自批。</p></section></article>
+<section id="practice" class="content-section"><h2>练习与可见产出</h2><div class="exercise-card"><h3>设计“发送日报”审批协议</h3><p>定义 prepare_report、approve_report、commit_report 三步的数据结构。审批后若收件人、附件哈希或正文摘要改变，系统必须如何处理？</p><details><summary>合格标准</summary><p>任何受保护字段改变都使旧审批失效；审批有主体与期限；提交幂等；失败状态可区分未提交、已提交和未知。</p></details></div></section>
+<section id="resources" class="content-section"><h2>精选资源</h2><article class="resource-card"><strong><a href="https://openai.github.io/openai-agents-python/guardrails/" target="_blank" rel="noopener noreferrer">Guardrails</a></strong>
+    <span class="resource-meta">来源：OpenAI Agents SDK · 位置：Workflow boundaries、Execution modes、Tool guardrails · 预计：25 分钟</span>
+    <p>理解输入/输出/工具护栏的实际触发边界以及阻断与并行的差别。</p></article></section>
+<section id="mental-model" class="content-section mental-model"><h2>带走这个心智模型</h2><p>护栏按边界布置，授权按每次动作判断，审批绑定具体参数；高影响操作使用准备—审批—重验—提交的事务流程。</p></section>
+<section id="review-plan" class="content-section"><h2>复习安排</h2><ul><li><strong>24 小时后：</strong>说出三类护栏各自何时运行。</li><li><strong>7 天后：</strong>解释并行输入护栏为何可能来不及阻止工具。</li><li><strong>阶段末：</strong>修改一个参数，验证旧审批失效。</li></ul></section>
+<aside class="callout note" aria-label="向教师追问"><strong>有不清楚的地方？</strong> 你可以随时追问本课任意内容，也可以要求换一种图解、补一个例子、逐行解释代码，或继续深入某个安全边界。</aside>
+<nav class="lesson-pager" aria-label="课程翻页"><a href="0010-memory-rag-security.html">← 上一课</a><a class="pager-home" href="../index.html">返回课程首页</a><a href="0012-observability-resilience.html">下一课 →</a></nav></main></div>
+<script src="../assets/course.js"></script></body></html>
