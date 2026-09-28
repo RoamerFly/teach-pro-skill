@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ASSESSMENT_DESCRIPTION}}">
+  <title>入门评估 | {{COURSE_TITLE}}</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-course-key="{{COURSE_SLUG}}">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <div class="page-shell">
+    <aside class="sidebar" id="course-sidebar">
+      {{SETTINGS_NAV_IF_ENABLED}}
+      <a class="site-brand" href="../index.html">{{COURSE_SHORT_TITLE}}</a>
+      <nav class="sidebar-section" aria-label="页面目录">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#instructions">使用方法</a></li>
+          <li><a href="#questions">评估任务</a></li>
+          <li><a href="#save">保存与提交</a></li>
+        </ol>
+      </nav>
+    </aside>
+    <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">目录</button>
+    <main id="main-content" class="content reference-body">
+      <header class="lesson-hero"><div><span class="eyebrow">起点诊断</span><h1>入门评估</h1><p class="lead">{{ASSESSMENT_DESCRIPTION}}</p></div></header>
+      <section id="instructions" class="content-section">
+        <h2>使用方法</h2>
+        <p>先独立作答，再展开参考标准。使用课程启动器打开时，答案会自动写入本地课程目录；已填写不代表已经掌握。</p>
+      </section>
+      <section id="questions" class="content-section">
+        <h2>评估任务</h2>
+        {{ASSESSMENT_QUESTIONS_WITH_LABELED_TEXTAREAS_AND_COLLAPSED_CRITERIA}}
+      </section>
+      <section id="save" class="content-section callout note">
+        <h2>保存与交给 AI</h2>
+        <p>从课程启动器打开时，AI 会在下次对话中直接读取已同步的本地答案。若仅双击 HTML 打开，则只保存在浏览器，可下载备份或手动粘贴。</p>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本页答案</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+      <nav class="lesson-pager" aria-label="页面导航"><a class="pager-home" href="../index.html">返回课程首页</a></nav>
+    </main>
+  </div>
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{LESSON_NUMBER}} · {{LESSON_TITLE}} | {{COURSE_TITLE}}</title>
+  <meta name="description" content="{{LESSON_DESCRIPTION}}">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-course-key="{{COURSE_SLUG}}">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      {{SETTINGS_NAV_IF_ENABLED}}
+      <div class="brand-block">
+        <span class="eyebrow">{{COURSE_PHASE}}</span>
+        <a class="course-title" href="../index.html">{{COURSE_TITLE}}</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本课目录</h2>
+        <ol class="toc-list" data-toc>
+          {{CURRENT_PAGE_NAV}}
+        </ol>
+      </nav>
+
+      {{ADDITIONAL_FILES_NAV}}
+
+      <nav class="sidebar-section" aria-label="全部课程">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          {{COURSE_NAVIGATION}}
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content lesson-page">
+      <header class="lesson-hero">
+        <div>
+          <span class="eyebrow">{{LESSON_NUMBER}} · {{COURSE_PHASE}}</span>
+          <h1>{{LESSON_TITLE}}</h1>
+          <p class="lead">{{LESSON_DESCRIPTION}}</p>
+        </div>
+        <dl class="lesson-meta">
+          <div><dt>预计时间</dt><dd>{{ESTIMATED_TIME}}</dd></div>
+          <div><dt>当前进度</dt><dd>{{PROGRESS_LABEL}}</dd></div>
+        </dl>
+      </header>
+
+      <section id="orientation" class="content-section learning-objectives">
+        <h2>今天要解决什么</h2>
+        {{ORIENTATION_AND_OBJECTIVES_HTML}}
+      </section>
+
+      {{PREREQUISITE_HTML}}
+
+      <article class="lesson-body">
+        {{LESSON_CONTENT_HTML}}
+      </article>
+
+      {{EXERCISES_HTML}}
+
+      <!-- 本课一手阅读与视频：优先项通常 1–2 项，写清定位、任务、产出和含产出的时间预算；
+           视频精学与进阶可用 details 默认折叠。访问限制及替代路径可见；适用时链接资源学习中心。
+           完成结果复用下方 lesson-evidence，不增加学员必填表单。此变量包含完整语义 section。 -->
+      {{RESOURCES_HTML}}
+
+      <section id="mental-model" class="content-section mental-model">
+        <h2>带走这个心智模型</h2>
+        {{MENTAL_MODEL_HTML}}
+      </section>
+
+      <section id="review-plan" class="content-section">
+        <h2>复习安排</h2>
+        {{REVIEW_PLAN_HTML}}
+      </section>
+
+      <section id="learning-input" class="content-section callout note">
+        <h2>本课答案与疑难记录</h2>
+        <p>使用课程启动器打开时，输入会自动写入本地课程目录，AI 下次对话会直接读取。若仅双击 HTML 打开，则保存在浏览器；必要时可下载备份。</p>
+        <label for="lesson-evidence">我的练习答案与掌握证据</label>
+        <textarea id="lesson-evidence" data-save-key="lesson-{{LESSON_NUMBER}}-evidence" placeholder="写下独立完成的答案、作品、代码结果与资源学习产出，说明需要提示的部分。"></textarea>
+        <label for="lesson-questions">疑难与希望继续讨论的问题</label>
+        <textarea id="lesson-questions" data-save-key="lesson-{{LESSON_NUMBER}}-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本课记录</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <aside class="callout note" aria-label="向教师追问">
+        <strong>有不清楚的地方？</strong> 你可以随时向教师追问本课任意内容，也可以要求换一种解释、补一个例子、拆解某一步，或继续深入这个主题。
+      </aside>
+
+      <nav class="lesson-pager" aria-label="课程翻页">
+        {{PREVIOUS_LESSON_LINK}}
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+        {{NEXT_LESSON_LINK_IF_GENERATED}}
+      </nav>
+    </main>
+  </div>
+
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+  {{TUTOR_SCRIPT_IF_ENABLED}}
+</body>
+</html>

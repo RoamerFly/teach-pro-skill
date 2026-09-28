@@ -1,0 +1,18 @@
+# Learner data and local model configuration must never be published.
+learner-submissions/
+learner-chats/
+.tutor-settings.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Generated caches and machine-specific files.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+Thumbs.db
+Desktop.ini

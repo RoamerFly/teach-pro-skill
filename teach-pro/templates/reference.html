@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{REFERENCE_TITLE}} | {{COURSE_TITLE}}</title>
+  <meta name="description" content="{{REFERENCE_DESCRIPTION}}">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">参考资料导航</button>
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="参考资料导航">
+      {{SETTINGS_NAV_IF_ENABLED}}
+      <div class="brand-block">
+        <span class="eyebrow">参考资料</span>
+        <a class="course-title" href="../index.html">{{COURSE_TITLE}}</a>
+      </div>
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>{{CURRENT_PAGE_NAV}}</ol>
+      </nav>
+      {{ADDITIONAL_FILES_NAV}}
+      <nav class="sidebar-section" aria-label="课程导航">
+        <h2>返回课程</h2>
+        <ol class="course-list">{{COURSE_NAVIGATION}}</ol>
+      </nav>
+    </aside>
+    <main id="main-content" class="content reference-page">
+      <header class="lesson-hero">
+        <div>
+          <span class="eyebrow">长期速查</span>
+          <h1>{{REFERENCE_TITLE}}</h1>
+          <p class="lead">{{REFERENCE_DESCRIPTION}}</p>
+        </div>
+      </header>
+      <!-- 用作资源学习中心时，将“长期速查”改为资源导学；当前优先与阶段候选分开，
+           选读折叠，保留具体任务、访问限制和替代路径，不提前生成未来课正文。 -->
+      <article class="reference-body">{{REFERENCE_CONTENT_HTML}}</article>
+      <nav class="lesson-pager" aria-label="返回课程">
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+      </nav>
+    </main>
+  </div>
+  <script src="../assets/course.js"></script>
+</body>
+</html>

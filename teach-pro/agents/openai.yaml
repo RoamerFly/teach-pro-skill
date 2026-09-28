@@ -1,0 +1,5 @@
+interface:
+  display_name: "学途智伴"
+  short_description: "循证、逐课生成的长期 AI 私教"
+policy:
+  allow_implicit_invocation: false

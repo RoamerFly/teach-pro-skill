@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{COURSE_TITLE}}</title>
+  <meta name="description" content="{{COURSE_DESCRIPTION}}">
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body data-course-key="{{COURSE_SLUG}}">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      {{SETTINGS_NAV_IF_ENABLED}}
+      <div class="brand-block">
+        <span class="eyebrow">学习课程</span>
+        <a class="course-title" href="./index.html" aria-current="page">{{COURSE_TITLE}}</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          {{CURRENT_PAGE_NAV}}
+        </ol>
+      </nav>
+
+      <!-- 适用时把阅读与视频学习中心加入相关文件导航；只链接真实存在的页面。 -->
+      {{ADDITIONAL_FILES_NAV}}
+
+      <nav class="sidebar-section" aria-label="全部课程">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          {{COURSE_NAVIGATION}}
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content course-home">
+      <header class="course-hero">
+        <div>
+          <span class="eyebrow">个性化学习路线</span>
+          <h1>{{COURSE_TITLE}}</h1>
+          <p class="lead">{{COURSE_DESCRIPTION}}</p>
+          <div class="hero-facts" aria-label="课程特点">
+            <span>每次一课</span><span>依据作答调整</span><span>本地保存</span>
+          </div>
+        </div>
+        <div class="progress-panel" aria-label="课程进度">
+          <span>{{PROGRESS_LABEL}}</span>
+          <progress max="100" value="{{PROGRESS_VALUE}}">{{PROGRESS_VALUE}}%</progress>
+        </div>
+      </header>
+
+      <section id="mission" class="content-section">
+        <h2>学习使命</h2>
+        {{MISSION_HTML}}
+      </section>
+
+      <section id="roadmap" class="content-section">
+        <h2>路线与阶段</h2>
+        {{ROADMAP_HTML}}
+      </section>
+
+      <section id="lessons" class="content-section">
+        <h2>课程列表</h2>
+        <p>只显示已经生成的课程链接。路线图中的后续主题是候选，下一课根据本课答案与疑难动态决定。</p>
+        <p>需要 AI 自动读取学习记录时，请从课程启动器打开网页；直接打开 HTML 仍可阅读，但答案只在浏览器中保存。</p>
+        <div class="lesson-grid">{{GENERATED_LESSON_CARDS}}</div>
+      </section>
+
+      <section id="review" class="content-section">
+        <h2>复习与下一步</h2>
+        {{REVIEW_AND_NEXT_HTML}}
+      </section>
+    </main>
+  </div>
+
+  <script src="./assets/course.js"></script>
+</body>
+</html>
