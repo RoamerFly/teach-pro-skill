@@ -64,7 +64,7 @@ cd teach-pro-skill/example/ai-agent-security-intelligence
 
 ## AI 答疑与隐私
 
-在课程左侧的“课程设置”配置服务、API Key 和模型。支持 OpenAI-compatible、OpenAI、DeepSeek、Ollama 与自定义地址，以及模型列表获取。
+每门课程默认提供左侧置顶“课程设置”，无需配置 AI 也能学习。需要课内答疑时，再启动本地服务并配置服务、API Key 和模型。支持 OpenAI-compatible、OpenAI、DeepSeek、Ollama 与自定义地址，以及主动获取模型列表。
 
 - API Key 默认遮蔽，仅保存在服务进程内存中，重启后重新输入。
 - 云端答疑会发送确认的课程上下文与对话，连接测试可能计费。

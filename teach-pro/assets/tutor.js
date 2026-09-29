@@ -84,7 +84,7 @@
     const current = bootstrap.settings || {};
     find('[data-tutor-model]').textContent = configured
       ? '当前模型：' + current.provider + ' / ' + current.model
-      : '模型尚未启用；请到课程设置中配置或重新输入会话 Key。';
+      : 'AI 答疑未启用；不配置也能继续学习。需要答疑时前往课程设置，或重新输入会话 Key。';
     return changed;
   }
   questionForm.addEventListener('submit', event => {
@@ -135,7 +135,7 @@
       find('.tutor-context-text').textContent = ctx.text;
       find('[data-tutor-context-meta]').textContent = '本课正文 ' + ctx.text.length + ' 字；' + (ctx.truncated ? '超过长度上限，已截断。' : '未截断。') + ' 不自动读取学员画像、其他课程或外部网页。';
       render(await api('history/' + lesson));
-      say(configured ? '本地答疑已连接；请确认发送说明后提问。' : '聊天可从本地恢复；请前往课程设置配置模型，服务重启后需重新输入 Key。');
+      say(configured ? '本地答疑已连接；请确认发送说明后提问。' : '本地服务已连接，AI 答疑尚未启用；可直接继续学习。需要时前往课程设置，服务重启后需重新输入 Key。');
       controls();
     } catch (error) { online = false; controls(); say('课内答疑不可用：' + error.message + '。核心课程仍可阅读。', true); }
   }

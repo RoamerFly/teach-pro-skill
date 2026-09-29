@@ -20,7 +20,7 @@
 - 每课固定提醒学习者可以继续向教师追问、要求换一种解释或更多例子。
 - Assets 采用 reuse-first：先复用，再扩展；避免课程页重复内联通用 CSS/JS。
 - 默认仅显式调用 Teach，不允许隐式自动触发。
-- 可选课内 AI 在“课程设置”主动获取模型列表并下拉选择，Key 默认遮蔽且不落盘；列表不可用时支持手动模型 ID。
+- 默认提供左侧置顶“课程设置”，AI 配置与答疑按需使用，不配置也能学习。支持主动获取模型列表并下拉选择，Key 默认遮蔽且不落盘；列表不可用时支持手动模型 ID。
 
 ## 启动课程
 
@@ -46,14 +46,19 @@
 - `*-FORMAT.md`：内部状态和教学模板。
 - `templates/`：课程首页、课程页、入门评估和参考页模板。
 - `assets/`：默认网页样式和交互脚本。
+- `scripts/check_course.py`：只读结构检查，定位属性、链接、题量和保存组件问题；不评判教学正确性。
 - `agents/openai.yaml`：显式调用策略与界面元数据。
+
+交付后可运行 `python scripts/check_course.py <课程目录> --json`。脚本位于 Skill 包内，不需复制到课程；不会读取答案、聊天或模型密钥配置。
 
 ## 生成课程后的典型结构
 
 ```text
 course-workspace/
 ├─ index.html
+├─ settings.html          # 默认提供，AI 按需配置
 ├─ serve_course.py
+├─ tutor_chat.py
 ├─ start-course.cmd / start-course.sh / start-course.command
 ├─ .gitignore
 ├─ learner-submissions/   # 本地生成，勿提交版本控制

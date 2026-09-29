@@ -14,14 +14,14 @@
 ├─ GLOSSARY.md                 # 已掌握术语
 ├─ NOTES.md                    # 持久偏好与工作笔记
 ├─ index.html                  # 学习者入口
-├─ settings.html               # 可选：统一课程设置；左侧导航置顶
+├─ settings.html               # 默认提供；统一课程设置，AI 按需配置
 ├─ serve_course.py             # 本机自动同步服务；有本地执行环境时提供
 ├─ start-course.cmd            # Windows 启动器；复制到课程根目录
 ├─ start-course.sh             # Linux 启动器；复制到课程根目录
 ├─ start-course.command        # macOS 启动器；复制到课程根目录
 ├─ .gitignore                  # 合并 templates/course.gitignore；保护学员原文与配置
 ├─ learner-submissions/        # 学员原始答案；本地生成，不入版本控制
-├─ tutor_chat.py               # 可选：课内答疑服务模块，放课程根目录
+├─ tutor_chat.py               # 默认配套：课内答疑服务模块
 ├─ learner-chats/              # 可选：每课原始聊天 JSON；不入版本控制或发布
 ├─ .tutor-settings.json        # 可选：本地非密钥设置；不入发布包
 ├─ lessons/                    # 顺序课程网页
@@ -37,8 +37,8 @@
    ├─ style.css
    ├─ course.js
    ├─ sync.js
-   ├─ tutor.js                # 可选：课内答疑组件
-   ├─ tutor-settings.js       # 可选：独立设置页的模型配置组件
+   ├─ tutor.js                # 默认提供：课内答疑组件，未配置不发请求
+   ├─ tutor-settings.js       # 默认提供：独立设置页的模型配置组件
    └─ *.svg                    # 可选：原创图解
 ```
 

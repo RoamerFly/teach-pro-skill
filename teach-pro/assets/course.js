@@ -12,6 +12,13 @@
   };
 
   if (sidebar && navToggle) {
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'sidebar-close';
+    closeButton.textContent = '×';
+    closeButton.setAttribute('aria-label', '关闭课程导航');
+    closeButton.addEventListener('click', () => { closeSidebar(); navToggle.focus(); });
+    sidebar.prepend(closeButton);
     navToggle.addEventListener('click', () => {
       const open = sidebar.classList.toggle('is-open');
       navToggle.setAttribute('aria-expanded', String(open));
@@ -32,7 +39,9 @@
   try { storage = window.localStorage; } catch { storage = null; }
   let savedTheme = null;
   if (storage) { try { savedTheme = storage.getItem('course-theme'); } catch {} }
-  if (savedTheme) root.dataset.theme = savedTheme;
+  const themes = [['auto', '跟随系统'], ['light', '浅色'], ['dark', '深色']];
+  const validTheme = (value) => themes.some(([theme]) => theme === value);
+  root.dataset.theme = validTheme(savedTheme) ? savedTheme : validTheme(root.dataset.theme) ? root.dataset.theme : 'auto';
 
   const shell = document.querySelector('.page-shell');
   if (sidebar && shell) {
@@ -60,16 +69,66 @@
   }
 
   if (sidebar && !sidebar.querySelector('.theme-control')) {
-    const select = document.createElement('select');
-    select.className = 'theme-control';
-    select.setAttribute('aria-label', '页面主题');
-    select.innerHTML = '<option value="auto">跟随系统</option><option value="light">浅色</option><option value="dark">深色</option>';
-    select.value = root.dataset.theme || 'auto';
-    select.addEventListener('change', () => {
-      root.dataset.theme = select.value;
-      if (storage) { try { storage.setItem('course-theme', select.value); } catch {} }
+    // Only navigation scrolls; the theme card remains in the sidebar footer.
+    const scroll = document.createElement('div');
+    scroll.className = 'sidebar-scroll';
+    [...sidebar.children].forEach((child) => {
+      if (!child.classList.contains('sidebar-collapse') && !child.classList.contains('sidebar-close')) scroll.appendChild(child);
     });
-    sidebar.appendChild(select);
+    sidebar.appendChild(scroll);
+    sidebar.classList.add('has-theme-control');
+
+    const control = document.createElement('details');
+    control.className = 'theme-control';
+    const current = document.createElement('summary');
+    current.className = 'theme-current';
+    const caption = document.createElement('span');
+    caption.className = 'theme-caption';
+    caption.textContent = '页面外观';
+    const label = document.createElement('span');
+    label.className = 'theme-current-label';
+    current.appendChild(caption);
+    current.appendChild(label);
+    const options = document.createElement('div');
+    options.className = 'theme-options';
+    options.setAttribute('role', 'group');
+    options.setAttribute('aria-label', '页面主题');
+    const buttons = themes.map(([value, name]) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'theme-option';
+      button.dataset.themeValue = value;
+      button.textContent = name;
+      button.addEventListener('click', () => {
+        root.dataset.theme = value;
+        if (storage) { try { storage.setItem('course-theme', value); } catch {} }
+        updateTheme();
+        control.open = false;
+        current.focus();
+      });
+      options.appendChild(button);
+      return button;
+    });
+    const updateTheme = () => {
+      label.textContent = themes.find(([value]) => value === root.dataset.theme)[1];
+      current.setAttribute('aria-label', '页面外观：' + label.textContent + '，选择主题');
+      buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.themeValue === root.dataset.theme)));
+    };
+    control.appendChild(current);
+    control.appendChild(options);
+    control.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && control.open) {
+        event.preventDefault();
+        event.stopPropagation();
+        control.open = false;
+        current.focus();
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (control.open && !control.contains(event.target)) control.open = false;
+    });
+    sidebar.appendChild(control);
+    updateTheme();
   }
 
   document.querySelectorAll('pre').forEach((pre) => {

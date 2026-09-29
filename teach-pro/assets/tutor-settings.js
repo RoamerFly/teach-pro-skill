@@ -44,7 +44,7 @@
     const saved = result.settings || {};
     current.textContent = result.configured
       ? '当前已启用：' + (kinds[saved.kind]?.label || '自定义') + ' · ' + saved.provider + ' / ' + saved.model + '。所有课节共享此连接。'
-      : '模型会话未启用；保存配置后可在各课答疑。服务重启后需重新输入 Key。';
+      : 'AI 答疑尚未启用；无需配置即可继续学习。需要时保存模型设置，服务重启后需重新输入 Key。';
   }
   function showProtocol() {
     const preset = kinds[kind.value];
