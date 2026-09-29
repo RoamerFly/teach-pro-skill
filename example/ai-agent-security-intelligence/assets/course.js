@@ -34,6 +34,31 @@
   if (storage) { try { savedTheme = storage.getItem('course-theme'); } catch {} }
   if (savedTheme) root.dataset.theme = savedTheme;
 
+  const shell = document.querySelector('.page-shell');
+  if (sidebar && shell) {
+    const collapseKey = `course-sidebar-collapsed:${document.body.dataset.courseKey || 'default'}`;
+    const collapseButton = sidebar.querySelector('.sidebar-collapse') || document.createElement('button');
+    collapseButton.type = 'button';
+    collapseButton.className = 'sidebar-collapse';
+    collapseButton.setAttribute('aria-controls', 'course-sidebar');
+    const updateCollapse = (collapsed) => {
+      shell.classList.toggle('is-sidebar-collapsed', collapsed);
+      collapseButton.setAttribute('aria-expanded', String(!collapsed));
+      collapseButton.setAttribute('aria-label', collapsed ? '展开左侧导航' : '收起左侧导航');
+      collapseButton.title = collapsed ? '展开左侧导航' : '收起左侧导航';
+      collapseButton.textContent = collapsed ? '☰' : '‹';
+    };
+    if (!collapseButton.isConnected) sidebar.prepend(collapseButton);
+    let savedCollapse = false;
+    if (storage) { try { savedCollapse = storage.getItem(collapseKey) === '1'; } catch {} }
+    updateCollapse(savedCollapse);
+    collapseButton.addEventListener('click', () => {
+      const collapsed = !shell.classList.contains('is-sidebar-collapsed');
+      updateCollapse(collapsed);
+      if (storage) { try { storage.setItem(collapseKey, collapsed ? '1' : '0'); } catch {} }
+    });
+  }
+
   if (sidebar && !sidebar.querySelector('.theme-control')) {
     const select = document.createElement('select');
     select.className = 'theme-control';

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="auto">
+<html lang="zh-CN" data-theme="auto" data-visual-theme="studio">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,9 +49,14 @@
         </div>
         <div class="progress-panel" aria-label="课程进度">
           <span>{{PROGRESS_LABEL}}</span>
-          <progress max="100" value="{{PROGRESS_VALUE}}">{{PROGRESS_VALUE}}%</progress>
+          <small>{{PROGRESS_NOTE}}</small>
         </div>
       </header>
+
+      <section id="review" class="content-section evidence-summary">
+        <h2>学习证据与下一步</h2>
+        {{REVIEW_AND_NEXT_HTML}}
+      </section>
 
       <section id="mission" class="content-section">
         <h2>学习使命</h2>
@@ -70,10 +75,6 @@
         <div class="lesson-grid">{{GENERATED_LESSON_CARDS}}</div>
       </section>
 
-      <section id="review" class="content-section">
-        <h2>复习与下一步</h2>
-        {{REVIEW_AND_NEXT_HTML}}
-      </section>
     </main>
   </div>
 

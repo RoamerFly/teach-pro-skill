@@ -6,6 +6,7 @@
 - 当前课程：`lessons/0001-agent-system-model.html`（待学习与反馈）
 - 最近课程：尚未验证完成任何课程
 - 学习者入口：`index.html`
+- 课程视觉方向：`systems`；用结构化网格、信任边界图和冷色层级辅助理解 Agent 系统关系。所有学习页面共用；浅色/深色由学员另行选择。
 - 资源导学入口：`reference/resource-learning-center.html`（2026-09-27 升级；当前课优先项约 35 分钟已计入课时，后续阶段为候选）
 - 可选课内答疑：左侧置顶“课程设置”统一配置兼容文本模型，各课共享连接；第一课加载 tutor.js，仅负责答疑。聊天自动保存 `learner-chats/0001-agent-system-model.json`；Key 仅本次服务会话，下次生成课程读取聊天参考但不视 AI 回答为掌握证据。
 - 本地同步：运行 `serve_course.py` 打开网页；下次对话直接读取 `learner-submissions/` 中对应的评估和课程答案

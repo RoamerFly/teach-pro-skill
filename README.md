@@ -9,6 +9,7 @@
 - **自适应教学**：建立学员画像与学习路线，依据学习证据选择下一课。
 - **一次一课**：聚焦当前目标，配合示范、练习、反馈与定向补救。
 - **图文与视频**：支持流程图、架构图、内嵌视频和字幕。
+- **主题化页面**：按学习主题选择课程级视觉风格与灵活版式，侧栏可折叠。
 - **资源导学**：精选一手阅读与视频，标明学习位置、用途和任务。
 - **本地学习记录**：自动保存作答、疑难与聊天，供课程生成 AI 参考。
 - **课内 AI 答疑**：统一配置模型服务，结合当前课程上下文交流。
@@ -76,6 +77,7 @@ cd teach-pro-skill/example/ai-agent-security-intelligence
 ```text
 teach-pro/     Skill 指令、课程模板与运行资源
 example/       课程案例与实验代码
+evals/         合成案例与可复现检查
 ```
 
 ## 文档与反馈
@@ -85,6 +87,7 @@ example/       课程案例与实验代码
 - [资源选择策略](./teach-pro/RESOURCE-SELECTION-POLICY.md)
 - [本地同步规范](./teach-pro/LOCAL-SYNC-SPEC.md)
 - [AI 答疑规范](./teach-pro/LOCAL-TUTOR-SPEC.md)
+- [评测方案与合成案例](./evals/README.md)
 - [更新记录](./teach-pro/CHANGELOG.md)
 
 由 [RoamerFly](https://github.com/RoamerFly) 维护。问题反馈与改进建议请提交 [Issue](https://github.com/RoamerFly/teach-pro-skill/issues)。

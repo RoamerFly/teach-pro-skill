@@ -34,6 +34,31 @@
   if (storage) { try { savedTheme = storage.getItem('course-theme'); } catch {} }
   if (savedTheme) root.dataset.theme = savedTheme;
 
+  const shell = document.querySelector('.page-shell');
+  if (sidebar && shell) {
+    const collapseKey = `course-sidebar-collapsed:${document.body.dataset.courseKey || 'default'}`;
+    const collapseButton = sidebar.querySelector('.sidebar-collapse') || document.createElement('button');
+    collapseButton.type = 'button';
+    collapseButton.className = 'sidebar-collapse';
+    collapseButton.setAttribute('aria-controls', 'course-sidebar');
+    const updateCollapse = (collapsed) => {
+      shell.classList.toggle('is-sidebar-collapsed', collapsed);
+      collapseButton.setAttribute('aria-expanded', String(!collapsed));
+      collapseButton.setAttribute('aria-label', collapsed ? '展开左侧导航' : '收起左侧导航');
+      collapseButton.title = collapsed ? '展开左侧导航' : '收起左侧导航';
+      collapseButton.textContent = collapsed ? '☰' : '‹';
+    };
+    if (!collapseButton.isConnected) sidebar.prepend(collapseButton);
+    let savedCollapse = false;
+    if (storage) { try { savedCollapse = storage.getItem(collapseKey) === '1'; } catch {} }
+    updateCollapse(savedCollapse);
+    collapseButton.addEventListener('click', () => {
+      const collapsed = !shell.classList.contains('is-sidebar-collapsed');
+      updateCollapse(collapsed);
+      if (storage) { try { storage.setItem(collapseKey, collapsed ? '1' : '0'); } catch {} }
+    });
+  }
+
   if (sidebar && !sidebar.querySelector('.theme-control')) {
     const select = document.createElement('select');
     select.className = 'theme-control';
@@ -109,6 +134,17 @@
   const storagePrefix = document.body?.dataset.courseKey || 'teach-course';
   const pageId = location.pathname.split('/').pop()?.replace(/\.html?$/i, '') || 'page';
   const saveFields = [...document.querySelectorAll('[data-save-key]')];
+  const isChoiceGroup = (field) => field.matches?.('[data-quiz]');
+  const fieldValue = (field) => isChoiceGroup(field)
+    ? (field.querySelector('input[type="radio"]:checked')?.value || '')
+    : field.value;
+  const setFieldValue = (field, value) => {
+    if (isChoiceGroup(field)) {
+      field.querySelectorAll('input[type="radio"]').forEach((input) => { input.checked = value !== '' && input.value === value; });
+    } else {
+      field.value = value;
+    }
+  };
   const saveStatus = document.querySelector('[data-save-status]');
   const status = (message) => { if (saveStatus) saveStatus.textContent = message; };
   const updatedKey = `${storagePrefix}:${pageId}:updated-at`;
@@ -117,17 +153,29 @@
     try {
       saveFields.forEach((field) => {
         const value = storage.getItem(`${storagePrefix}:${field.dataset.saveKey}`);
-        if (value !== null) field.value = value;
+        if (value !== null) setFieldValue(field, value);
       });
       const updated = storage.getItem(updatedKey);
-      if (updated && saveFields.some((field) => field.value)) status(`浏览器副本已恢复 · ${new Date(updated).toLocaleString()}`);
+      if (updated && saveFields.some((field) => fieldValue(field))) status(`浏览器副本已恢复 · ${new Date(updated).toLocaleString()}`);
     } catch { status('本地记录读取失败；仍可导出当前答案'); }
   }
   saveFields.forEach((field) => field.addEventListener('input', () => {
     if (!storage) return;
     try {
       const key = `${storagePrefix}:${field.dataset.saveKey}`;
-      if (field.value) storage.setItem(key, field.value); else storage.removeItem(key);
+      const value = fieldValue(field);
+      if (value) storage.setItem(key, value); else storage.removeItem(key);
+      const now = new Date();
+      storage.setItem(updatedKey, now.toISOString());
+      status(`浏览器副本已保存 · ${now.toLocaleString()}`);
+    } catch { status('浏览器副本保存失败；请查看课程目录同步状态或下载备份'); }
+  }));
+  saveFields.filter(isChoiceGroup).forEach((field) => field.addEventListener('change', () => {
+    if (!storage) return;
+    try {
+      const value = fieldValue(field);
+      const key = `${storagePrefix}:${field.dataset.saveKey}`;
+      if (value) storage.setItem(key, value); else storage.removeItem(key);
       const now = new Date();
       storage.setItem(updatedKey, now.toISOString());
       status(`浏览器副本已保存 · ${now.toLocaleString()}`);
@@ -136,7 +184,7 @@
   document.querySelectorAll('[data-save-clear]').forEach((button) => button.addEventListener('click', () => {
     saveFields.forEach((field) => {
       if (storage) { try { storage.removeItem(`${storagePrefix}:${field.dataset.saveKey}`); } catch {} }
-      field.value = '';
+      setFieldValue(field, '');
     });
     if (storage) { try { storage.removeItem(updatedKey); } catch {} }
     status('已清空本页答案');
@@ -145,7 +193,7 @@
     let savedAt = null;
     if (storage) { try { savedAt = storage.getItem(updatedKey); } catch {} }
     const payload = { course: storagePrefix, page: pageId, exported_at: new Date().toISOString(), saved_at: savedAt, fields: {} };
-    saveFields.forEach((field) => { payload.fields[field.dataset.saveKey] = field.value; });
+    saveFields.forEach((field) => { payload.fields[field.dataset.saveKey] = fieldValue(field); });
     const url = URL.createObjectURL(new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }));
     const link = document.createElement('a');
     link.href = url;

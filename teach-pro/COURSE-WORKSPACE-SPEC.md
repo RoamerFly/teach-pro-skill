@@ -56,6 +56,7 @@
 
 - 学习者入门评估固定生成在 `practice/entry-assessment.html`，不可移到课程根目录。与内部教学状态文件 `ENTRY-ASSESSMENT.md` 区分；模板中的 `../assets/`、`../index.html` 和本地服务的 `practice/` 页面白名单均以此为前提。
 - 所有链接使用相对路径，确保整个文件夹移动后仍能打开。
+- `COURSE.md` 记录课程级视觉方向和选择理由；所有页面根元素使用同一 `data-visual-theme`，并与学员可自行切换的 `data-theme` 明暗模式分开。未选择时保留模板的 `studio` 默认值。
 - `lessons/` 中引用资产通常使用 `../assets/style.css`。
 - `index.html` 中引用资产通常使用 `./assets/style.css`。
 - 不允许链接到父目录以外的课程文件。

@@ -2,6 +2,17 @@
   'use strict';
 
   const fields = [...document.querySelectorAll('[data-save-key]')];
+  const isChoiceGroup = (field) => field.matches?.('[data-quiz]');
+  const fieldValue = (field) => isChoiceGroup(field)
+    ? (field.querySelector('input[type="radio"]:checked')?.value || '')
+    : field.value;
+  const setFieldValue = (field, value) => {
+    if (isChoiceGroup(field)) {
+      field.querySelectorAll('input[type="radio"]').forEach((input) => { input.checked = value !== '' && input.value === value; });
+    } else {
+      field.value = value;
+    }
+  };
   if (!fields.length) return;
   const page = location.pathname.split('/').pop()?.replace(/\.html?$/i, '') || '';
   const baseStatus = document.querySelector('[data-save-status]');
@@ -23,7 +34,7 @@
   const endpoint = `/api/submissions/${encodeURIComponent(page)}`;
   const course = document.body?.dataset.courseKey || 'teach-course';
   const updatedKey = `${course}:${page}:updated-at`;
-  const snapshot = () => ({ fields: Object.fromEntries(fields.map((field) => [field.dataset.saveKey, field.value])) });
+  const snapshot = () => ({ fields: Object.fromEntries(fields.map((field) => [field.dataset.saveKey, fieldValue(field)])) });
   let ready = false;
   let changedBeforeReady = false;
   let timer = null;
@@ -74,15 +85,15 @@
       try { localUpdated = window.localStorage.getItem(updatedKey); } catch {}
       const localNewer = localUpdated && (!saved.saved_at || Date.parse(localUpdated) > Date.parse(saved.saved_at));
       ready = true;
-      if (changedBeforeReady || (localNewer && fields.some((field) => field.value))) {
+      if (changedBeforeReady || (localNewer && fields.some((field) => fieldValue(field)))) {
         persist();
         return;
       }
       if (saved.fields && typeof saved.fields === 'object' && saved.saved_at) {
         fields.forEach((field) => {
           if (typeof saved.fields[field.dataset.saveKey] === 'string') {
-            field.value = saved.fields[field.dataset.saveKey];
-            try { window.localStorage.setItem(`${course}:${field.dataset.saveKey}`, field.value); } catch {}
+            setFieldValue(field, saved.fields[field.dataset.saveKey]);
+            try { window.localStorage.setItem(`${course}:${field.dataset.saveKey}`, fieldValue(field)); } catch {}
           }
         });
         try { window.localStorage.setItem(updatedKey, saved.saved_at); } catch {}

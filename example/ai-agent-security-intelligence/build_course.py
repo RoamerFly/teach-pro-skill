@@ -85,7 +85,7 @@ def render_lesson(meta: tuple[str, str, str, str, str], spec: dict) -> str:
     next_link = '<span class="pager-pending">下一课依据本课证据生成</span>'
     page_toc = [("orientation", "本课目标"), *spec["toc"], ("practice", "练习与产出"), ("resources", "一手阅读与视频"), ("mental-model", "心智模型"), ("review-plan", "复习安排"), ("learning-input", "学习记录与疑难")]
     return f'''<!doctype html>
-<html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{int(number)} · {title} | {TITLE}</title>
 <meta name="description" content="{spec['description']}">
@@ -449,6 +449,7 @@ def write_internal_state() -> None:
         "current_lesson": "lessons/0001-agent-system-model.html",
         "latest_lesson": None,
         "entry": "index.html",
+        "visual_theme": "systems",
         "local_sync": "learner-submissions/",
         "candidate_lesson_topics": 18,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -461,6 +462,7 @@ def write_internal_state() -> None:
     - 当前课程：`lessons/0001-agent-system-model.html`（待学习与反馈）
     - 最近课程：尚未验证完成任何课程
     - 学习者入口：`index.html`
+    - 课程视觉方向：`systems`；用结构化网格、信任边界图和冷色层级辅助理解 Agent 系统关系。所有学习页面共用；浅色/深色由学员另行选择。
     - 本地同步：运行 `serve_course.py` 打开网页；下次对话直接读取 `learner-submissions/` 中对应的评估和课程答案
     - 路线：约 18 个候选课题；每次只生成一课，按证据调整顺序与内容
     '''), encoding="utf-8")
@@ -674,16 +676,17 @@ def write_index() -> None:
         ("06", "毕业项目", "第 15–18 课", "安全情报 Agent 的采集、研判、红队与发布。"),
     ]
     phase_html = "".join(f'<article class="phase-card"><span>{n}</span><h3>{name}</h3><strong>{lessons}</strong><p>{desc}</p></article>' for n, name, lessons, desc in phases)
-    html = f'''<!doctype html><html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8">
+    html = f'''<!doctype html><html lang="zh-CN" data-theme="auto" data-visual-theme="systems"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>{TITLE}</title>
 <meta name="description" content="从通用原理到安全情报 Agent 毕业项目的完整中文课程。">
 <link rel="stylesheet" href="./assets/style.css"></head><body data-course-key="ai-agent-security-intelligence"><a class="skip-link" href="#main-content">跳到正文</a>
 <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
 <div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航"><nav class="course-settings-nav" aria-label="课程设置"><a href="./settings.html">课程设置</a></nav><div class="brand-block"><span class="eyebrow">长期自适应课程</span><a class="course-title" href="./index.html" aria-current="page">{TITLE}</a></div>
-<nav class="sidebar-section" aria-label="当前页面导航"><h2>本页目录</h2><ol class="toc-list" data-toc>{toc([('mission','学习使命'),('architecture','毕业项目架构'),('roadmap','六阶段路线'),('lessons','当前课程与候选主题'),('start','从这里开始')])}</ol></nav>
+<nav class="sidebar-section" aria-label="当前页面导航"><h2>本页目录</h2><ol class="toc-list" data-toc>{toc([('review','学习证据与下一步'),('mission','学习使命'),('architecture','毕业项目架构'),('roadmap','六阶段路线'),('lessons','当前课程与候选主题'),('start','从这里开始')])}</ol></nav>
 <nav class="sidebar-section" aria-label="相关文件"><h2>学习工具</h2><ol class="course-list"><li><a href="./practice/entry-assessment.html">入门评估</a></li><li><a href="./practice/capstone-rubric.html">毕业项目量规</a></li><li><a href="./reference/secure-agent-checklist.html">安全检查表</a></li><li><a href="./reference/cti-data-model.html">情报数据模型</a></li></ol></nav>
 <nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list">{nav(None, './')}</ol></nav></aside>
 <main id="main-content" class="content course-home"><header class="course-hero"><div><span class="eyebrow">Agent Development × Agent Security</span><h1>{TITLE}</h1><p class="lead">从零建立 Agent 的运行时心智模型，同步学习安全边界，并用约 60 小时完成一个默认只读、证据可追溯、可解释、可红队验证的 AI 安全情报 Agent。</p><div class="hero-facts" aria-label="课程特点"><span>每次一课</span><span>依据作答调整</span><span>本地保存</span></div></div><div class="progress-panel"><span>当前：尚未验证完成任何课程</span><small>后续进度按实际掌握证据更新</small></div></header>
+<section id="review" class="content-section evidence-summary"><h2>学习证据与下一步</h2><ul class="evidence-list"><li data-evidence-status="pending"><strong>已知基础 · 学员自述</strong><span>会基础 Python 和模型 API；尚未由入门作答验证。</span></li><li data-evidence-status="pending"><strong>入门评估 · 待提交</strong><span>需确认 Agent 系统模型的前置理解。</span></li><li data-evidence-status="pending"><strong>第 1 课 · 待作答</strong><span>暂无可用于判断掌握的独立解释或迁移产出。</span></li></ul><p class="decision-note"><strong>为什么先学第 1 课？</strong>现有依据仅是 LEARNER-PROFILE.md 中的基础自述，尚不足以跳过 Agent 闭环。请先完成<a href="./practice/entry-assessment.html">入门评估</a>和<a href="./lessons/0001-agent-system-model.html">第 1 课</a>；提交后再据原始答案决定推进、补救或诊断。</p></section>
 <section id="mission" class="content-section"><h2>学习使命</h2><p>你已有基础 Python 与大模型 API 经验。本课程的目标不是教你拼装一个框架 Demo，而是让你能独立回答：Agent 为什么这样设计、哪里可能失败、谁有权做什么、如何证明它没有越权，以及什么时候必须让人接管。</p><div class="callout key"><strong>毕业成果：</strong>安全情报 Agent + 架构图 + 威胁模型 + 测试集 + 红队报告 + 5 分钟演示。</div></section>
 <section id="architecture" class="content-section"><h2>毕业项目架构</h2>{diagram(["公开情报源", "隔离采集与验证", "规范化证据库", "受控研判 Agent", "分析员确认", "带引用报告"], "不可信外部内容不能直接触达高权限工具；模型提议，策略裁决，人负责高影响判断。")}</section>
 <section id="roadmap" class="content-section"><h2>六阶段路线</h2><div class="phase-grid">{phase_html}</div><p>建议每周 5 小时、约 12 周。路线以能力门槛而不是日历推进：如果入门评估显示某个前置薄弱，就在对应课程增加补给，不会把“看完页面”记为掌握。</p></section>
@@ -694,7 +697,7 @@ def write_index() -> None:
 
 
 def page_shell(title: str, description: str, current_toc: list[tuple[str, str]], body: str, depth: str = "../") -> str:
-    return f'''<!doctype html><html lang="zh-CN" data-theme="auto"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+    return f'''<!doctype html><html lang="zh-CN" data-theme="auto" data-visual-theme="systems"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title} | {TITLE}</title><meta name="description" content="{description}"><link rel="stylesheet" href="{depth}assets/style.css"></head><body data-course-key="ai-agent-security-intelligence">
 <a class="skip-link" href="#main-content">跳到正文</a><button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
 <div class="page-shell"><aside id="course-sidebar" class="sidebar" aria-label="课程导航"><nav class="course-settings-nav" aria-label="课程设置"><a href="{depth}settings.html">课程设置</a></nav><div class="brand-block"><span class="eyebrow">学习工具</span><a class="course-title" href="{depth}index.html">{TITLE}</a></div>
