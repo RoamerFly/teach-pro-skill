@@ -836,6 +836,21 @@ body {
 }
 .sidebar .eyebrow, .sidebar-section h2 { color: var(--sidebar-muted); }
 .sidebar .course-title { color: #f4ffff; font-size: .94rem; }
+.sidebar .course-list li { color: var(--sidebar-muted); font-size: .82rem; }
+.sidebar .site-brand {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  padding: .24rem .38rem;
+  border-radius: .4rem;
+  color: #f4ffff;
+  font-size: .92rem;
+  font-weight: 740;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.sidebar .site-brand:hover { background: var(--sidebar-hover); color: #fff; }
+.sidebar .site-brand:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 .sidebar-section { margin-top: .9rem; }
 .sidebar-section h2 { font-size: .7rem; letter-spacing: .12em; }
 .toc-list a, .course-list a, .course-list .nav-pending { color: var(--sidebar-link); font-size: .82rem; }
@@ -902,6 +917,11 @@ body {
 }
 .lesson-hero h1 { font-size: clamp(1.6rem, 2.7vw, 2.2rem); }
 .lesson-hero .eyebrow { color: var(--lesson-hero-text); }
+.lesson-hero .hero-facts span {
+  border-color: var(--lesson-hero-border);
+  background: var(--surface);
+  color: var(--text);
+}
 h2 { margin: 1.65rem 0 .65rem; font-size: clamp(1.25rem, 2vw, 1.48rem); }
 h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 .content-section > h2:first-child, .lesson-body > section > h2:first-child { padding-bottom: .28rem; border-bottom: 1px solid var(--border); }
