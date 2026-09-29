@@ -22,7 +22,9 @@
   --font-mono: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
 }
 
+html[data-theme="light"] { color-scheme: light; }
 html[data-theme="dark"] {
+  color-scheme: dark;
   --bg: #0e1420;
   --surface: #151d2b;
   --surface-2: #1c2637;
@@ -364,15 +366,49 @@ summary {
 details > :not(summary) { margin-left: 0; margin-right: 0; }
 details[open] { padding-bottom: .6rem; }
 
-.quiz-options { display: grid; gap: .55rem; margin: 1rem 0; }
-.quiz-option {
+.quiz-options { display: grid; gap: .5rem; margin: .65rem 0 0; }
+.quiz-option, [data-quiz] label {
   display: flex;
   align-items: flex-start;
   gap: .55rem;
-  padding: .7rem .8rem;
+  min-height: 2.65rem;
+  padding: .55rem .7rem;
   border: 1px solid var(--border);
-  border-radius: .7rem;
+  border-radius: .55rem;
   background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+[data-quiz] > label + label { margin-top: .5rem; }
+:is(.quiz-option, [data-quiz] label) input[type="radio"] {
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  margin: .27rem 0 0;
+  accent-color: var(--accent);
+}
+:is(.quiz-option, [data-quiz] label):hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+:is(.quiz-option, [data-quiz] label):has(input[type="radio"]:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.quiz-submit, button[data-quiz-submit] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  margin-top: .6rem;
+  padding: .48rem .85rem;
+  border: 1px solid var(--accent);
+  border-radius: .55rem;
+  font: inherit;
+  font-size: .88rem;
+  background: var(--accent);
+  color: var(--on-accent, #fff);
+  cursor: pointer;
 }
 .quiz-feedback { display: none; margin-top: .8rem; padding: .8rem 1rem; border-radius: .7rem; }
 .quiz-feedback.is-visible { display: block; }
@@ -1012,18 +1048,18 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 th { background: var(--surface-2); }
 tbody tr:nth-child(even) { background: color-mix(in srgb, var(--surface) 90%, var(--accent-soft)); }
 textarea[data-save-key] { min-height: 7rem; border-color: var(--border); background: var(--surface); }
-textarea[data-save-key]:focus, .quiz-option:focus-within {
+textarea[data-save-key]:focus, .quiz-option:focus-within, [data-quiz] label:focus-within {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
 .sync-status[data-state="saved"] { font-weight: 700; }
 /* Shared control roles cover template buttons and generated lesson actions. */
-:where(.nav-toggle, .quiz-submit, .learning-input-actions button, .tutor-actions button,
+:where(.nav-toggle, .quiz-submit, button[data-quiz-submit], .learning-input-actions button, .tutor-actions button,
        .secret-toggle, .copy-code, .lesson-pager a, .button) {
   min-height: 2.35rem;
   transition: background-color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .16s ease;
 }
-:where(.nav-toggle, .quiz-submit, .learning-input-actions button, .tutor-actions button,
+:where(.nav-toggle, .quiz-submit, button[data-quiz-submit], .learning-input-actions button, .tutor-actions button,
        .secret-toggle, .copy-code, .lesson-pager a, .course-settings-nav a, .button):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -1034,14 +1070,14 @@ textarea[data-save-key]:focus, .quiz-option:focus-within {
   border-color: var(--accent);
   color: var(--text);
 }
-:is(.quiz-submit, .learning-input-actions button[data-save-export],
+:is(.quiz-submit, button[data-quiz-submit], .learning-input-actions button[data-save-export],
     .tutor-actions button[type="submit"], .button--primary) {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--on-accent);
   font-weight: 700;
 }
-:is(.quiz-submit, .learning-input-actions button[data-save-export],
+:is(.quiz-submit, button[data-quiz-submit], .learning-input-actions button[data-save-export],
     .tutor-actions button[type="submit"], .button--primary):hover:not(:disabled) {
   background: color-mix(in srgb, var(--accent) 83%, var(--text));
   border-color: color-mix(in srgb, var(--accent) 83%, var(--text));

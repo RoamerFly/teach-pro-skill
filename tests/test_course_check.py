@@ -1,5 +1,6 @@
 import importlib.util
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -105,6 +106,20 @@ class CourseCheckTests(unittest.TestCase):
         report = checker.check_course(self.root)
         self.assertTrue(report['structurally_valid'])
         self.assertEqual(report['semantic_review'], 'not_performed')
+
+    def test_reusable_quiz_fragment_keeps_style_and_behavior_structure(self):
+        template = (SCRIPT.parents[1] / 'templates/quiz.html').read_text(encoding='utf-8')
+        for correct in ('A', 'B'):
+            values = {'QUIZ_SAVE_KEY': 'entry-q1', 'QUIZ_NAME': 'q1', 'QUIZ_CORRECT_ANSWER': correct,
+                      'OPTION_A_IS_CORRECT': str(correct == 'A').lower(), 'OPTION_B_IS_CORRECT': str(correct == 'B').lower(),
+                      'OPTION_A_FEEDBACK': '解释 A', 'OPTION_B_FEEDBACK': '解释 B', 'OPTION_A_TEXT': '选项 A', 'OPTION_B_TEXT': '选项 B'}
+            html = re.sub(r'\{\{([A-Z_]+)\}\}', lambda match: values[match[1]], template)
+            page = checker.inspect_html(html)
+            self.assertEqual(page.issues, [])
+            self.assertEqual(sum('quiz-options' in (node.attrs.get('class') or '').split() for node in page.nodes), 1)
+            self.assertEqual(sum('quiz-option' in (node.attrs.get('class') or '').split() for node in page.nodes), 2)
+            button = next(node for node in page.nodes if 'data-quiz-submit' in node.attrs)
+            self.assertIn('quiz-submit', button.attrs['class'].split())
 
     def test_cli_exit_status_matches_machine_readable_report(self):
         result = subprocess.run([sys.executable, '-X', 'utf8', str(SCRIPT), str(self.root), '--json'], capture_output=True, text=True, encoding='utf-8')

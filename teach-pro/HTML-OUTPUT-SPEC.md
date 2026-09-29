@@ -197,13 +197,17 @@ HTML 属性中的内容先转义，再写入标签：双引号用 `&quot;`，`&`
 - 不永久锁定第一次选择，除非明确是考试模式。
 - 同题各选项在可见长度、句式完整度和信息密度上必须等价；自然可行时保持相同词数并缩小字符数差异。不得让正确答案因更长、更具体、更完整或格式独特而暴露，也不得为了机械等长牺牲语言自然性。
 
+生成选择题时读取并复用 [templates/quiz.html](./templates/quiz.html)：选项容器用 `.quiz-options`，标签用 `.quiz-option`，检查按钮用 `.quiz-submit`。`data-*` 绑定交互与保存，类名绑定统一外观，两者均应保留；共享 CSS 同时兼容缺少类名的旧输出，但不能用此回退替代生成规范。
+
 现有 `course.js` 会在每个 `[data-quiz]` **内部**查找 `[data-quiz-submit]` 与 `[data-quiz-feedback]`；按钮或反馈区若成为兄弟节点，点击不会绑定。最小结构如下，实际选项仍须按上面的教学要求设计：
 
 ```html
 <div data-quiz data-save-key="entry-q1" data-correct-answer="正确选项的简短说明">
-  <label><input type="radio" name="q1" value="a" data-correct="true" data-feedback="原因">选项 A</label>
-  <label><input type="radio" name="q1" value="b" data-feedback="误区">选项 B</label>
-  <button type="button" data-quiz-submit>检查回答</button>
+  <div class="quiz-options">
+    <label class="quiz-option"><input type="radio" name="q1" value="a" data-correct="true" data-feedback="原因">选项 A</label>
+    <label class="quiz-option"><input type="radio" name="q1" value="b" data-feedback="误区">选项 B</label>
+  </div>
+  <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
   <div data-quiz-feedback aria-live="polite"></div>
 </div>
 ```

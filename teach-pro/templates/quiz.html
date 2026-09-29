@@ -1,0 +1,9 @@
+<!-- Reusable single-choice fragment. Add/remove options as needed; exactly one data-correct must be true. -->
+<div data-quiz data-save-key="{{QUIZ_SAVE_KEY}}" data-correct-answer="{{QUIZ_CORRECT_ANSWER}}">
+  <div class="quiz-options">
+    <label class="quiz-option"><input type="radio" name="{{QUIZ_NAME}}" value="a" data-correct="{{OPTION_A_IS_CORRECT}}" data-feedback="{{OPTION_A_FEEDBACK}}"> {{OPTION_A_TEXT}}</label>
+    <label class="quiz-option"><input type="radio" name="{{QUIZ_NAME}}" value="b" data-correct="{{OPTION_B_IS_CORRECT}}" data-feedback="{{OPTION_B_FEEDBACK}}"> {{OPTION_B_TEXT}}</label>
+  </div>
+  <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+  <div data-quiz-feedback aria-live="polite"></div>
+</div>
