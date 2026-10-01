@@ -6,9 +6,9 @@
 
 [技能说明文档](./学途智伴技能说明文档.docx) 共六页，涵盖作品简介、设计思路、技术实现、使用说明、DeepSeek 设置与验证结果。采用[已校核的智鉴 Agent Demo](../competition-demo-zhi-jian-agent/README.md)，含一张架构图和三张重新采集的操作截图。
 
-材料使用已观察的合成测试结果；展示课经人工校核。设置截图只输入无效演示值，未获取模型或发起连接请求。真实模型成功、三端启动与长期学习效果不计入本轮结果。
+说明文档中的展示课经人工校核，教学分支采用已观察的合成测试结果；文档内设置截图使用无效演示值。最新视频另行录制真实 DeepSeek Flash 配置与多轮课内答疑。长期学习效果及三端启动不计入本轮验证。
 
-当前完成 Demo、Word 和[新版演示视频](./学途智伴演示视频.mp4)。视频为 2 分 41 秒，16 个镜头、自然语速中文旁白与 66 条分句字幕，另附[字幕文件](./学途智伴演示字幕.srt)和[章节时间](./video-chapters.json)。DeepSeek 配置及课内答疑为流程预览，未展示真实模型连接或回答；最终提交压缩包尚未制作。本目录不覆盖仓库外 competition-work 中的旧材料。[Word 验收](../../evals/records/2026-10-01-competition-document-review.md)与[视频验收](../../evals/records/2026-10-01-competition-video-review.md)列出文件指纹和检查结果。
+当前完成 Demo、Word 和[新版演示视频](./学途智伴演示视频.mp4)。视频约 2 分 51 秒，12 个顺序镜头、一条连续中文旁白，另附[字幕文件](./学途智伴演示字幕.srt)和[章节时间](./video-chapters.json)。主线为入门评估、图解学习、发现疑问、配置模型、真实问答与澄清、本地保存、课程调整。最终提交包尚未制作，Word 的操作截图与材料状态将在定稿时同步。[Word 验收](../../evals/records/2026-10-01-competition-document-review.md)与[最新视频验收](../../evals/records/2026-10-01-competition-live-video-review.md)列出文件指纹和检查结果；[上一版视频记录](../../evals/records/2026-10-01-competition-video-review.md)保留历史状态。
 
 ## 重建与检查
 
@@ -38,11 +38,11 @@ python example/competition-materials/scripts/render_with_word.py `
 
 ```powershell
 python example/competition-materials/scripts/build_video_voice.py <会话目录> --tts-packages <已有edge-tts包目录>
-node example/competition-materials/scripts/capture_video.cjs <会话目录>
+node example/competition-materials/scripts/capture_live_video.cjs <会话目录> --live
 python example/competition-materials/scripts/render_video.py <会话目录>
 python example/competition-materials/scripts/audit_video.py <仓库外检查目录>
 ```
 
-录制脚本使用隔离课程副本、合成作答和无效演示密钥，禁止提供商请求。视频始终将字幕放在课程画面下方的独立窄条中；导出后完整解码并逐镜头检查。修改讲稿须重做旁白与录制，不用语音加速挤入三分钟。
+真实录制需在私有交互终端通过标准输入提供密钥，输入不回显；不把密钥放入命令参数、环境变量或脚本。`--live` 明确启用提供商请求，可能计费。脚本使用隔离课程副本与合成作答，通过课程界面实际获取模型、保存配置、测试连接并完成三轮问答，检查聊天落盘。Flash 的本轮输出上限为 4096。配置输入始终为 password，不点击小眼睛；停止服务后忘记内存密钥。原始录屏、聊天、配置与学员文件只在仓库外保留。
 
-补录真实答疑时，在隔离课程中手动完成：选择 DeepSeek → 输入自己的密钥并保持遮蔽 → 确认提供商使用说明 → 获取模型并下拉选择 → 保存 → 测试连接 → 返回第一课并确认本课发送范围 → 提问。测试和答疑可能计费；只录制实际成功结果，不在聊天或提交材料中提供密钥。停止服务会忘记内存密钥；本地配置与聊天不发布。
+旁白使用 Yunxi Neural 连续合成，保留自然停顿并统一响度，不加速音频。镜头按句子边界与绝对帧时间对齐；仅剪短请求等待，模型回答不重写。字幕位于课程画面下方独立窄条，导出后完整解码、检查时间轴并提取所有章节代表帧。音色与术语读音由用户播放确认。旧 `capture_video.cjs` 对应 Git 历史中的离线预览讲稿，不用于当前真实答疑版本。

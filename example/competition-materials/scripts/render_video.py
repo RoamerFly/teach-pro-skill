@@ -23,11 +23,11 @@ def clock(seconds, ass=False):
     return f"{hour}:{minute:02}:{second:02}.{fraction:02}" if ass else f"{hour:02}:{minute:02}:{second:02},{fraction:03}"
 
 
-def captions(boundaries):
+def captions(boundaries, delay=0.2):
     for boundary in boundaries:
         parts = re.findall(r"[^，。；！？、]+[，。；！？、]?", boundary["text"])
         parts = [chunk for part in parts for chunk in [part[i:i + 28] for i in range(0, len(part), 28)] if chunk.strip()]
-        offset = boundary["offset"] / 1e7 + 0.2
+        offset = boundary["offset"] / 1e7 + delay
         length = boundary["duration"] / 1e7
         weight = sum(len(part) for part in parts)
         for part in parts:
@@ -52,6 +52,10 @@ def main():
     for captured, source in zip(plan["scenes"], script["scenes"]):
         assert (captured["id"], captured["narration"]) == (source["id"], source["narration"]), "Voice script changed; regenerate narration and capture"
         captured["title"] = source["title"]
+    if plan.get("voice_strategy") == "continuous":
+        from render_live_video import render
+        render(args, session, materials, plan)
+        return
     raw = session / "capture/raw.webm"
     raw_seconds = duration(raw, args.ffprobe)
     # The video writer starts just before newPage returns; align its tail to the last hold.

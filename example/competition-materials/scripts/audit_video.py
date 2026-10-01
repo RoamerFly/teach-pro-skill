@@ -25,7 +25,20 @@ def main():
     assert (streams["video"]["width"], streams["video"]["height"]) == (1440, 900)
     assert streams["video"]["r_frame_rate"] == "25/1"
     assert streams["audio"]["codec_name"] == "aac"
-    assert len(chapters["chapters"]) == 16 and chapters["provider_requests"] == 0
+    script = json.loads((materials / "video-scenes.json").read_text(encoding="utf-8"))
+    assert [item["id"] for item in chapters["chapters"]] == [item["id"] for item in script["scenes"]]
+    if chapters.get("voice_strategy") == "continuous":
+        operations = chapters["live_operations"]
+        assert chapters["provider_requests"] == len(operations) == 5
+        assert [item["operation"] for item in operations] == ["models", "test", "chat", "chat", "chat"]
+        assert all(item["local_http_status"] == 200 for item in operations)
+        assert chapters["model"] == "deepseek-flash" and chapters["model"] in operations[0]["model_ids"]
+        chats = operations[2:]
+        assert [item["message_count"] for item in chats] == [2, 4, 6]
+        assert len({item["context_version"] for item in chats}) == 1
+        assert all(item["answer_characters"] > 0 for item in chats)
+    else:
+        assert chapters["provider_requests"] == 0
     last = 0
     count = 0
     for start, end in re.findall(r"(\d\d:\d\d:\d\d,\d{3}) --> (\d\d:\d\d:\d\d,\d{3})", (materials / "学途智伴演示字幕.srt").read_text(encoding="utf-8")):
@@ -46,7 +59,7 @@ def main():
     for index, chapter in enumerate(chapters["chapters"], 1):
         timestamp = chapter["start"] + chapter["seconds"] * 0.65
         subprocess.run([args.ffmpeg, "-hide_banner", "-loglevel", "error", "-y", "-ss", f"{timestamp:.3f}", "-i", str(video), "-frames:v", "1", str(args.qa / f"frame-{index:02d}.png")], check=True)
-    report = {"seconds": duration, "bytes": video.stat().st_size, "sha256": hashlib.sha256(video.read_bytes()).hexdigest().upper(), "chapters": 16, "subtitle_cues": count, "full_decode": "pass", "mean_volume_db": mean, "max_volume_db": peak, "visual_review": "pending"}
+    report = {"seconds": duration, "bytes": video.stat().st_size, "sha256": hashlib.sha256(video.read_bytes()).hexdigest().upper(), "chapters": len(chapters["chapters"]), "provider_requests": chapters["provider_requests"], "subtitle_cues": count, "full_decode": "pass", "mean_volume_db": mean, "max_volume_db": peak, "visual_review": "pending"}
     (args.qa / "audit.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
