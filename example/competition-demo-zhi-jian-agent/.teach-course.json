@@ -1,0 +1,13 @@
+{
+  "course": "competition-demo-zhi-jian-agent",
+  "title": "智鉴 Agent：智能体开发与安全实战",
+  "created_at": "2026-10-01",
+  "entry": "index.html",
+  "visual_theme": "systems",
+  "phase": "Phase 1 · 比赛展示副本",
+  "latest_lesson": "lessons/0003-tool-calling-dataflow.html",
+  "latest_submission_lesson": null,
+  "entry_assessment": {"delivered": true, "submitted": false, "page": "practice/entry-assessment.html"},
+  "next_candidate": "记忆与状态；实际续课依据本副本新作答决定",
+  "demo": {"synthetic_scenario": true, "content_manually_reviewed": true, "skill_version": "1.1.0-rc.3"}
+}

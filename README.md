@@ -2,7 +2,7 @@
 
 面向长期学习的自适应教学 Skill。先评估基础与目标，再逐节生成网页课程，根据作答、实践成果和疑难持续调整教学。
 
-当前版本：**1.1.0-rc.3**（稳定化候选；教学主体功能冻结，行为复测进行中）
+当前版本：**1.1.0-rc.3**。教学主体功能冻结，进入比赛展示与验收阶段。
 
 ## 核心特性
 
@@ -53,14 +53,16 @@ $teach-pro
 
 ## 课程示例
 
-[智鉴 Agent：智能体开发与安全实战](./example/ai-agent-security-intelligence/README.md) 展示从学习评估到第一课的完整工作区，包含图解、字幕视频、资源导学、模型设置与实验代码。
+[比赛 Demo：智鉴 Agent](./example/competition-demo-zhi-jian-agent/README.md) 包含入门评估、三节校核课程、一手阅读中心、教学决策回放与统一模型设置。围绕“建立原理 → 定向补救 → 推进新目标”展示逐课教学。
 
 ```sh
 git clone https://github.com/RoamerFly/teach-pro-skill.git
-cd teach-pro-skill/example/ai-agent-security-intelligence
+cd teach-pro-skill/example/competition-demo-zhi-jian-agent
 ```
 
-随后使用对应平台的启动器打开课程。后续课节依据实际学习反馈生成，历史草稿单独归档。
+随后使用对应平台的启动器打开课程。此 Demo 为人工校核的展示副本；三分支决策来自合成场景实测，后续课节依据新作答生成。
+
+[早期课程与项目案例](./example/ai-agent-security-intelligence/README.md) 保留字幕视频和安全情报实验代码，供对照使用。
 
 ## AI 答疑与隐私
 
@@ -86,7 +88,7 @@ evals/         合成案例与可复现检查
 git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.3.zip HEAD:teach-pro
 ```
 
-行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；候选版不代表自适应续课已通过实测。
+行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；三种续课决策已观察，原生内容仍有失败项。展示校核与运行检查见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)。
 
 ## 文档与反馈
 

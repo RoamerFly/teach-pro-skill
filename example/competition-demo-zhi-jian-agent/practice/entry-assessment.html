@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="智鉴 Agent 课程入门评估：六道小题定位你的 Agent 开发与安全起点，不作排名不打分。">
+  <title>入门评估 | 智鉴 Agent：智能体开发与安全实战</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/demo.css">
+</head>
+<body data-course-key="competition-demo-zhi-jian-agent">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <div class="page-shell">
+    <aside class="sidebar" id="course-sidebar">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <a class="site-brand" href="../index.html">智鉴 Agent</a>
+      <nav class="sidebar-section" aria-label="页面目录">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#instructions">使用方法</a></li>
+          <li><a href="#questions">评估任务</a></li>
+          <li><a href="#save">保存与提交</a></li>
+        </ol>
+      </nav>
+    </aside>
+    <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">目录</button>
+    <main id="main-content" class="content reference-body">
+      <header class="lesson-hero"><div><span class="eyebrow">起点诊断</span><h1>入门评估</h1><p class="lead">用六道短题了解你对 Agent 开发与安全的认识，帮助课程决定从哪里讲起、讲多细。</p></div></header>
+
+      <section id="instructions" class="content-section">
+        <h2>使用方法</h2>
+        <p>先凭第一印象独立作答，再展开参考标准；不确定的题选一个最接近的即可。开放题里写「不记得」比猜测更有用。</p>
+        <p>两点如实说明：参考标准可以随时展开，选择题提交后也会立即显示对错反馈——因此你的作答会被记为<strong>可能受提示影响的起点线索</strong>，而不是严格的无提示诊断。它仍足以决定第一课从哪里开始。</p>
+      </section>
+
+      <section id="questions" class="content-section">
+        <h2>评估任务</h2>
+
+        <article class="exercise-card" id="q1">
+          <h3>第 1 题 · API 调用的理解</h3>
+          <p>调用兼容 OpenAI 的对话接口（chat completions）时，<code>messages</code> 参数传递的核心结构是什么？</p>
+          <div data-quiz data-save-key="entry-q1-api-messages" data-correct-answer="role 与 content 组成的消息列表">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q1" value="messages-list" data-correct="true" data-feedback="本题的独立 Chat Completions 请求使用结构化消息列表。调用方提供相关历史上下文；这不说明服务商一定不保存请求记录。"> role 与 content 组成的消息列表，按对话顺序传入</label>
+              <label class="quiz-option"><input type="radio" name="q1" value="plain-text" data-correct="false" data-feedback="常见误区：不是一段拼接文本，而是结构化消息列表；直接拼接会丢失提问者和回答者的角色边界。"> 一段拼接好的自然语言长文本，包含全部对话内容</label>
+              <label class="quiz-option"><input type="radio" name="q1" value="qa-dict" data-correct="false" data-feedback="常见误区：messages 是数组而不是字典，也不是每次只传一轮；多轮历史需要一起传入。"> 以提问为键、回答为值的字典，每次传一轮问答</label>
+              <label class="quiz-option"><input type="radio" name="q1" value="session-id" data-correct="false" data-feedback="本题询问 Chat Completions 的 messages 参数，不是某些接口提供的会话引用。后者存在，但不是本参数的消息结构。"> 一个会话编号，服务端据此查找历史对话记录</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+          <details>
+            <summary>参考标准（建议先作答再展开）</summary>
+            <p>messages 是消息数组，包含角色与对应内容。本题的独立请求由调用方提供相关上下文；不要把这件事等同于服务商的日志留存政策，也不要泛化为所有接口都不支持会话管理。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" id="q2">
+          <h3>第 2 题 · 密钥的工程习惯</h3>
+          <p>在一个要调用大模型 API 的 Python 脚本里，API Key 应该怎么存放？</p>
+          <div data-quiz data-save-key="entry-q2-key-storage" data-correct-answer="环境变量 + os.environ 读取">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q2" value="env-var" data-correct="true" data-feedback="对。在本地练习中，将密钥与代码分离、通过 os.environ 读取，能避免把密钥硬编码进源码；设置环境变量时仍要防止明文进入命令历史、日志或截图。生产环境可使用专门的密钥管理服务。"> 启动前写入环境变量，代码里用 os.environ 读取</label>
+              <label class="quiz-option"><input type="radio" name="q2" value="code-constant" data-correct="false" data-feedback="风险在于代码会被分享、备份或提交到版本库，密钥随之泄露；自己的电脑并不等于安全边界。"> 直接写在代码常量里，反正脚本只在自己电脑上运行</label>
+              <label class="quiz-option"><input type="radio" name="q2" value="code-comment" data-correct="false" data-feedback="注释会随代码一起分发，等于明文携带密钥，和写在代码里没有本质区别。"> 写在代码注释里，需要调试时再复制粘贴使用</label>
+              <label class="quiz-option"><input type="radio" name="q2" value="cli-arg" data-correct="false" data-feedback="命令行历史和进程列表都可能被其他程序读取，明文参数不是安全的密钥通道。"> 作为命令行参数明文传入，方便每次运行时修改</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+          <details>
+            <summary>参考标准（建议先作答再展开）</summary>
+            <p>本地练习可通过环境变量传入密钥，代码用 <code>os.environ.get("API_KEY")</code> 读取，避免硬编码在源码里；生产环境可使用密钥管理服务。设置和传递时也要避免明文出现在命令历史、日志或截图中。若使用本地密钥文件，勿将其提交到版本库。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" id="q3">
+          <h3>第 3 题 · 工具型 Agent 的工作方式（起点锚）</h3>
+          <p>这门课重点学习能多步决策并调用工具的 Agent。与一次大模型 API 调用相比，它增加了什么机制？这题只用于了解你现在的直觉，课前不必会。</p>
+          <div data-quiz data-save-key="entry-q3-agent-loop" data-correct-answer="工具调用循环：模型选择动作，程序执行工具并返回结果">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q3" value="tool-loop" data-correct="true" data-feedback="对。本课程聚焦的工具型 Agent 会在循环中选择工具，由程序执行，再根据结果决定下一步；它不只完成一次文本生成。"> 由模型在循环中自主决定调用工具并观察结果，直到判断任务完成</label>
+              <label class="quiz-option"><input type="radio" name="q3" value="longer-prompt" data-correct="false" data-feedback="更长的提示词或更大的模型本身不会带来本题所问的多步工具调用循环；还需要程序执行工具并把结果交回模型。"> 使用更长的提示词与更大的模型，回答因此更加详细</label>
+              <label class="quiz-option"><input type="radio" name="q3" value="multi-model" data-correct="false" data-feedback="常见误区：单个模型加上工具与循环就可以构成 Agent；多个模型协作是增强手段，不是必要条件。"> 必须接入多个模型协作，单个模型无法构成 Agent</label>
+              <label class="quiz-option"><input type="radio" name="q3" value="embodied" data-correct="false" data-feedback="常见误区：部署在手机或机器人上不是判定条件；纯软件、只操作网页和文件的 Agent 同样成立。"> 部署在手机或机器人上，拥有现实世界中的实体</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+          <details>
+            <summary>参考标准（建议先作答再展开）</summary>
+            <p>本课程的工具型 Agent 会经历：接收目标 → 模型选择下一步 → 程序执行工具 → 返回观察 → 再决策，直到达到停止条件。第一课将画出这个循环，并标明工具由谁执行。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" id="q4">
+          <h3>第 4 题 · 安全概念（起点锚）</h3>
+          <p>安全语境里的<strong>提示注入（prompt injection）</strong>指的是什么？同样只用来锚定起点，听过或没听过都正常。</p>
+          <div data-quiz data-save-key="entry-q4-injection" data-correct-answer="诱导模型偏离既定指令执行未授权行为">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="q4" value="instruction-override" data-correct="true" data-feedback="对。注入可来自用户直接输入（直接注入），也可来自模型读取的网页、文档等外部内容（间接注入），结果都是让模型偏离系统指令。"> 攻击者诱导模型偏离既定指令，执行未被授权的行为</label>
+              <label class="quiz-option"><input type="radio" name="q4" value="data-poisoning" data-correct="false" data-feedback="常见混淆：向训练数据掺入脏数据叫数据投毒，发生在训练阶段；提示注入发生在使用阶段，两者不同。"> 向模型训练数据中掺入脏数据以影响模型本身</label>
+              <label class="quiz-option"><input type="radio" name="q4" value="resource-exhaustion" data-correct="false" data-feedback="常见混淆：反复高频请求耗尽配额属于资源耗尽类拒绝服务，不改变模型的行为逻辑。"> 反复高频请求接口，耗尽配额或拖垮服务</label>
+              <label class="quiz-option"><input type="radio" name="q4" value="key-leak" data-correct="false" data-feedback="常见混淆：密钥粘贴进对话导致账号被盗属于凭据泄露问题，不是提示注入。"> 把真实密钥粘贴进对话，导致账号被盗用</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+          <details>
+            <summary>参考标准（建议先作答再展开）</summary>
+            <p>直接注入来自直接输入，间接注入藏在待处理外部内容中。没有工具也可能污染回答或泄露已提供的信息；授予工具能力后又增加实际动作的风险，执行层仍须检查授权。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" id="q5">
+          <h3>第 5 题 · 动手验证（开放题）</h3>
+          <p>请凭记忆写一小段调用大模型 API 的 Python 代码；记不清代码的话，用文字描述步骤和关键参数也可以。记不住的部分直接写「不记得」——比猜测更有用。</p>
+          <label for="entry-q5-api-code">你的回答（自动保存）：</label>
+          <textarea id="entry-q5-api-code" data-save-key="entry-q5-api-code" rows="10" placeholder="例如：import openai 之后的几行调用；或用文字说明你记得的步骤、参数名……"></textarea>
+          <details>
+            <summary>参考标准（建议先作答再展开）</summary>
+            <p>能说明调用流程、构造消息并读取响应，可作为相应能力的线索；只写库名或参数名，仅说明听说过这些词。留空表示本题没有可判断的产出，不影响开课，后续可在课内复核。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" id="q6">
+          <h3>第 6 题 · 目标与已有词汇（开放题）</h3>
+          <p>两个小问题：① 你希望这个「AI 安全情报 Agent」最终帮你做什么（比如跟踪哪类情报、输出什么形式）？② 在 Agent 安全方向，你已经听说过哪些词（如提示注入、越狱、OWASP LLM Top 10——都没听过也完全正常，直接说没听过即可）？</p>
+          <label for="entry-q6-goals">你的回答（自动保存）：</label>
+          <textarea id="entry-q6-goals" data-save-key="entry-q6-goals" rows="6" placeholder="① 目标场景……&#10;② 听说过的词（或：没听过）"></textarea>
+          <details>
+            <summary>参考说明（无标准答案）</summary>
+            <p>这题没有对错。① 用来细化毕业项目的设计；② 用来决定安全内容从多基础讲起。</p>
+          </details>
+        </article>
+
+        <div class="callout note">
+          <p><strong>提示：</strong>不要在作答中粘贴真实 API Key、个人隐私或公司内部材料。AI 无法读取浏览器私有存储；从课程启动器打开本页时，作答会自动同步到本地课程目录，下次对话直接生效。</p>
+        </div>
+      </section>
+
+      <section id="save" class="content-section callout note">
+        <h2>保存与交给 AI</h2>
+        <p>从课程启动器打开时，AI 会在下次对话中直接读取已同步的本地答案。若仅双击 HTML 打开，则只保存在浏览器，可下载备份或手动粘贴。</p>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本页答案</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+      <nav class="lesson-pager" aria-label="页面导航"><a class="pager-home" href="../index.html">返回课程首页</a></nav>
+    </main>
+  </div>
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+</body>
+</html>

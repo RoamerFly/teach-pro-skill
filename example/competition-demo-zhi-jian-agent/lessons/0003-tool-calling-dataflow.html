@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 3 课 · 工具调用机制：让模型「动手」的完整数据流 | 智鉴 Agent</title>
+  <meta name="description" content="推进课：回答「模型返回工具调用、程序执行、结果回传三步如何连接」，用图解与纸面示例讲清 Schema 声明→模型决策→程序执行→结果回填→循环停止的五步数据流，并把第 2 课的执行前核对嵌入执行层。">
+  <link rel="stylesheet" href="../assets/style.css">
+  <link rel="stylesheet" href="../assets/demo.css">
+</head>
+<body data-course-key="competition-demo-zhi-jian-agent">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <div class="page-shell">
+    <aside class="sidebar" id="course-sidebar">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <a class="site-brand" href="../index.html">智鉴 Agent</a>
+      <nav class="sidebar-section" aria-label="页面目录">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#goals">学习目标</a></li>
+          <li><a href="#recall">课首回忆</a></li>
+          <li><a href="#answer">先回答你的疑问</a></li>
+          <li><a href="#dataflow">五步数据流总图</a></li>
+          <li><a href="#step-by-step">逐步讲解</a></li>
+          <li><a href="#mock-run">本地跑通三步连接</a></li>
+          <li><a href="#pitfalls">边界与易错点</a></li>
+          <li><a href="#practice">练习</a></li>
+          <li><a href="#resources">本课一手阅读</a></li>
+          <li><a href="#summary">本课总结</a></li>
+          <li><a href="#review">复习安排</a></li>
+          <li><a href="#learning-input">掌握证据与疑难</a></li>
+        </ol>
+      </nav>
+      <nav class="sidebar-section" aria-label="相关文件">
+        <h2>相关页面</h2>
+        <ol class="course-list">
+          <li><a href="../index.html">课程首页</a></li>
+          <li><a href="./0001-llm-to-agent-api-call.html">第 1 课 · 从 LLM 到 Agent</a></li>
+          <li><a href="./0002-trust-boundary-authorization.html">第 2 课 · 信任边界</a></li>
+        </ol>
+      </nav>
+      <nav class="sidebar-section" aria-label="课程导航">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          <li><a href="./0001-llm-to-agent-api-call.html">第 1 课 · 从 LLM 到 Agent</a></li>
+          <li><a href="./0002-trust-boundary-authorization.html">第 2 课 · 信任边界</a></li>
+          <li><a href="./0003-tool-calling-dataflow.html" aria-current="page">第 3 课 · 工具调用机制（当前）</a></li>
+          <li>第 4 课 · 记忆与状态（候选，待本课证据）</li>
+        </ol>
+      </nav>
+    </aside>
+    <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">目录</button>
+    <main id="main-content" class="content lesson-body">
+
+      <header class="lesson-hero">
+        <div>
+          <span class="eyebrow">Phase 1 · 第 0003 课 · 推进课 · 60–75 分钟</span>
+          <h1>工具调用机制：让模型「动手」的完整数据流</h1>
+          <p class="lead">第二课的演示疑问是：「模型返回的工具调用、应用执行工具、把结果提供回模型，这三步之间如何连接？」本课用 messages 列表连接这些步骤，把五步数据流拆开、画出来，再在纸面和本地脚本上各走一遍。</p>
+          <div class="hero-facts" aria-label="课程信息">
+            <span>依据：第 2 课作答与疑难</span><span>全程纸面 + 本地模拟</span><span>不需要网络与密钥</span>
+          </div>
+        </div>
+      </header>
+      <p class="demo-note">推进分支展示 · 基于人工修订的第二课与新合成答案生成；正文已校核，不代表真实学员完成或长期掌握。</p>
+
+      <section id="goals" class="content-section learning-objectives">
+        <h2>学习目标</h2>
+        <ol>
+          <li>讲清工具调用的五步数据流：Schema 声明 → 模型决策（tool_calls）→ 程序解析执行（含执行前核对）→ 结果回填（tool 消息）→ 循环与停止条件；并回答「三步靠什么连接」。</li>
+          <li>写出工具的 tools 声明（JSON Schema），并在纸面上完成一次完整的消息列表演变：从 [system, user] 到含 assistant 提议与 tool 结果的完整列表。</li>
+          <li>把第 2 课的执行前核对嵌入第 3 步执行层：预测「模型提议白名单外目标」时数据流每一层各做什么。</li>
+        </ol>
+        <p class="resource-access">先修：第 1 课（无状态与 messages）、第 2 课（提议不等于执行授权）。本课全部示例为纸面设计与本地模拟，不调用真实 API、不发邮件、不访问网络——正好匹配你说明的环境条件。</p>
+      </section>
+
+      <section id="recall" class="content-section">
+        <h2>课首回忆：先写下你现在的答案</h2>
+        <p>先独立作答，不要翻前两课。这两问分别来自第 1 课和第 2 课——答完再往下读，本课会直接在它们之上搭建。</p>
+        <div class="exercise-card">
+          <h3>课首回忆（先作答再往下读）</h3>
+          <p>① 第 1 课说 Agent 在一次调用之外补了三样东西，是哪三样？② 第 2 课的结论「提议不等于执行授权」——模型提议调用工具之后，谁去执行？执行之前要过什么关？</p>
+          <label for="lesson-0003-recall-open">你的回答（自动保存）：</label>
+          <textarea id="lesson-0003-recall-open" data-save-key="lesson-0003-recall-open" rows="4" placeholder="① 三样是…… ② 执行者是……要先过……"></textarea>
+        </div>
+      </section>
+
+      <section id="answer" class="content-section">
+        <h2>先回答你的疑问：三步之间靠什么连接</h2>
+        <p>你的问题可以画成一句话：<strong>在本课的 Chat Completions 示例中，程序用 messages 保存提议与结果，并用 tool_call_id 配对，再发起下一次请求。</strong>messages 承载上下文，程序负责调度，调用编号负责关联。拆开看：</p>
+        <ol class="process-steps">
+          <li><strong>模型「返回工具调用」，返回的是什么？</strong>不是执行，而是一条<strong>特殊的 assistant 消息</strong>：普通回答的 content 里是文字，这条消息的 content 常为空，另带一个 <code>tool_calls</code> 字段——里面是结构化提议：想调哪个函数（name）、参数是什么（arguments，一段 JSON 文本）、这次提议的编号（id）。</li>
+          <li><strong>程序执行，依据是什么？</strong>程序按 name 找到注册的处理函数，解析并验证参数，过执行前核对后执行。本课处理函数在你的电脑上运行；实际应用也可以把执行放在服务器或隔离环境中。返回调用提议本身不等于工具已执行。</li>
+          <li><strong>结果怎么「提供回模型」？</strong>把两样东西追加进同一个 messages 列表：先追加那条含 tool_calls 的 assistant 消息（模型自己说过的话要留档），再追加一条新角色的消息——<code>role: "tool"</code>，带上对应的 <code>tool_call_id</code>，content 是执行结果。然后<strong>带着完整列表再次调用 API</strong>。模型看到的从来不是「内存里的连接」，而是又一次完整的消息列表——这正是第 1 课无状态的直接延续。</li>
+        </ol>
+        <div class="callout key">
+          <p><strong>一句话答案：</strong>本课靠<strong>程序调度、消息上下文和调用编号</strong>连接三步：提议写入 assistant 消息，结果写入与它配对的 tool 消息，再请求模型。其他接口可能用不同条目或服务端会话引用承载上下文；学通用职责时，不必记成只有一种实现。</p>
+        </div>
+      </section>
+
+      <section id="dataflow" class="content-section">
+        <h2>五步数据流总图</h2>
+        <p>把刚才的三步放进完整循环——这就是第 1 课图 3 里「选工具 → 回填结果」那对箭头的正式展开：</p>
+        <figure class="visual-figure visual-figure--wide">
+          <svg viewBox="0 0 760 420" role="img" aria-label="工具调用五步数据流：程序声明 tools 随 messages 发起请求；模型返回含 tool_calls 的 assistant 消息；程序解析参数并过执行前核对后运行本地函数；把 assistant 提议与 tool 结果追加进列表再次请求；模型给出最终回答或再次提议，循环受停止条件限制。" text-rendering="geometricPrecision">
+            <defs>
+              <marker id="tcA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+              </marker>
+              <marker id="tcM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--muted)"/>
+              </marker>
+              <marker id="tcR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--danger)"/>
+              </marker>
+            </defs>
+            <rect x="18" y="46" width="300" height="348" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
+            <text x="168" y="74" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--text)">你的程序</text>
+            <rect x="36" y="90" width="264" height="56" rx="6" fill="var(--accent-soft)" stroke="var(--border)"/>
+            <text x="168" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">① 声明 tools（JSON Schema）</text>
+            <text x="168" y="132" text-anchor="middle" font-size="10.5" fill="var(--muted)">name · description · parameters</text>
+            <rect x="36" y="200" width="264" height="118" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+            <text x="168" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">③ 解析并执行（本地）</text>
+            <rect x="52" y="234" width="232" height="34" rx="5" fill="var(--danger-soft)" stroke="var(--danger)" stroke-width="1.2"/>
+            <text x="168" y="256" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--danger)">执行前核对（第 2 课的关卡）</text>
+            <text x="168" y="282" text-anchor="middle" font-size="10.5" fill="var(--muted)">json.loads(arguments) → 函数</text>
+            <text x="168" y="302" text-anchor="middle" font-size="10.5" fill="var(--muted)">运行 → 得到结果</text>
+            <rect x="36" y="334" width="264" height="46" rx="6" fill="var(--accent-soft)" stroke="var(--border)"/>
+            <text x="168" y="354" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">④ 追加提议 + tool 结果消息</text>
+            <text x="168" y="372" text-anchor="middle" font-size="10.5" fill="var(--muted)">tool_call_id 一一对应</text>
+            <rect x="462" y="46" width="280" height="348" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="602" y="74" text-anchor="middle" font-size="13.5" font-weight="700" fill="var(--accent)">模型服务</text>
+            <rect x="480" y="90" width="244" height="56" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+            <text x="602" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">② 返回 tool_calls 提议</text>
+            <text x="602" y="132" text-anchor="middle" font-size="10.5" fill="var(--muted)">assistant 消息 · finish_reason</text>
+            <rect x="480" y="200" width="244" height="56" rx="6" fill="var(--surface)" stroke="var(--border)"/>
+            <text x="602" y="222" text-anchor="middle" font-size="12" font-weight="700" fill="var(--text)">⑤ 读完整列表再决策</text>
+            <text x="602" y="242" text-anchor="middle" font-size="10.5" fill="var(--muted)">最终回答 / 再次提议</text>
+            <rect x="480" y="290" width="244" height="66" rx="6" fill="none" stroke="var(--warning)" stroke-width="1.3" stroke-dasharray="6 4"/>
+            <text x="602" y="312" text-anchor="middle" font-size="11.5" font-weight="700" fill="var(--warning)">停止条件（程序侧守护）</text>
+            <text x="602" y="330" text-anchor="middle" font-size="10.5" fill="var(--muted)">最终回答 → 结束</text>
+            <text x="602" y="348" text-anchor="middle" font-size="10.5" fill="var(--muted)">最大轮数 → 强制中止</text>
+            <path d="M 318 118 L 466 118" stroke="var(--accent)" stroke-width="2" marker-end="url(#tcA)"/>
+            <text x="392" y="104" text-anchor="middle" font-size="10.5" fill="var(--accent)">请求：messages + tools</text>
+            <path d="M 466 158 L 318 158" stroke="var(--muted)" stroke-width="2" marker-end="url(#tcM)"/>
+            <text x="392" y="146" text-anchor="middle" font-size="10.5" fill="var(--muted)">响应：assistant(tool_calls)</text>
+            <path d="M 318 258 C 360 258 360 226 318 226" fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+            <path d="M 318 356 L 466 226" stroke="var(--accent)" stroke-width="2" marker-end="url(#tcA)"/>
+            <text x="404" y="310" text-anchor="middle" font-size="10.5" fill="var(--accent)">再次请求：更长的 messages</text>
+            <path d="M 480 246 L 318 380" stroke="var(--muted)" stroke-width="2" marker-end="url(#tcM)"/>
+            <text x="404" y="372" text-anchor="middle" font-size="10.5" fill="var(--muted)">最终回答</text>
+            <path d="M 724 246 L 736 246 L 736 400 L 24 400 L 24 212 L 36 212" fill="none" stroke="var(--danger)" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#tcR)"/>
+            <text x="385" y="417" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--danger)">⑤ 再次提议 → ③；停止条件由程序检查（右下框仅为提示）</text>
+          </svg>
+          <figcaption><strong>图 1 · 工具调用五步数据流。</strong>读图顺序：① 程序声明 tools 随请求发出 → ② 模型返回带 tool_calls 的 assistant 提议 → ③ 程序解析参数、<strong>过执行前核对</strong>（红色框，第 2 课的关卡就嵌在这里）、运行本地函数 → ④ 把提议与结果追加进 messages 再次请求 → ⑤ 模型读完整列表给出最终回答，或再次提议进入下一轮（红色虚线循环，受停止条件守护）。左列是程序侧职责，右列是模型侧职责——注意「执行」只在左边发生。</figcaption>
+        </figure>
+        <div class="callout key">
+          <p><strong>职责一句话：</strong>模型负责「决定做什么」（第②⑤步），程序负责「声明能做什么」和「实际去做」（第①③④步）。你在第 2 课建立的边界在图 1 里没有消失——它就是第③步里那个红色小框。</p>
+        </div>
+      </section>
+
+      <section id="step-by-step" class="content-section">
+        <h2>逐步讲解：五步各写什么</h2>
+        <p>场景沿用你的毕业项目：安全情报 Agent。本课用 <code>search_cve</code> 查询和 <code>send_report</code> 发送模拟说明数据流。下面各小段用于理解结构，不是可直接拼接的完整程序；可独立运行的版本在下一节。CVE-2026-12345 仅作编号占位，版本和严重等级均为虚构教学数据，不对应真实漏洞情报。字段采用 Chat Completions 格式，真实接入须核对服务商和模型支持。</p>
+
+        <h3>第 ① 步：声明工具——给模型一份「菜单」</h3>
+        <p>请求时多传一个 <code>tools</code> 参数：每个工具用 JSON Schema 说清「叫什么、干什么、要什么参数」。这份声明会随每次请求发送（也计入输入 token）：</p>
+        <pre><code class="language-python">tools = [
+    {
+        "type": "function",
+        "function": {
+            "name": "search_cve",
+            "description": "按 CVE 编号查询漏洞详情，返回受影响版本范围与严重等级。",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "cve_id": {
+                        "type": "string",
+                        "description": "CVE 编号，例如 CVE-2026-12345"
+                    }
+                },
+                "required": ["cve_id"]
+            }
+        }
+    }
+]
+
+response = client.chat.completions.create(
+    model="deepseek-flash",
+    messages=messages,
+    tools=tools,          # ← 菜单随请求发出
+)</code></pre>
+        <p><code>name</code> 是调用的函数名；<code>description</code> 说明适用任务；<code>parameters</code> 声明参数结构，<code>required</code> 声明必填项。它们帮助模型生成提议，但程序仍要验证实际参数、权限与内容；工具描述不是执行授权。</p>
+
+        <h3>第 ② 步：模型决策——tool_calls 长什么样</h3>
+        <p>如果模型判断需要查库，它<strong>不执行</strong>，而是返回一条这样的 assistant 消息（示意结构）：</p>
+        <pre><code class="language-python"># response.choices[0].finish_reason == "tool_calls"（而非 "stop"）
+msg = response.choices[0].message
+# msg.content            → None（这次没有正文）
+# msg.tool_calls         → 一条或多条提议：
+#   ToolCall(
+#     id        = "call_demo_001",        # 本次提议的编号，回填时要对应
+#     type      = "function",
+#     function  = Function(
+#         name      = "search_cve",
+#         arguments = '{"cve_id": "CVE-2026-12345"}',   # 注意：是 JSON 字符串
+#     )
+#   )</code></pre>
+        <p>三个细节值得盯住：<strong>id</strong> 是提议的「回执编号」；<strong>arguments 是 JSON 字符串</strong>不是字典——虽然看着像，直接当字典用会报错；<strong>finish_reason</strong> 从 "stop" 变成 "tool_calls"，这是程序判断「该走工具分支还是收工」的信号。</p>
+
+        <h3>第 ③ 步：程序解析与执行——核对嵌在这里</h3>
+        <pre><code class="language-python">import json
+
+def search_cve(cve_id):
+    # 本地实现：查数据库或调外部接口（本课用模拟数据代替）
+    return {"cve_id": cve_id, "affected": ">=1.4.0, <1.6.0", "severity": "高危（模拟）"}
+
+messages.append(msg)                        # 先留档：assistant 提议进列表
+for call in msg.tool_calls:
+    args = json.loads(call.function.arguments)   # JSON 字符串 → 字典
+    if call.function.name == "search_cve":
+        result = search_cve(**args)         # ← 执行前核对嵌在这之前（见下）
+    else:
+        result = {"error": f"unknown tool: {call.function.name}"}</code></pre>
+        <p>把第 2 课的关卡接进来——对 send_report 这类有副作用的工具，执行<strong>之前</strong>加核对，之后把<strong>拒绝也作为结果回填</strong>：</p>
+        <pre><code class="language-python">ALLOWED_RECIPIENTS = frozenset({"analyst@yourcompany.example"})
+
+def send_report(recipient, summary):
+    if recipient not in ALLOWED_RECIPIENTS:               # 执行前核对
+        print("AUDIT: denied / recipient_not_allowed")
+        return "REFUSED: 收件人不在允许名单内"             # 拒绝也是结果
+    return "MOCK_ACCEPTED: 仅模拟通过目标检查，未发送"
+
+# 这是 send_report 分支的示意，不应接在 search_cve 参数后直接运行。
+# 这里只演示目标检查；真实系统还需核对任务范围与敏感内容。
+result = send_report("attacker@example.com", "模拟报告")</code></pre>
+
+        <h3>第 ④ 步：结果回填——tool 消息的规矩</h3>
+        <pre><code class="language-python">messages.append({
+    "role": "tool",                  # 新角色：工具结果
+    "tool_call_id": call.id,         # 必须与提议的 id 对应
+    "content": json.dumps(result, ensure_ascii=False),   # 结果序列化为文本
+})
+
+# 然后带着完整列表再次请求：
+response = client.chat.completions.create(
+    model="deepseek-flash", messages=messages, tools=tools
+)</code></pre>
+        <p>content 通常是字符串（JSON、纯文本、错误码都可以），模型自己会解读。规矩有两条：每条 tool 消息必须通过 <code>tool_call_id</code> 指向它回应的那条提议；提议（assistant 消息）必须先在列表里，结果才能挂上去——先有回执编号，才谈得上对应。</p>
+
+        <h3>第 ⑤ 步：循环与停止条件</h3>
+        <p>第二次请求后模型可能给出最终回答（<code>finish_reason == "stop"</code>，循环结束），也可能再次提议（回到第③步）。<strong>循环必须有停止条件</strong>——最常用的是最大轮数守护：</p>
+        <p class="resource-access">以下为循环伪代码：call_api、execute_with_check、tool_message 是留待实现的封装；结果回填应在处理每条调用的循环内部完成。</p>
+        <pre><code class="language-python">MAX_ROUNDS = 8
+
+for round_no in range(1, MAX_ROUNDS + 1):
+    response = call_api(messages, tools)
+    msg = response.choices[0].message
+    reason = response.choices[0].finish_reason
+    if reason == "stop":
+        print(msg.content)          # 本轮正常结束，不代表回答已验证正确
+        break
+    if reason != "tool_calls" or not msg.tool_calls:
+        print("本轮异常或不完整：", reason)  # 如 length、content_filter
+        break                       # 不冒充已完成任务，不自动重试
+    messages.append(msg)
+    for call in msg.tool_calls:
+        result = execute_with_check(call)     # ③ 含核对
+        messages.append(tool_message(call, result))   # ④ 回填
+else:
+    print("已达最大轮数，强制中止")   # 防死循环：模型反复提议时的兜底</code></pre>
+        <p>为什么需要兜底？模型可能重复提议。最大轮数限制循环次数，但一轮仍可能有多个调用，不能代替每次动作的权限检查、总调用数、时间与费用预算。执行侧负责落实边界，不能仅凭“有上限”断言系统安全。</p>
+
+        <figure class="visual-figure visual-figure--wide">
+          <svg viewBox="0 0 760 300" role="img" aria-label="本课单调用示例：请求一含 system 与 user；追加 assistant 提议与 tool 结果后，请求二携带四条消息；多调用会增加更多结果消息，最终回答也可保存为 assistant 消息。" text-rendering="geometricPrecision">
+            <defs>
+              <marker id="evA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+              </marker>
+            </defs>
+            <rect x="18" y="56" width="220" height="200" rx="8" fill="var(--surface)" stroke="var(--border)"/>
+            <text x="128" y="82" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">请求 1 的 messages</text>
+            <rect x="34" y="96" width="188" height="30" rx="5" fill="var(--surface-2, #f4f6fa)" stroke="var(--border)"/>
+            <text x="128" y="116" text-anchor="middle" font-size="10.5" fill="var(--muted)">system · 岗位说明</text>
+            <rect x="34" y="134" width="188" height="30" rx="5" fill="var(--accent-soft)" stroke="var(--border)"/>
+            <text x="128" y="154" text-anchor="middle" font-size="10.5" fill="var(--text)">user · 查 CVE 问题</text>
+            <text x="128" y="196" text-anchor="middle" font-size="10" fill="var(--muted)">（请求时附 tools 菜单）</text>
+            <text x="128" y="238" text-anchor="middle" font-size="10.5" fill="var(--accent)">② 模型返回 tool_calls</text>
+            <path d="M 250 156 L 292 156" stroke="var(--accent)" stroke-width="2" marker-end="url(#evA)"/>
+            <text x="271" y="142" text-anchor="middle" font-size="10" fill="var(--muted)">③执行</text>
+            <text x="271" y="176" text-anchor="middle" font-size="10" fill="var(--muted)">④追加</text>
+            <rect x="306" y="56" width="436" height="200" rx="8" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.4"/>
+            <text x="524" y="82" text-anchor="middle" font-size="12.5" font-weight="700" fill="var(--text)">请求 2 的 messages（追加了两条）</text>
+            <rect x="322" y="96" width="188" height="30" rx="5" fill="var(--surface-2, #f4f6fa)" stroke="var(--border)"/>
+            <text x="416" y="116" text-anchor="middle" font-size="10.5" fill="var(--muted)">system · 岗位说明</text>
+            <rect x="322" y="134" width="188" height="30" rx="5" fill="var(--accent-soft)" stroke="var(--border)"/>
+            <text x="416" y="154" text-anchor="middle" font-size="10.5" fill="var(--text)">user · 查 CVE 问题</text>
+            <rect x="522" y="96" width="204" height="30" rx="5" fill="var(--warning-soft)" stroke="var(--warning)"/>
+            <text x="624" y="116" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--warning)">assistant · tool_calls 提议</text>
+            <rect x="522" y="134" width="204" height="30" rx="5" fill="var(--surface)" stroke="var(--border)"/>
+            <text x="624" y="154" text-anchor="middle" font-size="10.5" fill="var(--text)">tool · 结果（id 对应）</text>
+            <text x="524" y="196" text-anchor="middle" font-size="10" fill="var(--muted)">⑤ 模型读完整列表 → 最终回答（stop）或再次提议</text>
+            <text x="524" y="222" text-anchor="middle" font-size="10" fill="var(--muted)">再次提议时：继续追加，列表越来越长</text>
+            <text x="524" y="246" text-anchor="middle" font-size="10.5" font-weight="700" fill="var(--accent)">连接件：同一个 messages 列表</text>
+          </svg>
+          <figcaption><strong>图 2 · messages 列表的演变（疑难的答案）。</strong>左框是请求 1 发出的两条消息；程序执行后追加 assistant 提议（黄框）与 tool 结果（白框），右框是请求 2 发出的四条消息。若模型再次提议，列表继续增长——三步之间的「连接」就是这一份越拼越长的列表，由你的程序维护与重传。</figcaption>
+        </figure>
+
+        <div class="exercise-card">
+          <h3>即时检查 1 · 模型「调用」工具时实际发生了什么</h3>
+          <p>模型决定使用 <code>search_cve</code> 时，实际发生的是？</p>
+          <div data-quiz data-save-key="lesson-0003-check-proposal" data-correct-answer="返回一条含 tool_calls 的 assistant 消息，执行由程序完成">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="l3c1" value="structured-proposal" data-correct="true" data-feedback="对。模型只产出结构化提议（name + arguments + id），执行发生在你的程序里——图 1 左列；这也正是第 2 课「提议不等于执行授权」的技术根据。"> 返回一条含 tool_calls 的 assistant 消息，执行由程序完成</label>
+              <label class="quiz-option"><input type="radio" name="l3c1" value="server-executes" data-correct="false" data-feedback="本题使用应用自行实现的函数：只发声明，返回的是提议，须由应用调度执行；不讨论服务商托管工具。"> 模型服务端直接运行该函数并返回真实执行结果</label>
+              <label class="quiz-option"><input type="radio" name="l3c1" value="model-network" data-correct="false" data-feedback="本题只注册本地函数，没有提供直接请求工具地址的执行环境；应用处理调用后才能取得结果。"> 模型自行向工具地址发起一次网络请求取回数据</label>
+              <label class="quiz-option"><input type="radio" name="l3c1" value="send-source" data-correct="false" data-feedback="本例请求中是函数声明，不含源码或代码执行工具。调用声明不等于让服务端编译运行代码。"> 程序把工具源码发给模型，模型编译运行后作答</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="exercise-card">
+          <h3>即时检查 2 · 回填结果的规矩</h3>
+          <p>把工具结果回填给模型时，messages 列表里需要保证什么？</p>
+          <div data-quiz data-save-key="lesson-0003-check-backfill" data-correct-answer="先有含 tool_calls 的 assistant 消息，tool 消息的 tool_call_id 与提议对应">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="l3c2" value="both-paired" data-correct="true" data-feedback="对。先追加 assistant 提议（留档），再追加 role=tool 的结果消息并用 tool_call_id 指向那次提议——模型才能知道结果回应的是哪次提议；图 2 右框的四条消息正是这个结构。"> 先追加提议消息，tool 消息的 id 与提议一一对应</label>
+              <label class="quiz-option"><input type="radio" name="l3c2" value="tool-only" data-correct="false" data-feedback="偏差在于：没有 assistant 提议在列表里，tool 结果就找不到对应的提议——接口会拒绝这种消息序列，模型也无从知道结果回应谁。"> 只追加 tool 消息即可，assistant 提议可以省去</label>
+              <label class="quiz-option"><input type="radio" name="l3c2" value="system-result" data-correct="false" data-feedback="偏差在于：system 是开发者指令的位置，不是结果回填位；结果必须用 role=tool 且带 tool_call_id，位置错了模型读不到对应关系。"> 把结果写进 system 消息让模型当指令读取</label>
+              <label class="quiz-option"><input type="radio" name="l3c2" value="fresh-list" data-correct="false" data-feedback="偏差在于：API 无状态——新列表意味着丢掉全部上下文，模型连用户原问题都看不到；正确做法是同一份列表持续追加（图 2）。"> 每次回填都新建空列表只放最新结果</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="mock-run" class="content-section">
+        <h2>本地跑通三步连接：不需要网络与密钥</h2>
+        <p>你说过目前没有实际邮件或网络环境——没关系。下面这个脚本把「模型返回的响应」<strong>硬编码成一份模拟数据</strong>（字段结构与真实响应一致），只演练三步的连接件：解析提议 → 执行 → 回填。存成 <code>mock_tool_flow.py</code>，直接 <code>python mock_tool_flow.py</code> 就能跑：</p>
+        <pre><code class="language-python">import json
+
+# 模拟的模型响应：假如模型收到「查 CVE」的请求后返回这条消息。
+# 字段结构与真实 Chat Completions 响应一致；不调用任何 API。
+MOCK_RESPONSE = {
+    "choices": [{
+        "finish_reason": "tool_calls",
+        "message": {
+            "role": "assistant",
+            "content": None,
+            "tool_calls": [{
+                "id": "call_demo_001",
+                "type": "function",
+                "function": {
+                    "name": "search_cve",
+                    "arguments": json.dumps({"cve_id": "CVE-2026-12345"}),
+                },
+            }],
+        },
+    }]
+}
+
+def search_cve(cve_id):
+    # 本地模拟数据；真实实现会查数据库或调外部接口
+    return {"cve_id": cve_id, "affected": ">=1.4.0, <1.6.0", "severity": "高危（模拟）"}
+
+# ── 请求 1 的 messages（请求时还应附上 tools 菜单，这里省略） ──
+messages = [
+    {"role": "system", "content": "你是安全情报分析助手。"},
+    {"role": "user", "content": "CVE-2026-12345 影响哪些版本？"},
+]
+
+# ── 第②步：解析模型返回的 tool_calls（此处来自模拟响应） ──
+choice = MOCK_RESPONSE["choices"][0]
+msg = choice["message"]
+print("finish_reason =", choice["finish_reason"])
+call = msg["tool_calls"][0]
+print("模型提议：", call["function"]["name"], call["function"]["arguments"])
+
+# ── 第③步：程序执行（真实系统在这层前做执行前核对） ──
+messages.append(msg)                        # 先留档 assistant 提议
+args = json.loads(call["function"]["arguments"])   # JSON 字符串 → 字典
+result = search_cve(**args)
+
+# ── 第④步：结果回填为 tool 消息 ──
+messages.append({
+    "role": "tool",
+    "tool_call_id": call["id"],
+    "content": json.dumps(result, ensure_ascii=False),
+})
+
+print(json.dumps(messages, ensure_ascii=False, indent=2))
+# ── 第⑤步：带着这份四条消息的列表再次请求（真实系统调 API；模拟到此为止） ──</code></pre>
+        <p>运行后会打印四条消息：system、user、assistant 提议和 tool 结果。这是本例下一次请求的上下文部分，请求还需 model、tools 等参数。脚本固定只有一条合法的查询提议；真实接入还需处理多调用、未知工具、无效参数和执行失败，不能仅接上一次 API 请求就当作完整 Agent。</p>
+        <p class="resource-access">标注：此脚本为本地模拟，验证的是数据流的<strong>形状</strong>（谁追加、什么顺序、id 怎么对应），不验证模型行为；接上真实 API 后的表现属第 0003 课之后的实操，待环境就绪验证。</p>
+      </section>
+
+      <section id="pitfalls" class="content-section">
+        <h2>边界与易错点</h2>
+        <ul>
+          <li><strong>arguments 是 JSON 字符串，不是字典。</strong><code>call.function.arguments</code> 长得像字典，直接 <code>args["cve_id"]</code> 会报 <code>TypeError</code>——先 <code>json.loads</code>。</li>
+          <li><strong>先追加提议，再回填结果。</strong>顺序颠倒或漏掉 assistant 消息，tool 结果就没有对应的提议可挂——接口会拒绝这种序列。</li>
+          <li><strong>tool_call_id 必须用提议里返回的那个 id</strong>，不要自己编一个新的；多条提议时逐条对应。</li>
+          <li><strong>模型可能一次提议多个工具调用</strong>（并行提议）。稳妥的写法是像第③步那样用循环逐条处理，而不是只取 <code>[0]</code>。</li>
+          <li><strong>「模型执行了工具」是错觉。</strong>模型只产出提议；执行、核对、留痕都在程序侧。日志里记的执行者应该是你的程序，不是模型。</li>
+          <li><strong>区分正常结束与异常中断。</strong>stop 表示生成正常结束；length 等停止原因不能直接当成任务完成。循环次数、调用数和费用预算分别控制。</li>
+          <li><strong>只读也需检查。</strong>真实查询可能访问敏感数据、把查询发送给外部服务、引入恶意结果或消耗资源；外发报告又增加了输出侧风险。两者都要检查范围，拒绝结果也应按调用编号回填。</li>
+        </ul>
+      </section>
+
+      <section id="practice" class="content-section">
+        <h2>练习</h2>
+        <p>三个练习：练习 1 找错（数据流连接的三处断点），练习 2 迁移（把第 2 课的核对接进本课的数据流——两课的合流点），练习 3 可选实操（跑 mock 脚本）。纸面完成 1、2 即覆盖本课核心。</p>
+
+        <article class="exercise-card" data-difficulty="medium">
+          <h3>练习 1 · 找出三处「连接断点」并修复</h3>
+          <p>下面这段代码想完成「解析提议 → 执行 → 回填」，但有 <strong>3 处连接断点</strong>（都对应本课讲过的规矩）。找出每一处并写下修法：</p>
+          <pre><code class="language-python">import json
+
+messages = [{"role": "user", "content": "查一下 CVE-2026-12345 的影响范围"}]
+msg = response.choices[0].message      # 模型刚返回的、含 tool_calls 的消息
+
+# 断点 ①：直接回填结果，没有做"留档"
+messages.append({
+    "role": "tool",
+    "tool_call_id": "call_999",          # 断点 ②：这个 id 是随手编的
+    "content": json.dumps({"affected": ">=1.4.0, <1.6.0（模拟）"}),
+})
+
+# 断点 ③：把 arguments 当字典直接用
+args = msg.tool_calls[0].function.arguments
+result = search_cve(args["cve_id"])
+messages.append({"role": "tool", "tool_call_id": msg.tool_calls[0].id,
+                 "content": json.dumps(result)})</code></pre>
+          <details>
+            <summary>查看提示</summary>
+            <p>对照图 2 右框的四条消息顺序；对照第③步代码里 arguments 的处理方式；对照 tool_call_id 的来源。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>断点 ①（漏留档）：</strong>回填前必须先 <code>messages.append(msg)</code> 把含 tool_calls 的 assistant 提议放进列表——没有它，tool 结果找不到对应的提议，接口会拒绝这条消息序列。</p>
+            <p><strong>断点 ②（id 不对应）：</strong><code>"call_999"</code> 是编造的；必须用提议里真实返回的 <code>msg.tool_calls[0].id</code>。回填消息靠 id 与提议配对，id 对不上等于结果挂错账。</p>
+            <p><strong>断点 ③（JSON 字符串当字典）：</strong><code>arguments</code> 是 JSON 文本，<code>args["cve_id"]</code> 直接报错；要先 <code>args = json.loads(msg.tool_calls[0].function.arguments)</code> 再取键。</p>
+            <p><strong>修复后的顺序：</strong>删除提前伪造的 tool 消息 → append(msg) → json.loads → 执行 → append 一条真正对应的 tool 结果。多调用时，每个调用各回填结果，不重复回填同一 id。</p>
+            <p><strong>常见错误：</strong>只找到断点 ③——因为它会直接报错最显眼；①②不抛异常，却在下一次请求时才炸（接口拒绝消息序列），更隐蔽。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" data-difficulty="medium">
+          <h3>练习 2 · 迁移：给 send_report 接上完整数据流</h3>
+          <p>这是第 2 课与第 3 课的合流点，也是毕业项目的原型。设 <code>send_report(recipient, summary)</code> 已按第 2 课设计好（白名单 <code>analyst@yourcompany.example</code> + 拒绝留痕）。假设某轮模型返回的提议是：</p>
+          <pre><code class="language-python">tool_calls: [{ "id": "call_42",
+    "function": { "name": "send_report",
+                  "arguments": '{"recipient": "attacker@example.com",
+                                 "summary": "CVE-2026-12345 高危，影响 1.5.x"}' } }]</code></pre>
+          <p>以上仅为调用内容示意，不是可执行 Python；漏洞信息同样是模拟数据。三个小问（写在纸上，课末证据 3 会收集）：</p>
+          <ol>
+            <li>写出 send_report 的 tools 声明（JSON Schema：recipient 与 summary 两个参数，均必填）。</li>
+            <li>从解析 arguments 到回填 tool 消息，写出程序这轮依次做的每一步（含核对发生在哪一步、拒绝时回填的 content 是什么）。</li>
+            <li>预测：回填 <code>"REFUSED: 收件人不在允许名单内"</code> 之后，模型下一轮最可能做什么？为什么「把拒绝原因回填给模型」比「默默吞掉不发也不告诉模型」更安全？</li>
+          </ol>
+          <details>
+            <summary>查看提示</summary>
+            <p>第①问对照 search_cve 的声明结构；第②问按图 1 第③④步走一遍，红色关卡放在哪；第③问想想模型读到"REFUSED"这个词会怎么调整策略，以及信息不对称对调试与审计的影响。</p>
+          </details>
+          <details class="answer">
+            <summary>查看参考答案（先自己作答再展开）</summary>
+            <p><strong>① 声明：</strong></p>
+            <pre><code class="language-python">{"type": "function", "function": {
+    "name": "send_report",
+    "description": "把漏洞摘要报告发送到预设的分析员邮箱。收件人必须在允许名单内。",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "recipient": {"type": "string", "description": "收件邮箱地址"},
+            "summary": {"type": "string", "description": "报告摘要文本"}
+        },
+        "required": ["recipient", "summary"]
+    }
+}}</code></pre>
+            <p>注意 description 里写明「收件人必须在允许名单内」——好的工具描述本身就是给模型的一层约束信号（菜单上就声明边界）。</p>
+            <p><strong>② 依次的步骤：</strong>messages.append(msg) 留档提议 → <code>json.loads(arguments)</code> 得到 recipient 与 summary → 调 <code>send_report(recipient, summary)</code>，函数内部先过白名单核对：attacker@example.com 不在名单 → 打印审计日志（denied / recipient_not_allowed）→ 返回 <code>"REFUSED: 收件人不在允许名单内"</code> → 把这个字符串作为 content、<code>call_42</code> 作为 tool_call_id 回填 tool 消息 → 带完整列表再次请求。全程没有真实发送发生。</p>
+            <p><strong>③ 预测：</strong>模型可能说明拒绝、调整提议，也可能重复违规调用；没有实际模型运行，不能给出概率或保证。回填让模型获得“未执行及原因”的信息，程序仍须对后续每次提议独立检查。持久化审计由应用另行实现；给模型发结果消息本身不等于已保存可靠日志。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" data-difficulty="low">
+          <h3>练习 3 · 可选实操：跑通 mock 脚本</h3>
+          <p>把「本地跑通三步连接」一节的脚本存为 <code>mock_tool_flow.py</code> 并运行（无需网络与密钥）。</p>
+          <p><strong>完成标准：</strong>能对照打印出的四条消息指出——哪条是提议（assistant + tool_calls）、哪条是结果（tool + tool_call_id）、id 如何对应。若报错，把报错信息记进课末疑难框。</p>
+          <p class="resource-access">标注：此项验证的是数据流形状（本地模拟），不因未接真实 API 判为未掌握；接真实 API 的实操待环境就绪后验证。</p>
+        </article>
+      </section>
+
+      <section id="resources" class="content-section">
+        <h2>本课一手阅读</h2>
+        <p>一项选读资源，用于从外部验证你刚建立的五步图景。课程正文已完整覆盖本课内容，跳过不影响学习。</p>
+        <details class="resource-card">
+          <summary>选读 · OpenAI Function calling 指南</summary>
+          <p><span class="resource-badge">选读</span> <strong>为什么值得看：</strong>官方一手文档，与本课图 1 直接对应——其中「The tool calling flow」一节列出同样的五步：带工具发请求 → 收到工具调用 → 应用侧执行 → 带结果二次请求 → 得到最终回答（或更多调用）。<a href="https://platform.openai.com/docs/guides/function-calling" target="_blank" rel="noopener noreferrer">前往指南 →</a></p>
+          <p><strong>只看哪里：</strong>「How it works」（含五步流程）与「Defining functions」（Schema 字段与最佳实践）两节。约 15 分钟。</p>
+          <p><strong>看前预测：</strong>打开前先猜——指南会给 function 定义配哪几个字段？（本课讲了 name / description / parameters；看它还多出哪个字段、管什么。）</p>
+          <p><strong>完成标准：</strong>找到五步流程，对照本课图 1 核对步骤是否一致；用一句中文写下 <code>"required": ["location", "units"]</code> 这类声明起什么作用。写进课末学习记录。</p>
+          <p class="resource-access">英文、公开可读。指南提供 Responses 与 Chat Completions 两种格式；选择 Chat Completions 对照本课的 tool_calls 和 tool_call_id。若读 Responses 示例，会看到 function_call / function_call_output 等条目；对照步骤与职责，不直接混用字段。</p>
+        </details>
+      </section>
+
+      <section id="summary" class="content-section">
+        <h2>本课总结</h2>
+        <div class="mental-model">
+          <p>三句话，把「三步连接」装进口袋：</p>
+          <ol>
+            <li><strong>连接件是 messages：</strong>提议是一条 assistant 消息（tool_calls），结果是一条 tool 消息（tool_call_id 对应），两次调用之间靠程序把列表越拼越长。</li>
+            <li><strong>模型只提议，程序才执行：</strong>声明（tools 菜单）与执行（含第 2 课的核对）都在程序侧；拒绝也要回填，让模型知道边界。</li>
+            <li><strong>循环要带闸：</strong>finish_reason=tool_calls 就再走一轮，stop 就收工；最大轮数兜底，防止不收敛的提议无限转。</li>
+          </ol>
+        </div>
+      </section>
+
+      <section id="review" class="content-section">
+        <h2>复习安排</h2>
+        <p>下次开课前闭卷自测：① 默写五步数据流（含核对嵌在哪一步）；② 画出请求 2 的 messages 列表结构（四条消息，各自角色）。第 4 课「记忆与状态」的课首会检查其中一个——工具循环每轮都在往列表里加消息，下一课就回答「列表越来越长怎么办」，这正是无状态三责任里你还没学的第三份：筛选。</p>
+      </section>
+
+      <section id="learning-input" class="content-section">
+        <h2>本课掌握证据与疑难</h2>
+        <p>三项证据对应三个学习目标（讲清数据流、写对消息结构、接上权限核对）。AI 会在你下次说「继续」时读取它们：三项达标则推进第 4 课「记忆与状态」（列表会一直变长的那个问题）；数据流或消息结构有缺口则先补本课；核对连接不清楚则围绕 send_report 场景再练一题。作答自动保存并同步（从课程启动器打开时）。</p>
+
+        <div class="exercise-card">
+          <h3>证据 1 · 解释：五步数据流</h3>
+          <p>用自己的话（4–6 句，不看正文）：讲清五步数据流，并回答你自己在第 2 课末尾提出的问题——模型返回工具调用、程序执行、结果回传，这三步之间靠什么连接？核对发生在哪一步、由谁负责？</p>
+          <label for="lesson-0003-evidence-explain">你的回答（自动保存）：</label>
+          <textarea id="lesson-0003-evidence-explain" data-save-key="lesson-0003-evidence-explain" rows="5" placeholder="第①步……第②步返回的是……连接靠……核对在……"></textarea>
+        </div>
+
+        <div class="exercise-card">
+          <h3>证据 2 · 应用：消息结构与修正</h3>
+          <p>两选一：A. 写出练习 1 的三处断点与修法（每处一行：哪里断 → 怎么接）；B. 贴出你运行 mock 脚本的输出，并指出提议消息与结果消息各自的标志字段。</p>
+          <label for="lesson-0003-evidence-code">你的回答（自动保存）：</label>
+          <textarea id="lesson-0003-evidence-code" data-save-key="lesson-0003-evidence-code" rows="7" placeholder="断点①……改为……&#10;断点②……&#10;断点③……（或贴脚本输出）"></textarea>
+        </div>
+
+        <div class="exercise-card">
+          <h3>证据 3 · 迁移：send_report 数据流</h3>
+          <p>写练习 2 的三问答案：① tools 声明；② 从解析到回填的完整步骤（核对与拒绝回填）；③ 回填 REFUSED 后模型的预测 + 为什么拒绝要回填。</p>
+          <label for="lesson-0003-evidence-predict">你的回答（自动保存）：</label>
+          <textarea id="lesson-0003-evidence-predict" data-save-key="lesson-0003-evidence-predict" rows="7" placeholder="① 声明：……&#10;② 步骤：……&#10;③ 预测：……回填拒绝的原因是……"></textarea>
+        </div>
+
+        <div class="exercise-card">
+          <h3>疑难与下节课愿望</h3>
+          <p>本课没说清的、练习卡住的、希望第 4 课处理的，写在这里。写「无」也可以。</p>
+          <label for="lesson-0003-troubles">你的疑难（自动保存）：</label>
+          <textarea id="lesson-0003-troubles" data-save-key="lesson-0003-troubles" rows="4" placeholder="例如：并行多条提议怎么逐条回填？tool 消息的 content 该用 JSON 还是纯文本？"></textarea>
+        </div>
+
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本页记录</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <h2>继续追问</h2>
+        <p>随时回到对话里向 AI 追问：换一种解释、多一个例子、深挖某个细节（比如「tool_choice 参数能强制模型调某个工具吗」）。追问不会打断课程节奏；课内 AI 答疑可在下方使用（需在课程设置中配置模型，不配置不影响学习）。</p>
+      </section>
+
+      <section class="content-section">
+        <h2>下一课</h2>
+        <p>候选主题：<strong>第 4 课 · 记忆与状态：上下文窗口、会话状态与长期记忆</strong>——本课每轮循环都在往 messages 里追加消息，第 4 课回答「列表无限增长会怎样、装不下时怎么办」：上下文窗口的边界、历史裁剪与摘要、外部记忆与检索。这是第 1 课「无状态三责任」中你还没学的第三份（筛选）的正式展开。是否推进取决于本课三项证据：五步讲得清、消息结构写得出（含核对与拒绝回填）→ 推进；有缺口 → 围绕该缺口补一题。完成后回到对话说「继续」即可。</p>
+      </section>
+
+      <nav class="lesson-pager" aria-label="页面导航">
+        <a class="pager-prev" href="./0002-trust-boundary-authorization.html">上一课：信任边界</a>
+        <a class="pager-home" href="../index.html">课程首页</a>
+      </nav>
+    </main>
+  </div>
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+  <script src="../assets/tutor.js"></script>
+</body>
+</html>

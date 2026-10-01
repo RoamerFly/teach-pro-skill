@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>智鉴 Agent：智能体开发与安全实战 · 学途智伴</title>
+  <meta name="description" content="从一次 API 调用走向受控工具循环：图解、练习、一手资源与依据作答调整的逐课教学。">
+  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="./assets/demo.css">
+</head>
+<body data-course-key="competition-demo-zhi-jian-agent">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="./settings.html">课程设置</a></nav>
+      <a class="site-brand" href="./index.html" aria-current="page">智鉴 Agent</a>
+      <nav class="sidebar-section" aria-label="本页目录"><h2>学习入口</h2><ol class="toc-list" data-toc><li><a href="#start">从哪里开始</a></li><li><a href="#mission">学习目标</a></li><li><a href="#lessons">三节展示课</a></li><li><a href="#adaptive">课程如何调整</a></li><li><a href="#roadmap">长期路线</a></li></ol></nav>
+      <nav class="sidebar-section" aria-label="相关页面"><h2>学习工具</h2><ol class="course-list"><li><a href="./practice/entry-assessment.html">入门评估</a></li><li><a href="./reference/resource-learning-center.html">一手阅读中心</a></li><li><a href="./reference/teaching-decisions.html">教学决策回放</a></li></ol></nav>
+      <nav class="sidebar-section" aria-label="课程目录"><h2>课程目录</h2><ol class="course-list"><li><a href="./lessons/0001-llm-to-agent-api-call.html">01 · 从 LLM 到 Agent</a></li><li><a href="./lessons/0002-trust-boundary-authorization.html">02 · 信任边界</a></li><li><a href="./lessons/0003-tool-calling-dataflow.html">03 · 工具调用数据流</a></li></ol></nav>
+    </aside>
+    <main id="main-content" class="content course-home">
+      <header class="course-hero demo-hero">
+        <div><span class="eyebrow">学途智伴 · 重邮FFBond · 校园学习示例</span><h1>智鉴 Agent<span class="demo-subtitle">智能体开发与安全实战</span></h1><p class="lead">先看懂一次调用，再学会受控行动。把开发与安全放在同一张图里，逐步走向自己的 AI 安全情报 Agent。</p><div class="hero-facts"><span>图解理解优先</span><span>每次生成一课</span><span>依据作答调整</span></div></div>
+        <div class="demo-map" aria-label="本示例的三课主线"><span class="eyebrow">这段旅程</span><p>API 调用 <span aria-hidden="true">→</span> 信任边界 <span aria-hidden="true">→</span> 工具循环</p><small>看懂输入输出 → 区分来源与授权 → 连接提议、执行与结果</small></div>
+      </header>
+      <p class="demo-note">比赛展示副本 · 逐次生成课程的人工校核版，配合合成场景的教学决策回放。</p>
+      <section id="start" class="content-section">
+        <h2>从哪里开始</h2>
+        <div class="demo-start"><div><span class="eyebrow">第一次学习</span><h3>先用六道短题定位起点</h3><p>会基本 Python、用过模型 API，也可以直接从这里开始。写出记得的内容，不确定的地方正是教学线索。</p><a class="demo-link" href="./practice/entry-assessment.html">开始入门评估 →</a></div><div><span class="eyebrow">先体验一节课</span><h3>从请求与消息结构入手</h3><p>沿图读一次调用，改写 messages，再分析外部内容如何影响 Agent。未配置 AI 也能阅读和作答。</p><a class="demo-link" href="./lessons/0001-llm-to-agent-api-call.html">进入第一课 →</a></div></div>
+        <p class="resource-access">自动写入本地文件：启动一次课程服务，再填写答案和疑难。只双击 HTML 时保存在浏览器，下载备份是备用方式。</p>
+      </section>
+      <section id="mission" class="content-section">
+        <h2>学习目标</h2><p>独立开发一个能搜集安全情报、核对来源、生成报告，并在授权范围内调用工具的 Agent。先通用原理，再具体框架；每周约五小时，按作答与实践结果调整节奏。</p>
+        <ul class="demo-outcomes"><li><strong>理解：</strong>画出模型、外部数据、执行层与信任边界。</li><li><strong>实现：</strong>构造消息、解析调用、回填结果并控制停止。</li><li><strong>判断：</strong>区分来源真实、动作授权与实际执行。</li></ul>
+      </section>
+      <section id="lessons" class="content-section">
+        <h2>三节展示课</h2><p>沿逐次交付的三节课体验建立原理、定向补救与继续推进。完成当前作答后，再决定下一目标。</p>
+        <ol class="demo-lessons">
+          <li><span class="demo-number">01</span><div><span class="eyebrow">建立原理 · 60–90 分钟</span><h3><a href="./lessons/0001-llm-to-agent-api-call.html">从 LLM 到 Agent：一次 API 调用缺了什么</a></h3><p>一次调用、跨轮上下文与工具型 Agent。四张图解，逐行示例，三道即时检查与开放练习。</p></div><a class="demo-link" href="./lessons/0001-llm-to-agent-api-call.html">学习 →</a></li>
+          <li><span class="demo-number">02</span><div><span class="eyebrow">定向补救 · 45–60 分钟</span><h3><a href="./lessons/0002-trust-boundary-authorization.html">信任边界：来源可信，不等于有权外发</a></h3><p>针对“像官方就能授权”的错误推理，分清任务与外部内容，写出发送前检查，并换情境复查。</p></div><a class="demo-link" href="./lessons/0002-trust-boundary-authorization.html">学习 →</a></li>
+          <li><span class="demo-number">03</span><div><span class="eyebrow">依据新内容推进 · 60–75 分钟</span><h3><a href="./lessons/0003-tool-calling-dataflow.html">工具调用机制：三步如何连接</a></h3><p>两张图连接提议、执行与回填；用本地 mock 看清消息演变，把权限检查放进数据流。</p></div><a class="demo-link" href="./lessons/0003-tool-calling-dataflow.html">学习 →</a></li>
+        </ol>
+      </section>
+      <section id="adaptive" class="content-section evidence-summary">
+        <h2>课程如何调整</h2><p>同一条学习路线，不同的作答会改变下一步。AI 先读本地答案与疑难，再判断该教什么，而不是按页码一直往下生成。</p>
+        <div class="demo-decisions"><div><span class="eyebrow">解释还不充分</span><h3>先巩固</h3><p>用短课补充解释、应用或迁移证据。</p></div><div><span class="eyebrow">出现具体错误推理</span><h3>定向补救</h3><p>先回答疑难，换表示和情境检查。</p></div><div><span class="eyebrow">前置内容已有支持</span><h3>推进新目标</h3><p>教下一目标，再收集本课的达标证据。</p></div></div>
+        <p><a href="./reference/teaching-decisions.html">查看三种选择的实测回放与证据范围 →</a></p><p class="resource-access">填写自己的答案后，续课 AI 将从本目录读取新的学习记录。回放的测试条件与人工修订见链接说明。</p>
+      </section>
+      <section id="roadmap" class="content-section">
+        <h2>长期路线</h2><ol class="process-steps"><li><strong>原理与最小实现：</strong>消息、工具循环、状态与记忆；画图并跑通受控模拟。</li><li><strong>安全设计：</strong>提示注入、权限、数据边界和异常路径；将约束写进执行层。</li><li><strong>框架与工程：</strong>选一个适合项目的框架，补齐日志、测试、预算与恢复。</li><li><strong>情报项目：</strong>接入获准数据源，完成情报富化与报告，验证正常与拒绝路径。</li></ol>
+        <p>下一候选：记忆与状态。实际续课由当前作答决定；真实项目阶段再核实数据源、部署环境与权限范围。</p><p><a href="./reference/resource-learning-center.html">按课查找一手资料与短阅读任务 →</a></p>
+      </section>
+    </main>
+  </div>
+  <script src="./assets/course.js"></script>
+</body>
+</html>

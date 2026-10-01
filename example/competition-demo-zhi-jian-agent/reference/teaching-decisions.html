@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>教学决策回放 · 智鉴 Agent</title><meta name="description" content="合成场景中的三种续课选择及其证据范围。"><link rel="stylesheet" href="../assets/style.css"><link rel="stylesheet" href="../assets/demo.css"></head>
+<body data-course-key="competition-demo-zhi-jian-agent">
+  <a class="skip-link" href="#main-content">跳到正文</a><button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+  <div class="page-shell"><aside id="course-sidebar" class="sidebar"><nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav><a class="site-brand" href="../index.html">智鉴 Agent</a><nav class="sidebar-section" aria-label="本页目录"><h2>回放目录</h2><ol class="toc-list" data-toc><li><a href="#decisions">三种教学选择</a></li><li><a href="#chain">本地学习闭环</a></li><li><a href="#scope">证据范围</a></li></ol></nav><nav class="sidebar-section" aria-label="学习入口"><h2>返回学习</h2><ol class="course-list"><li><a href="../index.html">课程首页</a></li><li><a href="../practice/entry-assessment.html">入门评估</a></li><li><a href="./resource-learning-center.html">一手阅读中心</a></li><li><a href="../lessons/0002-trust-boundary-authorization.html">补救课展示</a></li><li><a href="../lessons/0003-tool-calling-dataflow.html">推进课展示</a></li></ol></nav></aside>
+    <main id="main-content" class="content reference-body">
+      <header class="lesson-hero"><div><span class="eyebrow">教学决策 · 实测产物回放</span><h1>不是下一页，而是下一步</h1><p class="lead">已观察到的差别不是换了标题，而是教学任务从“收集证据”变为“修正具体推理”，再变为“教新目标”。</p></div></header>
+      <p class="demo-note">以下为合成场景摘要，不展示原始学员答案；页面课程经人工校核。回放不是实时模型运行。</p>
+      <section id="decisions" class="content-section"><h2>三种教学选择</h2><div class="demo-table-wrap"><table><thead><tr><th>输入情况</th><th>观察到的判断</th><th>交付任务</th></tr></thead><tbody><tr><td>关键开放题没有足够内容</td><td>无法据“读完了”判断理解</td><td>交付巩固课，收集解释与迁移证据</td></tr><tr><td>把公告外观与外发授权混淆</td><td>定位来源可信与动作权限的混淆</td><td>先答疑，再交付<a href="../lessons/0002-trust-boundary-authorization.html">信任边界补救课</a></td></tr><tr><td>新合成内容能区分身份、任务、目标和内容</td><td>当前内容支持进入工具调用教学</td><td>回答连接疑问，交付<a href="../lessons/0003-tool-calling-dataflow.html">工具数据流推进课</a></td></tr></tbody></table></div><p>前两条来自第一课后的隔离分支；第三条是在人工修订的补救课后提供合成即时答案。它们不是同一真实学员的连续成绩。</p></section>
+      <section id="chain" class="content-section"><h2>本地学习闭环</h2><ol class="process-steps"><li><strong>学员：</strong>阅读当前课，填写解释、练习与疑难。</li><li><strong>本地服务：</strong>自动写入 learner-submissions；静态打开时只存浏览器副本。</li><li><strong>课程生成 AI：</strong>用户请求继续后，读取当前课程文件，先处理疑难，再选择一节课。</li><li><strong>课程工作区：</strong>新增一课并更新首页、路线和证据记录；下一目标仍待作答决定。</li></ol><p>可选课内 Tutor 负责当前课问答；不替代课程生成 AI，不自行写下一课。</p></section>
+      <section id="scope" class="content-section"><h2>证据范围</h2><ul><li>TeleAgent v2.5.2；界面模型选项为“旗舰模型”，底层型号及实际导入指纹未知。</li><li>三种选课决策已观察；原生课文仍有内容和状态缺陷，展示课已人工修订。</li><li>本副本使用 rc.3 运行资产，没有预置你的答案、聊天、密钥或掌握率。</li><li>这些观察不证明长期学习效果、跨学科泛化或完全无人工干预的教学闭环。</li></ul><p class="resource-access">维护者可在仓库 evals/records 查阅原始产物哈希、检查过程与失败项；课程网页不公开内部状态或真实提交文件。</p></section>
+      <nav class="lesson-pager" aria-label="页面导航"><a href="../index.html">返回课程首页</a></nav>
+    </main>
+  </div><script src="../assets/course.js"></script>
+</body></html>

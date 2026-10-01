@@ -6,6 +6,8 @@
 
 2026-10-01：三种 G3 续课决策均已观察到，原生内容仍有失败项；见[最终分支复核](./records/2026-10-01-test5-g3-recovery-review.md)。主线最小观察收尾，转入[比赛 Demo 制作方案](./competition-demo-plan.md)，不宣称整体通过或真实学习效果。
 
+比赛 Demo 已整理为[独立展示副本](../example/competition-demo-zhi-jian-agent/README.md)，校核与浏览器结果见 [Demo 验收记录](./records/2026-10-01-competition-demo-review.md)。这是展示验收，不新增模型行为成绩。
+
 ## 当前主线：智鉴 Agent
 
 后续 TeleAgent 测试固定使用“智鉴 Agent：智能体开发与安全实战”，基础条件和目标沿用用户原始要求。按[主线复测计划](./teleagent-main-course.md)串行验证：先评估，再生成第一课，最后检查证据不足、误区补救和新证据后的动态续课。
@@ -35,6 +37,8 @@ python -X utf8 -m unittest discover -s . -p test_runtime.py
 已具备 Playwright 与浏览器时，可运行 `node tests/sidebar-theme.browser.cjs "课程目录" "截图目录"` 检查主题面板底部布局、长目录、键盘、主题恢复和窄屏。可用 `TEACH_PRO_BROWSER` 指定浏览器可执行路径。测试使用独立浏览器上下文与静态课程，不提交作答、不请求模型；这不是课程阅读所需依赖。
 
 Test4 入门评估可运行 `node tests/assessment-ui.browser.cjs "课程目录" "截图目录"`。需要已有 Playwright、浏览器及 Python 3.11+；可用 `TEACH_PRO_PYTHON` 指定解释器。测试在临时副本检查选项/按钮样式、无样式类回退、反馈、七个字段同步、文件恢复和导出，不修改真实课程的作答。
+
+比赛 Demo 可运行 `node tests/competition-demo.browser.mjs "截图目录"`。需要 Node 22+、Edge/Chromium 和 Python 3.11+，无需 Playwright；浏览器和解释器可分别用 `TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 指定。脚本在独立临时副本检查八页、十一题、文件保存与恢复、DeepSeek 预设和密钥遮蔽；不获取远端模型、不测试连接、不发送聊天。临时副本保留供复核，含合成测试作答，不用于发布。
 
 2026-09-29 的实际修复与浏览器结果见[入门评估 UI 验证记录](./records/2026-09-29-test4-assessment.md)，包括截图和未验证边界。
 
