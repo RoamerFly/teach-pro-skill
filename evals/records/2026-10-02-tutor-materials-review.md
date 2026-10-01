@@ -58,6 +58,6 @@ SHA256：`8DA85E8304DAE8C8AD5CF83BDE597C8307CF31A4DBE83C78C5FBC705C9893E2C`。
 
 ## 发布与验证范围
 
-打包器只读取已提交 Git 树，输出到仓库外，排除本地学员答案、聊天、配置、缓存和旧 ZIP。Skill 与 Demo 的 sh/command Git 模式为 100755；工作包生成时检查 ZIP 中 755 权限、CRC 与隐私排除。发布指纹在打包后的单独记录补充。
+打包器只读取已提交 Git 树，输出到仓库外，排除本地学员答案、聊天、配置、缓存和旧 ZIP。Skill 与 Demo 的 sh/command Git 模式为 100755；ZIP 中 755 权限、CRC 与隐私排除均通过，发布指纹见 [工作包验收](2026-10-02-working-package-review.md)。
 
 本轮证明 Runtime、页面与材料链路可用，不把手工校核 Demo 或静态检查当作原生 Agent 课文质量、无人干预闭环或长期学习效果的证明。macOS/Linux 实机启动仍未验证；既有教学评测原生失败项保留。
