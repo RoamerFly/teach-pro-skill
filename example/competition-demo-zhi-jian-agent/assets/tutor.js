@@ -4,6 +4,14 @@
   const lesson = location.pathname.split('/').pop()?.replace(/\.html$/i, '');
   const anchor = document.querySelector('#learning-input');
   if (!anchor || !location.pathname.includes('/lessons/') || !/^[a-z0-9][a-z0-9-]{0,79}$/.test(lesson)) return;
+  const markdown = new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = new URL('tutor-markdown.js', document.currentScript.src).href;
+    script.onload = () => resolve(window.TutorMarkdown);
+    script.onerror = () => reject(new Error('回答排版组件未安装，请更新课程资产'));
+    document.head.append(script);
+  });
+  markdown.catch(() => {});
   const section = document.createElement('section');
   section.id = 'lesson-tutor';
   section.className = 'content-section tutor-panel';
@@ -49,7 +57,7 @@
     if (!response.ok) throw new Error(result.error || '本地答疑服务请求失败');
     return result;
   }
-  function render(data) {
+  async function render(data) {
     record = data;
     const log = find('.tutor-messages');
     log.replaceChildren();
@@ -57,9 +65,14 @@
       const box = document.createElement('article');
       box.className = 'tutor-message ' + (message.role === 'assistant' ? 'is-assistant' : 'is-user');
       const label = document.createElement('strong');
+      label.className = 'tutor-message-label';
       label.textContent = (message.role === 'assistant' ? '答疑 AI' : '我') + (message.status !== 'complete' ? ' · ' + (message.status === 'pending' ? '未完成' : '请求失败') : '');
       const content = document.createElement('div'); content.textContent = message.content;
       box.append(label, content);
+      if (message.role === 'assistant') {
+        try { await (await markdown).render(content, message.content); }
+        catch { content.textContent = message.content; }
+      }
       if (message.error) { const error = document.createElement('p'); error.textContent = message.error; box.append(error); }
       log.append(box);
     }
@@ -99,10 +112,10 @@
       }
       say('正在请求模型；问题先写入本地记录，不会自动重试…');
       try {
-        render(await api('chat/' + lesson, { message, selection, consent: true }));
+        await render(await api('chat/' + lesson, { message, selection, consent: true }));
         prompt.value = ''; say('回答与问题已写入本地聊天文件；课程生成 AI 下次可参考。');
       } catch (error) {
-        try { render(await api('history/' + lesson)); } catch {}
+        try { await render(await api('history/' + lesson)); } catch {}
         throw error;
       }
     });
@@ -118,7 +131,7 @@
   find('[data-tutor-unselect]').addEventListener('click', () => { selection = ''; find('.tutor-selection').textContent = ''; });
   find('[data-tutor-clear]').addEventListener('click', () => {
     if (!window.confirm('永久删除本课聊天文件？不会删除练习答案或其他课节记录。建议先下载备份。')) return;
-    act(async () => { render(await api('clear/' + lesson, { confirm: true })); say('本课聊天文件已删除；不可自动恢复，已有下载备份仍可保留。'); });
+    act(async () => { await render(await api('clear/' + lesson, { confirm: true })); say('本课聊天文件已删除；不可自动恢复，已有下载备份仍可保留。'); });
   });
   find('[data-tutor-export]').addEventListener('click', () => {
     const url = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: 'application/json' }));
@@ -134,7 +147,7 @@
       const ctx = await api('context/' + lesson);
       find('.tutor-context-text').textContent = ctx.text;
       find('[data-tutor-context-meta]').textContent = '本课正文 ' + ctx.text.length + ' 字；' + (ctx.truncated ? '超过长度上限，已截断。' : '未截断。') + ' 不自动读取学员画像、其他课程或外部网页。';
-      render(await api('history/' + lesson));
+      await render(await api('history/' + lesson));
       say(configured ? '本地答疑已连接；请确认发送说明后提问。' : '本地服务已连接，AI 答疑尚未启用；可直接继续学习。需要时前往课程设置，服务重启后需重新输入 Key。');
       controls();
     } catch (error) { online = false; controls(); say('课内答疑不可用：' + error.message + '。核心课程仍可阅读。', true); }

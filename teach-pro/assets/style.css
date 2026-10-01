@@ -1059,8 +1059,25 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 .tutor-messages { max-height: 26rem; overflow-y: auto; margin: .8rem 0; border: 1px solid var(--border); border-radius: .6rem; padding: .7rem; }
 .tutor-message { padding: .6rem .7rem; margin: .5rem 0; border-radius: .45rem; background: var(--surface-2); overflow-wrap: anywhere; }
 .tutor-message.is-assistant { background: var(--accent-soft); }
-.tutor-message strong { display: block; font-size: .82rem; margin-bottom: .25rem; }
-.tutor-message div, .tutor-selection { white-space: pre-wrap; font-size: .9rem; }
+.tutor-message-label { display: block; font-size: .82rem; margin-bottom: .25rem; }
+.tutor-message > div:not(.tutor-markdown), .tutor-selection { white-space: pre-wrap; font-size: .9rem; }
+.tutor-markdown { font-size: 1rem; line-height: 1.7; overflow-wrap: anywhere; }
+.tutor-markdown > :first-child { margin-top: 0; }
+.tutor-markdown > :last-child { margin-bottom: 0; }
+.tutor-markdown p { margin: .7em 0; }
+.tutor-markdown :is(h3, h4, h5, h6) { font-size: 1.08em; margin: 1.1em 0 .5em; color: var(--text); }
+.tutor-markdown :is(ul, ol) { padding-left: 1.5em; margin: .65em 0; }
+.tutor-markdown li { margin: .25em 0; }
+.tutor-markdown strong { display: inline; font-size: inherit; }
+.tutor-markdown blockquote { margin: .8em 0; padding: .2em .9em; border-left: 3px solid var(--accent); background: var(--accent-soft); }
+.tutor-markdown :not(pre) > code { font-size: .9em; padding: .1em .35em; background: var(--surface-2); border-radius: .25em; }
+.tutor-code-block { min-width: 0; margin: 1em 0; border: 1px solid var(--border); border-radius: .65rem; overflow: hidden; background: var(--surface-2); }
+.tutor-code-tools { display: flex; justify-content: space-between; align-items: center; padding: .35rem .7rem; font-size: .78rem; color: var(--muted); border-bottom: 1px solid var(--border); }
+.tutor-code-tools button { border: 0; background: transparent; color: var(--accent); font: inherit; cursor: pointer; padding: .2rem .4rem; }
+.tutor-markdown pre { margin: 0; padding: .9rem; max-width: 100%; overflow: auto; white-space: pre; background: var(--surface-2); color: var(--text); border: 0; border-radius: 0; line-height: 1.55; font-size: .86rem; }
+.tutor-table-wrap { max-width: 100%; overflow-x: auto; margin: 1em 0; }
+.tutor-table-wrap table { min-width: 100%; width: max-content; font-size: .9em; margin: 0; }
+.tutor-markdown a { color: var(--accent); text-underline-offset: .2em; }
 .tutor-selection:empty { display: none; }
 @media (max-width: 560px) { .tutor-config-grid { grid-template-columns: 1fr; } }
 @media print { .tutor-panel { display: none; } }
