@@ -1,18 +1,21 @@
 # 学途智伴参赛材料
 
-队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。校园生活赛道，Skill 基线为 Teach Pro 1.1.0-rc.3。
+队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。校园生活赛道，当前基线为 Teach Pro 1.1.0-rc.4。
 
 ## 当前交付
 
-[技能说明文档](./学途智伴技能说明文档.docx) 共六页，涵盖作品简介、设计思路、技术实现、使用说明、DeepSeek 设置与验证结果。采用[已校核的智鉴 Agent Demo](../competition-demo-zhi-jian-agent/README.md)，含一张架构图和三张重新采集的操作截图。
+- [技能说明文档](./学途智伴技能说明文档.docx)：七页，包含设计、架构、操作流程、真实答疑截图与验证结果，已渲染逐页复核。
+- [新版画面版](./学途智伴演示画面版.mp4)：2 分 50.64 秒，12 个循序镜头，实际 DeepSeek Flash 配置及三轮答疑，**暂不含配音**。附[字幕](./学途智伴画面版字幕.srt)与[章节及请求诊断](./video-ui-chapters.json)。
+- [智鉴 Agent Demo](../competition-demo-zhi-jian-agent/README.md)：八页，含三节校核课、入门评估、阅读中心与教学决策回放。
+- [本轮验收记录](../../evals/records/2026-10-02-tutor-materials-review.md)：页面回归、真实接口、文档及画面检查分别记录。
 
-说明文档中的展示课经人工校核，教学分支采用已观察的合成测试结果；文档内设置截图使用无效演示值。最新视频另行录制真实 DeepSeek Flash 配置与多轮课内答疑。长期学习效果及三端启动不计入本轮验证。
+课堂调整采用已观察的合成测试回放，展示课程经人工校核。设置截图使用无效演示值；视频中的问答来自真实接口，保留原始回答。真实学员长期效果与 macOS/Linux 实机启动不在本轮验证范围。
 
-当前完成 Demo、Word 和[新版演示视频](./学途智伴演示视频.mp4)。视频约 2 分 51 秒，12 个顺序镜头、一条连续中文旁白，另附[字幕文件](./学途智伴演示字幕.srt)和[章节时间](./video-chapters.json)。主线为入门评估、图解学习、发现疑问、配置模型、真实问答与澄清、本地保存、课程调整。最终提交包尚未制作，Word 的操作截图与材料状态将在定稿时同步。[Word 验收](../../evals/records/2026-10-01-competition-document-review.md)与[最新视频验收](../../evals/records/2026-10-01-competition-live-video-review.md)列出文件指纹和检查结果；[上一版视频记录](../../evals/records/2026-10-01-competition-video-review.md)保留历史状态。
+旧[配音视频](./学途智伴演示视频.mp4)及其字幕保持不变，供历史对照；它仍使用升级前界面，不作为当前提交候选。完成配音试听后，再与新版画面合成最终比赛视频。工作包会明确标记该状态，不能直接视为最终提交包。
 
-## 重建与检查
+## Word 重建
 
-使用已有的 Python 环境及 python-docx。截图采集另需 Node、Playwright、Sharp 和本机 Edge/Chromium；这些是材料维护工具，不是课程运行依赖。Codex 工作区使用随附依赖，避免另装包。
+材料维护需要已有 Python/python-docx、Node/Playwright/Sharp 和 Edge/Chromium。它们不是学员课程运行依赖。
 
 ```powershell
 node example/competition-materials/scripts/capture_materials.cjs
@@ -20,29 +23,36 @@ python example/competition-materials/scripts/build_document.py
 python example/competition-materials/scripts/audit_document.py
 ```
 
-截图脚本在临时副本运行课程，不修改公开 Demo 作答；可用 TEACH_PRO_BROWSER 和 TEACH_PRO_PYTHON 指定浏览器与解释器，随附 Node 包通过 NODE_PATH 解析。生成器以 assets 中的架构图和截图为输入，输出同一份 Word。
+截图在隔离副本采集，不改 Demo 作答、不调用模型。`TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 可指定运行路径；随附 Node 包用 `NODE_PATH` 解析。`assets/tutor-dialog.png` 来自本轮真实录制，需要单独替换，不能由合成回答冒充。
 
-Word 发布前必须渲染并逐页检查。Windows 无随附 LibreOffice 时，可用本机 Microsoft Word 的只读导出，再交由文档技能的 render_docx.py 和随附 Poppler 生成页图：
+发布前渲染并检查全部页面。Windows 可用 Word 只读导出，再由文档技能的渲染器和 Poppler 生成页图：
 
 ```powershell
 python example/competition-materials/scripts/render_with_word.py `
   example/competition-materials/学途智伴技能说明文档.docx <仓库外检查目录> `
-  --renderer <文档技能的render_docx.py绝对路径> --poppler <随附Poppler目录>
+  --renderer <render_docx.py绝对路径> --poppler <Poppler目录>
 ```
 
-这条路径只打开待验收文档，不调用桌面 LibreOffice。PDF、页图与临时浏览器缓存只用于检查，不加入提交包。重新生成后应复核文件指纹，更新验收记录，再提交推送。
+检查 PDF、页图和缓存不进入工作包。
 
-## 视频维护
-
-`video-scenes.json` 管理分镜与讲稿；素材和检查帧写入仓库外的会话目录。制作需已有 edge-tts 环境、FFmpeg/ffprobe、Playwright 和 Edge；这些不是 Skill 或课程运行依赖。旁白只向在线语音服务发送公开讲稿，不读取学员数据或密钥。
+## 真实画面录制
 
 ```powershell
-python example/competition-materials/scripts/build_video_voice.py <会话目录> --tts-packages <已有edge-tts包目录>
 node example/competition-materials/scripts/capture_live_video.cjs <会话目录> --live
-python example/competition-materials/scripts/render_video.py <会话目录>
-python example/competition-materials/scripts/audit_video.py <仓库外检查目录>
+python example/competition-materials/scripts/render_ui_video.py <会话目录>
+python example/competition-materials/scripts/audit_video.py <仓库外检查目录> --ui
 ```
 
-真实录制需在私有交互终端通过标准输入提供密钥，输入不回显；不把密钥放入命令参数、环境变量或脚本。`--live` 明确启用提供商请求，可能计费。脚本使用隔离课程副本与合成作答，通过课程界面实际获取模型、保存配置、测试连接并完成三轮问答，检查聊天落盘。Flash 的本轮输出上限为 4096。配置输入始终为 password，不点击小眼睛；停止服务后忘记内存密钥。原始录屏、聊天、配置与学员文件只在仓库外保留。
+会话目录需有镜头时长计划 `voice-plan.json`；这里只读取时长，不制作音轨。`video-ui-scenes.json` 定义新版字幕。录制会实际获取模型、测试连接和发送三轮问题，共五次提供商请求，可能计费。
 
-旁白使用 Yunxi Neural 连续合成，保留自然停顿并统一响度，不加速音频。镜头按句子边界与绝对帧时间对齐；仅剪短请求等待，模型回答不重写。字幕位于课程画面下方独立窄条，导出后完整解码、检查时间轴并提取所有章节代表帧。音色与术语读音由用户播放确认。旧 `capture_video.cjs` 对应 Git 历史中的离线预览讲稿，不用于当前真实答疑版本。
+在私有交互终端通过不回显的标准输入提供密钥，不使用命令参数、环境变量或脚本保存。API Key 始终为 password，保存后输入框清空。原始录屏、合成作答、聊天和配置只保留在仓库外隔离目录。
+
+剪辑使用真实操作录屏与同次采集的阅读停留截图；片尾为单独采集的当前架构卡。模型回答不重写，不把已有教学分支回放称为现场生成。字幕置于独立窄条，导出后完整解码，并逐一检查十二章节代表帧。
+
+## 工作包
+
+```powershell
+python example/competition-materials/scripts/package_working_release.py <仓库外输出目录>
+```
+
+从已提交的 Git 版本打包 Skill、当前 Word、无配音画面版和公开 Demo，保留 Unix 执行权限，不读取本地学员文件或旧 `teach-pro.zip`。输出目录必须位于仓库之外；完成后核对包指纹并更新证据记录。

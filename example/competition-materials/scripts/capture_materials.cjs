@@ -55,11 +55,16 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
     assert.equal(await key.getAttribute('type'), 'password');
     assert.equal(await page.locator('input[name="base_url"]').inputValue(), 'https://api.deepseek.com');
     assert.equal(await page.locator('select[name="model"]').inputValue(), '');
-    assert.equal(await page.locator('[data-settings-consent]').isChecked(), false);
-    await page.locator('.tutor-config-grid').screenshot({ path: path.join(assets, 'deepseek-settings.png') });
+    assert.equal(await page.locator('[data-settings-consent]').count(), 0);
+    await page.locator('[data-tutor-settings-page]').screenshot({ path: path.join(assets, 'deepseek-settings.png'), animations: 'disabled' });
     assert.equal(external.length, 0);
     await sharp(path.join(assets, 'architecture.svg'), { density: 180 }).png().toFile(path.join(assets, 'architecture.png'));
-    console.log('PASS: three clean screenshots and architecture raster; no external model requests');
+    await page.setViewportSize({ width: 1440, height: 810 });
+    await page.setContent('<!doctype html><html lang="zh-CN"><meta charset="utf-8"><style>body{margin:0;padding:50px 75px;background:#eef3f9;color:#17344e;font:22px/1.6 Microsoft YaHei}h1{font-size:34px}img{max-width:100%;max-height:490px;object-fit:contain}p{color:#536c7e}</style><p>学途智伴 · 重邮FFBond</p><h1>学途智伴——大学生长期自适应学习智能体</h1><p>了解基础 → 学懂一课 → 真实答疑 → 本地保存 → 动态续课</p><img alt="教学与文件连续性架构"></html>');
+    await page.locator('img').evaluate((img, data) => { img.src = data; }, 'data:image/png;base64,' + (await fs.readFile(path.join(assets, 'architecture.png'))).toString('base64'));
+    await page.waitForFunction(() => document.querySelector('img').complete && document.querySelector('img').naturalWidth > 0);
+    await page.screenshot({ path: path.join(assets, 'ui-closing.png'), animations: 'disabled', scale: 'css' });
+    console.log('PASS: three clean screenshots, architecture raster and closing card; no external model requests');
   } finally {
     await browser?.close(); server.kill();
   }

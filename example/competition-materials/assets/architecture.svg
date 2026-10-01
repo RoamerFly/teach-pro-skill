@@ -16,7 +16,7 @@
     <rect x="450" y="333" width="330" height="85" rx="10" fill="#f5f7fa" stroke="#91a4b8" stroke-width="2" stroke-dasharray="7 5"/>
     <text x="615" y="368" font-size="23" font-weight="700">可选课内 Tutor</text><text x="615" y="398" font-size="19">配置模型后  按本课上下文答疑</text>
     <path d="M615 260 V333" stroke="#334e68" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-    <text x="815" y="301" font-size="18">确认后发送课文与问题</text>
+    <text x="815" y="301" font-size="18">点击发送带入课文与问题</text>
     <text x="221" y="361" font-size="19">课程生成由 Agent 环境驱动</text><text x="221" y="394" font-size="19">课程设置仅管理可选答疑连接</text>
   </g>
 </svg>

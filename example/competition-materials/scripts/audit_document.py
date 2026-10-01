@@ -8,9 +8,9 @@ from docx.oxml.ns import qn
 
 file = Path(__file__).resolve().parents[1] / '学途智伴技能说明文档.docx'
 doc = Document(file)
-expected = ['作品简介', '设计思路', '技术实现与数据边界', '使用说明', '课程设置与课内答疑', '演示内容与验证结果']
+expected = ['作品简介', '设计思路', '技术实现与数据边界', '使用说明', '课程设置与课内答疑', '课内对话体验', '演示内容与验证结果']
 assert [p.text for p in doc.paragraphs if p.style.name == 'Heading 1'] == expected
-assert len(doc.inline_shapes) == 4
+assert len(doc.inline_shapes) == 5
 assert len(doc.tables) == 3
 assert doc.core_properties.author == '重邮FFBond'
 assert doc.core_properties.last_modified_by == '重邮FFBond'
@@ -39,5 +39,5 @@ with ZipFile(file) as z:
     hyperlinks = [rel for rel in doc.part.rels.values() if rel.reltype.endswith('/hyperlink')]
     assert len(hyperlinks) == 3
     assert all(rel.target_ref.startswith('https://github.com/RoamerFly/teach-pro-skill') for rel in hyperlinks)
-print('PASS: six sections, four annotated images, three tables and three public source links')
+print('PASS: seven sections, five annotated images, three tables and three public source links')
 print('SHA256:', hashlib.sha256(file.read_bytes()).hexdigest().upper())

@@ -155,7 +155,7 @@ def build():
 
     doc.add_paragraph('学途智伴技能说明文档', style='Title')
     doc.add_paragraph('大学生长期自适应学习智能体', style='Subtitle')
-    body(doc, '队伍  重邮FFBond    赛道  校园生活    Skill  Teach Pro 1.1.0-rc.3')
+    body(doc, '队伍  重邮FFBond    赛道  校园生活    Skill  Teach Pro 1.1.0-rc.4')
     heading(doc, '作品简介')
     body(doc, '学途智伴面向大学生自主学习、跨专业入门和竞赛备赛。我们将学习目标、基础评估、逐课教程与本地作答连成持续的教学过程：先了解起点，每次交付一节完整课，再依据解释、练习和疑难调整下一步。')
     body(doc, '作品名称为“学途智伴——大学生长期自适应学习智能体”。教学能力以 teach-pro Skill 提供，可在支持技能调用与工作区读写的 Agent 环境中使用。学生通过浏览器学习，在同一课程目录保留长期记录。')
@@ -187,8 +187,8 @@ def build():
     heading(doc, '本地保存与访问范围', 2)
     body(doc, '服务只监听 127.0.0.1，并限制静态文件与提交入口。直接打开 HTML 可阅读并在浏览器保存；使用启动器后，答案才会写入课程目录，供具有该目录访问权限的 AI 读取。读取发生在用户请求续课时，而非后台自动开课。')
     heading(doc, '密钥与模型上下文', 2)
-    body(doc, '课程设置保存非密钥连接参数；API Key 仅保留在本次服务进程内存中，重启后重新输入。获取模型列表和连接测试不发送课程正文。课内答疑经用户确认后发送本课正文与图注、当前问题、选中片段和有限近期聊天，不自动读取其他课程或完整学员画像。')
-    body(doc, '本地保存不等于本地推理。选择云端提供商时，确认的数据仍会发往该服务。作答、聊天和配置已加入忽略规则；公开 Demo 不包含原始学员提交、聊天或密钥。本服务用于单用户本机学习。')
+    body(doc, '课程设置保存非密钥连接参数；API Key 仅保留在本次服务进程内存中，重启后重新输入。获取模型列表和连接测试不发送课程正文。学员点击发送后，答疑结合本课正文与图注、当前问题、选中片段和最近五个完整成功回合，不自动读取其他课程或完整学员画像。')
+    body(doc, '本地保存不等于本地推理，云端答疑会把限定上下文发往所选服务。作答、聊天和配置已加入忽略规则；公开 Demo 不包含原始学员提交、聊天或密钥。本服务用于单用户本机学习。')
 
     page_section(doc, '使用说明')
     step(doc, 1, '导入并显式调用', '将 teach-pro 目录导入支持 Skill 和工作区读写的 Agent。TeleAgent 中可输入下面的示例，先评估再开课。')
@@ -203,41 +203,49 @@ def build():
     body(doc, 'AI 答疑按需启用。所有课节共用左侧置顶“课程设置”，课程页只提供当前课的问答入口。这里的连接仅用于课内 Tutor，不改变 TeleAgent 等环境中课程生成 AI 的模型。')
     heading(doc, '以 DeepSeek 为例', 2)
     step(doc, 1, '选择服务并输入 Key', '从服务类型选择 DeepSeek，默认地址自动填为 https://api.deepseek.com。输入自己的 API Key；默认以圆点遮蔽，小眼睛可切换显示。')
-    step(doc, 2, '获取并选择模型', '确认提供商说明后点击“获取模型”，从实际返回的列表选择模型。不支持列表时可手动填写模型 ID；不要把历史名称当成当前可用模型。')
-    picture(doc, 'deepseek-settings.png', '图 4 DeepSeek 预设与遮蔽输入  使用无效演示值 未获取或伪造模型列表', width=6.4)
-    step(doc, 3, '保存并测试', '保存设置后 Key 输入框清空，密钥保留在服务内存中。测试连接发送最小请求，可能计费。成功后返回当前课，确认上下文范围再提问。')
-    step(doc, 4, '保留课内讨论', '聊天按课自动保存到 learner-chats，续课 AI 可将讨论作为参考。答疑不执行工具、不修改教程，也不自动生成下一课。')
-    body(doc, 'HTTP 400 不足以判断 Key 有误，还应核对地址、实际模型 ID 与请求格式。服务重启后需重新输入 Key。本轮仅验证设置交互与未配置答疑状态，真实模型获取、连接及聊天成功仍待实际操作确认。')
+    step(doc, 2, '获取并选择模型', '点击“获取模型”，从实际列表选择 deepseek-flash，再保存并启用。不支持列表时可手动填写模型 ID。地址、输出预算与思考模式放在高级设置中。')
+    picture(doc, 'deepseek-settings.png', '图 4 简化后的 DeepSeek 设置  图中密钥为无效演示值', width=5.7)
+    step(doc, 3, '保存并测试', '保存后 Key 输入框清空，密钥留在服务内存中。测试连接发送简短请求；普通 Flash 答疑默认关闭思考，聊天预算默认 4096 token，连接测试预算独立。')
+    step(doc, 4, '返回当前课提问', '点击“问 AI”进入大弹窗，直接提问或继续追问，无需粘贴课文或重复勾选。未配置也能继续学习。')
+
+    page_section(doc, '课内对话体验')
+    body(doc, '答疑窗口把注意力集中在当前疑问上：顶部显示课节与模型，正文以连续文档流呈现，输入区固定在底部。标题、列表、强调、代码和表格按 Markdown 排版，代码支持复制，长内容在局部滚动。')
+    picture(doc, 'tutor-dialog.png', '图 5 DeepSeek Flash 本次真实第三轮答疑  模型回答原样展示', width=6.4)
+    body(doc, '学员可以先给出自己的判断，再让模型指出推理缺口。演示中，三轮交流依次讨论学校公告、新邮箱与外发权限，最后澄清系统提示与运行时授权的区别。即时答疑辅助理解，学员的解释和应用仍须另行检查。')
+    heading(doc, '保持对话连续', 2)
+    body(doc, '聊天原始 Markdown 自动保存到本课 JSON。关闭窗口保留草稿，已发送请求继续接收；刷新恢复历史，阅读旧消息时新回答不会强制跳到底。支持引用课文、Enter 发送、Shift 加 Enter 换行、输入法保护，以及备份和确认清空。')
+    heading(doc, '请求状态清晰', 2)
+    body(doc, '服务区分正常回答、部分正文、预算耗尽、异常结构和连接失败。未完成回答明确标记，学员可主动重试最近问题；重试关联原记录，不重复插入提问。有限诊断记录结束原因、用量与耗时，不保存思考原文或认证信息。')
 
     page_section(doc, '演示内容与验证结果')
-    body(doc, 'Demo 按“评估起点、学习一课、保存作答、依据误区调整教学”的过程展示。页面包含三节课、一手阅读中心与教学决策回放，共八页。视频计划采用同一 Demo，时长控制在三分钟以内，演示输入与回放明确标注，API Key 始终遮蔽。')
+    body(doc, 'Demo 共八页，包含三节校核课程、阅读中心与决策回放。新版画面依次展示评估、图解、疑问、配置、真实答疑、保存与续课，时长不足三分钟，密钥始终遮蔽。配音另行制作。')
     heading(doc, '教学决策观察', 2)
     table(doc, ['合成输入', '观察到的教学任务'], [
         ['关键开放题内容不足', '交付巩固课，补充解释与迁移证据'],
         ['混淆公告外观与外发授权', '先回答疑难，再生成信任边界补救课'],
         ['新内容能区分身份与动作权限', '处理数据流连接疑问，生成工具调用推进课'],
     ], [2.65, 4.29])
-    body(doc, '上述三种选择已在 TeleAgent v2.5.2 中观察到。测试使用合成即时作答，推进分支基于人工修订的前课；原生课文仍有概念和状态错误。展示课程经人工校核，不能据此宣称无人干预闭环或长期学习效果已验证。')
+    body(doc, '三种选择均在 TeleAgent v2.5.2 中观察到，使用合成即时作答，推进分支基于人工修订的前课。原生课文仍有概念与状态错误，展示课程已校核；无人干预闭环和长期学习效果尚未验证。')
     heading(doc, '页面与文件链路验收', 2)
     table(doc, ['检查对象', '结果与范围'], [
-        ['单元与结构检查', 'Node 14/14、Python 15/15；八页结构通过'],
-        ['排版与即时检查', '390/1366px 无横向溢出；十一题反馈与恢复正常'],
+        ['单元与结构检查', 'Node 16/16、Python 37/37；八页结构及 Skill 校验通过'],
+        ['弹窗与排版', '1440、1280、390px 布局通过；Markdown、输入法、滚动与关闭恢复正常'],
         ['入门答案与课末疑难', '六字段落盘、文件恢复、导出与清空通过；课间隔离正常'],
-        ['设置与未配置答疑', 'DeepSeek 地址预填、Key 遮蔽通过；无配置时发送禁用'],
+        ['真实模型请求', 'DeepSeek Flash 模型列表、连接测试、三轮答疑均成功'],
         ['发布权限', '.sh 与 .command 的 Git 和 ZIP 模式均为 755'],
     ], [2.05, 4.89])
-    body(doc, '以上为 Windows 本地验收，未调用真实提供商，也未完成 macOS/Linux 实机启动或真实学员长期效果测试。详细记录保留检查步骤、原生失败项与产物哈希，便于复核。')
-    base = 'https://github.com/RoamerFly/teach-pro-skill/blob/df152579943fcda5b3e9cffde2f5e74b8d76bab4/'
+    body(doc, '页面回归使用合成接口，真实 DeepSeek 请求独立记录。当前验收限于 Windows，未验证 macOS/Linux 实机启动。教学分支保留原生失败项，不因界面升级改记为通过。')
+    base = 'https://github.com/RoamerFly/teach-pro-skill/blob/main/'
     link(doc, '项目仓库与使用入口', 'https://github.com/RoamerFly/teach-pro-skill')
-    link(doc, 'Demo 运行验收记录  2026 年 10 月 1 日', base + 'evals/records/2026-10-01-competition-demo-review.md')
+    link(doc, 'Tutor 体验与真实演示验收  2026 年 10 月 2 日', base + 'evals/records/2026-10-02-tutor-materials-review.md')
     link(doc, 'G3 原生续课与人工修订记录', base + 'evals/records/2026-10-01-test5-g3-recovery-review.md')
     props = doc.core_properties
     props.title = '学途智伴技能说明文档'; props.author = '重邮FFBond'
     props.subject = '校园生活赛道作品简介设计思路与使用说明'
-    props.keywords = 'Teach Pro, 1.1.0-rc.3, 自适应教学, 本地学习记录'
+    props.keywords = 'Teach Pro, 1.1.0-rc.4, 自适应教学, 本地学习记录'
     props.comments = ''; props.last_modified_by = '重邮FFBond'
     props.created = datetime(2026, 10, 1, tzinfo=timezone.utc)
-    props.modified = props.created
+    props.modified = datetime(2026, 10, 2, tzinfo=timezone.utc)
     doc.save(OUT)
     print(OUT)
 

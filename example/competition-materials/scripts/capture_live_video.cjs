@@ -20,12 +20,17 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
   const plan = JSON.parse(await fs.readFile(path.join(session, 'voice-plan.json'), 'utf8'));
   assert.equal(plan.model, 'deepseek-flash');
   console.log('Waiting for credential on stdin; it will not be echoed or saved.');
-  if (!process.stdin.isTTY) throw new Error('Use a private interactive terminal with raw input; closed stdin is not supported');
-  process.stdin.setRawMode(true);
+  if (process.stdin.isTTY) process.stdin.setRawMode(true);
   const reader = createInterface({ input: process.stdin });
-  credential = await new Promise(resolve => reader.once('line', line => resolve(line.trim())));
-  reader.close();
-  process.stdin.setRawMode(false);
+  try {
+    credential = await new Promise((resolve, reject) => {
+      reader.once('line', line => resolve(line.trim()));
+      reader.once('close', () => reject(new Error('Credential input closed before a line was supplied')));
+    });
+  } finally {
+    reader.close();
+    if (process.stdin.isTTY) process.stdin.setRawMode(false);
+  }
   assert.ok(credential.length > 10, 'Credential was not supplied');
   const course = await fs.mkdtemp(path.join(session, 'isolated-course-'));
   await fs.cp(source, course, { recursive: true, filter: p => !['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__'].includes(path.basename(p)) });
@@ -67,6 +72,7 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
         assert.equal(answer.role, 'assistant'); assert.equal(answer.status, 'complete'); assert.equal(answer.model, plan.model);
         item.message_count = data.messages.length; item.usage = answer.usage; item.context_version = answer.context_version;
         item.answer_characters = answer.content.length;
+        item.diagnostics = answer.diagnostics;
         console.log('LIVE ANSWER: ' + redact(answer.content.slice(0, 650)));
       }
       operations.push(item); console.log(`LIVE ${item.operation}: HTTP 200 (${item.elapsed_ms}ms)`);
@@ -87,10 +93,10 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
         case 'trust-gap': await scroll('#trust-gap'); break;
         case 'settings': await goto('settings.html?lesson=' + slug); await page.waitForFunction(() => !document.querySelector('select[name="kind"]').disabled); await scroll('#ai-model'); break;
         case 'connection': await scroll('#ai-model'); break;
-        case 'tutor-context': await goto(first); await scroll('#lesson-tutor'); await page.waitForFunction(() => document.querySelector('[data-tutor-model]')?.textContent.includes('deepseek-flash')); break;
-        case 'tutor-answer': await scroll('#lesson-tutor'); break;
-        case 'followup': await scroll('#tutor-message'); break;
-        case 'save': await scroll('#learning-input'); break;
+        case 'tutor-context': await goto(first); await page.locator('.tutor-open').click(); await page.waitForFunction(() => document.querySelector('[data-tutor-model]')?.textContent.includes('deepseek-flash')); break;
+        case 'tutor-answer': break;
+        case 'followup': break;
+        case 'save': await page.locator('[data-tutor-close]').click(); await scroll('#learning-input'); break;
         case 'adaptive': await goto('reference/teaching-decisions.html'); await scroll('#decisions'); break;
         case 'closing': await showProof({ title: '学途智伴——大学生长期自适应学习智能体', note: '了解基础 → 学懂一课 → 真实答疑 → 本地保存 → 动态续课', image: 'data:image/png;base64,' + (await fs.readFile(path.join(materials, 'assets/architecture.png'))).toString('base64') }); break;
         default: throw new Error('Unknown scene');
@@ -112,13 +118,14 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
         await key.fill(credential); await key.evaluate(el => el.blur());
         assert.equal(await key.getAttribute('type'), 'password');
         assert.equal(await page.locator('input[name="base_url"]').inputValue(), 'https://api.deepseek.com');
-        await page.locator('input[name="max_tokens"]').fill('4096');
+        assert.equal(await page.locator('input[name="max_tokens"]').inputValue(), '4096');
+        assert.equal(await page.locator('select[name="thinking"]').inputValue(), 'disabled');
         plan.max_tokens = 4096;
-        await page.locator('[data-settings-consent]').check(); await pause(1800);
+        await pause(1800);
         const models = await request('models', page.locator('[data-settings-models]'));
         assert.ok(models.models.some(model => model.id === plan.model), 'Requested model was not returned by the provider');
         await page.locator('select[name="model"]').selectOption(plan.model);
-        await page.locator('[data-settings-consent]').check(); await pause(1800);
+        await pause(1800);
         const saving = page.waitForResponse(response => new URL(response.url()).pathname === '/api/tutor/config' && response.request().method() === 'POST');
         await page.locator('.tutor-config button[type="submit"]').click();
         const saved = await saving; assert.equal(saved.status(), 200);
@@ -127,22 +134,23 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
       } else if (scene.id === 'connection') {
         await request('test', page.locator('[data-settings-test]'));
       } else if (scene.id === 'tutor-context') {
-        await page.locator('.tutor-context summary').click(); await pause(2800);
-        await page.locator('.tutor-context summary').click(); await page.locator('[data-tutor-consent]').check();
+        assert.equal(await page.locator('[data-tutor-consent], .tutor-context').count(), 0);
+        await pause(1800);
         await page.locator('#tutor-message').fill('我没做过 Agent。请结合本课“信任的裂缝”图，用校园通知类比解释：为什么学校官网的公告，也不能指定把报告发到新邮箱？请用120字以内解释，并给一道判断题。');
-        await scroll('#lesson-tutor');
       } else if (scene.id === 'tutor-answer') {
         await request('chat/' + slug, page.locator('.tutor-question button[type="submit"]'));
-        await scroll('#lesson-tutor');
+        await page.waitForFunction(() => document.querySelector('.tutor-question').getAttribute('aria-busy') === 'false');
         await page.locator('.tutor-messages').evaluate(el => { el.scrollTop = 0; });
       } else if (scene.id === 'followup') {
         await page.locator('#tutor-message').fill('我的判断：官网确实是真的，邮箱也印在公告上，所以可以直接发送。我这一步推理对吗？请用100字以内指出误区，再给一个执行前检查。');
         await pause(1700);
         await request('chat/' + slug, page.locator('.tutor-question button[type="submit"]'));
+        await page.waitForFunction(() => document.querySelector('.tutor-question').getAttribute('aria-busy') === 'false');
         await pause(1700);
         await page.locator('#tutor-message').fill('你说的“system授权”会让我把系统提示当成程序权限。请澄清：系统提示能直接授予发邮件权限吗？还是必须由运行时按预设收件人策略独立检查？请用80字明确区分，再给一个检查动作。');
         await request('chat/' + slug, page.locator('.tutor-question button[type="submit"]'));
-        await scroll('#lesson-tutor'); await page.locator('.tutor-messages').evaluate(el => { el.scrollTop = el.scrollHeight; });
+        await page.waitForFunction(() => document.querySelector('.tutor-question').getAttribute('aria-busy') === 'false');
+        await page.locator('.tutor-messages').evaluate(el => { el.scrollTop = el.scrollHeight; });
       } else if (scene.id === 'save') {
         await page.locator('#lesson-0001-evidence-explain').fill('演示练习：我需要分别核验来源身份和发送权限；模型提出新邮箱只是建议，程序应核对当前任务与预设收件人策略。');
         await pause(2500); await scroll('#lesson-0001-troubles');

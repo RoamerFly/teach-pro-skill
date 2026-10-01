@@ -1,0 +1,199 @@
+{
+  "skill_version": "1.1.0-rc.4",
+  "audio": "none",
+  "resolution": "1440x900",
+  "fps": 25,
+  "model": "deepseek-flash",
+  "max_tokens": 4096,
+  "live_operations": [
+    {
+      "operation": "models",
+      "local_http_status": 200,
+      "elapsed_ms": 394,
+      "model_ids": [
+        "deepseek-flash",
+        "deepseek-v4-pro"
+      ]
+    },
+    {
+      "operation": "test",
+      "local_http_status": 200,
+      "elapsed_ms": 687
+    },
+    {
+      "operation": "chat",
+      "local_http_status": 200,
+      "elapsed_ms": 1413,
+      "message_count": 2,
+      "usage": {
+        "prompt_tokens": 4427,
+        "completion_tokens": 123,
+        "total_tokens": 4550
+      },
+      "context_version": "f463fe3b9d3ef62610b2a2216410ae790751e2c65f62447873b0671efdec9165",
+      "answer_characters": 219,
+      "diagnostics": {
+        "finish_reason": "stop",
+        "has_reasoning": false,
+        "answer_characters": 219,
+        "usage": {
+          "prompt_tokens": 4427,
+          "completion_tokens": 123,
+          "total_tokens": 4550
+        },
+        "http_status": 200,
+        "elapsed_ms": 1266
+      }
+    },
+    {
+      "operation": "chat",
+      "local_http_status": 200,
+      "elapsed_ms": 1206,
+      "message_count": 4,
+      "usage": {
+        "prompt_tokens": 4592,
+        "completion_tokens": 94,
+        "total_tokens": 4686
+      },
+      "context_version": "f463fe3b9d3ef62610b2a2216410ae790751e2c65f62447873b0671efdec9165",
+      "answer_characters": 160,
+      "diagnostics": {
+        "finish_reason": "stop",
+        "has_reasoning": false,
+        "answer_characters": 160,
+        "usage": {
+          "prompt_tokens": 4592,
+          "completion_tokens": 94,
+          "total_tokens": 4686
+        },
+        "http_status": 200,
+        "elapsed_ms": 937
+      }
+    },
+    {
+      "operation": "chat",
+      "local_http_status": 200,
+      "elapsed_ms": 1109,
+      "message_count": 6,
+      "usage": {
+        "prompt_tokens": 4743,
+        "completion_tokens": 84,
+        "total_tokens": 4827
+      },
+      "context_version": "f463fe3b9d3ef62610b2a2216410ae790751e2c65f62447873b0671efdec9165",
+      "answer_characters": 146,
+      "diagnostics": {
+        "finish_reason": "stop",
+        "has_reasoning": false,
+        "answer_characters": 146,
+        "usage": {
+          "prompt_tokens": 4743,
+          "completion_tokens": 84,
+          "total_tokens": 4827
+        },
+        "http_status": 200,
+        "elapsed_ms": 953
+      }
+    }
+  ],
+  "chapters": [
+    {
+      "id": "home",
+      "title": "学途智伴 · 从一个学习目标开始",
+      "start": 0,
+      "seconds": 10.48,
+      "wait_cut_seconds": 0,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "assessment",
+      "title": "01 了解起点 · 合成学员演示作答",
+      "start": 10.48,
+      "seconds": 15.52,
+      "wait_cut_seconds": 0.001,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "lesson",
+      "title": "02 学懂一课 · 图解与最小代码",
+      "start": 26.0,
+      "seconds": 15.04,
+      "wait_cut_seconds": 0.002,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "trust-gap",
+      "title": "03 留下疑问 · 来源可信是否等于动作获准",
+      "start": 41.04,
+      "seconds": 15.12,
+      "wait_cut_seconds": 0,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "settings",
+      "title": "04 连接模型 · DeepSeek Flash 实际配置",
+      "start": 56.16,
+      "seconds": 17.2,
+      "wait_cut_seconds": 0.033,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "connection",
+      "title": "05 测试连接 · 实际接口返回",
+      "start": 73.36,
+      "seconds": 7.76,
+      "wait_cut_seconds": 0.014,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "tutor-context",
+      "title": "06 一键问 AI · 大尺寸课内对话窗口",
+      "start": 81.12,
+      "seconds": 11.4,
+      "wait_cut_seconds": 0,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "tutor-answer",
+      "title": "07 真实答疑 · 保留模型原始回答",
+      "start": 92.52000000000001,
+      "seconds": 15.72,
+      "wait_cut_seconds": 0.011,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "followup",
+      "title": "08 连续追问 · 系统提示与运行时权限",
+      "start": 108.24000000000001,
+      "seconds": 16.52,
+      "wait_cut_seconds": 0.011,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "save",
+      "title": "09 本地保存 · 读取刚才产生的文件",
+      "start": 124.76,
+      "seconds": 15.08,
+      "wait_cut_seconds": 0,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "adaptive",
+      "title": "10 动态续课 · 已有合成测试的决策回放",
+      "start": 139.84,
+      "seconds": 17.6,
+      "wait_cut_seconds": 0.017,
+      "reading_hold": "same_capture_screenshot"
+    },
+    {
+      "id": "closing",
+      "title": "重邮FFBond · 学途智伴",
+      "start": 157.44,
+      "seconds": 13.2,
+      "wait_cut_seconds": 0.017,
+      "reading_hold": "current_architecture_card"
+    }
+  ],
+  "seconds": 170.64,
+  "sha256": "8DA85E8304DAE8C8AD5CF83BDE597C8307CF31A4DBE83C78C5FBC705C9893E2C"
+}
