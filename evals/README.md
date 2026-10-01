@@ -8,6 +8,8 @@
 
 比赛 Demo 已整理为[独立展示副本](../example/competition-demo-zhi-jian-agent/README.md)，校核与浏览器结果见 [Demo 验收记录](./records/2026-10-01-competition-demo-review.md)。这是展示验收，不新增模型行为成绩。
 
+同一 Demo 的六页 Word 已完成渲染与逐页检查，见[说明文档验收](./records/2026-10-01-competition-document-review.md)；下一阶段为视频制作，不改主体功能。
+
 ## 当前主线：智鉴 Agent
 
 后续 TeleAgent 测试固定使用“智鉴 Agent：智能体开发与安全实战”，基础条件和目标沿用用户原始要求。按[主线复测计划](./teleagent-main-course.md)串行验证：先评估，再生成第一课，最后检查证据不足、误区补救和新证据后的动态续课。

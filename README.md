@@ -93,6 +93,7 @@ git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.3.zip H
 ## 文档与反馈
 
 - [Skill 使用说明](./teach-pro/README.md)
+- [参赛技能说明文档](./example/competition-materials/README.md)
 - [课程工作区规范](./teach-pro/COURSE-WORKSPACE-SPEC.md)
 - [资源选择策略](./teach-pro/RESOURCE-SELECTION-POLICY.md)
 - [本地同步规范](./teach-pro/LOCAL-SYNC-SPEC.md)
