@@ -4,7 +4,6 @@
   const section = document.querySelector('[data-tutor-settings-page]');
   if (!section) return;
   const form = section.querySelector('.tutor-config');
-  const consent = section.querySelector('[data-settings-consent]');
   const status = section.querySelector('.tutor-status');
   const current = section.querySelector('[data-settings-current]');
   const test = section.querySelector('[data-settings-test]');
@@ -27,10 +26,11 @@
   function say(message, error = false) { status.textContent = message; status.dataset.state = error ? 'error' : 'ready'; }
   function controls() {
     section.querySelectorAll('button, input, select').forEach(field => { field.disabled = !online || busy; });
-    form.querySelector('button[type="submit"]').disabled = !online || busy || !consent.checked;
-    fetchModels.disabled = !online || busy || !consent.checked;
-    test.disabled = !online || busy || !configured || !consent.checked;
+    form.querySelector('button[type="submit"]').disabled = !online || busy;
+    fetchModels.disabled = !online || busy;
+    test.disabled = !online || busy || !configured;
     forget.disabled = !online || busy;
+    syncManual();
   }
   async function api(route, body) {
     const options = { credentials: 'omit', cache: 'no-store', headers: { 'X-Teach-Token': token } };
@@ -43,12 +43,13 @@
   function showCurrent(result) {
     const saved = result.settings || {};
     current.textContent = result.configured
-      ? '当前已启用：' + (kinds[saved.kind]?.label || '自定义') + ' · ' + saved.provider + ' / ' + saved.model + '。所有课节共享此连接。'
-      : 'AI 答疑尚未启用；无需配置即可继续学习。需要时保存模型设置，服务重启后需重新输入 Key。';
+      ? '已连接 · ' + saved.provider + ' / ' + saved.model
+      : '尚未连接，选择服务后输入密钥即可开始。';
+    form.elements.api_key.placeholder = result.configured ? '已在服务会话中，可留空保留' : '输入密钥，本机模型可留空';
   }
   function showProtocol() {
     const preset = kinds[kind.value];
-    protocol.textContent = preset ? preset.note + ' 请求：POST /chat/completions；输出上限参数：' + preset.token_parameter + '；非流式文本。' : '启动本地课程服务后可查看服务类型对应的协议规范。';
+    protocol.textContent = preset ? preset.note : '兼容 Chat Completions 的文本接口。';
   }
   function setModels(items, selected = '') {
     model.replaceChildren();
@@ -62,7 +63,7 @@
   function syncManual() {
     const active = model.value === '__manual__';
     manual.hidden = !active;
-    form.elements.model_manual.disabled = !active;
+    form.elements.model_manual.disabled = !active || !online || busy;
     form.elements.model_manual.required = active;
   }
   function hideKey() {
@@ -88,6 +89,9 @@
       form.elements.provider.value = preset.label;
     }
     form.elements.api_key.value = '';
+    form.elements.api_key.placeholder = '输入密钥，本机模型可留空';
+    form.elements.thinking.value = 'disabled';
+    if (kind.value === 'custom') section.querySelector('.settings-advanced').open = true;
     hideKey();
     setModels([]);
     showProtocol();
@@ -99,46 +103,45 @@
     try { await fn(); } catch (error) { say(error.message || '请求失败', true); }
     finally { busy = false; controls(); }
   }
-  consent.addEventListener('change', controls);
   form.addEventListener('submit', event => {
     event.preventDefault();
-    if (!online || busy || !consent.checked) return;
+    if (!online || busy) return;
     const data = Object.fromEntries(new FormData(form));
     if (data.model === '__manual__') data.model = data.model_manual.trim();
     delete data.model_manual;
-    data.max_tokens = Number(data.max_tokens); data.consent = true;
+    data.max_tokens = Number(data.max_tokens);
     act(async () => {
       try {
         const result = await api('config', data);
         configured = result.configured; showCurrent(result);
-        say('设置已保存；所有课节共用此连接，Key 仅在服务内存中。可测试连接或返回课程提问。');
+        say('设置已启用，可以返回本课提问。');
       } finally { form.elements.api_key.value = ''; data.api_key = ''; hideKey(); }
     });
   });
   function edited(event) {
-    if (event.target === consent) return;
-    configured = false; consent.checked = false;
-    say('表单已修改，尚未应用；课程仍使用上次已保存的连接。请确认说明并重新保存。');
+    configured = false;
+    say('修改尚未应用，保存后启用。');
     controls();
   }
   form.addEventListener('input', edited);
   form.addEventListener('change', edited);
   fetchModels.addEventListener('click', () => act(async () => {
     const data = { kind: kind.value, base_url: form.elements.base_url.value.trim(), mode: form.elements.mode.value,
-      api_key: form.elements.api_key.value, consent: true };
+      api_key: form.elements.api_key.value };
     say('正在获取模型列表（不发送课程内容）…');
+    const previous = model.value;
     const result = await api('models', data);
-    setModels(result.models || []);
-    say(result.message + (result.models.length ? '请选择模型，然后保存设置。' : '列表为空，可手动填写模型 ID。'));
+    setModels(result.models || [], result.models?.some(item => item.id === previous) ? previous : result.models?.length === 1 ? result.models[0].id : '');
+    say(result.models?.length ? '已获取 ' + result.models.length + ' 个模型，选择后保存。' : '列表为空，可手动填写模型 ID。');
     data.api_key = '';
   }));
   test.addEventListener('click', () => act(async () => {
-    say('正在测试兼容接口（可能计费）…');
+    say('正在测试连接…');
     const result = await api('test', {}); say(result.message);
   }));
   forget.addEventListener('click', () => act(async () => {
-    await api('forget', {}); configured = false; form.elements.api_key.value = ''; hideKey(); consent.checked = false;
-    showCurrent({ configured: false }); say('会话密钥已忘记；所有课节暂停答疑，已有聊天仍保留。');
+    await api('forget', {}); configured = false; form.elements.api_key.value = ''; hideKey();
+    showCurrent({ configured: false }); say('连接已断开，已有聊天仍保留。');
   }));
   async function start() {
     controls();
@@ -154,7 +157,7 @@
       setModels([], result.settings?.model || '');
       if (!result.settings || !Object.keys(result.settings).length) applyPreset();
       else { kind.value = result.settings.kind || 'custom'; showProtocol(); }
-      showCurrent(result); say('课程设置已连接；非密钥配置已恢复，API Key 不会回显。');
+      showCurrent(result); say(configured ? '模型已就绪' : '选服务 → 输入密钥 → 获取模型 → 保存');
     } catch (error) { say('课程设置不可用：' + error.message + '。核心课程仍可阅读。', true); }
     controls();
   }
