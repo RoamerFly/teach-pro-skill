@@ -8,7 +8,7 @@
 
 比赛 Demo 已整理为[独立展示副本](../example/competition-demo-zhi-jian-agent/README.md)，校核与浏览器结果见 [Demo 验收记录](./records/2026-10-01-competition-demo-review.md)。这是展示验收，不新增模型行为成绩。
 
-同一 Demo 的六页 Word 已完成渲染与逐页检查，见[说明文档验收](./records/2026-10-01-competition-document-review.md)；下一阶段为视频制作，不改主体功能。
+同一 Demo 的六页 Word 已完成渲染与逐页检查，见[说明文档验收](./records/2026-10-01-competition-document-review.md)。新版视频为 161.33 秒，已完整解码并检查 16 个镜头，见[视频验收](./records/2026-10-01-competition-video-review.md)；真实模型操作仍为待补录项，不改主体功能。
 
 ## 当前主线：智鉴 Agent
 

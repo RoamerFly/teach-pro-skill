@@ -1,8 +1,8 @@
 # 学途智伴 · 比赛 Demo 制作方案
 
-队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。基线：Teach Pro 1.1.0-rc.3；这是制作方案，不是已录好的新视频或最终提交包。
+队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。基线：Teach Pro 1.1.0-rc.3。本文记录制作方案与当前进度。
 
-制作状态：独立 Demo 八页已完成内容校核与 Windows 浏览器验收，见 [展示入口](../example/competition-demo-zhi-jian-agent/README.md) 和 [验收记录](./records/2026-10-01-competition-demo-review.md)。[新版 Word 说明](../example/competition-materials/README.md)已完成六页渲染验收；接下来录制视频，旧视频和提交包尚未替换。
+制作状态：独立 Demo 八页已完成内容校核与 Windows 浏览器验收，见 [展示入口](../example/competition-demo-zhi-jian-agent/README.md) 和 [验收记录](./records/2026-10-01-competition-demo-review.md)。[新版参赛材料](../example/competition-materials/README.md)包含六页 Word 和 161.33 秒视频；真实模型操作尚待补录，旧视频和提交包未覆盖。
 
 ## 展示主线
 
@@ -47,4 +47,4 @@
 3. 视频：按分镜录制 ≤3 分钟版本；有声、清晰字幕，配置演示不显示 Key。
 4. 提交包：匹配 Skill 源码版本，核验 Unix 执行权限、私有文件排除、文档与视频能打开，以“重邮FFBond+学途智伴——大学生长期自适应学习智能体”命名。
 
-用户提供的截止要求为 10 月 31 日 18:00；此处仅沿用提交信息，不声称已再次核验官网。评测依据见[行为关卡](./competition-gates.md)和[最后分支复核](./records/2026-10-01-test5-g3-recovery-review.md)。下一步是制作视频；Word 版本与检查见 [说明文档验收](./records/2026-10-01-competition-document-review.md)，不再要求学员重跑主线。
+用户提供的截止要求为 10 月 31 日 18:00；此处仅沿用提交信息，不声称已再次核验官网。评测依据见[行为关卡](./competition-gates.md)和[最后分支复核](./records/2026-10-01-test5-g3-recovery-review.md)。Word 与视频检查见 [说明文档验收](./records/2026-10-01-competition-document-review.md)、[视频验收](./records/2026-10-01-competition-video-review.md)。下一步确认旁白观感、补录真实模型操作，再统一材料状态并制作最终提交包，不再要求学员重跑教学主线。

@@ -1,0 +1,106 @@
+{
+  "seconds": 161.333333,
+  "resolution": "1440x900",
+  "fps": 25,
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "speech_rate": "+0%",
+  "provider_requests": 0,
+  "chapters": [
+    {
+      "start": 0,
+      "seconds": 12.32,
+      "id": "home",
+      "title": "01 · 学途智伴——大学生长期自适应学习智能体"
+    },
+    {
+      "start": 12.32,
+      "seconds": 8.12,
+      "id": "roadmap",
+      "title": "02 · 有长期路线，每次只教一课"
+    },
+    {
+      "start": 20.44,
+      "seconds": 11.0,
+      "id": "assessment",
+      "title": "03 · 入门评估｜合成演示作答"
+    },
+    {
+      "start": 31.44,
+      "seconds": 9.12,
+      "id": "assessment-save",
+      "title": "04 · 从本地服务打开，答案自动落盘"
+    },
+    {
+      "start": 40.56,
+      "seconds": 10.0,
+      "id": "diagram",
+      "title": "05 · 一节完整课｜先建立图景"
+    },
+    {
+      "start": 50.56,
+      "seconds": 8.0,
+      "id": "code",
+      "title": "06 · 从图解走向可运行代码"
+    },
+    {
+      "start": 58.56,
+      "seconds": 9.0,
+      "id": "feedback",
+      "title": "07 · 错误反馈，再解释与修正"
+    },
+    {
+      "start": 67.56,
+      "seconds": 8.44,
+      "id": "resources",
+      "title": "08 · 一手阅读不是链接堆砌"
+    },
+    {
+      "start": 76.0,
+      "seconds": 11.048,
+      "id": "questions",
+      "title": "09 · 保存练习结果与课末疑难"
+    },
+    {
+      "start": 87.048,
+      "seconds": 9.12,
+      "id": "files",
+      "title": "10 · 文件连续性｜刚才的实际保存结果"
+    },
+    {
+      "start": 96.168,
+      "seconds": 11.0,
+      "id": "decisions",
+      "title": "11 · 三种教学选择｜已有合成实测回放"
+    },
+    {
+      "start": 107.168,
+      "seconds": 10.0,
+      "id": "remedial",
+      "title": "12 · 补救课｜针对具体推理重新讲解"
+    },
+    {
+      "start": 117.168,
+      "seconds": 10.568,
+      "id": "advance",
+      "title": "13 · 推进课｜工具调用数据流"
+    },
+    {
+      "start": 127.736,
+      "seconds": 11.36,
+      "id": "settings",
+      "title": "14 · DeepSeek 设置｜流程预览，未发起连接"
+    },
+    {
+      "start": 139.096,
+      "seconds": 10.64,
+      "id": "tutor",
+      "title": "15 · 课内答疑｜上下文预览，未发送问题"
+    },
+    {
+      "start": 149.736,
+      "seconds": 11.576,
+      "id": "architecture",
+      "title": "16 · 学途智伴｜重邮FFBond"
+    }
+  ]
+}
