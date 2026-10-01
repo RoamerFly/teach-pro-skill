@@ -126,7 +126,7 @@ test('Tutor modal, configuration, retries and local history work through the run
     await page.locator('#tutor-message').fill('');
     for (const [name, width, height, theme, visual] of [ ['04-chat-dark', 1440, 900, 'dark', 'systems'], ['05-chat-medium', 1280, 720, 'light', 'studio'], ['06-chat-mobile', 390, 844, 'dark', 'nature'] ]) {
       await page.setViewportSize({ width, height }); await page.evaluate(({ theme, visual }) => { document.documentElement.dataset.theme = theme; document.documentElement.dataset.visualTheme = visual; }, { theme, visual });
-      await page.screenshot({ path: path.join(qa, name + '.png') });
+      await page.screenshot({ path: path.join(qa, name + '.png'), animations: 'disabled' });
       assert.ok(await page.locator('#tutor-dialog').evaluate(el => el.getBoundingClientRect().right <= innerWidth + 1));
       assert.ok(await page.locator('.tutor-question').evaluate(el => el.getBoundingClientRect().bottom <= innerHeight + 1));
     }
@@ -157,8 +157,9 @@ test('Tutor modal, configuration, retries and local history work through the run
     await ask('使用切换后的模型继续答疑');
     assert.equal(calls.filter(call => call.kind === 'chat').at(-1).payload.model, 'demo-second');
     await another.setViewportSize({ width: 390, height: 844 });
+    await another.reload(); await wait(another, () => !document.querySelector('[data-key-toggle]').disabled);
     await another.evaluate(() => { document.documentElement.dataset.theme = 'dark'; });
-    await another.screenshot({ path: path.join(qa, '07-settings-mobile-dark.png'), fullPage: true });
+    await another.screenshot({ path: path.join(qa, '07-settings-mobile-dark.png'), fullPage: true, animations: 'disabled' });
     assert.ok(await another.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await page.locator('[data-tutor-close]').click();
     const providerBeforeStatic = calls.length;

@@ -39,6 +39,8 @@
    ├─ sync.js
    ├─ tutor.js                # 默认提供：课内答疑组件，未配置不发请求
    ├─ tutor-settings.js       # 默认提供：独立设置页的模型配置组件
+   ├─ tutor-markdown.js       # 默认提供：回答排版模块
+   ├─ vendor/                # 固定本地排版依赖及许可证，完整复制
    └─ *.svg                    # 可选：原创图解
 ```
 

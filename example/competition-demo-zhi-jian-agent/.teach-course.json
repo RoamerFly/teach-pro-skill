@@ -9,5 +9,5 @@
   "latest_submission_lesson": null,
   "entry_assessment": {"delivered": true, "submitted": false, "page": "practice/entry-assessment.html"},
   "next_candidate": "记忆与状态；实际续课依据本副本新作答决定",
-  "demo": {"synthetic_scenario": true, "content_manually_reviewed": true, "skill_version": "1.1.0-rc.3"}
+  "demo": {"synthetic_scenario": true, "content_manually_reviewed": true, "skill_version": "1.1.0-rc.4", "teaching_content_baseline": "1.1.0-rc.3"}
 }

@@ -137,6 +137,10 @@ def history(root, slug):
         raise TutorError("聊天文件与当前课程不匹配。")
     if len(data['messages']) > MAX_HISTORY or any(not isinstance(m, dict) or m.get('role') not in {'user', 'assistant'} or m.get('status') not in {'complete', 'pending', 'failed', 'incomplete'} or not isinstance(m.get('content'), str) or len(m['content']) > MAX_REPLY for m in data['messages']):
         raise TutorError("聊天记录格式无效，请检查本地文件。")
+    for index, message in enumerate(data['messages']):
+        if message['role'] == 'user' and not message.get('id'):
+            # Stable in-memory compatibility ID; reading alone never rewrites the file.
+            message['id'] = hashlib.sha256((str(index) + '\n' + str(message.get('time', '')) + '\n' + message['content']).encode()).hexdigest()[:16]
     return data
 
 

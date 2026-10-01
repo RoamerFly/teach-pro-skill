@@ -130,6 +130,12 @@ class CourseCheckTests(unittest.TestCase):
         self.assertEqual(result.returncode, 1)
         self.assertFalse(json.loads(result.stdout)['structurally_valid'])
 
+    def test_missing_markdown_dependency_is_a_deployment_failure(self):
+        (self.root / 'assets/vendor/purify.min.js').unlink()
+        report = checker.check_course(self.root)
+        self.assertFalse(report['structurally_valid'])
+        self.assertTrue(any('purify.min.js' in str(issue) for issue in report['issues']))
+
 
 if __name__ == '__main__':
     unittest.main()

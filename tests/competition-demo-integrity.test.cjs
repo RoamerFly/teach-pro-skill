@@ -11,7 +11,8 @@ const pages = ['index.html', 'settings.html', 'practice/entry-assessment.html',
   ...fs.readdirSync(path.join(demo, 'lessons')).map(file => `lessons/${file}`)];
 
 test('Demo reuses the frozen runtime byte-for-byte', () => {
-  for (const file of ['style.css', 'course.js', 'sync.js', 'tutor.js', 'tutor-settings.js']) {
+  for (const file of ['style.css', 'course.js', 'sync.js', 'tutor.js', 'tutor-settings.js', 'tutor-markdown.js',
+    'vendor/marked.umd.js', 'vendor/purify.min.js', 'vendor/marked.LICENSE', 'vendor/dompurify.LICENSE', 'vendor/dompurify.LICENSE-MPL']) {
     assert.deepEqual(fs.readFileSync(path.join(demo, 'assets', file)), fs.readFileSync(path.join(root, 'teach-pro/assets', file)), file);
   }
   for (const file of ['serve_course.py', 'tutor_chat.py', 'start-course.cmd', 'start-course.sh', 'start-course.command']) {
@@ -35,7 +36,7 @@ test('Demo starts without learner evidence or model secrets', () => {
   assert.equal(meta.latest_submission_lesson, null);
   assert.equal(meta.entry_assessment.submitted, false);
   assert.equal(meta.demo.synthetic_scenario, true);
-  assert.equal(meta.demo.skill_version, '1.1.0-rc.3');
+  assert.equal(meta.demo.skill_version, '1.1.0-rc.4');
   for (const file of ['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__']) {
     assert.equal(fs.existsSync(path.join(demo, file)), false, file);
   }

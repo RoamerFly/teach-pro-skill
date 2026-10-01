@@ -14,7 +14,10 @@ VOID = set('area base br col embed hr img input link meta param source track wbr
 COUNT_RE = re.compile(r'(\d+)\s*道选择题\s*(?:[+＋和、]|与)\s*(\d+)\s*道(?:开放|自述)题')
 REQUIRED = ('index.html', 'settings.html', 'serve_course.py', 'tutor_chat.py',
             'assets/style.css', 'assets/course.js', 'assets/sync.js',
-            'assets/tutor.js', 'assets/tutor-settings.js')
+            'assets/tutor.js', 'assets/tutor-settings.js', 'assets/tutor-markdown.js',
+            'assets/vendor/marked.umd.js', 'assets/vendor/purify.min.js',
+            'assets/vendor/marked.LICENSE', 'assets/vendor/dompurify.LICENSE',
+            'assets/vendor/dompurify.LICENSE-MPL')
 
 
 @dataclass

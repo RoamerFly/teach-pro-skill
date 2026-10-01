@@ -163,7 +163,13 @@ class ChatTests(unittest.TestCase):
         record = {'schema': 1, 'course': self.root.name, 'lesson': '0001-intro', 'messages': [
             {'role': 'user', 'content': '旧问题', 'status': 'failed', 'time': 'unknown'}]}
         tutor.save_history(self.root, record)
-        self.assertEqual(tutor.history(self.root, '0001-intro')['messages'][0]['content'], '旧问题')
+        original = (self.root / 'learner-chats/0001-intro.json').read_bytes()
+        loaded = tutor.history(self.root, '0001-intro')
+        self.assertEqual(loaded['messages'][0]['content'], '旧问题')
+        self.assertEqual(original, (self.root / 'learner-chats/0001-intro.json').read_bytes())
+        with patch.object(tutor, 'model_request', return_value=tutor.parse_answer(response('补答'))):
+            retried = tutor.chat(self.root, '0001-intro', {'message': '旧问题', 'retry_id': loaded['messages'][0]['id']})
+        self.assertEqual(len(retried['messages']), 2)
 
     def test_stale_retry_and_unconfigured_request_rejected(self):
         with self.assertRaises(tutor.TutorError):
