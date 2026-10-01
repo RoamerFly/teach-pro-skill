@@ -2,7 +2,7 @@
 
 面向长期学习的自适应教学 Skill。先评估基础与目标，再逐节生成网页课程，根据作答、实践成果和疑难持续调整教学。
 
-当前版本：**1.1.0-rc.2**（稳定化候选；教学主体功能冻结，行为复测进行中）
+当前版本：**1.1.0-rc.3**（稳定化候选；教学主体功能冻结，行为复测进行中）
 
 ## 核心特性
 
@@ -83,7 +83,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.2.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.3.zip HEAD:teach-pro
 ```
 
 行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；候选版不代表自适应续课已通过实测。
