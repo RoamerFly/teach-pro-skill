@@ -35,76 +35,98 @@
   const course = document.body?.dataset.courseKey || 'teach-course';
   const updatedKey = `${course}:${page}:updated-at`;
   const snapshot = () => ({ fields: Object.fromEntries(fields.map((field) => [field.dataset.saveKey, fieldValue(field)])) });
-  let ready = false;
-  let changedBeforeReady = false;
-  let timer = null;
-  let chain = Promise.resolve();
-
-  function persist() {
-    if (!ready) { changedBeforeReady = true; return; }
-    const body = JSON.stringify(snapshot());
-    say('正在写入课程目录…', 'pending');
-    chain = chain.catch(() => {}).then(async () => {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'omit',
-        cache: 'no-store',
-        body,
-      });
+  const timesKey = `${course}:${page}:field-updated-at`;
+  const dirty = new Map();
+  let ready = false, restoring = false, writing = false, revision = 0, timer = null, retryTimer = null, retries = 0;
+  const mark = (field) => dirty.set(field.dataset.saveKey, ++revision);
+  const stopRetry = () => { clearTimeout(retryTimer); retryTimer = null; };
+  async function request(options = {}) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(endpoint, { credentials: 'omit', cache: 'no-store', ...options, signal: controller.signal });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      say('已写入课程目录 · AI 下次对话可直接读取', 'saved');
-    }).catch(() => { say('课程目录同步失败；答案仍保存在浏览器，可下载备份', 'offline'); });
+      return await response.json();
+    } finally { clearTimeout(timeout); }
   }
-
+  function retry() {
+    if (retryTimer || retries >= 3) return;
+    retryTimer = setTimeout(() => { retryTimer = null; restore(); }, 1000 * 2 ** retries++);
+  }
   function schedule(delay = 350) {
-    if (!ready) { changedBeforeReady = true; return; }
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(() => { timer = null; persist(); }, delay);
+    clearTimeout(timer);
+    timer = setTimeout(() => { timer = null; if (ready) persist(); else restore(); }, delay);
   }
-
+  async function persist() {
+    if (!ready || writing || !dirty.size) return;
+    writing = true;
+    const changes = new Map(dirty), body = JSON.stringify(snapshot());
+    say('正在写入课程目录…', 'pending');
+    try {
+      await request({ method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
+      for (const [key, value] of changes) if (dirty.get(key) === value) dirty.delete(key);
+      retries = 0; stopRetry();
+      if (!dirty.size) say('已写入课程目录 · AI 下次对话可直接读取', 'saved');
+    } catch {
+      ready = false;
+      say('课程目录同步失败；答案仍保存在浏览器，可下载备份', 'offline'); retry();
+    } finally {
+      writing = false;
+      if (ready && dirty.size) schedule(0);
+    }
+  }
+  async function restore() {
+    if (restoring || writing || ready) return;
+    restoring = true;
+    try {
+      const saved = await request();
+      if (!saved || !saved.fields || typeof saved.fields !== 'object' || Array.isArray(saved.fields)) throw new Error('invalid record');
+      let localUpdated = null, times = {};
+      try {
+        localUpdated = window.localStorage.getItem(updatedKey);
+        times = JSON.parse(window.localStorage.getItem(timesKey) || '{}');
+      } catch {}
+      if (!times || typeof times !== 'object' || Array.isArray(times)) times = {};
+      const newer = (time) => Boolean(time && (!saved.saved_at || Date.parse(time) > Date.parse(saved.saved_at)));
+      const legacyNewer = !Object.keys(times).length && newer(localUpdated);
+      for (const field of fields) {
+        const key = field.dataset.saveKey;
+        // Preserve individual edits, including explicit empty values, not a pre-restore blank form.
+        if (!dirty.has(key) && (newer(times[key]) || (legacyNewer && fieldValue(field)))) mark(field);
+        if (dirty.has(key)) continue;
+        if (typeof saved.fields[key] === 'string') {
+          setFieldValue(field, saved.fields[key]);
+          if (saved.saved_at) times[key] = saved.saved_at;
+          try { window.localStorage.setItem(`${course}:${key}`, fieldValue(field)); } catch {}
+        }
+      }
+      try {
+        window.localStorage.setItem(timesKey, JSON.stringify(times));
+        if (!dirty.size && saved.saved_at) window.localStorage.setItem(updatedKey, saved.saved_at);
+      } catch {}
+      ready = true; stopRetry();
+      if (dirty.size) schedule(0);
+      else {
+        retries = 0;
+        say(saved.saved_at ? '已从课程目录恢复 · AI 下次对话可直接读取' : '课程目录已连接；填写后自动同步给 AI', saved.saved_at ? 'saved' : 'ready');
+      }
+    } catch {
+      say('课程目录不可用；答案仅保存在浏览器，可下载备份', 'offline'); retry();
+    } finally { restoring = false; }
+  }
+  function edited(field, delay) { mark(field); retries = 0; stopRetry(); schedule(delay); }
   fields.forEach((field) => {
-    field.addEventListener('input', () => schedule());
-    field.addEventListener('change', () => schedule(0));
+    field.addEventListener('input', () => edited(field, 350));
+    field.addEventListener('change', () => edited(field, 0));
   });
-  document.querySelectorAll('[data-save-clear]').forEach((button) => {
-    button.addEventListener('click', () => schedule(0));
-  });
+  // Only course.js emits this event, after the learner confirms clearing.
+  document.addEventListener('teach:answers-cleared', () => { fields.forEach(mark); retries = 0; stopRetry(); schedule(0); });
+  const reconnect = () => { if (!ready && !restoring && !writing) { retries = 0; stopRetry(); restore(); } };
+  window.addEventListener('focus', reconnect); window.addEventListener('online', reconnect);
   window.addEventListener('pagehide', () => {
-    if (!timer || !ready || typeof navigator.sendBeacon !== 'function') return;
+    if (!ready || writing || !dirty.size || typeof navigator.sendBeacon !== 'function') return;
     clearTimeout(timer);
     navigator.sendBeacon(endpoint, new Blob([JSON.stringify(snapshot())], { type: 'application/json' }));
   });
-
-  async function restore() {
-    try {
-      const response = await fetch(endpoint, { credentials: 'omit', cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const saved = await response.json();
-      let localUpdated = null;
-      try { localUpdated = window.localStorage.getItem(updatedKey); } catch {}
-      const localNewer = localUpdated && (!saved.saved_at || Date.parse(localUpdated) > Date.parse(saved.saved_at));
-      ready = true;
-      if (changedBeforeReady || (localNewer && fields.some((field) => fieldValue(field)))) {
-        persist();
-        return;
-      }
-      if (saved.fields && typeof saved.fields === 'object' && saved.saved_at) {
-        fields.forEach((field) => {
-          if (typeof saved.fields[field.dataset.saveKey] === 'string') {
-            setFieldValue(field, saved.fields[field.dataset.saveKey]);
-            try { window.localStorage.setItem(`${course}:${field.dataset.saveKey}`, fieldValue(field)); } catch {}
-          }
-        });
-        try { window.localStorage.setItem(updatedKey, saved.saved_at); } catch {}
-        say('已从课程目录恢复 · AI 下次对话可直接读取', 'saved');
-      } else {
-        say('课程目录已连接；填写后自动同步给 AI', 'ready');
-      }
-    } catch {
-      say('课程目录不可用；答案仅保存在浏览器，可下载备份', 'offline');
-    }
-  }
-
   restore();
 })();

@@ -6,6 +6,7 @@ const path = require('node:path');
 const { spawn } = require('node:child_process');
 const { createInterface } = require('node:readline');
 const { chromium } = require('playwright');
+const { readTutorResponse } = require('./capture_response.cjs');
 const session = path.resolve(process.argv[2]);
 const materials = path.resolve(__dirname, '..');
 const source = path.resolve(materials, '../competition-demo-zhi-jian-agent');
@@ -63,11 +64,11 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
       const waiting = page.waitForResponse(response => new URL(response.url()).pathname === '/api/tutor/' + endpoint && response.request().method() === 'POST', { timeout: 65000 });
       await button.click();
       const response = await waiting;
-      const data = await response.json();
-      if (response.status() !== 200) throw new Error(redact(data.error || `Local request failed: ${response.status()}`));
-      const item = { operation: endpoint.startsWith('chat/') ? 'chat' : endpoint, local_http_status: response.status(), elapsed_ms: Date.now() - started };
+      const data = await readTutorResponse(response, page);
+      const chat = endpoint.startsWith('chat-stream/');
+      const item = { operation: chat ? 'chat' : endpoint, local_http_status: response.status(), elapsed_ms: Date.now() - started, ...(chat ? { transport: 'stream' } : {}) };
       if (endpoint === 'models') item.model_ids = data.models.map(model => model.id);
-      if (endpoint.startsWith('chat/')) {
+      if (chat) {
         const answer = data.messages.at(-1);
         assert.equal(answer.role, 'assistant'); assert.equal(answer.status, 'complete'); assert.equal(answer.model, plan.model);
         item.message_count = data.messages.length; item.usage = answer.usage; item.context_version = answer.context_version;
@@ -138,17 +139,17 @@ const redact = text => credential ? String(text).replaceAll(credential, '[creden
         await pause(1800);
         await page.locator('#tutor-message').fill('我没做过 Agent。请结合本课“信任的裂缝”图，用校园通知类比解释：为什么学校官网的公告，也不能指定把报告发到新邮箱？请用120字以内解释，并给一道判断题。');
       } else if (scene.id === 'tutor-answer') {
-        await request('chat/' + slug, page.locator('.tutor-question button[type="submit"]'));
+        await request('chat-stream/' + slug, page.locator('.tutor-question button[type="submit"]'));
         await page.waitForFunction(() => document.querySelector('.tutor-question').getAttribute('aria-busy') === 'false');
         await page.locator('.tutor-messages').evaluate(el => { el.scrollTop = 0; });
       } else if (scene.id === 'followup') {
         await page.locator('#tutor-message').fill('我的判断：官网确实是真的，邮箱也印在公告上，所以可以直接发送。我这一步推理对吗？请用100字以内指出误区，再给一个执行前检查。');
         await pause(1700);
-        await request('chat/' + slug, page.locator('.tutor-question button[type="submit"]'));
+        await request('chat-stream/' + slug, page.locator('.tutor-question button[type="submit"]'));
         await page.waitForFunction(() => document.querySelector('.tutor-question').getAttribute('aria-busy') === 'false');
         await pause(1700);
         await page.locator('#tutor-message').fill('你说的“system授权”会让我把系统提示当成程序权限。请澄清：系统提示能直接授予发邮件权限吗？还是必须由运行时按预设收件人策略独立检查？请用80字明确区分，再给一个检查动作。');
-        await request('chat/' + slug, page.locator('.tutor-question button[type="submit"]'));
+        await request('chat-stream/' + slug, page.locator('.tutor-question button[type="submit"]'));
         await page.waitForFunction(() => document.querySelector('.tutor-question').getAttribute('aria-busy') === 'false');
         await page.locator('.tutor-messages').evaluate(el => { el.scrollTop = el.scrollHeight; });
       } else if (scene.id === 'save') {

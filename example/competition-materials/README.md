@@ -2,7 +2,7 @@
 
 队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。校园生活赛道，当前基线为 Teach Pro 1.1.0-rc.4。
 
-Skill 与公开 Demo 已更新至 rc.6 紧凑流式答疑；本目录的 Word、截图和视频仍为 rc.4 快照，待最终录制时同步。新版界面检查见[工具栏验收](../../evals/records/2026-10-03-lesson-toolbar-review.md)及[流式答疑验收](../../evals/records/2026-10-03-streaming-tutor-review.md)。
+Skill 与公开 Demo 已更新至 rc.7 学习记录稳定化；本目录的 Word、截图和视频仍为 rc.4 快照，待最终录制时同步。新版界面检查见[工具栏验收](../../evals/records/2026-10-03-lesson-toolbar-review.md)、[流式答疑验收](../../evals/records/2026-10-03-streaming-tutor-review.md)及[保存稳定化验收](../../evals/records/2026-10-03-learner-input-stability.md)。
 
 ## 当前交付
 
@@ -45,7 +45,7 @@ python example/competition-materials/scripts/render_ui_video.py <会话目录>
 python example/competition-materials/scripts/audit_video.py <仓库外检查目录> --ui
 ```
 
-会话目录需有镜头时长计划 `voice-plan.json`；这里只读取时长，不制作音轨。`video-ui-scenes.json` 定义新版字幕。录制会实际获取模型、测试连接和发送三轮问题，共五次提供商请求，可能计费。
+会话目录需有镜头时长计划 `voice-plan.json`；这里只读取时长，不制作音轨。`video-ui-scenes.json` 定义新版字幕。录制会实际获取模型、测试连接和发送三轮问题，共五次提供商请求，可能计费。脚本使用新版 chat-stream 端点，在收到最终已保存记录后才记录成功；不重发请求或替换模型回答。
 
 在私有交互终端通过不回显的标准输入提供密钥，不使用命令参数、环境变量或脚本保存。API Key 始终为 password，保存后输入框清空。原始录屏、合成作答、聊天和配置只保留在仓库外隔离目录。
 

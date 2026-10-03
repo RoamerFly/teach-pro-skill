@@ -173,6 +173,10 @@
     const submit = quiz.querySelector('[data-quiz-submit]');
     const feedback = quiz.querySelector('[data-quiz-feedback]');
     if (!submit || !feedback) return;
+    quiz.addEventListener('change', () => {
+      feedback.className = 'quiz-feedback';
+      feedback.textContent = '';
+    });
 
     submit.addEventListener('click', () => {
       const selected = quiz.querySelector('input[type="radio"]:checked');
@@ -207,6 +211,15 @@
   const saveStatus = document.querySelector('[data-save-status]');
   const status = (message) => { if (saveStatus) saveStatus.textContent = message; };
   const updatedKey = `${storagePrefix}:${pageId}:updated-at`;
+  const fieldTimesKey = `${storagePrefix}:${pageId}:field-updated-at`;
+  const markUpdated = (keys, now) => {
+    let times = {};
+    try { times = JSON.parse(storage.getItem(fieldTimesKey) || '{}'); } catch {}
+    if (!times || typeof times !== 'object' || Array.isArray(times)) times = {};
+    keys.forEach((key) => { times[key] = now; });
+    storage.setItem(fieldTimesKey, JSON.stringify(times));
+    storage.setItem(updatedKey, now);
+  };
   if (!storage && saveFields.length) status('当前浏览器无法本地保存；请查看课程目录同步状态或下载备份');
   if (storage) {
     try {
@@ -225,7 +238,7 @@
       const value = fieldValue(field);
       if (value) storage.setItem(key, value); else storage.removeItem(key);
       const now = new Date();
-      storage.setItem(updatedKey, now.toISOString());
+      markUpdated([field.dataset.saveKey], now.toISOString());
       status(`浏览器副本已保存 · ${now.toLocaleString()}`);
     } catch { status('浏览器副本保存失败；请查看课程目录同步状态或下载备份'); }
   }));
@@ -236,17 +249,23 @@
       const key = `${storagePrefix}:${field.dataset.saveKey}`;
       if (value) storage.setItem(key, value); else storage.removeItem(key);
       const now = new Date();
-      storage.setItem(updatedKey, now.toISOString());
+      markUpdated([field.dataset.saveKey], now.toISOString());
       status(`浏览器副本已保存 · ${now.toLocaleString()}`);
     } catch { status('浏览器副本保存失败；请查看课程目录同步状态或下载备份'); }
   }));
   document.querySelectorAll('[data-save-clear]').forEach((button) => button.addEventListener('click', () => {
+    if (!window.confirm('确定清空本页答案与疑难记录吗？')) return;
     saveFields.forEach((field) => {
       if (storage) { try { storage.removeItem(`${storagePrefix}:${field.dataset.saveKey}`); } catch {} }
       setFieldValue(field, '');
     });
-    if (storage) { try { storage.removeItem(updatedKey); } catch {} }
+    document.querySelectorAll('[data-quiz-feedback]').forEach((feedback) => {
+      feedback.className = 'quiz-feedback';
+      feedback.textContent = '';
+    });
+    if (storage) { try { markUpdated(saveFields.map((field) => field.dataset.saveKey), new Date().toISOString()); } catch {} }
     status('已清空本页答案');
+    document.dispatchEvent(new CustomEvent('teach:answers-cleared'));
   }));
   document.querySelectorAll('[data-save-export]').forEach((button) => button.addEventListener('click', () => {
     let savedAt = null;
