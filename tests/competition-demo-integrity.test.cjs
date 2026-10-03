@@ -37,7 +37,7 @@ test('Demo starts without learner evidence or model secrets', () => {
   assert.equal(meta.latest_submission_lesson, null);
   assert.equal(meta.entry_assessment.submitted, false);
   assert.equal(meta.demo.synthetic_scenario, true);
-  assert.equal(meta.demo.skill_version, '1.1.0-rc.7');
+  assert.equal(meta.demo.skill_version, '1.1.0-rc.8');
   for (const file of ['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__']) {
     assert.equal(execFileSync('git', ['ls-files', '--', file], { cwd: demo, encoding: 'utf8' }).trim(), '', file);
   }

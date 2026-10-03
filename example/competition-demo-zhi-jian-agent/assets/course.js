@@ -169,6 +169,25 @@
     tocTargets.forEach((target) => observer.observe(target));
   }
 
+  const figures = [...document.querySelectorAll('.visual-figure')];
+  if (figures.length) {
+    const updateFigure = (figure) => {
+      const overflow = window.getComputedStyle(figure).overflowX;
+      figure.classList.toggle('is-scrollable', ['auto', 'scroll'].includes(overflow)
+        && figure.scrollWidth > figure.clientWidth + 1);
+    };
+    const updateFigures = () => figures.forEach(updateFigure);
+    const observer = typeof ResizeObserver === 'function'
+      ? new ResizeObserver(updateFigures) : null;
+    figures.forEach((figure) => {
+      observer?.observe(figure);
+      figure.querySelectorAll('img, svg').forEach((media) => observer?.observe(media));
+      figure.addEventListener('load', updateFigures, true);
+    });
+    window.addEventListener('resize', updateFigures);
+    updateFigures();
+  }
+
   document.querySelectorAll('[data-quiz]').forEach((quiz) => {
     const submit = quiz.querySelector('[data-quiz-submit]');
     const feedback = quiz.querySelector('[data-quiz-feedback]');

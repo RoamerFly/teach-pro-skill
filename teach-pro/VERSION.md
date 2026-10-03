@@ -1,7 +1,7 @@
 # Version
 
-- Version: 1.1.0-rc.7
-- Release: Learner-input stability candidate, 2026-10-03; adaptive core unchanged, generated content gates still pending
+- Version: 1.1.0-rc.8
+- Release: Diagram review candidate, 2026-10-03; adaptive core unchanged, generated content gates still pending
 - Edition: Universal Web Tutor · adaptive lessons with local sync
 - Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)
 - Primary output: learner-facing HTML

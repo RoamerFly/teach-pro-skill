@@ -136,6 +136,51 @@ class CourseCheckTests(unittest.TestCase):
         self.assertFalse(report['structurally_valid'])
         self.assertTrue(any('purify.min.js' in str(issue) for issue in report['issues']))
 
+    def test_svg_fallback_and_wide_text_are_review_hints_not_semantic_failures(self):
+        html = (nav() + '<link rel="stylesheet" href="assets/style.css">'
+                '<figure class="visual-figure"><svg viewBox="0 0 720 460">'
+                '<rect fill="var(--unknown-bg, #fff)"></rect>'
+                '<text fill="var(--text)">图中文字</text></svg></figure>')
+        (self.root / 'assets/style.css').write_text(':root { --text: #111; }', encoding='utf-8')
+        (self.root / 'index.html').write_text(html, encoding='utf-8')
+        report = checker.check_course(self.root)
+        self.assertTrue(report['structurally_valid'])
+        self.assertEqual(report['semantic_review'], 'not_performed')
+        self.assertEqual({w['code'] for w in report['visual_warnings']}, {'SVG_COLOR_VAR', 'SVG_TEXT_SCALE'})
+        self.assertIn('--unknown-bg', report['visual_warnings'][0]['message'])
+        self.assertNotIn('--text', report['visual_warnings'][0]['message'])
+
+    def test_svg_local_tokens_and_wide_container_clear_hints(self):
+        html = (nav() + '<link rel="stylesheet" href="assets/style.css">'
+                '<style>svg { --custom-fill: #fff; }</style>'
+                '<figure class="visual-figure visual-figure--wide">'
+                '<svg viewBox="0,0,720,460"><rect fill="var(--surface-2)"></rect>'
+                '<text style="fill:var(--custom-fill)">文字</text></svg></figure>')
+        (self.root / 'assets/style.css').write_text(':root { --surface-2: #eee; }', encoding='utf-8')
+        (self.root / 'index.html').write_text(html, encoding='utf-8')
+        self.assertEqual(checker.check_course(self.root)['visual_warnings'], [])
+
+    def test_svg_hints_never_read_external_outside_or_private_styles(self):
+        html = nav() + ''.join(f'<link rel="stylesheet" href="{url}">' for url in
+                              ['https://example.test/styles.css', '../outside.css',
+                               'learner-chats/private.css', 'assets/../learner-chats/private.css'])
+        html += '<svg viewBox="invalid"><text fill="var(--unverified, #fff)">文字</text></svg>'
+        private = self.root / 'learner-chats/private.css'
+        private.parent.mkdir()
+        private.write_bytes(b'\xffPRIVATE')
+        (self.root / 'index.html').write_text(html, encoding='utf-8')
+        original = Path.read_text
+        def guarded(file, *args, **kwargs):
+            if file == private:
+                raise AssertionError('private stylesheet read')
+            return original(file, *args, **kwargs)
+        with patch.object(Path, 'read_text', guarded):
+            report = checker.check_course(self.root)
+        self.assertEqual([w['code'] for w in report['visual_warnings']], ['SVG_COLOR_VAR'])
+
+    def test_no_svg_has_no_visual_warnings(self):
+        self.assertEqual(checker.check_course(self.root)['visual_warnings'], [])
+
 
 if __name__ == '__main__':
     unittest.main()

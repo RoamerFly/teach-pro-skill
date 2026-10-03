@@ -96,11 +96,54 @@ def inspect_html(text):
     return page
 
 
+def visual_warnings(root, file, page, text):
+    """Review hints, not CSS cascade evaluation or contrast measurements."""
+    svg_nodes = [node for node in page.nodes if node.tag == 'svg']
+    if not svg_nodes:
+        return []
+    sources = [text]
+    for node in page.nodes:
+        if node.tag != 'link' or 'stylesheet' not in (node.attrs.get('rel') or '').split():
+            continue
+        url = urlsplit(node.attrs.get('href') or '')
+        if url.scheme or url.netloc:
+            continue
+        target = (file.parent / unquote(url.path)).resolve()
+        if (target.is_relative_to(root / 'assets') and target.suffix == '.css'
+                and target.is_file()):
+            sources.append(target.read_text(encoding='utf-8-sig'))
+    defined = set(re.findall(r'(--[\w-]+)\s*:', '\n'.join(sources)))
+    warnings = []
+    for svg in svg_nodes:
+        children = list(svg.descendants())
+        paints = ' '.join(node.attrs.get(attr) or '' for node in [svg, *children]
+                          for attr in ('fill', 'stroke', 'style'))
+        missing = sorted(set(re.findall(r'var\(\s*(--[\w-]+)', paints)) - defined)
+        if missing:
+            warnings.append((svg.line, 'SVG_COLOR_VAR',
+                'SVG 颜色变量未在本页或直接引用的本地样式中找到定义：'
+                + ', '.join(missing) + '；核对回退颜色与深色主题。'))
+        box = (svg.attrs.get('viewbox') or '').replace(',', ' ').split()
+        try:
+            width = float(box[2]) if len(box) == 4 else 0
+        except ValueError:
+            width = 0
+        ancestor = svg.parent
+        while ancestor and ancestor.tag != 'figure':
+            ancestor = ancestor.parent
+        wide = ancestor and 'visual-figure--wide' in (ancestor.attrs.get('class') or '').split()
+        if width >= 600 and any(node.tag == 'text' for node in children) and not wide:
+            warnings.append((svg.line, 'SVG_TEXT_SCALE',
+                '宽 SVG 包含文字但未使用宽图容器；请实测窄屏字号，必要时用 '
+                'visual-figure--wide 与 --diagram-min-width 保持图内滚动。'))
+    return warnings
+
+
 def check_course(root):
     root = Path(root).resolve()
     if not root.is_dir():
         raise ValueError('课程目录不存在')
-    issues, pages, texts = [], {}, {}
+    issues, pages, texts, warnings = [], {}, {}, []
 
     def issue(file, line, code, message):
         issues.append({'file': file, 'line': line, 'code': code, 'message': message})
@@ -125,6 +168,8 @@ def check_course(root):
         texts[relative] = text
         page = inspect_html(text)
         pages[file.resolve()] = page
+        for line, code, message in visual_warnings(root, file, page, text):
+            warnings.append({'file': relative, 'line': line, 'code': code, 'message': message})
         for line, code, message in page.issues:
             issue(relative, line, code, message)
         sidebar = next((node for node in page.nodes if 'sidebar' in (node.attrs.get('class') or '').split()), None)
@@ -176,7 +221,7 @@ def check_course(root):
                 if (int(match[1]), int(match[2])) != (choice, opened):
                     issue(relative, 1, 'ASSESSMENT_COUNT', '题型数量描述与评估页输入结构不一致')
     return {'structurally_valid': not issues, 'pages_checked': len(pages),
-            'assessment_counts': counts, 'issues': issues,
+            'assessment_counts': counts, 'issues': issues, 'visual_warnings': warnings,
             'semantic_review': 'not_performed',
             'limits': '不检查学员能力、概念正确性、外链可用性、播放器或真实模型连接；不读取答案、聊天或密钥配置。'}
 
@@ -197,6 +242,8 @@ def main():
         print(f"结构检查：{'通过' if report['structurally_valid'] else '未通过'}；页面：{report['pages_checked']}")
         for issue in report['issues']:
             print(f"{issue['file']}:{issue['line']} [{issue['code']}] {issue['message']}")
+        for warning in report['visual_warnings']:
+            print(f"{warning['file']}:{warning['line']} [复核 {warning['code']}] {warning['message']}")
         print(report['limits'])
     return 0 if report['structurally_valid'] else 1
 

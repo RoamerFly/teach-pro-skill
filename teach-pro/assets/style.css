@@ -1309,7 +1309,7 @@ textarea[data-save-key]:focus-visible,
   .visual-figure { overflow-x: auto; }
   .visual-figure img { width: 850px; max-width: none; }
   .visual-figure--wide > svg { display: block; width: var(--diagram-min-width, 600px); max-width: none; }
-  .visual-figure figcaption::before { content: "可左右滑动图查看完整结构。"; font-weight: 700; color: var(--accent); }
+  .visual-figure.is-scrollable figcaption::before { content: "可左右滑动图查看完整结构。"; font-weight: 700; color: var(--accent); }
   .content-pair, .compare-grid { grid-template-columns: 1fr; }
   .content-pair--reverse > :first-child { order: 0; }
 }
@@ -1336,6 +1336,7 @@ html[data-theme="dark"] th { background: var(--surface-2); }
   html[data-theme="auto"] th { background: var(--surface-2); }
 }
 @media print {
+  .visual-figure.is-scrollable figcaption::before { content: none; }
   html[data-visual-theme][data-theme] {
     --bg: #fff; --surface: #fff; --surface-2: #f5f5f5;
     --text: #000; --muted: #333; --border: #bbb;
