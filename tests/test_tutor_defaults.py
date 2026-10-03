@@ -3,6 +3,7 @@ import importlib.util
 import json
 import tempfile
 import threading
+import time
 import unittest
 from http.server import ThreadingHTTPServer
 from pathlib import Path
@@ -91,6 +92,69 @@ class DefaultTutorTests(unittest.TestCase):
             raised.exception.close()
             connection.assert_not_called()
         self.assertFalse((self.root / 'learner-chats').exists())
+
+    def test_stream_flushes_before_completion_and_survives_reader_disconnect(self):
+        tutor.CONFIG = {'kind': 'custom', 'provider': 'Synthetic', 'model': 'demo', 'mode': 'local',
+                        'base_url': 'http://127.0.0.1:11434/v1', 'api_key': '', 'max_tokens': 4096}
+        token = self.request('/api/tutor/bootstrap')['token']
+        release = threading.Event()
+        def model(config, messages, emit):
+            emit('分段中文')
+            if not release.wait(3):
+                raise AssertionError('reader did not release synthetic model')
+            return tutor.parse_answer({'choices': [{'message': {'content': '分段中文完整回答'}, 'finish_reason': 'stop'}]})
+        headers = {'Origin': self.base, 'Sec-Fetch-Site': 'same-origin', 'X-Teach-Token': token, 'Content-Type': 'application/json'}
+        request = Request(self.base + '/api/tutor/chat-stream/0001-intro', data=b'{"message":"Help?"}', headers=headers)
+        with patch.object(tutor, 'model_request', side_effect=model):
+            try:
+                reader = urlopen(request, timeout=5)
+                self.assertIn('application/x-ndjson', reader.headers['Content-Type'])
+                self.assertEqual(json.loads(reader.readline())['event'], 'pending')
+                self.assertEqual(json.loads(reader.readline()), {'event': 'delta', 'data': {'text': '分段中文'}})
+                self.assertEqual(tutor.history(self.root, '0001-intro')['messages'][0]['status'], 'pending')
+                with self.assertRaises(HTTPError) as raised:
+                    self.request('/api/tutor/forget', {}, token)
+                self.assertEqual(raised.exception.code, 409)
+                raised.exception.close()
+                reader.close()
+            finally:
+                release.set()
+            for _ in range(100):
+                saved = tutor.history(self.root, '0001-intro')
+                if saved['messages'][-1]['role'] == 'assistant':
+                    break
+                time.sleep(.02)
+            self.assertEqual(saved['messages'][-1]['content'], '分段中文完整回答')
+            self.assertEqual(saved['messages'][-1]['status'], 'complete')
+
+    def test_stream_validation_errors_remain_json_and_do_not_create_records(self):
+        token = self.request('/api/tutor/bootstrap')['token']
+        for credential, code in [('', 403), (token, 409)]:
+            with self.subTest(code=code), self.assertRaises(HTTPError) as raised:
+                self.request('/api/tutor/chat-stream/0001-intro', {'message': 'Help?'}, credential)
+            self.assertEqual(raised.exception.code, code)
+            raised.exception.close()
+        self.assertFalse((self.root / 'learner-chats').exists())
+
+    def test_stream_never_reports_done_when_final_save_fails(self):
+        tutor.CONFIG = {'kind': 'custom', 'provider': 'Synthetic', 'model': 'demo', 'mode': 'local',
+                        'base_url': 'http://127.0.0.1:11434/v1', 'api_key': '', 'max_tokens': 4096}
+        token = self.request('/api/tutor/bootstrap')['token']
+        save = tutor.save_history
+        def write(root, record):
+            if any(m['role'] == 'assistant' for m in record['messages']):
+                raise OSError('synthetic save failure')
+            save(root, record)
+        def model(config, messages, emit):
+            emit('回答正文')
+            return tutor.parse_answer({'choices': [{'message': {'content': '回答正文'}, 'finish_reason': 'stop'}]})
+        headers = {'Origin': self.base, 'Sec-Fetch-Site': 'same-origin', 'X-Teach-Token': token, 'Content-Type': 'application/json'}
+        request = Request(self.base + '/api/tutor/chat-stream/0001-intro', data=b'{"message":"Help?"}', headers=headers)
+        with patch.object(tutor, 'model_request', side_effect=model), patch.object(tutor, 'save_history', side_effect=write):
+            with urlopen(request, timeout=5) as reader:
+                events = [json.loads(line) for line in reader]
+        self.assertEqual([item['event'] for item in events], ['pending', 'delta', 'error'])
+        self.assertEqual(tutor.history(self.root, '0001-intro')['messages'][0]['status'], 'pending')
 
 
 if __name__ == '__main__':

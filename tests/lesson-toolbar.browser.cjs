@@ -12,7 +12,8 @@ const qa = process.env.TOOLBAR_QA_DIR || path.resolve(repo, '../competition-work
 test('lesson toolbar stays in the content column and preserves reading, modal and legacy layouts', { timeout: 90000 }, async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'teach-toolbar-'));
   fs.mkdirSync(qa, { recursive: true });
-  fs.cpSync(path.join(repo, 'example/competition-demo-zhi-jian-agent'), root, { recursive: true });
+  const demo = path.join(repo, 'example/competition-demo-zhi-jian-agent');
+  fs.cpSync(demo, root, { recursive: true, filter: file => !['learner-chats', 'learner-submissions', '.tutor-settings.json', '__pycache__'].includes(path.relative(demo, file).split(path.sep)[0]) });
   const source = fs.readFileSync(path.join(repo, 'teach-pro/templates/lesson.html'), 'utf8');
   const longTitle = '理解智能体的工具调用、信任边界与跨步骤状态：一个足够长的课题标题';
   const values = { LESSON_NUMBER: '0001', LESSON_TITLE: longTitle, COURSE_TITLE: '模板测试课程', COURSE_SLUG: 'toolbar-template-test',

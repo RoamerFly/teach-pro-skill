@@ -2,7 +2,7 @@
 
 队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。校园生活赛道，当前基线为 Teach Pro 1.1.0-rc.4。
 
-Skill 与公开 Demo 已更新至 rc.5 冻结课内工具栏；本目录的 Word、截图和视频仍为 rc.4 快照，待最终录制时同步。新版界面检查见[工具栏验收](../../evals/records/2026-10-03-lesson-toolbar-review.md)。
+Skill 与公开 Demo 已更新至 rc.6 紧凑流式答疑；本目录的 Word、截图和视频仍为 rc.4 快照，待最终录制时同步。新版界面检查见[工具栏验收](../../evals/records/2026-10-03-lesson-toolbar-review.md)及[流式答疑验收](../../evals/records/2026-10-03-streaming-tutor-review.md)。
 
 ## 当前交付
 

@@ -180,6 +180,108 @@ class ChatTests(unittest.TestCase):
         self.assertEqual(error.exception.status, 409)
         self.assertFalse((self.root / 'learner-chats').exists())
 
+    def test_stream_events_and_interrupted_text_are_saved_for_retry(self):
+        events = []
+        def interrupted(config, messages, emit):
+            emit('已到达的正文')
+            error = tutor.TutorError('回答中断', 502, {'code': 'stream_interrupted'})
+            error.partial_content = '已到达的正文'
+            raise error
+        with patch.object(tutor, 'model_request', side_effect=interrupted), self.assertRaises(tutor.TutorError):
+            tutor.chat(self.root, '0001-intro', {'message': '解释一下'}, emit=lambda event, data: events.append(event))
+        self.assertEqual(events, ['pending', 'delta'])
+        record = tutor.history(self.root, '0001-intro')
+        self.assertEqual(record['messages'][-1]['content'], '已到达的正文')
+        self.assertTrue(all(m['status'] == 'incomplete' for m in record['messages']))
+        with patch.object(tutor, 'model_request', return_value=tutor.parse_answer(response('补充回答'))):
+            restored = tutor.chat(self.root, '0001-intro', {'message': '解释一下', 'retry_id': record['messages'][0]['id']})
+        self.assertEqual(len([m for m in restored['messages'] if m['role'] == 'user']), 1)
+        self.assertEqual(restored['messages'][-1]['status'], 'complete')
+
+
+class StreamTests(unittest.TestCase):
+    @staticmethod
+    def frame(text=None, reason=None, **delta):
+        if text is not None:
+            delta['content'] = text
+        return ('data: ' + json.dumps({'choices': [{'index': 0, 'delta': delta, 'finish_reason': reason}]}, ensure_ascii=False) + '\r\n\r\n').encode()
+
+    def stream(self, chunks, key=''):
+        output = []
+        remote = Mock()
+        remote.read1.side_effect = chunks + [b'']
+        return tutor.read_stream(remote, key, output.append), output
+
+    def test_fragmented_utf8_crlf_and_cross_chunk_key_redaction(self):
+        wire = b': heartbeat\r\n\r\n' + self.frame(reasoning_content='PRIVATE_REASONING')
+        wire += self.frame('# 中文\n凭据：demo-') + self.frame('credential。讲解。') + self.frame(reason='stop') + b'data: [DONE]\r\n\r\n'
+        answer, pieces = self.stream([wire[i:i+3] for i in range(0, len(wire), 3)], CONFIG['api_key'])
+        self.assertEqual(answer['status'], 'complete')
+        self.assertEqual(''.join(pieces), answer['content'])
+        self.assertIn('[密钥已隐藏]', answer['content'])
+        self.assertNotIn(CONFIG['api_key'], ''.join(pieces))
+        self.assertNotIn('PRIVATE_REASONING', answer['content'])
+        self.assertTrue(answer['diagnostics']['has_reasoning'])
+
+    def test_eof_and_length_are_incomplete_and_usage_is_preserved(self):
+        for end in [b'', self.frame(reason='length') + b'data: [DONE]\n\n']:
+            answer, _ = self.stream([self.frame('半段中文'), end])
+            self.assertEqual(answer['status'], 'incomplete')
+        usage = b'data: {"choices":[],"usage":{"prompt_tokens":2,"completion_tokens":3,"total_tokens":5}}\n\n'
+        answer, _ = self.stream([self.frame('正文'), self.frame(reason='stop'), usage, b'data: [DONE]\n\n'])
+        self.assertEqual(answer['usage']['total_tokens'], 5)
+
+    def test_reasoning_only_and_tools_remain_errors(self):
+        for wire, code in [(self.frame(reasoning_content='PRIVATE') + self.frame(reason='stop'), 'reasoning_only'),
+                           (self.frame(tool_calls=[{'id': 'call'}]), 'tools_unsupported')]:
+            with self.subTest(code=code), self.assertRaises(tutor.TutorError) as raised:
+                self.stream([wire, b'data: [DONE]\n\n'])
+            self.assertEqual(raised.exception.diagnostics['code'], code)
+            self.assertNotIn('PRIVATE', str(raised.exception))
+
+    def test_malformed_and_timeout_keep_safe_partial_text(self):
+        for ending in [b'data: not-json\n\n', TimeoutError()]:
+            remote = Mock()
+            remote.read1.side_effect = [self.frame('已经到达'), ending, b'']
+            output = []
+            with self.assertRaises(tutor.TutorError) as raised:
+                tutor.read_stream(remote, '', output.append)
+            self.assertEqual(raised.exception.partial_content, '已经到达')
+            self.assertEqual(''.join(output), '已经到达')
+
+    def test_reply_limit_stops_stream_and_never_sends_excess_text(self):
+        answer, pieces = self.stream([self.frame('文' * (tutor.MAX_REPLY + 1))])
+        self.assertEqual(answer['status'], 'incomplete')
+        self.assertEqual(len(''.join(pieces)), tutor.MAX_REPLY)
+        self.assertTrue(answer['diagnostics']['local_truncated'])
+
+    def test_streaming_payload_and_json_fallback_use_one_request(self):
+        remote = Mock(status=200)
+        remote.getheader.return_value = 'application/json'
+        remote.read1.side_effect = [json.dumps(response('兼容正文')).encode(), b'']
+        connection = Mock()
+        connection.getresponse.return_value = remote
+        pieces = []
+        with patch.object(tutor, 'connection', return_value=connection):
+            answer = tutor.model_request(CONFIG, [], emit=pieces.append)
+        payload = json.loads(connection.request.call_args.kwargs['body'])
+        self.assertTrue(payload['stream'])
+        self.assertEqual(pieces, ['兼容正文'])
+        self.assertFalse(answer['diagnostics']['streaming'])
+        connection.request.assert_called_once()
+
+    def test_error_frame_does_not_reflect_provider_body(self):
+        with self.assertRaises(tutor.TutorError) as raised:
+            self.stream([b'data: {"error":"demo-credential private body"}\n\n'])
+        self.assertNotIn('private body', str(raised.exception))
+        self.assertNotIn(CONFIG['api_key'], str(raised.exception))
+
+    def test_malformed_finish_reason_and_event_size_keep_partial(self):
+        for ending in [self.frame(reason={}), b'data: ' + b'x' * (128 * 1024) + b'\n\n']:
+            with self.subTest(size=len(ending)), self.assertRaises(tutor.TutorError) as raised:
+                self.stream([self.frame('先前正文'), ending])
+            self.assertEqual(raised.exception.partial_content, '先前正文')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -229,8 +229,8 @@ def read_response(response, maximum):
     return json.loads(b''.join(chunks))
 
 
-def request_payload(config, messages, testing=False):
-    payload = {'model': config['model'], 'messages': messages, 'stream': False,
+def request_payload(config, messages, testing=False, streaming=False):
+    payload = {'model': config['model'], 'messages': messages, 'stream': streaming,
                KINDS[config.get('kind', 'custom')]['token_parameter']: 128 if testing else config['max_tokens']}
     if config.get('kind') == 'deepseek' and config['model'] in {'deepseek-flash', 'deepseek-v4-pro'}:
         payload['thinking'] = {'type': 'disabled' if testing else config.get('thinking', 'disabled')}
@@ -276,11 +276,113 @@ def parse_answer(data, key=''):
             'note': note, 'usage': usage, 'diagnostics': info}
 
 
-def model_request(config, messages, testing=False):
+def read_stream(response, key, emit):
+    """Parse bounded SSE frames; forward only text, never reasoning or credentials."""
+    pending, total, buffer = '', 0, b''
+    parts, reason, usage, reasoning = [], None, {}, False
+    characters = 0
+    deadline = time.monotonic() + 45
+
+    def publish(text, final=False):
+        nonlocal pending, characters
+        pending += text
+        if key:
+            pending = pending.replace(key, '[密钥已隐藏]')
+        hold = 0
+        if key and not final:
+            for size in range(1, min(len(key), len(pending) + 1)):
+                if pending.endswith(key[:size]):
+                    hold = size
+        safe, pending = (pending[:-hold], pending[-hold:]) if hold else (pending, '')
+        room = MAX_REPLY + 1 - characters
+        safe = safe[:max(0, room)]
+        if safe:
+            offset = characters
+            parts.append(safe)
+            characters += len(safe)
+            visible = safe[:max(0, MAX_REPLY - offset)]
+            if visible:
+                emit(visible)
+
+    def finish(interrupted=False):
+        publish('', final=True)
+        content = ''.join(parts)
+        data = {'choices': [{'message': {'content': content, 'reasoning_content': bool(reasoning)},
+                             'finish_reason': reason}], 'usage': usage}
+        result = parse_answer(data)
+        if interrupted or reason not in {'stop', 'length', 'content_filter', 'tool_calls', 'function_call'}:
+            result.update(status='incomplete', note='回答中断，可重新回答。')
+            result['diagnostics']['code'] = 'stream_interrupted'
+        result['diagnostics']['streaming'] = True
+        return result
+
+    try:
+        while True:
+            if time.monotonic() > deadline:
+                raise TutorError('模型读取超时，可重新回答。', 504, {'code': 'timeout'})
+            chunk = response.read1(8192)
+            if not chunk:
+                # A clean finish frame also supports providers that omit [DONE].
+                return finish(interrupted=bool(buffer.strip()) or reason is None)
+            total += len(chunk)
+            if total > 512 * 1024:
+                raise TutorError('模型响应过大，已停止读取。', 502, {'code': 'response_size'})
+            buffer += chunk
+            while True:
+                boundary = re.search(rb'\r?\n\r?\n', buffer)
+                if boundary is None:
+                    if len(buffer) > 128 * 1024:
+                        raise TutorError('模型流式事件过大。', 502, {'code': 'response_size'})
+                    break
+                frame, buffer = buffer[:boundary.start()], buffer[boundary.end():]
+                if len(frame) > 128 * 1024:
+                    raise TutorError('模型流式事件过大。', 502, {'code': 'response_size'})
+                lines = [line[5:].lstrip(b' ') for line in frame.splitlines() if line.startswith(b'data:')]
+                if not lines:
+                    continue
+                raw = b'\n'.join(lines).decode('utf-8')
+                if raw == '[DONE]':
+                    return finish()
+                item = json.loads(raw)
+                if not isinstance(item, dict) or 'error' in item or not isinstance(item.get('choices'), list):
+                    raise TutorError('模型流式响应格式不支持。', 502, {'code': 'response_shape'})
+                if isinstance(item.get('usage'), dict):
+                    usage = item['usage']
+                if not item['choices']:
+                    continue  # Usage-only frame.
+                choice = next((c for c in item['choices'] if isinstance(c, dict) and c.get('index', 0) == 0), None)
+                if choice is None or not isinstance(choice.get('delta'), dict):
+                    raise TutorError('模型流式响应格式不支持。', 502, {'code': 'response_shape'})
+                delta = choice['delta']
+                reasoning = reasoning or bool(delta.get('reasoning_content'))
+                if delta.get('tool_calls') or delta.get('function_call'):
+                    raise TutorError('模型返回了工具调用，请选择文本答疑模型。', 502, {'code': 'tools_unsupported'})
+                if choice.get('finish_reason') is not None:
+                    if not isinstance(choice['finish_reason'], str):
+                        raise TutorError('模型流式结束状态不支持。', 502, {'code': 'response_shape'})
+                    reason = choice['finish_reason']
+                text = delta.get('content')
+                if text is not None and not isinstance(text, str):
+                    raise TutorError('模型流式正文格式不支持。', 502, {'code': 'response_shape'})
+                if text:
+                    publish(text)
+                if characters > MAX_REPLY:
+                    return finish()
+    except (ValueError, TypeError, OSError, http.client.HTTPException, TutorError) as exc:
+        publish('', final=True)
+        if not isinstance(exc, TutorError):
+            code = 'timeout' if isinstance(exc, TimeoutError) else 'stream_interrupted'
+            exc = TutorError('回答中断，可重新回答。', 502, {'code': code})
+        exc.partial_content = ''.join(parts)[:MAX_REPLY]
+        exc.diagnostics.update(streaming=True, answer_characters=len(exc.partial_content), has_reasoning=reasoning)
+        raise exc
+
+
+def model_request(config, messages, testing=False, emit=None):
     url, port, path = validate_endpoint(config['base_url'], config['mode'])
     conn = connection(url, port, config['mode'])
-    payload = json.dumps(request_payload(config, messages, testing), ensure_ascii=False).encode('utf-8')
-    headers = {'Content-Type': 'application/json', 'Accept': 'application/json'}
+    payload = json.dumps(request_payload(config, messages, testing, streaming=emit is not None), ensure_ascii=False).encode('utf-8')
+    headers = {'Content-Type': 'application/json', 'Accept': 'text/event-stream, application/json' if emit else 'application/json'}
     if config['api_key']:
         headers['Authorization'] = 'Bearer ' + config['api_key']
     started = time.monotonic()
@@ -289,8 +391,14 @@ def model_request(config, messages, testing=False):
         response = conn.getresponse()
         if response.status != 200:
             raise TutorError(provider_error(response.status), 502, {'code': 'provider_http', 'http_status': response.status})
-        data = read_response(response, 512 * 1024)
-        result = parse_answer(data, config['api_key'])
+        if emit is not None and 'text/event-stream' in response.getheader('Content-Type', '').lower():
+            result = read_stream(response, config['api_key'], emit)
+        else:
+            data = read_response(response, 512 * 1024)
+            result = parse_answer(data, config['api_key'])
+            if emit is not None:
+                emit(result['content'])  # Same request, JSON-only compatible provider.
+                result['diagnostics']['streaming'] = False
         result['diagnostics'].update(http_status=200, elapsed_ms=round((time.monotonic() - started) * 1000))
         return result
     except TutorError as exc:
@@ -448,7 +556,7 @@ def recent_turns(items, version, budget=16000):
     return recent
 
 
-def chat(root, slug, data):
+def chat(root, slug, data, emit=None):
     question = data.get('message')
     selected = data.get('selection', '')
     if not isinstance(question, str) or not 1 <= len(question.strip()) <= 4000 or not isinstance(selected, str) or len(selected) > 2000:
@@ -482,16 +590,23 @@ def chat(root, slug, data):
         record['messages'].append(entry)
     entry.update(status='pending', context_version=ctx['version'], provider=config['provider'], model=config['model'])
     save_history(root, record)
+    if emit:
+        emit('pending', record)
     try:
-        result = model_request(config, messages)
+        result = model_request(config, messages, emit=lambda text: emit('delta', {'text': text})) if emit else model_request(config, messages)
         entry['status'] = result['status']
         record['messages'].append({'role': 'assistant', 'content': result['content'], 'time': now(), 'status': result['status'],
                                    'reply_to': entry['id'], 'note': result['note'], 'diagnostics': result['diagnostics'],
                                    'context_version': ctx['version'], 'provider': config['provider'], 'model': config['model'], 'usage': result['usage']})
     except TutorError as exc:
-        entry['status'] = 'failed'
+        partial = getattr(exc, 'partial_content', '')
+        entry['status'] = 'incomplete' if partial else 'failed'
         entry['error'] = str(exc)
         entry['diagnostics'] = exc.diagnostics
+        if partial:
+            record['messages'].append({'role': 'assistant', 'content': partial, 'time': now(), 'status': 'incomplete',
+                                       'reply_to': entry['id'], 'note': str(exc), 'diagnostics': exc.diagnostics,
+                                       'context_version': ctx['version'], 'provider': config['provider'], 'model': config['model']})
         save_history(root, record)
         raise
     save_history(root, record)
@@ -503,6 +618,26 @@ def handle(handler, root, path, method):
     if not path.startswith('/api/tutor/'):
         return False
     expected = f'http://127.0.0.1:{handler.server.server_port}'
+    streaming, disconnected = False, False
+
+    def emit(event, data):
+        nonlocal streaming, disconnected
+        if disconnected:
+            return
+        try:
+            if not streaming:
+                handler.send_response(200)
+                handler.send_header('Content-Type', 'application/x-ndjson; charset=utf-8')
+                handler.send_header('Cache-Control', 'no-store')
+                handler.send_header('X-Content-Type-Options', 'nosniff')
+                handler.send_header('Connection', 'close')
+                handler.end_headers()
+                handler.close_connection = True
+                streaming = True
+            handler.wfile.write((json.dumps({'event': event, 'data': data}, ensure_ascii=False) + '\n').encode('utf-8'))
+            handler.wfile.flush()
+        except (OSError, ValueError):
+            disconnected = True  # Finish and persist even when the reader leaves.
     try:
         if handler.headers.get('Sec-Fetch-Site', 'same-origin') not in {'same-origin', 'none'}:
             raise TutorError("拒绝跨站请求。", 403)
@@ -545,6 +680,10 @@ def handle(handler, root, path, method):
                 result = {'ok': True, 'message': '连接成功，可以开始答疑。', 'diagnostics': answer['diagnostics']}
             elif path == '/api/tutor/models':
                 result = list_models(data)
+            elif path.startswith('/api/tutor/chat-stream/'):
+                result = chat(root, path.rsplit('/', 1)[-1], data, emit=emit)
+                emit('done', result)
+                return True
             elif path.startswith('/api/tutor/chat/'):
                 result = chat(root, path.rsplit('/', 1)[-1], data)
             elif path.startswith('/api/tutor/clear/'):
@@ -560,7 +699,15 @@ def handle(handler, root, path, method):
         finally:
             BUSY.release()
     except TutorError as exc:
-        handler._json(exc.status, {'error': str(exc), 'diagnostics': exc.diagnostics})
+        payload = {'error': str(exc), 'diagnostics': exc.diagnostics}
+        if streaming or disconnected:
+            emit('error', payload)
+        else:
+            handler._json(exc.status, payload)
     except (OSError, ValueError, TypeError):
-        handler._json(500, {'error': '本地配置或聊天记录读写失败；未声称保存成功。'})
+        payload = {'error': '本地配置或聊天记录读写失败。'}
+        if streaming or disconnected:
+            emit('error', payload)
+        else:
+            handler._json(500, payload)
     return True

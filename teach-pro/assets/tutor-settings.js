@@ -23,7 +23,7 @@
       link.textContent = '返回本课答疑 →';
     });
   }
-  function say(message, error = false) { status.textContent = message; status.dataset.state = error ? 'error' : 'ready'; }
+  function say(message, state = 'ready') { status.textContent = message; status.dataset.state = state; }
   function controls() {
     section.querySelectorAll('button, input, select').forEach(field => { field.disabled = !online || busy; });
     form.querySelector('button[type="submit"]').disabled = !online || busy;
@@ -100,7 +100,7 @@
   async function act(fn) {
     if (busy) return;
     busy = true; controls();
-    try { await fn(); } catch (error) { say(error.message || '请求失败', true); }
+    try { await fn(); } catch (error) { say(error.message || '请求失败', 'error'); }
     finally { busy = false; controls(); }
   }
   form.addEventListener('submit', event => {
@@ -111,10 +111,11 @@
     delete data.model_manual;
     data.max_tokens = Number(data.max_tokens);
     act(async () => {
+      say('正在保存设置…', 'busy');
       try {
         const result = await api('config', data);
         configured = result.configured; showCurrent(result);
-        say('设置已启用，可以返回本课提问。');
+        say('设置已启用，可以返回本课提问。', 'success');
       } finally { form.elements.api_key.value = ''; data.api_key = ''; hideKey(); }
     });
   });
@@ -128,20 +129,21 @@
   fetchModels.addEventListener('click', () => act(async () => {
     const data = { kind: kind.value, base_url: form.elements.base_url.value.trim(), mode: form.elements.mode.value,
       api_key: form.elements.api_key.value };
-    say('正在获取模型列表（不发送课程内容）…');
+    say('正在获取模型列表…', 'busy');
     const previous = model.value;
     const result = await api('models', data);
     setModels(result.models || [], result.models?.some(item => item.id === previous) ? previous : result.models?.length === 1 ? result.models[0].id : '');
-    say(result.models?.length ? '已获取 ' + result.models.length + ' 个模型，选择后保存。' : '列表为空，可手动填写模型 ID。');
+    say(result.models?.length ? '已获取 ' + result.models.length + ' 个模型，选择后保存。' : '列表为空，可手动填写模型 ID。', result.models?.length ? 'success' : 'ready');
     data.api_key = '';
   }));
   test.addEventListener('click', () => act(async () => {
-    say('正在测试连接…');
-    const result = await api('test', {}); say(result.message);
+    say('正在测试连接…', 'busy');
+    const result = await api('test', {}); say(result.message, 'success');
   }));
   forget.addEventListener('click', () => act(async () => {
+    say('正在断开连接…', 'busy');
     await api('forget', {}); configured = false; form.elements.api_key.value = ''; hideKey();
-    showCurrent({ configured: false }); say('连接已断开，已有聊天仍保留。');
+    showCurrent({ configured: false }); say('连接已断开。', 'success');
   }));
   async function start() {
     controls();
@@ -157,8 +159,8 @@
       setModels([], result.settings?.model || '');
       if (!result.settings || !Object.keys(result.settings).length) applyPreset();
       else { kind.value = result.settings.kind || 'custom'; showProtocol(); }
-      showCurrent(result); say(configured ? '模型已就绪' : '选服务 → 输入密钥 → 获取模型 → 保存');
-    } catch (error) { say('课程设置不可用：' + error.message + '。核心课程仍可阅读。', true); }
+      showCurrent(result); say(configured ? '模型已就绪' : '选服务 → 输入密钥 → 获取模型 → 保存', configured ? 'success' : 'ready');
+    } catch (error) { say('课程设置不可用：' + error.message + '。核心课程仍可阅读。', 'error'); }
     controls();
   }
   start();
