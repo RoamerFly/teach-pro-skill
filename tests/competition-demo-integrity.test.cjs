@@ -36,7 +36,7 @@ test('Demo starts without learner evidence or model secrets', () => {
   assert.equal(meta.latest_submission_lesson, null);
   assert.equal(meta.entry_assessment.submitted, false);
   assert.equal(meta.demo.synthetic_scenario, true);
-  assert.equal(meta.demo.skill_version, '1.1.0-rc.4');
+  assert.equal(meta.demo.skill_version, '1.1.0-rc.5');
   for (const file of ['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__']) {
     assert.equal(fs.existsSync(path.join(demo, file)), false, file);
   }

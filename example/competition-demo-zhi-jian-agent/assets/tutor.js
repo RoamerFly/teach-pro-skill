@@ -10,9 +10,36 @@
   });
   markdown.catch(() => {});
   const settings = '../settings.html?lesson=' + encodeURIComponent(lesson);
-  const entry = document.createElement('div'); entry.id = 'lesson-tutor'; entry.className = 'tutor-entry';
-  entry.innerHTML = '<span>读到这里，有想讨论的地方？</span><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 3-2Z"/><path d="M7 9h10M7 13h6"/></svg>问 AI</button>';
-  anchor.before(entry);
+  const main = anchor.closest('main');
+  const entry = main.querySelector('.lesson-hero') || document.createElement('header');
+  if (!entry.id) entry.id = 'lesson-tutor'; entry.classList.add('lesson-toolbar'); entry.setAttribute('aria-label', '本课工具栏');
+  const meta = entry.querySelector('.lesson-meta') || (entry.nextElementSibling?.matches('.lesson-meta.lesson-status') ? entry.nextElementSibling : null);
+  let context = entry.querySelector('.lesson-toolbar-context');
+  if (!context) {
+    context = document.createElement('div'); context.className = 'lesson-toolbar-context';
+    for (const child of [...entry.childNodes]) if (child !== meta) context.append(child);
+    if (!context.textContent.trim()) {
+      const title = main.querySelector('h1') || document.createElement('span');
+      if (title.tagName !== 'H1') { title.className = 'lesson-toolbar-title'; title.textContent = document.title; }
+      const note = main.querySelector('.lead') || document.createElement('p'); note.classList.add('lead');
+      if (!note.textContent.trim()) note.textContent = document.querySelector('meta[name="description"]')?.content || '围绕本课理解、练习与讨论'; context.append(title, note);
+    }
+    entry.append(context);
+  }
+  let actions = entry.querySelector('.lesson-toolbar-actions');
+  if (!actions) { actions = document.createElement('div'); actions.className = 'lesson-toolbar-actions'; }
+  if (entry.id !== 'lesson-tutor') actions.id = 'lesson-tutor';
+  actions.innerHTML = '<button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H9l-5 3v-3a2 2 0 0 1-2-2V6a2 2 0 0 1 3-2Z"/><path d="M7 9h10M7 13h6"/></svg>问 AI</button>';
+  entry.prepend(actions); main.classList.add('lesson-page'); main.prepend(entry);
+  const details = document.createElement('div'); details.className = 'lesson-details';
+  for (const item of [context.querySelector('.eyebrow'), context.querySelector('.hero-facts'), meta]) if (item) { if (item === meta) item.classList.add('lesson-status'); details.append(item); }
+  if (details.childNodes.length) entry.after(details);
+  const heading = context.querySelector('h1, .lesson-toolbar-title'), number = Number(entry.dataset.lessonNumber || lesson.match(/^(\d+)-/)?.[1]);
+  if (heading && Number.isInteger(number) && number > 0) heading.textContent = '第 ' + number + ' 课 · ' + heading.textContent.trim().replace(/^第\s*(?:\d+|[一二三四五六七八九十百]+)\s*课\s*[·:：—-]\s*/, '');
+  for (const text of context.querySelectorAll('h1, .lesson-toolbar-title, .lead')) text.title = text.textContent.trim();
+  const measure = () => document.documentElement.style.setProperty('--lesson-toolbar-height', Math.ceil(entry.getBoundingClientRect().height) + 'px');
+  if ('ResizeObserver' in window) new ResizeObserver(measure).observe(entry);
+  measure(); window.addEventListener('resize', measure);
   const dialog = document.createElement('dialog'); dialog.id = 'tutor-dialog'; dialog.className = 'tutor-dialog'; dialog.setAttribute('aria-labelledby', 'tutor-title');
   dialog.innerHTML = `<header class="tutor-header"><div class="tutor-heading"><span class="tutor-eyebrow">本课的学习对话</span><h2 id="tutor-title">课内答疑</h2></div><span class="tutor-connection" data-tutor-model></span><details class="tutor-more"><summary aria-label="更多操作">···</summary><div class="tutor-menu"><a data-tutor-settings>课程设置</a><button type="button" data-tutor-export>导出聊天记录</button><button type="button" data-tutor-clear>清空本课聊天</button></div></details><button type="button" class="tutor-icon" data-tutor-close aria-label="关闭答疑">×</button></header>
     <div class="tutor-conversation"><div class="tutor-messages" role="log" aria-label="本课答疑记录" aria-live="off"></div><button type="button" class="tutor-jump" hidden>查看最新消息 ↓</button></div>
@@ -20,7 +47,7 @@
   document.body.append(dialog);
   const find = selector => dialog.querySelector(selector); find('[data-tutor-settings]').href = settings;
   find('.tutor-eyebrow').textContent = document.querySelector('main h1')?.textContent.trim().slice(0, 80) || '本课的学习对话';
-  const opener = entry.querySelector('button'), prompt = find('#tutor-message'), log = find('.tutor-messages'), status = find('.tutor-status'), jump = find('.tutor-jump');
+  const opener = actions.querySelector('button'), prompt = find('#tutor-message'), log = find('.tutor-messages'), status = find('.tutor-status'), jump = find('.tutor-jump');
   let token = '', online = false, configured = false, busy = false, selection = '', record = { messages: [] }, composing = false, configVersion = null, rendering = 0;
   function say(message, error = false) { status.textContent = message; status.dataset.state = error ? 'error' : 'ready'; }
   function controls() {

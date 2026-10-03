@@ -37,17 +37,18 @@
     </aside>
 
     <main id="main-content" class="content lesson-page">
-      <header class="lesson-hero">
-        <div>
+      <header id="lesson-tutor" class="lesson-hero lesson-toolbar" data-lesson-number="{{LESSON_NUMBER}}" aria-label="本课工具栏">
+        <div class="lesson-toolbar-actions"><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog" disabled>问 AI</button></div>
+        <div class="lesson-toolbar-context">
           <span class="eyebrow">{{LESSON_NUMBER}} · {{COURSE_PHASE}}</span>
-          <h1>{{LESSON_TITLE}}</h1>
+          <h1>第 {{LESSON_NUMBER}} 课 · {{LESSON_TITLE}}</h1>
           <p class="lead">{{LESSON_DESCRIPTION}}</p>
         </div>
-        <dl class="lesson-meta">
-          <div><dt>预计时间</dt><dd>{{ESTIMATED_TIME}}</dd></div>
-          <div><dt>当前进度</dt><dd>{{PROGRESS_LABEL}}</dd></div>
-        </dl>
       </header>
+      <dl class="lesson-meta lesson-status">
+        <div><dt>预计时间</dt><dd>{{ESTIMATED_TIME}}</dd></div>
+        <div><dt>当前进度</dt><dd>{{PROGRESS_LABEL}}</dd></div>
+      </dl>
 
       <section id="orientation" class="content-section learning-objectives">
         <h2>今天要解决什么</h2>

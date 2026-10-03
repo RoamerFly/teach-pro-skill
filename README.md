@@ -2,7 +2,7 @@
 
 面向长期学习的自适应教学 Skill。先评估基础与目标，再逐节生成网页课程，根据作答、实践成果和疑难持续调整教学。
 
-当前版本：**1.1.0-rc.4**。逐课教学主体保持稳定，课内答疑与页面体验持续校核。
+当前版本：**1.1.0-rc.5**。逐课教学主体保持稳定，课内答疑与页面体验持续校核。
 
 ## 核心特性
 
@@ -12,7 +12,7 @@
 - **主题化页面**：按学习主题选择课程级视觉风格与灵活版式，侧栏可折叠。
 - **资源导学**：精选一手阅读与视频，标明学习位置、用途和任务。
 - **本地学习记录**：自动保存作答、疑难与聊天，供课程生成 AI 参考。
-- **课内 AI 答疑**：统一设置模型，一键打开大弹窗，多轮交流与 Markdown 排版。
+- **课内 AI 答疑**：内容区顶部冻结标题栏，左侧一键打开大弹窗，多轮交流与 Markdown 排版。
 
 ## 快速开始
 
@@ -85,7 +85,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.4.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.5.zip HEAD:teach-pro
 ```
 
 行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；三种续课决策已观察，原生内容仍有失败项。展示校核与运行检查见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)。

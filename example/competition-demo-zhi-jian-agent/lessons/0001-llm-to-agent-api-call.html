@@ -49,12 +49,13 @@
       </nav>
     </aside>
     <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">目录</button>
-    <main id="main-content" class="content lesson-body">
+    <main id="main-content" class="content lesson-body lesson-page">
 
-      <header class="lesson-hero">
-        <div>
+      <header id="lesson-tutor" class="lesson-hero lesson-toolbar" data-lesson-number="1" aria-label="本课工具栏">
+        <div class="lesson-toolbar-actions"><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog" disabled>问 AI</button></div>
+        <div class="lesson-toolbar-context">
           <span class="eyebrow">Phase 1 · 第 0001 课 · 60–90 分钟</span>
-          <h1>从 LLM 到 Agent：一次 API 调用缺了什么</h1>
+          <h1>第 1 课 · 从 LLM 到 Agent：一次 API 调用缺了什么</h1>
           <p class="lead">逐行解剖一次最小的对话 API 调用，练习自己写出并解释关键代码；再看本例尚未实现的历史、工具与上下文管理机制，理解工具型 Agent 如何补足它们。</p>
           <div class="hero-facts" aria-label="课程信息">
             <span>先修：能读基本 Python</span><span>本课目标：解释并改写调用代码</span>

@@ -1079,7 +1079,32 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 .tutor-table-wrap table { min-width: 100%; width: max-content; font-size: .9em; margin: 0; }
 .tutor-markdown a { color: var(--accent); text-underline-offset: .2em; }
 .tutor-selection:empty { display: none; }
-.tutor-entry { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1rem 0; padding: .75rem 0; border-block: 1px solid var(--border); font-size: .88rem; color: var(--muted); }
+.lesson-page { --lesson-inset: clamp(1rem, 1.9vw, 2rem); padding-top: 0 !important; padding-inline: var(--lesson-inset); }
+.lesson-page .lesson-toolbar { position: sticky; top: 0; z-index: 50; display: flex; align-items: center; gap: .85rem; min-height: 4.4rem; margin: 0 calc(-1 * var(--lesson-inset)) 1rem; padding: .65rem var(--lesson-inset); border: 0; border-bottom: 2px solid color-mix(in srgb, var(--accent) 35%, var(--border)); border-radius: 0; background: linear-gradient(110deg, var(--accent-soft), var(--surface-2)) !important; box-shadow: 0 4px 14px #0000000b; }
+.lesson-toolbar::before { display: none; }
+.lesson-toolbar-actions { flex: 0 0 auto; }
+.lesson-toolbar-context { flex: 1 1 auto; min-width: 0; }
+.lesson-toolbar-context > div { min-width: 0; }
+.lesson-toolbar .eyebrow { display: none; }
+.lesson-toolbar :is(h1, .lesson-toolbar-title) { display: block; margin: 0; font-size: 1.05rem; line-height: 1.4; font-weight: 700; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lesson-toolbar .lead { max-width: none; margin: .15rem 0 0; color: var(--muted); font-size: .78rem; line-height: 1.5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lesson-toolbar .tutor-open { font-size: .88rem; white-space: nowrap; }
+.lesson-details { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem 1.2rem; margin: -.3rem 0 1rem; color: var(--muted); }
+.lesson-details .eyebrow { font-size: .73rem; font-weight: 500; letter-spacing: 0; }
+.lesson-details .hero-facts { margin: 0; gap: .35rem 1rem; }
+.lesson-details .hero-facts span { border: 0; padding: 0; background: none; color: var(--muted); font-size: .75rem; }
+.lesson-meta.lesson-status { display: flex; flex-wrap: wrap; gap: .35rem 1.5rem; min-width: 0; margin: -.3rem 0 1rem; padding: 0; border: 0; border-radius: 0; background: none; font-size: .8rem; }
+.lesson-meta.lesson-status div { display: flex; align-items: baseline; gap: .45rem; margin: 0; padding: 0; border: 0; }
+.lesson-meta.lesson-status dd { margin: 0; font-weight: 500; }
+.lesson-details .lesson-status { margin: 0; }
+.lesson-page :where(section[id], article[id], h2[id], h3[id], h4[id], textarea[id]) { scroll-margin-top: calc(var(--lesson-toolbar-height, 76px) + 1rem); }
+@media (max-width: 900px) { .lesson-page { --lesson-inset: .9rem; } }
+@media (max-width: 560px) {
+  .lesson-page .lesson-toolbar { gap: .6rem; min-height: 4rem; padding-block: .5rem; }
+  .lesson-toolbar :is(h1, .lesson-toolbar-title) { font-size: .92rem; }
+  .lesson-toolbar .lead { font-size: .72rem; }
+  .lesson-toolbar .tutor-open { padding: .45rem .65rem; font-size: .8rem; }
+}
 .tutor-open, .tutor-send { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; min-height: 2.5rem; padding: .5rem 1rem; border: 1px solid var(--accent); border-radius: .7rem; background: var(--accent); color: var(--on-accent); font: inherit; font-weight: 650; cursor: pointer; }
 .tutor-open svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.7; }
 .tutor-dialog { inset: 0; margin: auto; width: min(94vw, 1440px); height: 90dvh; max-width: none; max-height: 94dvh; padding: 0; border: 1px solid var(--border); border-radius: 1.15rem; background: var(--surface); color: var(--text); box-shadow: 0 24px 90px #0005; font: 16px/1.65 var(--font-body, system-ui, sans-serif); overflow: hidden; }
@@ -1132,9 +1157,9 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 .tutor-composer-hint { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .7rem; padding-top: .35rem; }
 .tutor-dialog .tutor-selection { display: flex; align-items: center; gap: .5rem; margin: 0 0 .55rem; padding: .35rem .6rem; border-left: 3px solid var(--accent); background: var(--accent-soft); font-size: .8rem; }
 .tutor-selection [data-selection-text] { white-space: pre-wrap; max-height: 4rem; overflow: auto; flex: 1; }
-:is(.tutor-dialog, .tutor-entry) [hidden] { display: none !important; }
-:is(.tutor-dialog, .tutor-entry) button:disabled { opacity: .5; cursor: not-allowed; }
-:is(.tutor-dialog, .tutor-entry) :is(button, summary, a):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+:is(.tutor-dialog, .lesson-toolbar) [hidden] { display: none !important; }
+:is(.tutor-dialog, .lesson-toolbar) button:disabled { opacity: .5; cursor: not-allowed; }
+:is(.tutor-dialog, .lesson-toolbar) :is(button, summary, a):focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 body:has(.tutor-dialog[open]) { overflow: hidden; }
 .settings-page .content { max-width: 1120px; }
 .settings-page .lesson-hero { padding-bottom: 1rem; }
@@ -1169,7 +1194,7 @@ body:has(.tutor-dialog[open]) { overflow: hidden; }
   .tutor-entry span { font-size: .8rem; }
   .settings-model-row { grid-template-columns: 1fr; }
 }
-@media (prefers-reduced-motion: reduce) { .tutor-dialog *, .tutor-entry * { transition: none; scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .tutor-dialog *, .lesson-toolbar * { transition: none; scroll-behavior: auto; } }
 @media (max-width: 560px) { .tutor-config-grid { grid-template-columns: 1fr; } }
 @media print { .tutor-panel, .tutor-dialog, .tutor-entry { display: none; } }
 .table-wrap table { border: 1px solid var(--border); }
@@ -1321,4 +1346,9 @@ html[data-theme="dark"] th { background: var(--surface-2); }
   .video-lesson video { display: none; }
   .media-transcript { display: block; }
   .media-transcript > * { display: block; }
+  .lesson-page { padding-inline: 0; }
+  .lesson-page .lesson-toolbar { position: static; display: block; min-height: 0; margin: 0 0 1rem; padding: 0; border: 0; background: #fff !important; box-shadow: none; }
+  .lesson-toolbar-actions { display: none; }
+  .lesson-toolbar :is(h1, .lesson-toolbar-title) { font-size: 1.5rem; white-space: normal; overflow: visible; }
+  .lesson-toolbar .lead { white-space: normal; overflow: visible; }
 }
