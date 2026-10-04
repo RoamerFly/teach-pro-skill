@@ -1,6 +1,6 @@
 """Serve this course on loopback and persist learner answers for the local tutor.
 
-Run ``python3 serve_course.py`` (or a platform launcher) from any directory. No third-party packages are used.
+Run ``python3 serve_course.py`` (or a platform launcher). Keyring is optional for remembering keys.
 This is a single-user development helper, not a production web server.
 """
 
@@ -18,6 +18,9 @@ from threading import Lock
 from urllib.parse import unquote, urlsplit
 import re
 import webbrowser
+import subprocess
+import sys
+import venv
 
 try:
     import tutor_chat
@@ -207,7 +210,25 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Open the course with automatic local answer sync")
     parser.add_argument("--port", type=int, default=0, help="loopback port; 0 chooses a free port")
     parser.add_argument("--no-browser", action="store_true", help="do not open the browser automatically")
+    parser.add_argument("--install-keyring", action="store_true", help="install optional keyring in this course's isolated Python environment")
     args = parser.parse_args()
+    if args.install_keyring:
+        from credential_store import KEYRING_REQUIREMENT
+        environment = ROOT / '.teach-runtime'
+        if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
+            raise ValueError('Invalid course runtime path')
+        executable = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+        try:
+            if not executable.is_file():
+                venv.EnvBuilder(with_pip=True).create(environment)
+            subprocess.run([str(executable), '-m', 'pip', 'install', '--disable-pip-version-check', KEYRING_REQUIREMENT], check=True)
+        except (OSError, subprocess.CalledProcessError) as exc:
+            print('Optional keyring installation failed. Check pip/network and Python venv support; session mode remains available.', file=sys.stderr)
+            raise SystemExit(1) from exc
+        print('Keyring installed in .teach-runtime/. Restart the course launcher to use it.', flush=True)
+        return
+    if tutor_chat:
+        tutor_chat.config_status(ROOT)  # Restore local credentials before any lesson request.
     with ThreadingHTTPServer(("127.0.0.1", args.port), CourseHandler) as server:
         url = f"http://127.0.0.1:{server.server_port}/"
         print(f"Course ready: {url}", flush=True)

@@ -31,7 +31,7 @@ def main():
         for info in source.infolist():
             if info.is_dir():
                 continue
-            assert not set(Path(info.filename).parts) & {'learner-submissions', 'learner-chats', '__pycache__'}
+            assert not set(Path(info.filename).parts) & {'learner-submissions', 'learner-chats', '__pycache__', '.teach-runtime'}
             assert Path(info.filename).name != '.tutor-settings.json'
             data = source.read(info)
             if Path(info.filename).suffix in {'.md', '.json', '.html', '.js', '.py', '.txt', '.yaml', '.srt'}:

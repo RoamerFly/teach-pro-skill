@@ -16,7 +16,7 @@ test('Demo reuses the frozen runtime byte-for-byte', () => {
     'vendor/marked.umd.js', 'vendor/purify.min.js', 'vendor/marked.LICENSE', 'vendor/dompurify.LICENSE', 'vendor/dompurify.LICENSE-MPL']) {
     assert.deepEqual(fs.readFileSync(path.join(demo, 'assets', file)), fs.readFileSync(path.join(root, 'teach-pro/assets', file)), file);
   }
-  for (const file of ['serve_course.py', 'tutor_chat.py', 'start-course.cmd', 'start-course.sh', 'start-course.command']) {
+  for (const file of ['serve_course.py', 'tutor_chat.py', 'credential_store.py', 'start-course.cmd', 'start-course.sh', 'start-course.command']) {
     assert.deepEqual(fs.readFileSync(path.join(demo, file)), fs.readFileSync(path.join(root, 'teach-pro/assets', file)), file);
   }
 });
@@ -37,8 +37,8 @@ test('Demo starts without learner evidence or model secrets', () => {
   assert.equal(meta.latest_submission_lesson, null);
   assert.equal(meta.entry_assessment.submitted, false);
   assert.equal(meta.demo.synthetic_scenario, true);
-  assert.equal(meta.demo.skill_version, '1.1.0-rc.8');
-  for (const file of ['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__']) {
+  assert.equal(meta.demo.skill_version, '1.1.0-rc.9');
+  for (const file of ['learner-submissions', 'learner-chats', '.tutor-settings.json', '.teach-runtime', '__pycache__']) {
     assert.equal(execFileSync('git', ['ls-files', '--', file], { cwd: demo, encoding: 'utf8' }).trim(), '', file);
   }
   assert.match(read('settings.html'), /name="api_key" type="password"/);

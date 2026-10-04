@@ -7,6 +7,8 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 FILE = Path(__file__).resolve().parents[1] / 'teach-pro/assets/tutor_chat.py'
+import sys
+sys.path.insert(0, str(FILE.parent))
 spec = importlib.util.spec_from_file_location('responses_tutor', FILE)
 tutor = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(tutor)

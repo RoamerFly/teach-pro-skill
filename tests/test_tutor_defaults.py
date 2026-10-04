@@ -2,6 +2,8 @@
 import importlib.util
 import json
 import tempfile
+import sys
+import subprocess
 import threading
 import time
 import unittest
@@ -12,6 +14,7 @@ from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 ASSETS = Path(__file__).resolve().parents[1] / 'teach-pro' / 'assets'
+sys.path.insert(0, str(ASSETS))
 
 
 def load(name, file):
@@ -82,6 +85,27 @@ class DefaultTutorTests(unittest.TestCase):
         saved = json.loads((self.root / 'learner-submissions/entry-assessment.json').read_text(encoding='utf-8'))
         self.assertEqual(saved['fields'], fields)
         self.assertFalse(self.request('/api/tutor/bootstrap')['configured'])
+
+    def test_optional_installer_targets_only_course_environment(self):
+        environment = self.root / '.teach-runtime'
+        executable = environment / ('Scripts/python.exe' if server.os.name == 'nt' else 'bin/python')
+        executable.parent.mkdir(parents=True)
+        executable.touch()
+        with patch.object(sys, 'argv', ['serve_course.py', '--install-keyring']), patch.object(server.subprocess, 'run') as run:
+            server.main()
+        self.assertEqual(run.call_args.args[0][0], str(executable))
+        self.assertIn('keyring==25.7.0', run.call_args.args[0])
+        self.assertFalse(self.request('/api/tutor/bootstrap')['configured'])
+
+    def test_optional_installer_failure_does_not_start_model_or_claim_success(self):
+        with patch.object(sys, 'argv', ['serve_course.py', '--install-keyring']), \
+                patch.object(server.venv, 'EnvBuilder') as builder, \
+                patch.object(server.subprocess, 'run', side_effect=subprocess.CalledProcessError(1, 'synthetic-pip')), \
+                self.assertRaises(SystemExit) as error:
+            server.main()
+        self.assertEqual(error.exception.code, 1)
+        builder.return_value.create.assert_called_once_with(self.root / '.teach-runtime')
+        self.assertFalse((self.root / '.tutor-settings.json').exists())
 
     def test_unconfigured_chat_is_rejected_without_writing_or_calling_provider(self):
         token = self.request('/api/tutor/bootstrap')['token']

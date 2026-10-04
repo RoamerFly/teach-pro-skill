@@ -1,6 +1,6 @@
 # 学途智伴 · Teach Pro Skill
 
-一个面向任意知识与技能的长期 AI 私教 Skill。当前为 1.1.0-rc.8：提供紧凑网页、逐课生成与流式大弹窗答疑；本地工作区可用时，学员答案和聊天自动写入课程目录，AI 下次对话读取并据此决定下一课。
+一个面向任意知识与技能的长期 AI 私教 Skill。当前为 1.1.0-rc.9：提供紧凑网页、逐课生成与流式大弹窗答疑；本地工作区可用时，学员答案和聊天自动写入课程目录，AI 下次对话读取并据此决定下一课。
 
 ## 核心特性
 
@@ -20,7 +20,7 @@
 - 每课固定提醒学习者可以继续向教师追问、要求换一种解释或更多例子。
 - Assets 采用 reuse-first：先复用，再扩展；避免课程页重复内联通用 CSS/JS。
 - 默认仅显式调用 Teach，不允许隐式自动触发。
-- 默认提供左侧置顶“课程设置”，AI 配置与答疑按需使用，不配置也能学习。支持主动获取模型列表并下拉选择，Key 默认遮蔽且不落盘；列表不可用时支持手动模型 ID。
+- 默认提供左侧置顶“课程设置”，AI 配置与答疑按需使用，不配置也能学习。支持主动获取模型列表并下拉选择，Key 默认遮蔽，可用系统凭据存储记住此设备；列表不可用时支持手动模型 ID。
 
 ## 启动课程
 
@@ -33,6 +33,8 @@
 | macOS | 双击 `start-course.command`；若系统阻止打开，可在终端运行 `sh start-course.command` |
 
 无图形浏览器、WSL 或远程环境可运行 `python3 serve_course.py --no-browser`，再按终端显示的本机 URL 打开；Windows 也可用 `py -3 serve_course.py --no-browser`。服务只监听 `127.0.0.1`，不是可直接部署公网的服务器。静态模式仍能阅读，但浏览器保存的答案不会自动进入 AI 可读取的课程文件。
+
+记住密钥统一使用 Python keyring 对接系统凭据存储。首次在课程目录运行对应启动器并加 `--install-keyring`，随后重新启动；依赖只安装到当前课程 `.teach-runtime/`，不改全局 Python。Linux 还需可用的桌面密钥环与 D-Bus；不具备时仍可使用会话模式。密钥不写入课程目录，复制或移动课程后需重新配置。
 
 ## Skill 包结构
 
@@ -59,6 +61,7 @@ course-workspace/
 ├─ settings.html          # 默认提供，AI 按需配置
 ├─ serve_course.py
 ├─ tutor_chat.py
+├─ credential_store.py
 ├─ start-course.cmd / start-course.sh / start-course.command
 ├─ .gitignore
 ├─ learner-submissions/   # 本地生成，勿提交版本控制

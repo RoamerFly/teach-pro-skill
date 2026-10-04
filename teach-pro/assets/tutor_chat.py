@@ -1,4 +1,4 @@
-"""Optional, single-user lesson tutor: compatible chat API, memory-only key."""
+"""Single-user lesson tutor with optional OS-protected device credentials."""
 from __future__ import annotations
 
 import hashlib
@@ -17,12 +17,15 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 from threading import Lock
 from urllib.parse import urlsplit
+from credential_store import CredentialStore, CredentialError, capability
 
 SLUG = re.compile(r"[a-z0-9][a-z0-9-]{0,79}\Z")
 BUSY = Lock()
 CONFIG_LOCK = Lock()
 TOKEN = secrets.token_urlsafe(32)
 CONFIG = None
+RESTORED_ROOT = None
+RESTORE_ERROR = ''
 MAX_BODY = 20000
 MAX_HISTORY = 200
 MAX_REPLY = 24000
@@ -414,7 +417,7 @@ def model_request(config, messages, testing=False, emit=None):
         conn.close()
 
 
-def list_models(data):
+def list_models(data, root=None):
     kind = data.get('kind')
     if kind not in KINDS:
         raise TutorError("服务类型不支持。")
@@ -431,6 +434,14 @@ def list_models(data):
             saved = dict(CONFIG) if CONFIG else None
         if saved and (saved['kind'], saved['base_url'], saved['mode']) == (kind, base, mode):
             key = saved['api_key']
+        elif root is not None:
+            status = config_status(root)
+            if status['key_saved'] and all(status['settings'].get(k) == value
+                                           for k, value in [('kind', kind), ('base_url', base), ('mode', mode)]):
+                try:
+                    key = CredentialStore(root).load(status['settings'])
+                except CredentialError as exc:
+                    raise TutorError(str(exc)) from None
     if mode == 'cloud' and not key:
         raise TutorError("请先填写 API Key，再获取模型。")
     models_path = chat_path.removesuffix('/chat/completions') + '/models'
@@ -469,22 +480,52 @@ def list_models(data):
 
 
 def config_status(root):
+    global CONFIG, RESTORED_ROOT, RESTORE_ERROR
+    file = confined(root, '.tutor-settings.json')
+    saved = {}
+    try:
+        if file.is_file() and file.stat().st_size < 4096:
+            data = json.loads(file.read_text(encoding='utf-8'))
+            if isinstance(data, dict):
+                saved = {k: data[k] for k in ('kind', 'provider', 'base_url', 'model', 'mode',
+                                              'max_tokens', 'thinking', 'remember_key', 'enabled', 'requires_key') if k in data}
+    except (OSError, ValueError):
+        RESTORE_ERROR = '设置无法读取，请重新保存。'
+    backend = capability()
     with CONFIG_LOCK:
+        if CONFIG is None and RESTORED_ROOT != root.resolve():
+            RESTORED_ROOT = root.resolve()
+            if saved.get('enabled') is True:
+                try:
+                    if (not isinstance(saved.get('kind'), str) or saved.get('kind') not in KINDS or saved.get('mode') not in ('cloud', 'local')
+                            or not all(isinstance(saved.get(k), str) and 1 <= len(saved[k]) <= limit
+                                       for k, limit in [('provider', 80), ('model', 120), ('base_url', 300)])
+                            or type(saved.get('max_tokens')) is not int or not 128 <= saved['max_tokens'] <= 16384
+                            or saved.get('thinking') not in ('enabled', 'disabled')):
+                        raise CredentialError('已保存设置无效，请重新保存。')
+                    key = CredentialStore(root).load(saved) if saved.get('remember_key') is True else ''
+                    if (saved['mode'] == 'cloud' or saved.get('requires_key') is True or saved.get('remember_key') is True) and not key:
+                        raise CredentialError('未能恢复本机密钥，请重新输入并保存。')
+                    # No provider request or DNS lookup here; connection validates before sending.
+                    CONFIG = {**saved, 'api_key': key}
+                    RESTORE_ERROR = ''
+                except CredentialError as exc:
+                    RESTORE_ERROR = str(exc)
         configured = CONFIG is not None
         safe = {k: v for k, v in CONFIG.items() if k != 'api_key'} if CONFIG else {}
     if not safe:
-        file = confined(root, '.tutor-settings.json')
-        if file.is_file() and file.stat().st_size < 4096:
-            saved = json.loads(file.read_text(encoding='utf-8'))
-            safe = {k: saved[k] for k in ('kind', 'provider', 'base_url', 'model', 'mode', 'max_tokens', 'thinking') if k in saved}
+        safe = saved
     if safe:
         safe.setdefault('kind', 'custom')  # Preserve older settings without guessing a provider.
         safe.setdefault('thinking', 'disabled')
-    return {'configured': configured, 'settings': safe, 'key_storage': 'process-memory-only'}
+    return {'configured': configured, 'settings': safe, 'credential_storage': backend,
+            'key_saved': safe.get('remember_key') is True,
+            'key_storage': backend['backend'] if safe.get('remember_key') is True else 'process-memory-only',
+            'restore_error': RESTORE_ERROR}
 
 
 def configure(root, data):
-    global CONFIG
+    global CONFIG, RESTORED_ROOT, RESTORE_ERROR
     kind = data.get('kind', 'custom')
     if not isinstance(kind, str) or kind not in KINDS:
         raise TutorError("服务类型不支持，请从课程设置的下拉框选择。")
@@ -511,6 +552,13 @@ def configure(root, data):
         previous = dict(CONFIG or {})
     if not credential and all(previous.get(k) == data.get(k) for k in ('kind', 'base_url', 'mode')):
         credential = previous.get('api_key', '')
+    if not credential:
+        saved = config_status(root)
+        if saved['key_saved'] and all(saved['settings'].get(k) == data.get(k) for k in ('kind', 'base_url', 'mode')):
+            try:
+                credential = CredentialStore(root).load(data)
+            except CredentialError as exc:
+                raise TutorError(str(exc)) from None
     if data['mode'] == 'cloud' and not credential:
         raise TutorError("云端接口需要 API Key。")
     limit = data.get('max_tokens', 4096)
@@ -524,16 +572,51 @@ def configure(root, data):
     config['max_tokens'] = limit
     config['thinking'] = thinking
     config['api_key'] = credential
+    remember = data.get('remember_key', previous.get('remember_key', False))
+    if type(remember) is not bool:
+        raise TutorError('记住此设备设置无效。')
+    config['remember_key'] = remember and bool(credential)
+    config['requires_key'] = bool(credential)
+    config['enabled'] = True
+    try:
+        if config['remember_key']:
+            CredentialStore(root).save(config, credential)
+        elif config_status(root)['key_saved']:
+            CredentialStore(root).delete()
+    except CredentialError as exc:
+        raise TutorError(str(exc)) from None
     atomic_json(confined(root, '.tutor-settings.json'), {k: v for k, v in config.items() if k != 'api_key'})
     with CONFIG_LOCK:
         CONFIG = config
+        RESTORED_ROOT = root.resolve()
+        RESTORE_ERROR = ''
+    return config_status(root)
+
+
+def disconnect(root, delete_key=False):
+    global CONFIG, RESTORED_ROOT, RESTORE_ERROR
+    safe = config_status(root)['settings']
+    if safe:
+        safe['enabled'] = False
+        atomic_json(confined(root, '.tutor-settings.json'), safe)
+    with CONFIG_LOCK:
+        CONFIG = None
+        RESTORED_ROOT = root.resolve()
+        RESTORE_ERROR = ''
+    if delete_key and safe.get('remember_key') is True:
+        try:
+            CredentialStore(root).delete()
+        except CredentialError as exc:
+            raise TutorError(str(exc)) from None
+        safe['remember_key'] = False
+        atomic_json(confined(root, '.tutor-settings.json'), safe)
     return config_status(root)
 
 
 def current_config():
     with CONFIG_LOCK:
         if CONFIG is None:
-            raise TutorError("请先保存模型设置；服务重启后需重新输入密钥。", 409)
+            raise TutorError("请先在课程设置中保存并启用模型。", 409)
         return dict(CONFIG)
 
 
@@ -669,17 +752,19 @@ def handle(handler, root, path, method):
         try:
             if path == '/api/tutor/config':
                 result = configure(root, data)
+            elif path == '/api/tutor/disconnect':
+                result = disconnect(root)
             elif path == '/api/tutor/forget':
-                with CONFIG_LOCK:
-                    CONFIG = None
-                result = {'ok': True, 'configured': False}
+                if data.get('confirm') is not True:
+                    raise TutorError('请确认删除本机保存的密钥。')
+                result = disconnect(root, delete_key=True)
             elif path == '/api/tutor/test':
                 answer = model_request(current_config(), [{'role': 'user', 'content': '连接测试，请仅回复 OK。'}], testing=True)
                 if answer['status'] != 'complete':
                     raise TutorError('连接已建立，但测试回答未完成，请检查模型。', 502, answer['diagnostics'])
                 result = {'ok': True, 'message': '连接成功，可以开始答疑。', 'diagnostics': answer['diagnostics']}
             elif path == '/api/tutor/models':
-                result = list_models(data)
+                result = list_models(data, root)
             elif path.startswith('/api/tutor/chat-stream/'):
                 result = chat(root, path.rsplit('/', 1)[-1], data, emit=emit)
                 emit('done', result)

@@ -17,7 +17,7 @@ test('Tutor modal, configuration, retries and local history work through the run
   fs.mkdirSync(qa, { recursive: true });
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'teach-tutor-ui-'));
   const demo = path.join(repo, 'example/competition-demo-zhi-jian-agent');
-  fs.cpSync(demo, root, { recursive: true, filter: file => !['learner-chats', 'learner-submissions', '.tutor-settings.json', '__pycache__'].includes(path.relative(demo, file).split(path.sep)[0]) });
+  fs.cpSync(demo, root, { recursive: true, filter: file => !['learner-chats', 'learner-submissions', '.tutor-settings.json', '.teach-runtime', '__pycache__'].includes(path.relative(demo, file).split(path.sep)[0]) });
   const calls = [], attempts = new Map(), settingsMeasurements = [], composerMeasurements = [];
   const upstream = http.createServer((request, response) => {
     response.setHeader('Content-Type', 'application/json');
@@ -87,6 +87,7 @@ test('Tutor modal, configuration, retries and local history work through the run
     await wait(page, () => document.querySelector('[name=model] option[value="deepseek-flash"]'));
     assert.equal(await page.locator('.tutor-status').getAttribute('data-state'), 'success');
     await page.locator('[name=model]').selectOption('deepseek-flash');
+    await page.locator('[name=remember_key]').uncheck(); // This regression exercises session mode, not a persistent vault.
     assert.equal(await page.locator('.tutor-status').getAttribute('data-state'), 'ready');
     await page.locator('button[type=submit]').click(); await wait(page, () => !document.querySelector('[data-settings-test]').disabled);
     assert.equal(await page.locator('[name=api_key]').inputValue(), '');

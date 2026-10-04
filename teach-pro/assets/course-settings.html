@@ -26,6 +26,7 @@
           <div class="tutor-config-grid">
             <label>服务类型<select name="kind"><option value="openai-compatible">OpenAI-compatible</option><option value="openai">OpenAI</option><option value="deepseek">DeepSeek</option><option value="ollama">Ollama</option><option value="custom">自定义</option></select></label>
             <label class="settings-key-row">API Key<span class="secret-field"><input name="api_key" type="password" maxlength="512" autocomplete="new-password" spellcheck="false" placeholder="输入密钥，本机模型可留空"><button type="button" class="secret-toggle" data-key-toggle aria-label="显示 API Key" aria-pressed="false" title="显示 API Key"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></span></label>
+            <div class="settings-key-row settings-credential"><label><input name="remember_key" type="checkbox" checked>记住此设备</label><button type="button" class="button--danger" data-settings-forget hidden>删除已保存密钥</button><span class="resource-access" data-storage-hint hidden></span></div>
             <div class="settings-model-row"><label>模型<select name="model" required><option value="">请先获取模型</option><option value="__manual__">手动填写模型 ID…</option></select></label><div class="tutor-actions"><button type="button" data-settings-models>获取模型</button></div></div>
             <label class="settings-key-row" data-model-manual hidden>模型 ID<input name="model_manual" maxlength="120" placeholder="服务提供的完整模型 ID" disabled></label>
           </div>
@@ -40,9 +41,8 @@
             </div>
             <p class="resource-access" data-settings-protocol></p>
           </details>
-          <div class="tutor-actions"><button type="submit">保存并启用</button><button type="button" data-settings-test>测试连接</button><button type="button" data-settings-forget>断开连接</button></div>
+          <div class="tutor-actions"><button type="submit">保存并启用</button><button type="button" data-settings-test>测试连接</button><button type="button" data-settings-disconnect>断开连接</button></div>
           <p class="tutor-status" role="status" aria-live="polite">正在连接课程服务…</p>
-          <p class="settings-help">密钥只保留在当前服务会话中，重启后重新输入。测试连接会发送一个简短请求。</p>
         </form>
         <p><a href="./index.html" data-settings-return>返回学习页面 →</a></p>
       </section>

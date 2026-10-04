@@ -1,5 +1,8 @@
 #!/bin/sh
 case "$0" in */*) cd "${0%/*}" || exit 1 ;; esac
+if [ -x .teach-runtime/bin/python ]; then
+  exec .teach-runtime/bin/python serve_course.py "$@"
+fi
 for candidate in python3 python; do
   if command -v "$candidate" >/dev/null 2>&1 &&
     "$candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' >/dev/null 2>&1; then

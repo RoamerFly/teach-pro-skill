@@ -22,8 +22,10 @@
 ├─ .gitignore                  # 合并 templates/course.gitignore；保护学员原文与配置
 ├─ learner-submissions/        # 学员原始答案；本地生成，不入版本控制
 ├─ tutor_chat.py               # 默认配套：课内答疑服务模块
+├─ credential_store.py         # 三端系统凭据接口；密钥存储在课程目录之外
 ├─ learner-chats/              # 可选：每课原始聊天 JSON；不入版本控制或发布
 ├─ .tutor-settings.json        # 可选：本地非密钥设置；不入发布包
+├─ .teach-runtime/             # 可选：keyring 隔离环境；本机安装，不入发布包
 ├─ lessons/                    # 顺序课程网页
 │  ├─ 0001-*.html
 │  └─ 0002-*.html              # 仅在上一课证据评估后生成

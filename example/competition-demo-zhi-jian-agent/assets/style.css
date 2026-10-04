@@ -1237,18 +1237,23 @@ textarea[data-save-key]:focus, .quiz-option:focus-within, [data-quiz] label:focu
   border-color: color-mix(in srgb, var(--accent) 83%, var(--text));
   color: var(--on-accent);
 }
-:is(.learning-input-actions button[data-save-clear], .tutor-actions button[data-settings-forget],
+:is(.learning-input-actions button[data-save-clear],
     .button--danger) {
   background: var(--danger-soft);
   border-color: var(--danger);
   color: var(--danger);
 }
-:is(.learning-input-actions button[data-save-clear], .tutor-actions button[data-settings-forget],
+:is(.learning-input-actions button[data-save-clear],
     .button--danger):hover:not(:disabled) {
   background: color-mix(in srgb, var(--danger-soft) 75%, var(--danger));
   color: var(--text);
 }
 :where(button, .button)[disabled] { opacity: .55; cursor: not-allowed; }
+.settings-credential { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; }
+.tutor-config .settings-credential label { display: inline-flex; align-items: center; gap: .45rem; margin: 0; font-size: .85rem; }
+.tutor-config .settings-credential input[type="checkbox"] { width: 1rem; min-height: 1rem; margin: 0; accent-color: var(--accent); }
+.settings-credential button { font: inherit; font-size: .8rem; padding: .35rem .65rem; border: 1px solid var(--danger); border-radius: var(--radius-sm, .5rem); cursor: pointer; }
+.settings-credential .resource-access { margin: 0; font-size: .8rem; }
 .tutor-config :where(input, select):focus-visible,
 .tutor-question textarea:focus-visible,
 textarea[data-save-key]:focus-visible,

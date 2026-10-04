@@ -1,5 +1,6 @@
 learner-submissions/
 learner-chats/
 .tutor-settings.json
+.teach-runtime/
 __pycache__/
 *.pyc

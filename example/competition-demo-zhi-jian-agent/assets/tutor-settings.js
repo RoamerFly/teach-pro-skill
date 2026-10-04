@@ -9,6 +9,10 @@
   const test = section.querySelector('[data-settings-test]');
   const fetchModels = section.querySelector('[data-settings-models]');
   const forget = section.querySelector('[data-settings-forget]');
+  const disconnect = section.querySelector('[data-settings-disconnect]');
+  const remember = form.elements.remember_key;
+  const storageHint = section.querySelector('[data-storage-hint]');
+  let storageAvailable = false, keySaved = false;
   const kind = form.elements.kind;
   const model = form.elements.model;
   const manual = section.querySelector('[data-model-manual]');
@@ -30,6 +34,8 @@
     fetchModels.disabled = !online || busy;
     test.disabled = !online || busy || !configured;
     forget.disabled = !online || busy;
+    disconnect.disabled = !online || busy || !configured;
+    remember.disabled = !online || busy || !storageAvailable;
     syncManual();
   }
   async function api(route, body) {
@@ -42,10 +48,17 @@
   }
   function showCurrent(result) {
     const saved = result.settings || {};
+    keySaved = result.key_saved === true;
+    forget.hidden = !keySaved;
+    if (result.credential_storage) {
+      storageAvailable = result.credential_storage.available === true;
+      storageHint.textContent = result.credential_storage.hint || '';
+      storageHint.hidden = !storageHint.textContent;
+    }
     current.textContent = result.configured
       ? '已连接 · ' + saved.provider + ' / ' + saved.model
-      : '尚未连接，选择服务后输入密钥即可开始。';
-    form.elements.api_key.placeholder = result.configured ? '已在服务会话中，可留空保留' : '输入密钥，本机模型可留空';
+      : keySaved ? '已暂停 · ' + saved.provider + ' / ' + saved.model : '尚未连接，选择服务后输入密钥即可开始。';
+    form.elements.api_key.placeholder = keySaved ? '已保存在本机，可留空保留' : result.configured ? '已在服务会话中，可留空保留' : '输入密钥，本机模型可留空';
   }
   function showProtocol() {
     const preset = kinds[kind.value];
@@ -110,6 +123,7 @@
     if (data.model === '__manual__') data.model = data.model_manual.trim();
     delete data.model_manual;
     data.max_tokens = Number(data.max_tokens);
+    data.remember_key = storageAvailable && remember.checked;
     act(async () => {
       say('正在保存设置…', 'busy');
       try {
@@ -140,11 +154,19 @@
     say('正在测试连接…', 'busy');
     const result = await api('test', {}); say(result.message, 'success');
   }));
-  forget.addEventListener('click', () => act(async () => {
+  disconnect.addEventListener('click', () => act(async () => {
     say('正在断开连接…', 'busy');
-    await api('forget', {}); configured = false; form.elements.api_key.value = ''; hideKey();
-    showCurrent({ configured: false }); say('连接已断开。', 'success');
+    const result = await api('disconnect', {}); configured = false; form.elements.api_key.value = ''; hideKey();
+    showCurrent(result); say('连接已断开。', 'success');
   }));
+  forget.addEventListener('click', () => {
+    if (!window.confirm('删除本机保存的密钥并断开连接？')) return;
+    act(async () => {
+      const result = await api('forget', { confirm: true }); configured = false;
+      form.elements.api_key.value = ''; remember.checked = false; hideKey();
+      showCurrent(result); say('已删除本机密钥。', 'success');
+    });
+  });
   async function start() {
     controls();
     if (location.protocol !== 'http:' || location.hostname !== '127.0.0.1') {
@@ -154,12 +176,15 @@
       const result = await api('bootstrap'); token = result.token; configured = result.configured; online = true;
       kinds = result.kinds || {};
       for (const [key, value] of Object.entries(result.settings || {})) {
-        if (form.elements[key] && key !== 'api_key' && key !== 'model') form.elements[key].value = value;
+        if (key === 'remember_key') remember.checked = value === true;
+        else if (form.elements[key] && key !== 'api_key' && key !== 'model') form.elements[key].value = value;
       }
       setModels([], result.settings?.model || '');
       if (!result.settings || !Object.keys(result.settings).length) applyPreset();
       else { kind.value = result.settings.kind || 'custom'; showProtocol(); }
-      showCurrent(result); say(configured ? '模型已就绪' : '选服务 → 输入密钥 → 获取模型 → 保存', configured ? 'success' : 'ready');
+      showCurrent(result);
+      if (!storageAvailable) remember.checked = false;
+      say(result.restore_error || (configured ? '模型已就绪' : keySaved ? '连接已暂停，保存并启用即可继续。' : '选服务 → 输入密钥 → 获取模型 → 保存'), result.restore_error ? 'error' : configured ? 'success' : 'ready');
     } catch (error) { say('课程设置不可用：' + error.message + '。核心课程仍可阅读。', 'error'); }
     controls();
   }
