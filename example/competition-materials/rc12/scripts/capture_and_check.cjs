@@ -13,7 +13,7 @@ const delay = ms => new Promise(resolve => setTimeout(resolve,ms));
 (async () => {
  const temp = await fs.mkdtemp(path.join(os.tmpdir(),'teach-pro-rc12-materials-'));
  const course = path.join(temp, 'competition-demo-rc12');
- await fs.cp(source,course,{recursive:true,filter:file=>!['learner-submissions','learner-chats','.tutor-settings.json','__pycache__'].includes(path.basename(file))});
+ await fs.cp(source,course,{recursive:true,filter:file=>!['learner-submissions','learner-chats','.tutor-settings.json','.teach-runtime','__pycache__'].includes(path.basename(file))});
  const server = spawn(process.env.TEACH_PRO_PYTHON || 'python',['-u','-X','utf8','serve_course.py','--no-browser','--session-only'],{cwd:course,windowsHide:true,stdio:['ignore','pipe','pipe']});
  let log='', launchError, browser;
  server.on('error',e=>{launchError=e;});server.stdout.on('data',data=>{log+=data;});server.stderr.resume();

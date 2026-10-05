@@ -22,16 +22,20 @@
   "platform": "Windows",
   "screenshots": [
     {
+      "file": "architecture.png",
+      "sha256": "c4db482e97d2febc4b913713c1599b7f43b9b92c3bd24d6e06559c9e4fce68d2"
+    },
+    {
       "file": "assessment.png",
       "sha256": "97efe092d110745ae191c9077151f7091ec8c85951d846919a218a5b3849d38b"
     },
     {
       "file": "course-home-dark.png",
-      "sha256": "b1004c0ba82f4224c2f4e45969aea93da8dfb726dfe43a9a06c031a5e1837718"
+      "sha256": "f37cdfbadc6fede06933ab9a5733f7f77e307b13f80354e9a2b5e3bb0d35fc24"
     },
     {
       "file": "course-home.png",
-      "sha256": "86eb51f03663937d4aa3c0f3ec018eeffc6132420913d946503259df11e3dc07"
+      "sha256": "759c813caba571ba12f08350506438d999f17c12d8a9a43efa7fe5f8b69ebefb"
     },
     {
       "file": "deepseek-settings.png",
@@ -43,7 +47,7 @@
     },
     {
       "file": "lesson-diagram.png",
-      "sha256": "2265d8bc5810a80b1e6e7cc58cad18a86081777be1873afcf8aeb26e2287d420"
+      "sha256": "10f396fe6aa67c789fdb4551d29a2231b7045b03f06121fee40a9cf068b556fe"
     },
     {
       "file": "masked-key.png",

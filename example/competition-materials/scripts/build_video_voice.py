@@ -13,11 +13,12 @@ async def main():
     parser.add_argument("session", type=Path)
     parser.add_argument("--tts-packages", type=Path)
     parser.add_argument("--ffprobe", default="ffprobe")
+    parser.add_argument("--script", type=Path, help="Public narration plan; defaults to the legacy video script")
     args = parser.parse_args()
     if args.tts_packages:
         sys.path.insert(0, str(args.tts_packages.resolve()))
     edge_tts = importlib.import_module("edge_tts")
-    source = Path(__file__).resolve().parents[1] / "video-scenes.json"
+    source = args.script.resolve() if args.script else Path(__file__).resolve().parents[1] / "video-scenes.json"
     plan = json.loads(source.read_text(encoding="utf-8"))
     audio = args.session.resolve() / "audio"
     audio.mkdir(parents=True, exist_ok=True)

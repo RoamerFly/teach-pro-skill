@@ -1,0 +1,104 @@
+{
+  "version": "1.1.0-rc.12",
+  "kind": "synthetic_voice_candidates",
+  "subjective_listening_review": "pending",
+  "final_video_recorded": false,
+  "script_sha256": "de1924da604d801449a08fdc5a4b2d11581a3a62223da0e90078119f1a26d263",
+  "rate": "+0%",
+  "pitch": "+0Hz",
+  "files": [
+    {
+      "file": "连续旁白候选.mp3",
+      "sha256": "30bda4ea6b054640d1cb7465cab73755c1358d05bab352fa44d4a172014bcc7b",
+      "seconds": 156.408,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "mean_db": -19.6,
+      "peak_db": -2.0,
+      "full_decode": "pass"
+    },
+    {
+      "file": "女声试样.mp3",
+      "sha256": "185612228ed7a4e717c98dc388e7d40dfe5a05a336066559779944f884d8a015",
+      "seconds": 26.328,
+      "voice": "zh-CN-XiaoxiaoNeural",
+      "mean_db": -19.3,
+      "peak_db": -4.0,
+      "full_decode": "pass"
+    },
+    {
+      "file": "男声试样.mp3",
+      "sha256": "2ef596fa1f75275eff6327ce4760f21ed8e8d14f0dde065de36d2f0d379ba26c",
+      "seconds": 24.528,
+      "voice": "zh-CN-YunxiNeural",
+      "mean_db": -24.8,
+      "peak_db": -3.2,
+      "full_decode": "pass"
+    }
+  ],
+  "timeline_seconds_with_tail": 156.758,
+  "chapters": [
+    {
+      "id": "home",
+      "start": 0,
+      "seconds": 12.957
+    },
+    {
+      "id": "assessment",
+      "start": 12.957,
+      "seconds": 16.413
+    },
+    {
+      "id": "lesson",
+      "start": 29.37,
+      "seconds": 14.738
+    },
+    {
+      "id": "resources",
+      "start": 44.108,
+      "seconds": 14.525
+    },
+    {
+      "id": "settings",
+      "start": 58.633,
+      "seconds": 16.45
+    },
+    {
+      "id": "connection",
+      "start": 75.082,
+      "seconds": 7.6
+    },
+    {
+      "id": "tutor-answer",
+      "start": 82.683,
+      "seconds": 14.212
+    },
+    {
+      "id": "followup",
+      "start": 96.895,
+      "seconds": 13.238
+    },
+    {
+      "id": "save",
+      "start": 110.133,
+      "seconds": 17.037
+    },
+    {
+      "id": "adaptive",
+      "start": 127.17,
+      "seconds": 16.412
+    },
+    {
+      "id": "closing",
+      "start": 143.582,
+      "seconds": 13.175
+    }
+  ],
+  "subtitles": {
+    "file": "旁白字幕候选.srt",
+    "cues": 76,
+    "sha256": "72e9c96ed276fc5289d15e46094c6d91e1147494edc520a2d1e84783843e654e",
+    "max_line_characters": 28,
+    "timebase": "narration_audio_only",
+    "final_video_alignment": "pending"
+  }
+}
