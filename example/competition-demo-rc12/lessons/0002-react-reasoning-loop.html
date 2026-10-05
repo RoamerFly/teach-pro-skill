@@ -29,7 +29,7 @@
           <li><a href="#stopping">推理什么时候结束</a></li>
           <li><a href="#security">安全视角：不可信内容如何影响 Agent 行为</a></li>
           <li><a href="#exercises">理解检查</a></li>
-          <li><a href="#resources">本课一手阅读</a></li>
+          <li><a href="#resources">一手阅读与视频</a></li>
           <li><a href="#mental-model">带走这个心智模型</a></li>
           <li><a href="#review-plan">复习安排</a></li>
           <li><a href="#learning-input">本课答案与疑难记录</a></li>
@@ -407,8 +407,8 @@
       </section>
 
       <section id="resources" class="content-section">
-        <h2>本课一手阅读</h2>
-        <p>以下资源补充本课视角，不替代课内讲解。</p>
+        <h2>本课一手阅读与视频</h2>
+        <p>先读论文的指定片段；想观察代码组织方式时，选看中文实作视频。把对照结果写入课末证据框。</p>
 
         <div class="resource-card">
           <h3>ReAct: Synergizing Reasoning and Acting in Language Models</h3>
@@ -421,6 +421,13 @@
           <p><strong>访问：</strong><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">arxiv.org/abs/2210.03629</a>（英文，免费，无需登录；摘要页面可直接阅读，PDF 可选）</p>
         </div>
 
+        <details class="resource-card" data-resource-id="video-datawhale-react">
+          <summary>选看 · Hello-Agents 第四章：智能体范式构建（上）· 中文 · 约 15 分钟</summary>
+          <p><a href="https://www.bilibili.com/video/BV12Z63BCEn6/?p=1" target="_blank" rel="noopener noreferrer">观看 Datawhale 的 ReAct 实作视频 →</a>，发布者“二次元的Datawhale”。对照本课纸面循环与教程代码，关注新观察怎样进入下一轮。</p>
+          <p><strong>看哪里：</strong>单集 P1，按 ReAct 主题定位；视频全长 22 分 54 秒。分配 10 分钟选看、5 分钟做对照，精确时间段未核验；其他范式留待后续。</p>
+          <p><strong>看前预测：</strong>工具超时后，模型应根据什么决定下一步？<strong>暂停任务：</strong>画两轮循环，分别标注模型提议、程序执行和返回结果。<strong>看后产出：</strong>把天气示例换成安全情报查询，写出一次超时后的继续或停止判断；不把可见 Thought 当成执行权限。</p>
+          <p class="resource-access">中文；平台访问受限时，可改读<a href="https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/第四章%20智能体经典范式构建.md#42-react" target="_blank" rel="noopener noreferrer">项目第四章 4.2 ReAct</a>，或用本课完整示范完成相同产出。</p>
+        </details>
         <details>
           <summary>选读：Anthropic Building effective agents — Agents 部分</summary>
           <div class="resource-card">

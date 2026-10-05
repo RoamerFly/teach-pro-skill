@@ -25,7 +25,7 @@
           <li><a href="#whats-missing">一次调用缺了什么</a></li>
           <li><a href="#trust-gap">信任的裂缝</a></li>
           <li><a href="#practice">练习</a></li>
-          <li><a href="#resources">本课一手阅读</a></li>
+          <li><a href="#resources">一手阅读与视频</a></li>
           <li><a href="#summary">本课总结</a></li>
           <li><a href="#review">复习安排</a></li>
           <li><a href="#learning-input">掌握证据与疑难</a></li>
@@ -298,7 +298,7 @@ print(response.choices[0].message.content)   # 可能回复：你叫小林；实
             <path d="M 580 290 L 580 256" stroke="var(--muted)" stroke-width="1.6" stroke-dasharray="5 4"/>
             <text x="580" y="352" text-anchor="middle" font-size="10.5" fill="var(--muted)">循环补过程 · 工具补行动 · 记忆补容量</text>
           </svg>
-          <figcaption><strong>图 3 · 本示例的三个缺口与工具型 Agent 的补足。</strong>左框是本课无工具、未关联会话的单次文本调用；右框是课程将实现的一种 Agent：模型提出工具调用，由应用在授权范围内执行，结果再回填，循环受完成条件、步数与人工审核约束。历史与外部记忆由应用管理。当前第 2 课先练习信任边界；工具调用与记忆主题根据后续作答安排。</figcaption>
+          <figcaption><strong>图 3 · 本示例的三个缺口与工具型 Agent 的补足。</strong>左框是本课无工具、未关联会话的单次文本调用；右框是课程将实现的一种 Agent：模型提出工具调用，由应用在授权范围内执行，结果再回填，循环受完成条件、步数与人工审核约束。历史与外部记忆由应用管理。第 2 课讲推理循环，第 3 课讲安全工具调用契约；记忆主题根据后续作答安排。</figcaption>
         </figure>
         <p>逐个说清补足关系：</p>
         <ol class="process-steps">
@@ -438,8 +438,8 @@ print(response)</code></pre>
       </section>
 
       <section id="resources" class="content-section">
-        <h2>本课一手阅读</h2>
-        <p>先核对中文接口样例，再按需要选读循环方法的研究源头或工程解释。阅读产出可写入本课已有证据框，课内练习优先。</p>
+        <h2>本课一手阅读与视频</h2>
+        <p>先核对中文接口样例；想换一种讲解时，再选看中文视频或导读研究片段。产出写入本课已有证据框，课内练习优先。</p>
 
         <article class="resource-card">
           <h3>DeepSeek API 文档《首次调用 API》</h3>
@@ -451,6 +451,13 @@ print(response)</code></pre>
           <p class="resource-access">访问：中文、免费、无需登录（申请 API key 需注册 DeepSeek 开放平台）。不用此文档不影响本课——正文已含等价代码。</p>
         </article>
 
+        <details class="resource-card" data-resource-id="video-lee-agent">
+          <summary>选看 · 李宏毅：AI Agent 原理 · 中文 · 约 12 分钟</summary>
+          <p><a href="https://www.youtube.com/watch?v=M2Yg1kwPpts" target="_blank" rel="noopener noreferrer">观看 AI Agent 讲座 →</a>，来自李宏毅的 2025 年机器学习课程。用另一种讲解对照图 3 的模型、工具与环境反馈。</p>
+          <p><strong>看哪里：</strong>按“使用工具”主题定位，分配 8 分钟选看、4 分钟画图和解释；这是学习预算，不是视频片长，精确时间段未核验。</p>
+          <p><strong>看前预测：</strong>模型说“我已经查到了”，是否足以证明工具执行过？<strong>暂停任务：</strong>画出模型、应用、工具三个节点，标出请求与结果的箭头。<strong>看后产出：</strong>合上视频，用三句话解释谁提出调用、谁执行、谁管理历史，写入课末证据框。</p>
+          <p class="resource-access">中文讲座；需能访问 YouTube 的网络。也可从<a href="https://speech.ee.ntu.edu.tw/~hylee/ml/2025-spring.php" target="_blank" rel="noopener noreferrer">官方课表 3/7 的 AI Agent 条目</a>查找讲义，或对照本课图 3 完成同一任务。</p>
+        </details>
         <details class="resource-card">
           <summary>选读 · ReAct 原始论文 · ICLR 2023 · 约 15 分钟</summary>
           <p><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">ReAct: Synergizing Reasoning and Acting in Language Models</a>，Yao 等。只读摘要与 PDF 第 2 页图 1/图注，辨认推理、行动和观察如何交错。</p>

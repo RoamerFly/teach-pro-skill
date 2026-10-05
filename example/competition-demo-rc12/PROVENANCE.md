@@ -10,4 +10,6 @@
 
 ReAct、Toolformer 摘要与 Python json、OWASP LLM01 页面于 2026-10-05 再次访问。其他沿用资源的逐项检查日期保留在历史证据中，本轮没有重新核验全部外部资料。
 
+资源导学补充：2026-10-05 人工选入李宏毅与 Datawhale 的两个中文视频，按课目标编写选看任务；出处、平台信息、核验程度与逐课取舍见 RESOURCES.md。未实际播放，不作为视频播放验收或 TeleAgent 原生生成证据。
+
 公开副本没有附带 `learner-submissions`、`learner-chats` 或 `.tutor-settings.json`。后续访问者填写的内容由其自己的本地服务管理。
