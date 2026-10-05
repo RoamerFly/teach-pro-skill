@@ -1,7 +1,7 @@
 # Version
 
-- Version: 1.1.0-rc.11
-- Release: Adaptive startup candidate, 2026-10-05; adaptive core unchanged, macOS/Linux native checks and generated content gates still pending
+- Version: 1.1.0-rc.12
+- Release: Formal and supplementary lesson candidate, 2026-10-05; TeleAgent classified-delivery and macOS/Linux native checks pending
 - Edition: Universal Web Tutor · adaptive lessons with local sync
 - Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)
 - Primary output: learner-facing HTML
@@ -15,5 +15,5 @@
 - Long-file policy: incremental writes continue in the same logical file
 - Assessment hygiene: semantically equivalent options; equal word count when natural
 - Lesson closure: every lesson explicitly invites learner follow-up questions
-- Generation cadence: one new lesson per request; later lessons depend on submitted evidence
+- Generation cadence: one formal lesson per continuation, plus one supplementary lesson when needed; evidence informs both without a blanket supplementary-completion gate
 - Learner input: browser autosave plus workspace-local sync; JSON export remains a fallback

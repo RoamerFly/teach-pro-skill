@@ -181,6 +181,32 @@ class CourseCheckTests(unittest.TestCase):
     def test_no_svg_has_no_visual_warnings(self):
         self.assertEqual(checker.check_course(self.root)['visual_warnings'], [])
 
+    def test_supplement_relation_uses_formal_parent_and_preserves_legacy(self):
+        (self.root / 'lessons').mkdir()
+        def lesson(name, attrs=''):
+            file = self.root / 'lessons' / name
+            file.write_text(nav('../') + f'<main {attrs}><section id="learning-input"></section></main>'
+                            '<script src="../assets/tutor.js"></script>', encoding='utf-8')
+            return file
+        parent = lesson('0001-intro.html')  # Existing pages need no metadata migration.
+        lesson('0002-new-topic.html', 'data-lesson-kind="formal"')
+        supplement = lesson('0001-s01-review.html', 'data-lesson-kind="supplement" data-related-lesson="0001"')
+        self.assertTrue(checker.check_course(self.root)['structurally_valid'])
+        parent.unlink()
+        self.assertIn('LESSON_PARENT', self.codes(checker.check_course(self.root)))
+        lesson('0001-s02-other.html', 'data-lesson-kind="supplement" data-related-lesson="0001"')
+        self.assertIn('LESSON_PARENT', self.codes(checker.check_course(self.root)))
+        lesson('0001-intro.html')
+        supplement.write_text(supplement.read_text(encoding='utf-8').replace('data-related-lesson="0001"', 'data-related-lesson="0002"'), encoding='utf-8')
+        self.assertIn('LESSON_RELATION', self.codes(checker.check_course(self.root)))
+
+    def test_supplement_kind_and_filename_must_agree(self):
+        (self.root / 'lessons').mkdir()
+        (self.root / 'lessons/0001-s01-review.html').write_text(
+            nav('../') + '<main data-lesson-kind="formal"><section id="learning-input"></section></main>'
+            '<script src="../assets/tutor.js"></script>', encoding='utf-8')
+        self.assertIn('LESSON_RELATION', self.codes(checker.check_course(self.root)))
+
 
 if __name__ == '__main__':
     unittest.main()

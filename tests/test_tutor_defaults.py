@@ -99,6 +99,29 @@ class DefaultTutorTests(unittest.TestCase):
         self.assertEqual(run.call_args_list[1].args[0], [str(executable), '-c', 'import keyring'])
         self.assertFalse(self.request('/api/tutor/bootstrap')['configured'])
 
+    def test_supplement_reuses_sync_and_keeps_context_and_history_separate(self):
+        slug = '0001-s01-review'
+        (self.root / f'lessons/{slug}.html').write_text(
+            '<main data-lesson-kind="supplement" data-related-lesson="0001">'
+            '<h1>第 1 课补充 · 检查位置</h1><p>Supplement-only content</p></main>', encoding='utf-8')
+        fields = {'lesson-0001-s01-evidence': 'Synthetic supplementary answer'}
+        self.assertTrue(self.request(f'/api/submissions/{slug}', {'fields': fields})['ok'])
+        self.assertTrue(self.request('/api/submissions/0001-intro', {'fields': {'lesson-0001-evidence': 'Synthetic formal answer'}})['ok'])
+        self.assertEqual(json.loads((self.root / f'learner-submissions/{slug}.json').read_text(encoding='utf-8'))['fields'], fields)
+        token = self.request('/api/tutor/bootstrap')['token']
+        context = self.request(f'/api/tutor/context/{slug}', token=token)
+        self.assertIn('Supplement-only content', context['text'])
+        self.assertNotIn('Teaching content', context['text'])
+        self.assertIn('Teaching content', self.request('/api/tutor/context/0001-intro', token=token)['text'])
+        chats = self.root / 'learner-chats'
+        chats.mkdir()
+        for current, content in [(slug, 'Supplement history'), ('0001-intro', 'Formal history')]:
+            (chats / f'{current}.json').write_text(json.dumps({'schema': 1, 'course': self.root.name, 'lesson': current,
+                'messages': [{'role': 'user', 'content': content, 'status': 'complete'}]}), encoding='utf-8')
+        self.assertEqual(self.request(f'/api/tutor/history/{slug}', token=token)['messages'][0]['content'], 'Supplement history')
+        self.assertEqual(self.request('/api/tutor/history/0001-intro', token=token)['messages'][0]['content'], 'Formal history')
+        self.assertFalse((self.root / '.tutor-settings.json').exists())
+
     def test_optional_installer_failure_does_not_start_model_or_claim_success(self):
         with patch.object(sys, 'argv', ['serve_course.py', '--install-keyring']), \
                 patch.object(server.venv, 'EnvBuilder') as builder, \

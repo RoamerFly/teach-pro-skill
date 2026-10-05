@@ -1340,6 +1340,19 @@ html[data-theme="dark"] th { background: var(--surface-2); }
   html[data-theme="auto"] .diagram-node:last-child,
   html[data-theme="auto"] th { background: var(--surface-2); }
 }
+.lesson-kind-label {
+  display: inline-block;
+  padding: .12rem .45rem;
+  border: 1px solid var(--border);
+  border-radius: .45rem;
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: .75rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+.lesson-supplements { margin: .2rem 0 .35rem; padding-left: .65rem; border-left: 2px solid var(--border); list-style: none; }
+.lesson-supplements a { font-size: .78rem; }
 @media print {
   .visual-figure.is-scrollable figcaption::before { content: none; }
   html[data-visual-theme][data-theme] {

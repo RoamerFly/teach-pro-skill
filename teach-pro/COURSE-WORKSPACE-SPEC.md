@@ -26,8 +26,9 @@
 ├─ learner-chats/              # 可选：每课原始聊天 JSON；不入版本控制或发布
 ├─ .tutor-settings.json        # 可选：本地非密钥设置；不入发布包
 ├─ .teach-runtime/             # 可选：keyring 隔离环境；本机安装，不入发布包
-├─ lessons/                    # 顺序课程网页
+├─ lessons/                    # 正式课与关联补充网页
 │  ├─ 0001-*.html
+│  ├─ 0001-s01-*.html          # 按需补充，不占正式课序号
 │  └─ 0002-*.html              # 仅在上一课证据评估后生成
 ├─ reference/                  # 长期速查网页
 ├─ practice/
@@ -49,7 +50,7 @@
 ## 命名规则
 
 - 工作区：简短、唯一、dash-case。
-- 课程：`lessons/NNNN-dash-case.html`。
+- 正式课：`lessons/NNNN-dash-case.html`；补充课：`lessons/NNNN-sSS-dash-case.html`。分类、稳定标识和旧课兼容见 [LESSON-DELIVERY-POLICY.md](./LESSON-DELIVERY-POLICY.md)。
 - 学习记录：`learning-records/NNNN-dash-case.md`。
 - 参考页：`reference/dash-case.html`，仅在内容稳定且可复用时创建。
 - 长期资源中心：适用时用 `reference/resource-learning-center.html`；链接到当前课导学和阶段候选资源，未来阶段不提供未生成课链接。它与内部 `RESOURCES.md` 分工：前者给学员导学，后者保留核验与选择记录。
@@ -70,8 +71,8 @@
 新增课程后必须同步：
 
 1. `index.html` 的课程卡片和进度。
-2. `COURSE.md` 的最近课程。
-3. `ROADMAP.md` 的当前状态。
+2. `COURSE.md` 的当前正式课、关联补充页及最近有作答页面。
+3. `ROADMAP.md` 的主线进度和补充状态，补充页不推进正式课计数。
 4. 必要时更新 `RESOURCES.md` 和 `GLOSSARY.md`。
 5. 只有获得理解证据时才新增学习记录。
 
@@ -79,6 +80,6 @@
 
 - 首次只创建第一课；路线图记录候选主题和能力门槛，不提前写完整后续课程。
 - 学习者在入门评估和每课末尾填写答案、掌握证据与疑难；可用本地服务时自动同步到 `learner-submissions/`，浏览器副本用于恢复。
-- AI 在下次对话中直接读取当前课程的已同步记录，先答疑和判断掌握，再决定下一课或补救课；同步不可用时才需要学员导出或粘贴。
+- AI 在下次对话中读取上一正式课及相关补充页的已同步记录，处理疑难、判断证据；请求续课时生成一节新正式课并按需同轮交付补充页，不用补充替代主线。同步不可用时才需要学员导出或粘贴。
 - 新课生成后才加入首页和课程导航。未生成的候选主题不应显示为可点击链接。
 - 原始答案与 `learning-records/` 分开；后者只记录 AI 有依据判断后的能力证据。

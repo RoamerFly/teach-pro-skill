@@ -44,7 +44,7 @@
           <h1>{{COURSE_TITLE}}</h1>
           <p class="lead">{{COURSE_DESCRIPTION}}</p>
           <div class="hero-facts" aria-label="课程特点">
-            <span>每次一课</span><span>依据作答调整</span><span>本地保存</span>
+            <span>逐课推进</span><span>按需补充</span><span>本地保存</span>
           </div>
         </div>
         <div class="progress-panel" aria-label="课程进度">
@@ -72,7 +72,8 @@
         <h2>课程列表</h2>
         <p>只显示已经生成的课程链接。路线图中的后续主题是候选，下一课根据本课答案与疑难动态决定。</p>
         <p>需要 AI 自动读取学习记录时，请从课程启动器打开网页；直接打开 HTML 仍可阅读，但答案只在浏览器中保存。</p>
-        <div class="lesson-grid">{{GENERATED_LESSON_CARDS}}</div>
+        <!-- 插槽内按正式课 / 补充课分区，每区自带 lesson-grid；无补充页时省略补充分区。 -->
+        {{GENERATED_LESSON_CARDS}}
       </section>
 
     </main>

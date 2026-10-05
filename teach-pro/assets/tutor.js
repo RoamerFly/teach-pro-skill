@@ -34,8 +34,16 @@
   const details = document.createElement('div'); details.className = 'lesson-details';
   for (const item of [context.querySelector('.eyebrow'), context.querySelector('.hero-facts'), meta]) if (item) { if (item === meta) item.classList.add('lesson-status'); details.append(item); }
   if (details.childNodes.length) entry.after(details);
-  const heading = context.querySelector('h1, .lesson-toolbar-title'), number = Number(entry.dataset.lessonNumber || lesson.match(/^(\d+)-/)?.[1]);
-  if (heading && Number.isInteger(number) && number > 0) heading.textContent = '第 ' + number + ' 课 · ' + heading.textContent.trim().replace(/^第\s*(?:\d+|[一二三四五六七八九十百]+)\s*课\s*[·:：—-]\s*/, '');
+  const supplement = main.dataset.lessonKind === 'supplement' || /^\d+-s\d+-/.test(lesson);
+  const number = Number(supplement ? (main.dataset.relatedLesson || lesson.match(/^(\d+)-/)?.[1]) : (entry.dataset.lessonNumber || lesson.match(/^(\d+)-/)?.[1]));
+  const heading = context.querySelector('h1, .lesson-toolbar-title');
+  if (heading && Number.isInteger(number) && number > 0) {
+    const title = heading.textContent.trim().replace(/^第\s*(?:\d+|[一二三四五六七八九十百]+)\s*课(?:\s*补充)?\s*[·:：—-]\s*/, '');
+    heading.textContent = '第 ' + number + ' 课' + (supplement ? '补充' : '') + ' · ' + title;
+  }
+  let kindLabel = main.querySelector('.lesson-kind-label');
+  if (!kindLabel) { kindLabel = document.createElement('span'); kindLabel.className = 'lesson-kind-label'; details.prepend(kindLabel); if (!details.isConnected) entry.after(details); }
+  kindLabel.textContent = supplement ? '补充课' : '正式课';
   for (const text of context.querySelectorAll('h1, .lesson-toolbar-title, .lead')) text.title = text.textContent.trim();
   const measure = () => document.documentElement.style.setProperty('--lesson-toolbar-height', Math.ceil(entry.getBoundingClientRect().height) + 'px');
   if ('ResizeObserver' in window) new ResizeObserver(measure).observe(entry);

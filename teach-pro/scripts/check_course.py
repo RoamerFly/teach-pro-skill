@@ -185,6 +185,22 @@ def check_course(root):
                 issue(relative, 1, 'TUTOR_SCRIPT', '课页未加载默认答疑组件')
     for file, page in pages.items():
         relative = file.relative_to(root).as_posix()
+        if relative.startswith('lessons/'):
+            main = next((node for node in page.nodes if node.tag == 'main'), None)
+            kind = main.attrs.get('data-lesson-kind') if main else None
+            supplement_id = re.fullmatch(r'(\d{4})-s\d{2}-.+', file.stem)
+            if kind is not None and kind not in ('formal', 'supplement'):
+                issue(relative, main.line, 'LESSON_KIND', '课程类型应为 formal 或 supplement')
+            if supplement_id or kind == 'supplement':
+                related = main.attrs.get('data-related-lesson') if main else None
+                if kind != 'supplement' or not supplement_id or related != supplement_id[1]:
+                    issue(relative, main.line if main else 1, 'LESSON_RELATION', '补充页分类、文件关联编号与 data-related-lesson 不一致')
+                elif not any(other.parent == file.parent and other.stem.startswith(related + '-')
+                             and not re.fullmatch(r'\d{4}-s\d{2}-.+', other.stem)
+                             and not any(n.tag == 'main' and n.attrs.get('data-lesson-kind') == 'supplement'
+                                         for n in other_page.nodes)
+                             for other, other_page in pages.items()):
+                    issue(relative, main.line, 'LESSON_PARENT', '补充页关联的正式课不存在')
         for node in page.nodes:
             for attribute in ('href', 'src'):
                 value = node.attrs.get(attribute)

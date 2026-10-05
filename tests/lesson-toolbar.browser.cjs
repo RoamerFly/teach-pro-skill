@@ -16,7 +16,7 @@ test('lesson toolbar stays in the content column and preserves reading, modal an
   fs.cpSync(demo, root, { recursive: true, filter: file => !['learner-chats', 'learner-submissions', '.tutor-settings.json', '__pycache__'].includes(path.relative(demo, file).split(path.sep)[0]) });
   const source = fs.readFileSync(path.join(repo, 'teach-pro/templates/lesson.html'), 'utf8');
   const longTitle = '理解智能体的工具调用、信任边界与跨步骤状态：一个足够长的课题标题';
-  const values = { LESSON_NUMBER: '0001', LESSON_TITLE: longTitle, COURSE_TITLE: '模板测试课程', COURSE_SLUG: 'toolbar-template-test',
+  const values = { LESSON_NUMBER: '0001', LESSON_LABEL: '第 0001 课', LESSON_KIND: 'formal', LESSON_KIND_LABEL: '正式课', LESSON_TITLE: longTitle, COURSE_TITLE: '模板测试课程', COURSE_SLUG: 'toolbar-template-test',
     LESSON_DESCRIPTION: '沿着数据流理解每一步，区分模型提议与应用授权，再用一个小例子检查边界。'.repeat(3), COURSE_PHASE: '基础阶段', ESTIMATED_TIME: '30 分钟', PROGRESS_LABEL: '等待本课作答',
     CURRENT_PAGE_NAV: '<li><a href="#toolbar-target">目标章节</a></li>',
     LESSON_CONTENT_HTML: '<p>阅读测试段落。</p>'.repeat(40) + '<section id="toolbar-target"><h2>目标章节</h2><p>冻结栏不应挡住这个标题。</p></section>' + '<p>后续测试段落。</p>'.repeat(40) };
