@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "purpose": "Scripted college-learner acceptance scenario; not a human learning outcome or an independent learner-model benchmark.",
+  "profile": {
+    "background": "大学生；会基本 Python 和调用大模型 API；未做过 Agent 项目",
+    "mission": "独立开发安全的 AI 安全情报 Agent",
+    "schedule": "每周约五小时，无固定截止日期",
+    "preference": "图解与理解优先，通用原理先于框架"
+  },
+  "lesson": "0002-react-reasoning-loop",
+  "attempts": [
+    {"key": "lesson-0002-q1-thought-purpose", "choice": "c", "reason": "Thought 是可读的思路文本，不是所有 Agent 都必须输出。", "expected_feedback": "回答正确"},
+    {"key": "lesson-0002-q2-function-calling", "choice": "d", "reason": "模型提议调用，程序解析和检查后执行，结果再交回模型。", "expected_feedback": "回答正确"},
+    {"key": "lesson-0002-q3-injection-target", "choice": "a", "reason": "我以为攻击主要针对模型写出的 Thought，没有显式 Thought 应该更安全。", "expected_feedback": "还需要调整"}
+  ],
+  "evidence": "【合成大学生作答；教学后即时练习，不是实际学生成绩】\n选择题：第一题 C，第二题 D，第三题第一次选 A。前两题的理由是 Thought 不必显式输出，工具由程序而不是模型执行；第三题我把没有显式 Thought 与不会被注入混在一起了，看到反馈后需要再用新例子核查。\n开放练习（以下均为纸面模拟，未访问真实漏洞库或执行工具）：\n用户问最近是否有 Apache 中间件相关的高危漏洞，我会先澄清最近指哪一周、具体组件是什么。为演练假设范围是最近七天的组件 A。\nThought 1：先找候选情报，再阅读原始报告核对，不能直接断言存在真实高危漏洞。\nAction 1：提议 search_cve(keyword=\"Apache 组件 A 最近七天 高危\")。程序检查工具权限、查询参数与预算，再执行。\nObservation 1（设定的模拟工具结果）：返回候选编号 SYNTH-2026-001、路径 /data/reports/synthetic-apache-a.json；这不是实际 CVE 事实。\nThought 2：有候选编号还不够，需要核对日期、组件和严重性。\nAction 2：提议 read_report(path=\"/data/reports/synthetic-apache-a.json\")。程序校验规范化路径、读取权限、敏感级别与预算后执行。\nObservation 2（设定的模拟工具结果）：日期在假设范围内、组件 A、严重性为高，来源标为合成测试数据。\n最终回复：这个演练中找到一个候选，列出合成编号和核对结果；不能作为真实安全情报使用。应用按目标字段验证后决定结束，并不因模型说查完就认定成功。\n我现在能按示例写出两轮，但没有运行过完整 Agent，也还不确定收到恶意网页指令时如何处理。",
+  "questions": "【合成疑难】我已经知道工具调用由程序执行，但没有 Thought 的 Function Calling Agent 为什么仍会被网页里的指令影响？如果模型提议一个看起来格式正确的 JSON，程序第一步具体应该怎样检查，难道只做 json.loads 就够了？",
+  "generation_request": "请读取本课程第二课已保存的答案与疑难，处理问题并生成下一节正式课；若有需要，另给一节关联第二课的补充课。不要重复入门评估，不批量生成后续正式课。"
+}
