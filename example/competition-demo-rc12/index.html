@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>智鉴 Agent</title>
+  <meta name="description" content="智能体开发与安全实战：从一次 API 调用开始，沿图解、代码与练习，逐步构建 AI 安全情报 Agent。">
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+<body data-course-key="competition-demo-rc12">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="./settings.html">课程设置</a></nav>
+      <div class="brand-block">
+        <span class="eyebrow">学习课程</span>
+        <a class="course-title" href="./index.html" aria-current="page">智鉴 Agent</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#review">从哪里开始</a></li><li><a href="#mission">学习目标</a></li><li><a href="#roadmap">长期路线</a></li><li><a href="#lessons">正式课与补充课</a></li>
+        </ol>
+      </nav>
+
+      <!-- 适用时把阅读与视频学习中心加入相关文件导航；只链接真实存在的页面。 -->
+      <nav class="sidebar-section" aria-label="学习工具"><h2>学习工具</h2><ol class="course-list"><li><a href="./practice/entry-assessment.html">入门评估</a></li><li><a href="./reference/resource-learning-center.html">一手阅读中心</a></li></ol></nav>
+
+      <nav class="sidebar-section" aria-label="全部课程">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          <li><a href="./lessons/0001-llm-to-agent-api-call.html">第 1 课 · 从 LLM 到 Agent</a></li><li><a href="./lessons/0002-react-reasoning-loop.html">第 2 课 · 推理循环与 ReAct 模式</a><ul class="lesson-supplements"><li><a href="./lessons/0002-s01-injection-without-thought.html">补充 · 没有 Thought 仍有注入风险</a></li></ul></li><li><a href="./lessons/0003-safe-tool-contract.html">第 3 课 · 安全工具调用契约</a></li>
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content course-home">
+      <header class="course-hero">
+        <div>
+          <span class="eyebrow">个性化学习路线</span>
+          <h1>智鉴 Agent</h1>
+          <p class="lead">智能体开发与安全实战：从一次 API 调用开始，沿图解、代码与练习，逐步构建 AI 安全情报 Agent。</p>
+          <div class="hero-facts" aria-label="课程特点">
+            <span>逐课推进</span><span>按需补充</span><span>本地保存</span>
+          </div>
+        </div>
+        <div class="progress-panel" aria-label="课程进度">
+          <span>三节正式课 · 一节补充课</span>
+          <small>参赛展示副本 · 内容经人工校核</small>
+        </div>
+      </header>
+
+      <section id="review" class="content-section evidence-summary">
+        <h2>学习证据与下一步</h2>
+        <p>第一次使用，先填写<a href="./practice/entry-assessment.html">入门评估</a>；想先体验，可直接进入<a href="./lessons/0001-llm-to-agent-api-call.html">第一课</a>。学习时写下练习答案和疑难，课程启动器会自动保存到本地，续课 AI 再据此安排下一课。</p><p>这个展示使用合成学习场景：第二课安全题出现“没有 Thought 就没有注入风险”的误解，下一轮既推进正式第三课，也交付第二课补充。补充课按需学习，不替代正式课。</p>
+      </section>
+
+      <section id="mission" class="content-section">
+        <h2>学习使命</h2>
+        <p>面向有基本 Python 和模型 API 使用经验的大学生，目标是独立开发安全的 AI 安全情报 Agent。先学通用原理，再学框架；每周约五小时，优先图解理解，再做代码和项目。</p>
+      </section>
+
+      <section id="roadmap" class="content-section">
+        <h2>路线与阶段</h2>
+        <ol class="process-steps"><li><strong>原理与最小实现：</strong>消息、工具循环、调用契约与执行边界。</li><li><strong>状态与安全：</strong>上下文、记忆、提示注入、权限与异常处理。</li><li><strong>框架与工程：</strong>选用项目框架，补齐日志、测试与预算控制。</li><li><strong>情报项目：</strong>接入授权数据源，核对来源，生成可追溯报告。</li></ol><p>后续主题为路线候选，由当前课作答决定难度与先后。</p>
+      </section>
+
+      <section id="lessons" class="content-section">
+        <h2>课程列表</h2>
+        <p>只显示已经生成的课程链接。路线图中的后续主题是候选，下一课根据本课答案与疑难动态决定。</p>
+        <p>需要 AI 自动读取学习记录时，请从课程启动器打开网页；直接打开 HTML 仍可阅读，但答案只在浏览器中保存。</p>
+        <!-- 插槽内按正式课 / 补充课分区，每区自带 lesson-grid；无补充页时省略补充分区。 -->
+        <section data-course-section="formal"><h3 class="lesson-kind-label">正式课</h3><div class="lesson-grid"><div class="lesson-card"><h3><a href="./lessons/0001-llm-to-agent-api-call.html">第 1 课 · 从 LLM 到 Agent</a></h3><p>正式课 · 消息与调用</p></div><div class="lesson-card"><h3><a href="./lessons/0002-react-reasoning-loop.html">第 2 课 · 推理循环与 ReAct 模式</a></h3><p>正式课 · 推理、行动与观察</p></div><div class="lesson-card"><h3><a href="./lessons/0003-safe-tool-contract.html">第 3 课 · 安全工具调用契约</a></h3><p>正式课 · 解析、契约与执行边界</p></div></div></section><section data-course-section="supplement"><h3 class="lesson-kind-label">补充课</h3><div class="lesson-grid"><div class="lesson-card"><h3><a href="./lessons/0002-s01-injection-without-thought.html">第 2 课补充 · 没有 Thought 仍有注入风险</a></h3><p>补充课 · 换场景澄清注入风险</p></div></div></section>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="./assets/course.js"></script>
+</body>
+</html>

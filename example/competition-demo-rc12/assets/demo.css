@@ -1,0 +1,35 @@
+/* Showcase-only composition. Shared controls stay in unmodified style.css. */
+.demo-hero { align-items: center; }
+.demo-subtitle { display: block; font-size: .53em; line-height: 1.6; margin-top: .2em; letter-spacing: .01em; }
+.demo-map { border-left: 2px solid var(--accent); padding: .55rem 1rem; max-width: 25rem; }
+.demo-map p { font-size: 1.05rem; font-weight: 700; margin: .5rem 0; }
+.demo-map p span { color: var(--accent); padding: 0 .25rem; }
+.demo-map small { color: var(--muted); line-height: 1.65; }
+.course-hero .demo-map { border-color: rgba(255, 255, 255, .4); }
+.course-hero .demo-map small { color: #e0ebff; }
+.course-hero .demo-map p span { color: #c7ddff; }
+.demo-note { font-size: .8rem; color: var(--muted); border-left: 3px solid var(--border); padding: .35rem .7rem; margin: .7rem 0 1rem; }
+.demo-start { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.demo-start > div + div { border-left: 1px solid var(--border); padding-left: 1.5rem; }
+.demo-link { display: inline-block; font-weight: 650; padding: .35rem 0; text-underline-offset: .22em; }
+.demo-outcomes { padding-left: 1.3rem; }
+.demo-lessons { list-style: none; padding: 0; margin: .7rem 0; }
+.demo-lessons li { display: grid; grid-template-columns: 2.7rem 1fr auto; gap: .9rem; align-items: center; padding: 1rem .1rem; border-top: 1px solid var(--border); }
+.demo-lessons li:last-child { border-bottom: 1px solid var(--border); }
+.demo-number { font-family: var(--font-mono); font-size: 1.35rem; font-weight: 700; color: var(--accent); }
+.demo-lessons h3 { margin: .25rem 0; }
+.demo-lessons p { margin: .25rem 0 0; color: var(--muted); }
+.demo-decisions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1rem 0; }
+.demo-decisions > div { border-top: 2px solid var(--accent); padding: .65rem .1rem; }
+.demo-decisions h3 { margin: .25rem 0; }
+.demo-decisions p { margin: .4rem 0; }
+.demo-table-wrap { overflow-x: auto; }
+.demo-table-wrap table { width: 100%; min-width: 520px; }
+@media (max-width: 700px) {
+  .demo-start, .demo-decisions { grid-template-columns: 1fr; gap: .75rem; }
+  .demo-start > div + div { border-left: 0; border-top: 1px solid var(--border); padding: .85rem 0 0; }
+  .demo-lessons li { grid-template-columns: 2rem 1fr; gap: .65rem; }
+  .demo-lessons li > .demo-link { grid-column: 2; padding-top: 0; }
+  .demo-map { max-width: 100%; }
+}
+@media print { .demo-note { color: #333; } .demo-lessons li { break-inside: avoid; } }

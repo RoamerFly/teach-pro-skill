@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 3 课 · 安全工具调用契约 | 智鉴 Agent</title>
+  <meta name="description" content="把模型的调用提议变成可检查的数据契约：解析、参数、授权与预算各自负责什么。">
+  <link rel="stylesheet" href="../assets/style.css"><link rel="stylesheet" href="../assets/demo.css">
+</head>
+<body data-course-key="competition-demo-rc12">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <div class="brand-block">
+        <span class="eyebrow">Phase 1 · 原理</span>
+        <a class="course-title" href="../index.html">智鉴 Agent</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本课目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#orientation">学习目标</a></li><li><a href="#contract">调用契约图解</a></li><li><a href="#parsing">解析与校验</a></li><li><a href="#registration">工具注册</a></li><li><a href="#implementation">离线示范</a></li><li><a href="#walkthrough">走查</a></li><li><a href="#exercises">即时练习</a></li><li><a href="#resources">一手阅读</a></li><li><a href="#mental-model">总结</a></li><li><a href="#review-plan">复习</a></li><li><a href="#learning-input">答案与疑难</a></li>
+        </ol>
+      </nav>
+
+
+
+      <nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-llm-to-agent-api-call.html">第 1 课 · 从 LLM 到 Agent</a></li><li><a href="../lessons/0002-react-reasoning-loop.html">第 2 课 · 推理循环与 ReAct 模式</a><ul class="lesson-supplements"><li><a href="../lessons/0002-s01-injection-without-thought.html">补充 · 没有 Thought 仍有注入风险</a></li></ul></li><li><a href="../lessons/0003-safe-tool-contract.html">第 3 课 · 安全工具调用契约</a></li></ol></nav>
+    </aside>
+
+    <main id="main-content" class="content lesson-page" data-lesson-kind="formal" data-related-lesson="">
+      <header id="lesson-tutor" class="lesson-hero lesson-toolbar" data-lesson-number="0003" aria-label="本课工具栏">
+        <div class="lesson-toolbar-actions"><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog" disabled>问 AI</button></div>
+        <div class="lesson-toolbar-context">
+          <span class="eyebrow">0003 · Phase 1 · 原理</span>
+          <h1>第 3 课 · 安全工具调用契约</h1>
+          <p class="lead">把模型的调用提议变成可检查的数据契约：解析、参数、授权与预算各自负责什么。</p>
+        </div>
+      </header>
+      <dl class="lesson-meta lesson-status">
+        <div><dt>课程类型</dt><dd><span class="lesson-kind-label">正式课</span></dd></div>
+        <div><dt>预计时间</dt><dd>40–50 分钟，选读另计</dd></div>
+        <div><dt>当前进度</dt><dd>正式第 3 课已交付；能力待作答验证</dd></div>
+      </dl>
+
+      <section id="orientation" class="content-section learning-objectives">
+        <h2>今天要解决什么</h2>
+        <p>今天做成一件事：为一个情报查询工具写清输入契约，并解释为什么“JSON 能解析”不等于“可以执行”。读图和示范约 20 分钟，练习约 10–15 分钟，一手阅读约 10 分钟。</p><ul><li>区分解析、参数校验与授权检查。</li><li>沿控制流说明合法与被拒绝提议的去向。</li><li>为一个新工具写出三类测试：成功、参数不符、未授权。</li></ul>
+      </section>
+
+      <section id="prerequisite" class="content-section"><h2>从调用提议接到程序边界</h2><p>第二课把工具调用放回了模型与应用的循环。现在展开其中的程序部分：一段文本怎样变成能安全处理的提议。无需先完成补充课；关于没有 Thought 的注入问题，可按需阅读<a href="./0002-s01-injection-without-thought.html">第二课补充</a>。</p></section>
+
+      <article class="lesson-body">
+        <section id="contract" class="content-section">
+  <h2>先把“调用”拆成四件事</h2>
+  <p>模型写出 <code>{"tool":"search_reports","arguments":{"component":"component-a","limit":2}}</code>，看起来像一条调用命令。但对程序来说，它首先只是一段文本。要让它成为一次受控调用，需要依次处理：读懂格式、检查参数、判断授权、执行已注册的函数。</p>
+  <p>把它想成校园实验室的器材申请单：表格填对，不等于申请人有资格使用；有资格，也不等于可以超量领用。申请单中的“批准”二字更不能替代管理员的批准。对应到 Agent，模型负责提出申请，应用负责核验，工具负责具体操作。</p>
+  <figure class="visual-figure visual-figure--wide">
+    <svg viewBox="0 0 900 220" role="img" aria-labelledby="contract-diagram-title">
+      <title id="contract-diagram-title">调用提议经过解析、参数校验和授权预算检查，才进入注册工具；检查失败返回拒绝</title>
+      <defs><marker id="contract-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="var(--text)"/></marker></defs>
+      <g fill="var(--surface-2)" stroke="var(--border)"><rect x="15" y="35" width="150" height="70" rx="8"/><rect x="190" y="35" width="150" height="70" rx="8"/><rect x="365" y="35" width="150" height="70" rx="8"/><rect x="540" y="35" width="150" height="70" rx="8"/><rect x="715" y="35" width="170" height="70" rx="8"/><rect x="340" y="155" width="240" height="45" rx="8"/></g>
+      <g stroke="var(--text)" fill="none" stroke-width="2" marker-end="url(#contract-arrow)"><path d="M165 70H190"/><path d="M340 70H365"/><path d="M515 70H540"/><path d="M690 70H715"/><path d="M440 105V155"/><path d="M615 105V130H460V155"/></g>
+      <g fill="var(--text)" text-anchor="middle" font-size="17"><text x="90" y="65">模型提议</text><text x="90" y="88">仅是数据</text><text x="265" y="65">解析格式</text><text x="265" y="88">文本 → 对象</text><text x="440" y="65">参数校验</text><text x="440" y="88">字段 / 类型 / 范围</text><text x="615" y="65">授权与预算</text><text x="615" y="88">是否允许执行</text><text x="800" y="65">注册工具执行</text><text x="800" y="88">返回实际结果</text><text x="460" y="183">拒绝：记录原因，不执行</text></g>
+    </svg>
+    <figcaption>沿上方箭头读主线；下方箭头代表检查失败。工具名未知或格式错误也应拒绝。示意中的检查可以集中或分散实现，关键是没有通过必要检查就不发生动作。</figcaption>
+  </figure>
+  <p><strong>契约</strong>是双方对输入、输出和失败方式的共同约定。在这个例子里，调用提议必须有 <code>tool</code> 和 <code>arguments</code>；参数只能指定一个演练组件、返回数量为 1–3。应用还能用当前用户权限和剩余次数拒绝一份格式正确的申请。</p>
+</section>
+<section id="parsing" class="content-section">
+  <h2>解析成功，只是第一道门</h2>
+  <p><code>json.loads</code>把 JSON 文本变成 Python 对象：对象通常变成字典，数组变成列表，布尔值变成 <code>True/False</code>。这一步解决“读得懂吗”，不解决“应该执行吗”。调用提议可以格式完全合法，却要求一个未注册工具、越界的数量或没有授权的操作。</p>
+  <table><thead><tr><th>提议</th><th>能否解析</th><th>本例处理</th></tr></thead><tbody>
+    <tr><td><code>{"tool":"search_reports","arguments":{"component":"component-a","limit":2}}</code></td><td>能</td><td>还须检查当前权限、预算与字段</td></tr>
+    <tr><td><code>{"tool":"delete_all","arguments":{}}</code></td><td>能</td><td>未知工具，拒绝</td></tr>
+    <tr><td><code>{"tool":"search_reports","arguments":{"component":"component-a","limit":999}}</code></td><td>能</td><td>数量超出本例 1–3，拒绝</td></tr>
+    <tr><td><code>{"tool":"search_reports","arguments":{"component":"component-a","limit":true}}</code></td><td>能</td><td>布尔值不是本例要求的整数数量，拒绝</td></tr>
+  </tbody></table>
+  <p>为什么特意检查布尔值？Python 中布尔类型与整数有继承关系，只用 <code>isinstance(value, int)</code>可能放过 <code>True</code>。本例用 <code>type(value) is int</code>表达精确类型要求。实际工程也可以使用成熟校验库，但应知道所选校验是否会自动转换类型。</p>
+  <p>格式还要考虑大小和歧义。Python 默认 JSON 解码允许部分扩展值，并对重复键保留最后一个值；本例用钩子拒绝非标准数字和重复键，限制提议长度。真实服务还需限制嵌套、输入总量、并发和处理时间，不能把一个小函数当成全部防护。</p>
+</section>
+<section id="registration" class="content-section">
+  <h2>工具注册：名字不是可执行代码</h2>
+  <p>模型知道某个工具的描述，不等于程序应该执行任意同名表达式。我们预先创建注册表 <code>REGISTRY = {"search_reports": search_reports}</code>，只从这张表找到已定义函数，不能把模型文本交给 <code>eval</code>、Shell 或任意动态导入。</p>
+  <p>“工具存在”和“这次可用”也是两件事：注册表可能包含多个工具，当前会话的 <code>allowed_tools</code>只允许其中一部分。权限来自应用的授权状态，不从网页、报告或模型附带的 <code>approved=true</code>字段读取。即使模型收到恶意指令并写出一个合规 JSON，程序仍应执行相同的权限检查。</p>
+  <p>工具返回的结果重新进入模型上下文后，也不获得新的指令权限。最小权限能减少可发生的动作，但不能单独保证摘要准确或完全消除提示注入。内容可信度、结果核验与执行权限应分别处理。</p>
+</section>
+<section id="implementation" class="content-section">
+  <h2>完整示范：一个离线工具调度器</h2>
+  <p>以下 Python 3.11+ 示例只调用本地合成函数，不接大模型、不访问网络、不读写报告文件。先读代码并预测输出；需要运行时，将代码保存为 <code>tool-contract.py</code>，执行 <code>python tool-contract.py</code>。不运行也能完成本课的纸面练习。</p>
+  <pre><code class="language-python">&quot;&quot;&quot;Offline teaching example: one tool, synthetic data, no model/network/filesystem calls.&quot;&quot;&quot;
+import json
+
+
+def search_reports(component, limit):
+    return [{&quot;id&quot;: &quot;SYNTH-001&quot;, &quot;component&quot;: component, &quot;source&quot;: &quot;synthetic&quot;}][:limit]
+
+
+REGISTRY = {&quot;search_reports&quot;: search_reports}
+
+
+def reject_constant(value):
+    raise ValueError(&quot;non-standard number&quot;)
+
+
+def unique_pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(&quot;duplicate key&quot;)
+        result[key] = value
+    return result
+
+
+def dispatch(raw, allowed_tools, remaining_calls):
+    # Simple, bounded input for a one-level teaching protocol.
+    if not isinstance(raw, str) or len(raw) &gt; 4096:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;input_size&quot;}
+    try:
+        proposal = json.loads(raw, parse_constant=reject_constant, object_pairs_hook=unique_pairs)
+    except (ValueError, RecursionError):
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;parse&quot;}
+    if type(proposal) is not dict or set(proposal) != {&quot;tool&quot;, &quot;arguments&quot;}:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;shape&quot;}
+    tool, args = proposal[&quot;tool&quot;], proposal[&quot;arguments&quot;]
+    if type(tool) is not str or tool not in REGISTRY:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;unknown_tool&quot;}
+    if tool not in allowed_tools:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;permission&quot;}
+    if type(remaining_calls) is not int or remaining_calls &lt;= 0:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;budget&quot;}
+    if type(args) is not dict or set(args) != {&quot;component&quot;, &quot;limit&quot;}:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;arguments&quot;}
+    if args[&quot;component&quot;] != &quot;component-a&quot; or type(args[&quot;limit&quot;]) is not int or not 1 &lt;= args[&quot;limit&quot;] &lt;= 3:
+        return {&quot;ok&quot;: False, &quot;reason&quot;: &quot;arguments&quot;}
+    # Only this line executes the pre-registered synthetic function.
+    result = REGISTRY[tool](args[&quot;component&quot;], args[&quot;limit&quot;])
+    return {&quot;ok&quot;: True, &quot;data&quot;: result, &quot;remaining_calls&quot;: remaining_calls - 1}
+
+
+if __name__ == &quot;__main__&quot;:
+    valid = '{&quot;tool&quot;:&quot;search_reports&quot;,&quot;arguments&quot;:{&quot;component&quot;:&quot;component-a&quot;,&quot;limit&quot;:2}}'
+    print(dispatch(valid, {&quot;search_reports&quot;}, 1))
+    print(dispatch(valid, set(), 1))
+    print(dispatch(valid, {&quot;search_reports&quot;}, 0))
+    print(dispatch(valid.replace('&quot;limit&quot;:2', '&quot;limit&quot;:true'), {&quot;search_reports&quot;}, 1))
+</code></pre>
+  <p>从下往上看调用入口，再回到 <code>dispatch</code>顺着各个返回条件走：输入不合格就返回拒绝；只有最后的注册表调用才产生工具动作。参数检查在权限检查之前或之后可以按工程需求调整，但都必须发生在需要保护的动作之前。</p>
+  <p>四次示范分别得到：成功并剩余零次；权限拒绝；预算拒绝；参数拒绝。成功返回的 <code>remaining_calls</code>需要由调用方持久化或传给下一轮，不能每次重新传 1。并发生产应用还需原子预留预算，本例演示顺序单次调用，不包含并发控制。</p>
+  <p>观察输出时区分两层：这是实际运行 Python 得到的结果；其中报告编号与内容仍然是合成数据，不是实际查询 CVE 的结果。本例的四类拒绝也不是所有工具通用的错误清单。</p>
+</section>
+<section id="walkthrough" class="content-section">
+  <h2>从提议走到可核对的结果</h2>
+  <ol class="process-steps"><li>收到文本提议，先限制长度，再解析为对象；不解释或执行其中的代码。</li><li>核对顶层字段和工具名称。注册表只包含开发者预先实现的工具。</li><li>核对当前权限和剩余次数，再检查参数结构、精确类型和业务范围。</li><li>通过后执行工具，记录实际返回；拒绝时记录阶段和原因，不编造成功 Observation。</li><li>调用方更新预算。后续是否重试、暂停或结束，由应用策略决定；不能用无限重试绕过拒绝。</li></ol>
+  <p>现在改变一个条件：提议和参数都没变，但当前会话没有查询权限。仍然拒绝。这说明“格式正确”与“可执行”不是等价关系；如果你的测试只覆盖 JSON 格式，就遗漏了真正的授权边界。</p>
+</section>
+
+      </article>
+
+      <section id="exercises" class="content-section"><h2>教学后即时练习</h2><div class="exercise-card"><h3>格式正确后，还要查什么？</h3><p>工具已注册，参数已通过校验，但当前会话没有该工具权限。程序应怎样处理？</p><div data-quiz data-save-key="lesson-0003-q1-permission" data-correct-answer="B"><div class="quiz-options"><label class="quiz-option"><input type="radio" name="lesson-0003-q1-permission" value="a" data-feedback="格式和注册不替代当前会话授权。先执行再补权限会发生未授权动作。"> A. 保留参数格式，照常执行这次调用</label><label class="quiz-option"><input type="radio" name="lesson-0003-q1-permission" value="b" data-correct="true" data-feedback="正确。当前授权状态独立于格式；拒绝后由应用选择暂停或其他允许的方案。"> B. 返回权限拒绝，不执行这次调用</label><label class="quiz-option"><input type="radio" name="lesson-0003-q1-permission" value="c" data-feedback="模型自述批准不是权限来源；申请文本不能给自己授权。"> C. 让模型写批准，再执行这次调用</label><label class="quiz-option"><input type="radio" name="lesson-0003-q1-permission" value="d" data-feedback="需要的授权须在受保护动作发生前落实，不能靠事后审批撤销动作。"> D. 先执行出结果，再补这次审批</label></div><button type="button" class="quiz-submit" data-quiz-submit>检查回答</button><div data-quiz-feedback aria-live="polite"></div></div></div><div class="exercise-card"><h3>JSON 布尔值能当数量吗？</h3><p>本课契约要求 limit 是 1–3 的整数，模型提议 limit=true。按示例如何处理？</p><div data-quiz data-save-key="lesson-0003-q2-type" data-correct-answer="C"><div class="quiz-options"><label class="quiz-option"><input type="radio" name="lesson-0003-q2-type" value="a" data-feedback="本契约要求精确整数。解析能成功，不代表类型符合业务约定。"> A. 解析成布尔值，直接作为数量调用</label><label class="quiz-option"><input type="radio" name="lesson-0003-q2-type" value="b" data-feedback="自动转换会掩盖类型不符；本课没有授权这种转换。"> B. 解析成布尔值，改为一个数量调用</label><label class="quiz-option"><input type="radio" name="lesson-0003-q2-type" value="c" data-correct="true" data-feedback="正确。type(value) is int 不接纳布尔值；先解析，再按契约判断。"> C. 解析成布尔值，返回参数校验拒绝</label><label class="quiz-option"><input type="radio" name="lesson-0003-q2-type" value="d" data-feedback="删参数不能替代校验，会偏离模型提议且可能改变函数行为。"> D. 解析成布尔值，跳过数量参数调用</label></div><button type="button" class="quiz-submit" data-quiz-submit>检查回答</button><div data-quiz-feedback aria-live="polite"></div></div></div><div class="exercise-card"><h3>为新工具写契约与测试</h3><p>工具 <code>list_advisories(component, limit)</code>只查询已授权组件，数量允许 1–5。写一份合法提议、一个参数不符的提议和一个格式合法但未授权的情形，指出各在哪一层被拒绝，并说明是否执行。</p><details><summary>对照检查标准</summary><p>合法样例必须同时满足字段、精确类型、范围、当前权限和预算。参数不符可用 limit=true 或 6；未授权应改变会话权限而不是改变合法参数。拒绝不产生工具动作。答案属于教学后应用，不据一次完成认定长期掌握。</p></details></div></section>
+
+      <!-- 有选定资源时插入完整语义 section：优先项通常 1–2 项，写清定位、任务、产出和时间预算；
+           选读用 details 折叠。已选资源的访问限制及替代路径可见；产出复用 lesson-evidence。
+           没有选定资源时删除此占位，不在学员页面解释资源取舍；决策记入 RESOURCES.md。 -->
+      <section id="resources" class="content-section"><h2>本课一手阅读</h2><div class="resource-card"><h3>Python 3.13 · json.loads 与解码边界</h3><p>优先，约 5 分钟。阅读 <a href="https://docs.python.org/3.13/library/json.html#json.loads" target="_blank" rel="noopener noreferrer">json.loads</a>与 <a href="https://docs.python.org/3.13/library/json.html#standard-compliance-and-interoperability" target="_blank" rel="noopener noreferrer">标准兼容性</a>片段。写出解析器负责什么、不负责什么，再解释示例为何拒绝重复键与非标准数字。英文；可先完成课内表格和代码走查。</p></div><div class="resource-card"><h3>OWASP LLM01:2025 · 格式校验与最小权限</h3><p>优先，约 5 分钟。阅读 <a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/" target="_blank" rel="noopener noreferrer">Prevention and Mitigation Strategies 的第 2、4、5 项</a>，在本课调用图上标注格式、权限和高风险人工审批分别属于哪层。英文；本课注册表与授权示范提供对应解释。</p></div><details><summary>选读论文 · Toolformer 摘要（约 5 分钟）</summary><p>阅读 <a href="https://arxiv.org/abs/2302.04761v1" target="_blank" rel="noopener noreferrer">Toolformer 原始论文摘要</a>，找出模型学习选择 API、参数与使用结果的研究目标，再写一句：这与应用判定权限有什么区别？这里只导读摘要，历史研究不替代当前接口或授权规范。</p></details></section>
+
+      <section id="mental-model" class="content-section mental-model">
+        <h2>带走这个心智模型</h2>
+        <p>模型提议是数据；程序解析并按契约校验，再用当前授权与预算判断是否执行。注册表限制可调用函数，工具返回实际结果。格式、权限、成功验证是不同问题。</p>
+      </section>
+
+      <section id="review-plan" class="content-section">
+        <h2>复习安排</h2>
+        <ul><li>今天：保存三道练习的答案、预测输出与不清楚的检查层。</li><li>隔 2–3 天：不看代码画出提议到执行的路径，再改变一个授权条件预测结果。</li><li>下一课候选：状态与消息历史；只有取得相应证据后再决定难度与补充需求。</li></ul>
+      </section>
+
+      <section id="learning-input" class="content-section callout note">
+        <h2>本课答案与疑难记录</h2>
+        <p>使用课程启动器打开时，输入会自动写入本地课程目录，AI 下次对话会直接读取。若仅双击 HTML 打开，则保存在浏览器；必要时可下载备份。</p>
+        <label for="lesson-evidence">我的练习答案与掌握证据</label>
+        <textarea id="lesson-evidence" data-save-key="lesson-0003-evidence" placeholder="写下独立完成的答案、作品、代码结果与资源学习产出，说明需要提示的部分。"></textarea>
+        <label for="lesson-questions">疑难与希望继续讨论的问题</label>
+        <textarea id="lesson-questions" data-save-key="lesson-0003-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本课记录</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <aside class="callout note" aria-label="向教师追问">
+        <strong>有不清楚的地方？</strong> 你可以随时向教师追问本课任意内容，也可以要求换一种解释、补一个例子、拆解某一步，或继续深入这个主题。
+      </aside>
+
+      <nav class="lesson-pager" aria-label="课程翻页">
+        <a class="pager-prev" href="./0002-react-reasoning-loop.html">上一正式课：第 2 课</a>
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+
+      </nav>
+    </main>
+  </div>
+
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+  <script src="../assets/tutor.js"></script>
+</body>
+</html>

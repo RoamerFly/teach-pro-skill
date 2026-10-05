@@ -1,5 +1,11 @@
 # 学途智伴 · 比赛 Demo 制作方案
 
+## 当前候选 2026年10月5日
+
+Skill 主体保持 1.1.0-rc.12，不再堆叠功能。新版 [Demo](../example/competition-demo-rc12/README.md) 用三节正式课与一节补充课展示主线推进和按需补充；[参赛材料](../example/competition-materials/rc12/README.md)同步重写说明文档和 175 秒目标分镜。新版真实问答录屏、配音与成片尚未制作，最终提交包待成片验收后生成。
+
+以下 rc.3 至 rc.4 方案作为历史记录，不能视为新版录制或无人工介入的成功证据。
+
 队伍：重邮FFBond。作品：学途智伴——大学生长期自适应学习智能体。基线：Teach Pro 1.1.0-rc.3。本文记录制作方案与当前进度。
 
 制作状态：独立 Demo 八页已完成内容校核与 Windows 浏览器验收，见 [展示入口](../example/competition-demo-zhi-jian-agent/README.md) 和 [验收记录](./records/2026-10-01-competition-demo-review.md)。[新版参赛材料](../example/competition-materials/README.md)包含六页 Word 和约 171 秒视频；视频已补录真实 DeepSeek Flash 模型获取、连接测试与三轮问答，采用连续旁白。Word 的截图与材料状态待定稿同步，最终提交包未制作。

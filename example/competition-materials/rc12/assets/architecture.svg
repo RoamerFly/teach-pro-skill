@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="410" viewBox="0 0 1100 410">
+ <rect width="1100" height="410" fill="#fff"/>
+ <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#536b86"/></marker></defs>
+ <g font-family="Microsoft YaHei, sans-serif" fill="#172b49">
+ <rect x="20" y="35" width="310" height="180" rx="14" fill="#eef3ff" stroke="#ccd8ec"/>
+ <rect x="390" y="35" width="310" height="180" rx="14" fill="#f0f6f6" stroke="#cbdedc"/>
+ <rect x="760" y="35" width="320" height="180" rx="14" fill="#f3f3fb" stroke="#d5d3e7"/>
+ <text x="175" y="78" text-anchor="middle" font-size="25" font-weight="bold">教学 AI 调用 Skill</text>
+ <text x="175" y="118" text-anchor="middle" font-size="21">评估基础 · 核验理解</text>
+ <text x="175" y="154" text-anchor="middle" font-size="21">读记录 · 决定下一目标</text>
+ <text x="175" y="187" text-anchor="middle" font-size="18">Teach Pro 教学协议</text>
+ <text x="545" y="78" text-anchor="middle" font-size="25" font-weight="bold">本地课程工作区</text>
+ <text x="545" y="118" text-anchor="middle" font-size="21">网页课文 · 答案 · 疑难</text>
+ <text x="545" y="154" text-anchor="middle" font-size="21">画像 · 路线 · 状态文件</text>
+ <text x="545" y="187" text-anchor="middle" font-size="18">新会话继续读取</text>
+ <text x="920" y="78" text-anchor="middle" font-size="25" font-weight="bold">下一轮教学</text>
+ <text x="920" y="118" text-anchor="middle" font-size="21">一节正式课推进新目标</text>
+ <text x="920" y="154" text-anchor="middle" font-size="21">按需配套独立补充课</text>
+ <text x="920" y="187" text-anchor="middle" font-size="18">练习与复查再次收集证据</text>
+ <path d="M334 110H381M704 110H751" fill="none" stroke="#536b86" stroke-width="3" marker-end="url(#arrow)"/>
+ <rect x="320" y="275" width="450" height="108" rx="14" fill="#f8f9fc" stroke="#d4dce8"/>
+ <text x="545" y="315" text-anchor="middle" font-size="24" font-weight="bold">可选课内 Tutor</text>
+ <text x="545" y="351" text-anchor="middle" font-size="21">本课上下文 · 多轮答疑 · 按课保存</text>
+ <path d="M545 270V225" fill="none" stroke="#536b86" stroke-width="3" marker-end="url(#arrow)"/>
+ <text x="615" y="250" font-size="17">聊天供续课参考</text>
+ </g>
+</svg>

@@ -53,14 +53,14 @@ $teach-pro
 
 ## 课程示例
 
-[比赛 Demo：智鉴 Agent](./example/competition-demo-zhi-jian-agent/README.md) 包含入门评估、三节校核课程、一手阅读中心、教学决策回放与统一模型设置。围绕“建立原理 → 定向补救 → 推进新目标”展示逐课教学。
+[比赛 Demo：智鉴 Agent](./example/competition-demo-rc12/README.md) 包含入门评估、三节正式课、一节关联补充课、一手阅读中心与统一模型设置。展示主线推进、按需补充与本地学习记录的衔接。
 
 ```sh
 git clone https://github.com/RoamerFly/teach-pro-skill.git
-cd teach-pro-skill/example/competition-demo-zhi-jian-agent
+cd teach-pro-skill/example/competition-demo-rc12
 ```
 
-随后使用对应平台的启动器打开课程。此 Demo 为人工校核的展示副本；三分支决策来自合成场景实测，后续课节依据新作答生成。
+随后使用对应平台的启动器打开课程。此 Demo 使用合成场景，内容经人工校核；后续课节依据新作答生成。[旧版展示](./example/competition-demo-zhi-jian-agent/README.md)保留为历史对照。
 
 [早期课程与项目案例](./example/ai-agent-security-intelligence/README.md) 保留字幕视频和安全情报实验代码，供对照使用。
 
@@ -96,7 +96,7 @@ git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.12.zip 
 ## 文档与反馈
 
 - [Skill 使用说明](./teach-pro/README.md)
-- [参赛说明文档与演示视频](./example/competition-materials/README.md)
+- [新版参赛说明与视频制作方案](./example/competition-materials/rc12/README.md)
 - [课程工作区规范](./teach-pro/COURSE-WORKSPACE-SPEC.md)
 - [资源选择策略](./teach-pro/RESOURCE-SELECTION-POLICY.md)
 - [本地同步规范](./teach-pro/LOCAL-SYNC-SPEC.md)

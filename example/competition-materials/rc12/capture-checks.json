@@ -1,0 +1,57 @@
+{
+  "skill": "1.1.0-rc.12",
+  "synthetic": true,
+  "provider_requests": 0,
+  "pages": [
+    "index.html",
+    "settings.html",
+    "practice/entry-assessment.html",
+    "reference/resource-learning-center.html",
+    "lessons/0001-llm-to-agent-api-call.html",
+    "lessons/0002-react-reasoning-loop.html",
+    "lessons/0002-s01-injection-without-thought.html",
+    "lessons/0003-safe-tool-contract.html"
+  ],
+  "external_requests": 0,
+  "checks": [
+    "8 pages: relative links, same-page anchors, blank answers, 1280/390/320px overflow, JavaScript errors",
+    "12 runtime files byte-identical to rc.12 Skill",
+    "DeepSeek preset address and masked invalid screenshot key; no save or model call",
+    "Isolated synthetic third-lesson answer saved and restored in fresh browser"
+  ],
+  "platform": "Windows",
+  "screenshots": [
+    {
+      "file": "assessment.png",
+      "sha256": "97efe092d110745ae191c9077151f7091ec8c85951d846919a218a5b3849d38b"
+    },
+    {
+      "file": "course-home-dark.png",
+      "sha256": "b1004c0ba82f4224c2f4e45969aea93da8dfb726dfe43a9a06c031a5e1837718"
+    },
+    {
+      "file": "course-home.png",
+      "sha256": "86eb51f03663937d4aa3c0f3ec018eeffc6132420913d946503259df11e3dc07"
+    },
+    {
+      "file": "deepseek-settings.png",
+      "sha256": "a97190c7d3d39a131fedfa855ab7b2a799a221fc76940d18738efd31a3447349"
+    },
+    {
+      "file": "formal-supplement.png",
+      "sha256": "7e26b9ab2bcac579a3b9062091d724cdc5f97e9921ea65871560d74def611d2e"
+    },
+    {
+      "file": "lesson-diagram.png",
+      "sha256": "2265d8bc5810a80b1e6e7cc58cad18a86081777be1873afcf8aeb26e2287d420"
+    },
+    {
+      "file": "masked-key.png",
+      "sha256": "3fd2d205c7ff2fb1d299d351191e306bae30723a6004620c1193941c1d249b16"
+    },
+    {
+      "file": "tutor-dialog.png",
+      "sha256": "1191512228eced1f02e4cacf4e96bb4b6599ef5dc1792455d7234d4657655630"
+    }
+  ]
+}

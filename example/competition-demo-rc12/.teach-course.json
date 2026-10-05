@@ -1,0 +1,21 @@
+{
+  "course": "competition-demo-rc12",
+  "title": "智鉴 Agent：智能体开发与安全实战",
+  "created_at": "2026-10-05",
+  "entry": "index.html",
+  "visual_theme": "systems",
+  "latest_lesson": "lessons/0003-safe-tool-contract.html",
+  "latest_submission_lesson": null,
+  "entry_assessment": {
+    "delivered": true,
+    "submitted": false,
+    "page": "practice/entry-assessment.html"
+  },
+  "next_candidate": "状态与消息历史；按当前作答决定",
+  "demo": {
+    "synthetic_scenario": true,
+    "content_manually_reviewed": true,
+    "skill_version": "1.1.0-rc.12",
+    "teleagent_new_run": false
+  }
+}
