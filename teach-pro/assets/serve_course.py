@@ -1,6 +1,6 @@
 """Serve this course on loopback and persist learner answers for the local tutor.
 
-Run ``python3 serve_course.py`` (or a platform launcher). Keyring is optional for remembering keys.
+Run ``python3 serve_course.py`` (or a platform launcher); missing keyring is prepared automatically.
 This is a single-user development helper, not a production web server.
 """
 
@@ -21,6 +21,8 @@ import webbrowser
 import subprocess
 import sys
 import venv
+import importlib
+from importlib.metadata import PackageNotFoundError, version
 
 try:
     import tutor_chat
@@ -217,27 +219,65 @@ def use_course_environment() -> None:
     os.execv(str(executable), [str(executable), '-X', 'utf8', '-B', str(ROOT / 'serve_course.py'), *sys.argv[1:]])
 
 
+def keyring_ready() -> bool:
+    from credential_store import KEYRING_REQUIREMENT
+    try:
+        if version('keyring') != KEYRING_REQUIREMENT.split('==')[1]:
+            return False
+        importlib.import_module('keyring')
+        return True
+    except (ImportError, PackageNotFoundError):
+        return False
+
+
+def install_keyring() -> Path:
+    from credential_store import KEYRING_REQUIREMENT
+    environment = ROOT / '.teach-runtime'
+    if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
+        raise ValueError('Invalid course runtime path')
+    executable = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+    if not executable.is_file():
+        venv.EnvBuilder(with_pip=True).create(environment)
+    subprocess.run([str(executable), '-m', 'pip', 'install', '--disable-pip-version-check', '--no-input',
+                    '--retries', '1', '--timeout', '10', KEYRING_REQUIREMENT],
+                   check=True, capture_output=True, timeout=60)
+    subprocess.run([str(executable), '-c', 'import keyring'],
+                   check=True, capture_output=True, timeout=10)
+    return executable
+
+
+def prepare_runtime() -> None:
+    if keyring_ready():
+        return
+    print('Preparing course runtime for remembered credentials (first launch only)...', flush=True)
+    try:
+        executable = install_keyring()
+    except (OSError, ValueError, subprocess.SubprocessError):
+        print('Runtime preparation failed. Check network/Python venv support, then restart. '
+              'The course will open; uncheck Remember device for session-only AI.', flush=True)
+        return
+    print('Course runtime ready. Continuing startup...', flush=True)
+    # Fresh imports after installation; arguments and chosen port are preserved.
+    os.execv(str(executable), [str(executable), '-X', 'utf8', '-B', str(ROOT / 'serve_course.py'), *sys.argv[1:]])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Open the course with automatic local answer sync")
     parser.add_argument("--port", type=int, default=0, help="loopback port; 0 chooses a free port")
     parser.add_argument("--no-browser", action="store_true", help="do not open the browser automatically")
     parser.add_argument("--install-keyring", action="store_true", help="install optional keyring in this course's isolated Python environment")
+    parser.add_argument("--session-only", action="store_true", help="skip automatic dependency preparation; use existing environment")
     args = parser.parse_args()
     if args.install_keyring:
-        from credential_store import KEYRING_REQUIREMENT
-        environment = ROOT / '.teach-runtime'
-        if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
-            raise ValueError('Invalid course runtime path')
-        executable = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
         try:
-            if not executable.is_file():
-                venv.EnvBuilder(with_pip=True).create(environment)
-            subprocess.run([str(executable), '-m', 'pip', 'install', '--disable-pip-version-check', KEYRING_REQUIREMENT], check=True)
-        except (OSError, subprocess.CalledProcessError) as exc:
+            install_keyring()
+        except (OSError, ValueError, subprocess.SubprocessError) as exc:
             print('Optional keyring installation failed. Check pip/network and Python venv support; session mode remains available.', file=sys.stderr)
             raise SystemExit(1) from exc
         print('Keyring installed in .teach-runtime/. Restart the course launcher to use it.', flush=True)
         return
+    if not args.session_only:
+        prepare_runtime()
     if tutor_chat:
         tutor_chat.config_status(ROOT)  # Restore local credentials before any lesson request.
     with ThreadingHTTPServer(("127.0.0.1", args.port), CourseHandler) as server:

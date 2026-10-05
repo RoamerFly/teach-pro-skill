@@ -16,7 +16,7 @@ const course = path.join(temp, path.basename(source));
 const output = path.resolve(process.argv[2] || path.join(temp, 'screenshots'));
 const browserPath = process.env.TEACH_PRO_BROWSER || (process.platform === 'win32'
   ? 'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe' : 'chromium');
-await cp(source, course, { recursive: true, filter: file => !['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__'].includes(path.basename(file)) });
+await cp(source, course, { recursive: true, filter: file => !['learner-submissions', 'learner-chats', '.tutor-settings.json', '.teach-runtime', '__pycache__'].includes(path.basename(file)) });
 await mkdir(output, { recursive: true });
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 const processes = [];
@@ -118,7 +118,7 @@ try {
     return { changed: a !== c, restored: a === shell.className }; })()`);
   assert.ok(collapse.changed && collapse.restored); report.sidebar = collapse;
 
-  const server = launch(process.env.TEACH_PRO_PYTHON || 'python', ['-u', '-X', 'utf8', 'serve_course.py', '--no-browser'], course);
+  const server = launch(process.env.TEACH_PRO_PYTHON || 'python', ['-u', '-X', 'utf8', 'serve_course.py', '--no-browser', '--session-only'], course);
   let serverLog = ''; server.stdout.on('data', data => { serverLog += data; }); server.stderr.resume();
   const base = await until(() => { if (server.spawnError) throw server.spawnError; return serverLog.match(/Course ready: (http:\/\/127\.0\.0\.1:\d+\/)/)?.[1]; }, 'local server');
   for (const page of pages) {

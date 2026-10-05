@@ -10,10 +10,10 @@ const repo = path.resolve(__dirname, '..');
 test('learner records survive delayed restore, outages and cancelled clear', { timeout: 90000 }, async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'teach-sync-'));
   const source = path.join(repo, 'example/competition-demo-zhi-jian-agent');
-  fs.cpSync(source, root, { recursive: true, filter: file => !['learner-submissions', 'learner-chats', '.tutor-settings.json', '__pycache__'].includes(path.relative(source, file).split(path.sep)[0]) });
+  fs.cpSync(source, root, { recursive: true, filter: file => !['learner-submissions', 'learner-chats', '.tutor-settings.json', '.teach-runtime', '__pycache__'].includes(path.relative(source, file).split(path.sep)[0]) });
   const qa = process.env.SYNC_QA_DIR || path.join(repo, '../competition-work/2026-10-03-sync-qa');
   fs.mkdirSync(qa, { recursive: true });
-  const runtime = spawn(process.env.TEACH_PRO_PYTHON || 'C:/Users/浪客飞/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe', ['-B', '-u', 'serve_course.py', '--no-browser'], { cwd: root, windowsHide: true });
+  const runtime = spawn(process.env.TEACH_PRO_PYTHON || 'C:/Users/浪客飞/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe', ['-B', '-u', 'serve_course.py', '--no-browser', '--session-only'], { cwd: root, windowsHide: true });
   runtime.stderr.resume();
   let browser, release;
   try {

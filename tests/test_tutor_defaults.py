@@ -93,8 +93,10 @@ class DefaultTutorTests(unittest.TestCase):
         executable.touch()
         with patch.object(sys, 'argv', ['serve_course.py', '--install-keyring']), patch.object(server.subprocess, 'run') as run:
             server.main()
-        self.assertEqual(run.call_args.args[0][0], str(executable))
-        self.assertIn('keyring==25.7.0', run.call_args.args[0])
+        self.assertEqual(run.call_args_list[0].args[0][0], str(executable))
+        self.assertIn('keyring==25.7.0', run.call_args_list[0].args[0])
+        self.assertEqual(run.call_args_list[0].kwargs['timeout'], 60)
+        self.assertEqual(run.call_args_list[1].args[0], [str(executable), '-c', 'import keyring'])
         self.assertFalse(self.request('/api/tutor/bootstrap')['configured'])
 
     def test_optional_installer_failure_does_not_start_model_or_claim_success(self):
@@ -124,6 +126,39 @@ class DefaultTutorTests(unittest.TestCase):
             server.use_course_environment()
         execute.assert_not_called()
         run.assert_not_called()
+
+    def test_automatic_preparation_installs_once_then_restarts_with_arguments(self):
+        executable = self.root / '.teach-runtime' / ('Scripts/python.exe' if server.os.name == 'nt' else 'bin/python')
+        with patch.object(server, 'keyring_ready', return_value=False), \
+                patch.object(server, 'install_keyring', return_value=executable) as install, \
+                patch.object(server.os, 'execv') as execute, \
+                patch.object(sys, 'argv', ['serve_course.py', '--no-browser', '--port', '54321']):
+            server.prepare_runtime()
+        install.assert_called_once()
+        self.assertEqual(execute.call_args.args[1][-3:], ['--no-browser', '--port', '54321'])
+
+    def test_prepared_environment_is_not_installed_again(self):
+        with patch.object(server, 'keyring_ready', return_value=True), \
+                patch.object(server, 'install_keyring') as install, patch.object(server.os, 'execv') as execute:
+            server.prepare_runtime()
+        install.assert_not_called()
+        execute.assert_not_called()
+
+    def test_preparation_timeout_allows_reading_without_claiming_ready(self):
+        with patch.object(server, 'keyring_ready', return_value=False), \
+                patch.object(server, 'install_keyring', side_effect=subprocess.TimeoutExpired('synthetic-pip', 60)), \
+                patch.object(server.os, 'execv') as execute, patch('builtins.print') as output:
+            server.prepare_runtime()
+        execute.assert_not_called()
+        self.assertIn('preparation failed', str(output.call_args_list[-1]))
+
+    def test_default_start_prepares_runtime_but_explicit_session_skips(self):
+        for args, count in [(['serve_course.py', '--no-browser'], 1),
+                            (['serve_course.py', '--no-browser', '--session-only'], 0)]:
+            with self.subTest(args=args), patch.object(sys, 'argv', args), \
+                    patch.object(server, 'prepare_runtime') as prepare, patch.object(server, 'ThreadingHTTPServer'):
+                server.main()
+            self.assertEqual(prepare.call_count, count)
 
     def test_unconfigured_chat_is_rejected_without_writing_or_calling_provider(self):
         token = self.request('/api/tutor/bootstrap')['token']

@@ -25,7 +25,7 @@ def system_backend():
     try:
         import keyring
     except ImportError:
-        raise CredentialError('记住密钥：运行课程启动器 --install-keyring，再重新启动课程。') from None
+        raise CredentialError('密钥存储尚未就绪，请检查启动窗口的环境准备结果；联网后重新启动课程即可。') from None
     try:
         selected = keyring.get_keyring()
         name = type(selected).__module__ + '.' + type(selected).__name__

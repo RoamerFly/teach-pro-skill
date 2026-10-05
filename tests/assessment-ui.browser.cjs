@@ -24,9 +24,9 @@ async function main() {
   const isolatedCourse = path.join(temporary, path.basename(course));
   let server, browser;
   try {
-    fs.cpSync(course, isolatedCourse, { recursive: true, filter: (file) => !/(?:^|[\\/])(?:learner-submissions|learner-chats|__pycache__|\.git|\.tutor-settings\.json|\.env(?:\.[^\\/]*)?)(?:[\\/]|$)/.test(file) });
+    fs.cpSync(course, isolatedCourse, { recursive: true, filter: (file) => !/(?:^|[\\/])(?:learner-submissions|learner-chats|__pycache__|\.git|\.teach-runtime|\.tutor-settings\.json|\.env(?:\.[^\\/]*)?)(?:[\\/]|$)/.test(file) });
     const python = process.env.TEACH_PRO_PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
-    server = spawn(python, ['-X', 'utf8', path.join(isolatedCourse, 'serve_course.py'), '--no-browser'], { cwd: isolatedCourse, windowsHide: true });
+    server = spawn(python, ['-X', 'utf8', path.join(isolatedCourse, 'serve_course.py'), '--no-browser', '--session-only'], { cwd: isolatedCourse, windowsHide: true });
     server.stderr.on('data', () => {});
     const base = await new Promise((resolve, reject) => {
       let text = '';

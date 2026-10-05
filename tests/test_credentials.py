@@ -49,7 +49,7 @@ class KeyringAdapterTests(unittest.TestCase):
         with patch.dict(sys.modules, {'keyring': None}):
             result = vault.capability()
             self.assertFalse(result['available'])
-            self.assertIn('--install-keyring', result['hint'])
+            self.assertIn('重新启动课程', result['hint'])
 
     def test_missing_library_does_not_silently_change_default_to_session(self):
         with tempfile.TemporaryDirectory() as directory, patch.dict(sys.modules, {'keyring': None}), \

@@ -44,7 +44,7 @@ test('Tutor modal, configuration, retries and local history work through the run
     });
   });
   await new Promise(resolve => upstream.listen(0, '127.0.0.1', resolve));
-  const runtime = spawn(python, ['-X', 'utf8', path.join(root, 'serve_course.py'), '--no-browser'], { env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
+  const runtime = spawn(python, ['-X', 'utf8', path.join(root, 'serve_course.py'), '--no-browser', '--session-only'], { env: { ...process.env, PYTHONDONTWRITEBYTECODE: '1' } });
   let base = '', output = '';
   const ready = new Promise((resolve, reject) => {
     const deadline = setTimeout(() => reject(new Error('runtime start timeout: ' + output)), 10000);
@@ -93,7 +93,7 @@ test('Tutor modal, configuration, retries and local history work through the run
     if (!boot.credential_storage.available) {
       await page.locator('button[type=submit]').click();
       await wait(page, () => document.querySelector('.tutor-status').dataset.state === 'error');
-      assert.match(await page.locator('.tutor-status').innerText(), /install-keyring/);
+      assert.match(await page.locator('.tutor-status').innerText(), /重新启动课程/);
       assert.equal(fs.existsSync(path.join(root, '.tutor-settings.json')), false);
       assert.equal(await page.locator('[name=remember_key]').isChecked(), true);
       await page.locator('[name=api_key]').fill('synthetic-demo-credential');

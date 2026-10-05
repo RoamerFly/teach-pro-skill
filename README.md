@@ -2,7 +2,7 @@
 
 面向长期学习的自适应教学 Skill。先评估基础与目标，再逐节生成网页课程，根据作答、实践成果和疑难持续调整教学。
 
-当前版本：**1.1.0-rc.10**。逐课教学主体保持稳定，课内答疑与页面体验持续校核。
+当前版本：**1.1.0-rc.11**。逐课教学主体保持稳定，课内答疑与页面体验持续校核。
 
 ## 核心特性
 
@@ -75,13 +75,7 @@ cd teach-pro-skill/example/competition-demo-zhi-jian-agent
 
 本地服务仅面向单用户本机使用。课内答疑与课程生成相互独立，更新 Skill 不会自动更新已生成的课程。
 
-首次启用“记住此设备”，在课程目录运行对应启动器并加 `--install-keyring`，例如 Windows：
-
-```powershell
-.\start-course.cmd --install-keyring
-```
-
-macOS 使用 `sh start-course.command --install-keyring`，Linux 使用 `sh start-course.sh --install-keyring`。安装到课程专用 `.teach-runtime/` 后重新启动课程，启动器和直接运行服务都会自动复用；未安装时，取消记住选项仍可使用会话模式答疑。
+启动器自动检查密钥存储依赖，首次缺少时联网安装到课程专用 `.teach-runtime/`，准备完成后直接打开课程；后续启动复用环境，不改全局 Python，无需手动安装参数。准备失败仍可阅读，取消记住选项可使用会话答疑；离线启动可加 `--session-only` 跳过准备。
 
 ## 项目结构
 
@@ -94,7 +88,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.10.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.11.zip HEAD:teach-pro
 ```
 
 行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；三种续课决策已观察，原生内容仍有失败项。展示校核与运行检查见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)。
