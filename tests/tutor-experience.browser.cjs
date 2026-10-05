@@ -73,6 +73,8 @@ test('Tutor modal, configuration, retries and local history work through the run
     assert.equal(await page.locator('.tutor-open').evaluate(el => el === document.activeElement), true);
     await page.goto(base + '/settings.html?lesson=' + lessonFiles[0].replace('.html', ''));
     await wait(page, () => !document.querySelector('[data-settings-models]').disabled);
+    assert.equal(await page.locator('[name=remember_key]').isChecked(), true);
+    assert.equal(await page.locator('[name=remember_key]').isEnabled(), true);
     await page.locator('[name=kind]').selectOption('deepseek');
     assert.equal(await page.locator('[name=base_url]').inputValue(), 'https://api.deepseek.com');
     assert.equal(await page.locator('[name=thinking]').inputValue(), 'disabled');
@@ -87,6 +89,15 @@ test('Tutor modal, configuration, retries and local history work through the run
     await wait(page, () => document.querySelector('[name=model] option[value="deepseek-flash"]'));
     assert.equal(await page.locator('.tutor-status').getAttribute('data-state'), 'success');
     await page.locator('[name=model]').selectOption('deepseek-flash');
+    const boot = await (await page.request.get(base + '/api/tutor/bootstrap')).json();
+    if (!boot.credential_storage.available) {
+      await page.locator('button[type=submit]').click();
+      await wait(page, () => document.querySelector('.tutor-status').dataset.state === 'error');
+      assert.match(await page.locator('.tutor-status').innerText(), /install-keyring/);
+      assert.equal(fs.existsSync(path.join(root, '.tutor-settings.json')), false);
+      assert.equal(await page.locator('[name=remember_key]').isChecked(), true);
+      await page.locator('[name=api_key]').fill('synthetic-demo-credential');
+    }
     await page.locator('[name=remember_key]').uncheck(); // This regression exercises session mode, not a persistent vault.
     assert.equal(await page.locator('.tutor-status').getAttribute('data-state'), 'ready');
     await page.locator('button[type=submit]').click(); await wait(page, () => !document.querySelector('[data-settings-test]').disabled);
@@ -217,6 +228,8 @@ test('Tutor modal, configuration, retries and local history work through the run
     const another = await context.newPage(); await another.goto(base + '/settings.html');
     await wait(another, () => !document.querySelector('[data-settings-models]').disabled);
     await another.locator('[name=model]').selectOption('__manual__'); await another.locator('[name=model_manual]').fill('demo-second');
+    assert.equal(await another.locator('[name=remember_key]').isChecked(), true);
+    await another.locator('[name=remember_key]').uncheck(); // Keep this no-keyring regression in explicit session mode after reopening settings.
     await another.locator('button[type=submit]').click(); await wait(another, () => document.querySelector('[data-settings-current]').textContent.includes('demo-second'));
     await page.evaluate(() => window.dispatchEvent(new Event('focus')));
     await wait(page, () => document.querySelector('[data-tutor-model]').textContent === 'demo-second');

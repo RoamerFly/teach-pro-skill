@@ -107,6 +107,24 @@ class DefaultTutorTests(unittest.TestCase):
         builder.return_value.create.assert_called_once_with(self.root / '.teach-runtime')
         self.assertFalse((self.root / '.tutor-settings.json').exists())
 
+    def test_direct_python_reuses_installed_course_environment(self):
+        environment = self.root / '.teach-runtime'
+        executable = environment / ('Scripts/python.exe' if server.os.name == 'nt' else 'bin/python')
+        executable.parent.mkdir(parents=True)
+        executable.touch()
+        with patch.object(sys, 'argv', ['serve_course.py', '--no-browser', '--port', '0']), patch.object(server.os, 'execv') as execute:
+            server.use_course_environment()
+        self.assertEqual(execute.call_args.args, (str(executable), [str(executable), '-X', 'utf8', '-B', str(self.root / 'serve_course.py'), '--no-browser', '--port', '0']))
+        with patch.object(sys, 'prefix', str(environment)), patch.object(server.os, 'execv') as execute:
+            server.use_course_environment()
+        execute.assert_not_called()
+
+    def test_direct_python_without_course_environment_does_not_install(self):
+        with patch.object(server.os, 'execv') as execute, patch.object(server.subprocess, 'run') as run:
+            server.use_course_environment()
+        execute.assert_not_called()
+        run.assert_not_called()
+
     def test_unconfigured_chat_is_rejected_without_writing_or_calling_provider(self):
         token = self.request('/api/tutor/bootstrap')['token']
         with patch.object(tutor, 'connection', side_effect=AssertionError('Unexpected provider request')) as connection:

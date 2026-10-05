@@ -12,7 +12,7 @@
   const disconnect = section.querySelector('[data-settings-disconnect]');
   const remember = form.elements.remember_key;
   const storageHint = section.querySelector('[data-storage-hint]');
-  let storageAvailable = false, keySaved = false;
+  let keySaved = false;
   const kind = form.elements.kind;
   const model = form.elements.model;
   const manual = section.querySelector('[data-model-manual]');
@@ -35,7 +35,7 @@
     test.disabled = !online || busy || !configured;
     forget.disabled = !online || busy;
     disconnect.disabled = !online || busy || !configured;
-    remember.disabled = !online || busy || !storageAvailable;
+    remember.disabled = !online || busy;
     syncManual();
   }
   async function api(route, body) {
@@ -51,7 +51,6 @@
     keySaved = result.key_saved === true;
     forget.hidden = !keySaved;
     if (result.credential_storage) {
-      storageAvailable = result.credential_storage.available === true;
       storageHint.textContent = result.credential_storage.hint || '';
       storageHint.hidden = !storageHint.textContent;
     }
@@ -123,7 +122,7 @@
     if (data.model === '__manual__') data.model = data.model_manual.trim();
     delete data.model_manual;
     data.max_tokens = Number(data.max_tokens);
-    data.remember_key = storageAvailable && remember.checked;
+    data.remember_key = remember.checked;
     act(async () => {
       say('正在保存设置…', 'busy');
       try {
@@ -163,7 +162,7 @@
     if (!window.confirm('删除本机保存的密钥并断开连接？')) return;
     act(async () => {
       const result = await api('forget', { confirm: true }); configured = false;
-      form.elements.api_key.value = ''; remember.checked = false; hideKey();
+      form.elements.api_key.value = ''; remember.checked = true; hideKey();
       showCurrent(result); say('已删除本机密钥。', 'success');
     });
   });
@@ -176,14 +175,13 @@
       const result = await api('bootstrap'); token = result.token; configured = result.configured; online = true;
       kinds = result.kinds || {};
       for (const [key, value] of Object.entries(result.settings || {})) {
-        if (key === 'remember_key') remember.checked = value === true;
-        else if (form.elements[key] && key !== 'api_key' && key !== 'model') form.elements[key].value = value;
+        if (form.elements[key] && !['api_key', 'model', 'remember_key'].includes(key)) form.elements[key].value = value;
       }
       setModels([], result.settings?.model || '');
       if (!result.settings || !Object.keys(result.settings).length) applyPreset();
       else { kind.value = result.settings.kind || 'custom'; showProtocol(); }
       showCurrent(result);
-      if (!storageAvailable) remember.checked = false;
+      remember.checked = true;
       say(result.restore_error || (configured ? '模型已就绪' : keySaved ? '连接已暂停，保存并启用即可继续。' : '选服务 → 输入密钥 → 获取模型 → 保存'), result.restore_error ? 'error' : configured ? 'success' : 'ready');
     } catch (error) { say('课程设置不可用：' + error.message + '。核心课程仍可阅读。', 'error'); }
     controls();

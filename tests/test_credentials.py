@@ -51,6 +51,18 @@ class KeyringAdapterTests(unittest.TestCase):
             self.assertFalse(result['available'])
             self.assertIn('--install-keyring', result['hint'])
 
+    def test_missing_library_does_not_silently_change_default_to_session(self):
+        with tempfile.TemporaryDirectory() as directory, patch.dict(sys.modules, {'keyring': None}), \
+                patch.object(tutor, 'validate_endpoint'), patch.object(tutor, 'CONFIG', None), \
+                patch.object(tutor, 'RESTORED_ROOT', None), patch.object(tutor, 'RESTORE_ERROR', ''):
+            root = Path(directory)
+            data = {k: v for k, v in DATA.items() if k != 'remember_key'}
+            with self.assertRaises(tutor.TutorError):
+                tutor.configure(root, data)
+            self.assertFalse((root / '.tutor-settings.json').exists())
+            self.assertTrue(tutor.configure(root, dict(data, remember_key=False))['configured'])
+            self.assertFalse(tutor.config_status(root)['key_saved'])
+
     def test_plaintext_remote_null_and_fail_backends_are_rejected(self):
         for identity in ['keyrings.alt.file.PlaintextKeyring', 'keyring.backends.null.Keyring',
                          'keyring.backends.fail.Keyring', 'remote.credentials.Keyring']:
@@ -125,6 +137,12 @@ class NativePersistenceTests(unittest.TestCase):
             self.assertTrue(status['configured'])
             self.assertNotIn(DATA['api_key'], json.dumps(status))
             self.assertEqual(tutor.current_config()['api_key'], DATA['api_key'])
+
+    def test_omitted_preference_defaults_to_device_storage(self):
+        data = {k: v for k, v in DATA.items() if k != 'remember_key'}
+        self.assertTrue(tutor.configure(self.root, data)['key_saved'])
+        self.restart()
+        self.assertTrue(tutor.config_status(self.root)['configured'])
 
     def test_disconnect_stays_off_then_blank_key_reenable(self):
         tutor.configure(self.root, DATA)

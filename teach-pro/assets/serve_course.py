@@ -206,6 +206,17 @@ class CourseHandler(BaseHTTPRequestHandler):
         self.send_error(403)
 
 
+def use_course_environment() -> None:
+    """Reuse an installed course environment even when launched with system Python."""
+    environment = ROOT / '.teach-runtime'
+    executable = environment / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')
+    if not executable.is_file() or Path(sys.prefix).resolve() == environment.resolve():
+        return
+    if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
+        raise ValueError('Invalid course runtime path')
+    os.execv(str(executable), [str(executable), '-X', 'utf8', '-B', str(ROOT / 'serve_course.py'), *sys.argv[1:]])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Open the course with automatic local answer sync")
     parser.add_argument("--port", type=int, default=0, help="loopback port; 0 chooses a free port")
@@ -242,4 +253,5 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    use_course_environment()
     main()

@@ -2,7 +2,7 @@
 
 面向长期学习的自适应教学 Skill。先评估基础与目标，再逐节生成网页课程，根据作答、实践成果和疑难持续调整教学。
 
-当前版本：**1.1.0-rc.9**。逐课教学主体保持稳定，课内答疑与页面体验持续校核。
+当前版本：**1.1.0-rc.10**。逐课教学主体保持稳定，课内答疑与页面体验持续校核。
 
 ## 核心特性
 
@@ -68,7 +68,7 @@ cd teach-pro-skill/example/competition-demo-zhi-jian-agent
 
 每门课程默认提供左侧置顶“课程设置”，无需配置 AI 也能学习。需要课内答疑时，再启动本地服务并配置服务、API Key 和模型。支持 OpenAI-compatible、OpenAI、DeepSeek、Ollama 与自定义地址，以及主动获取模型列表。
 
-- API Key 默认遮蔽；“记住此设备”通过系统凭据存储支持重启恢复，不回填浏览器或写入课程文件。可选择仅用于本次会话。
+- API Key 默认遮蔽；默认勾选“记住此设备”，保存时使用系统凭据存储，支持重启恢复，不回填浏览器或写入课程文件。取消勾选可仅用于本次会话。
 - 统一使用 Python keyring 对接 Windows、macOS 与 Linux 系统凭据存储；Linux 还需可用的桌面密钥环与 D-Bus。
 - 点击发送后，云端答疑结合当前课与近期对话回答；连接测试发送简短请求。
 - 作答、聊天和本地配置已加入忽略规则，请勿提交密钥或敏感资料。
@@ -81,7 +81,7 @@ cd teach-pro-skill/example/competition-demo-zhi-jian-agent
 .\start-course.cmd --install-keyring
 ```
 
-macOS 使用 `sh start-course.command --install-keyring`，Linux 使用 `sh start-course.sh --install-keyring`。安装到课程专用 `.teach-runtime/` 后重新启动课程，启动器会自动复用；未安装也可使用会话模式答疑。
+macOS 使用 `sh start-course.command --install-keyring`，Linux 使用 `sh start-course.sh --install-keyring`。安装到课程专用 `.teach-runtime/` 后重新启动课程，启动器和直接运行服务都会自动复用；未安装时，取消记住选项仍可使用会话模式答疑。
 
 ## 项目结构
 
@@ -94,7 +94,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.9.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.10.zip HEAD:teach-pro
 ```
 
 行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；三种续课决策已观察，原生内容仍有失败项。展示校核与运行检查见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)。

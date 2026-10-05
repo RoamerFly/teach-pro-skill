@@ -1,7 +1,7 @@
 # Version
 
-- Version: 1.1.0-rc.9
-- Release: Device credential candidate, 2026-10-04; adaptive core unchanged, macOS/Linux native checks and generated content gates still pending
+- Version: 1.1.0-rc.10
+- Release: Remember-device default fix, 2026-10-05; adaptive core unchanged, macOS/Linux native checks and generated content gates still pending
 - Edition: Universal Web Tutor · adaptive lessons with local sync
 - Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)
 - Primary output: learner-facing HTML

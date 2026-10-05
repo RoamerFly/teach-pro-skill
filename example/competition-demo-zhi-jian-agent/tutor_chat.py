@@ -572,7 +572,7 @@ def configure(root, data):
     config['max_tokens'] = limit
     config['thinking'] = thinking
     config['api_key'] = credential
-    remember = data.get('remember_key', previous.get('remember_key', False))
+    remember = data.get('remember_key', True)
     if type(remember) is not bool:
         raise TutorError('记住此设备设置无效。')
     config['remember_key'] = remember and bool(credential)

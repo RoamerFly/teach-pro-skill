@@ -18,6 +18,11 @@ test('device credentials survive real restarts and respect disconnect/confirmed 
     const demo = path.join(repo, 'example/competition-demo-zhi-jian-agent');
     fs.cpSync(demo, root, { recursive: true, filter: file => !['learner-chats', 'learner-submissions', '.tutor-settings.json', '.teach-runtime', '__pycache__'].includes(path.relative(demo, file).split(path.sep)[0]) });
     fs.mkdirSync(qa, { recursive: true });
+    fs.writeFileSync(path.join(root, '.tutor-settings.json'), JSON.stringify({
+      kind: 'custom', provider: '旧会话配置', base_url: 'http://127.0.0.1:11434/v1',
+      mode: 'local', model: 'synthetic-model', max_tokens: 4096, thinking: 'disabled',
+      remember_key: false, enabled: false
+    }));
     const key = 'synthetic-credential-not-a-real-key';
     let requests = 0, runtime, base;
     const upstream = http.createServer((request, response) => {
@@ -69,6 +74,11 @@ test('device credentials survive real restarts and respect disconnect/confirmed 
         await page.waitForFunction(() => !document.querySelector('[name=kind]').disabled);
       };
       await start(); await openSettings();
+      assert.equal(await page.locator('[name=remember_key]').isChecked(), true);
+      assert.equal(await page.locator('[name=remember_key]').isEnabled(), true);
+      await page.locator('.settings-credential label').click();
+      assert.equal(await page.locator('[name=remember_key]').isChecked(), false);
+      await page.locator('.settings-credential label').click();
       assert.equal(await page.locator('[name=remember_key]').isChecked(), true);
       assert.equal(await page.locator('[data-settings-forget]').isVisible(), false);
       await page.locator('[name=kind]').selectOption('custom');
@@ -122,16 +132,18 @@ test('device credentials survive real restarts and respect disconnect/confirmed 
       page.once('dialog', dialog => dialog.accept());
       await page.locator('[data-settings-forget]').click();
       await page.waitForFunction(() => document.querySelector('.tutor-status').textContent.includes('已删除'));
+      assert.equal(await page.locator('[name=remember_key]').isChecked(), true, 'a replacement key defaults to device storage');
       assert.equal(vaultProbe('read'), '0', 'confirmed deletion removes OS credential');
       await stop(); await start(); await openSettings();
       assert.equal(await page.locator('[data-settings-test]').isDisabled(), true);
       assert.equal(await page.locator('[data-settings-forget]').isVisible(), false);
       assert.equal(requests, 1);
+      assert.equal(await page.locator('[name=remember_key]').isChecked(), true);
       assert.deepEqual(errors, []);
       fs.writeFileSync(path.join(qa, 'restart-summary.json'), JSON.stringify({ platform: process.platform,
         native_storage: 'keyring Windows Credential Locker', synthetic_provider_requests: requests, process_restarts: 3,
         restored_without_key_input: true, disconnect_stays_off: true, deletion_cancel_and_confirm: true,
-        desktop_and_mobile: true, errors }, null, 2));
+        desktop_and_mobile: true, default_checked_after_legacy_session: true, checkbox_clickable: true, errors }, null, 2));
     } catch (error) {
       if (page) {
         await page.screenshot({ path: path.join(qa, 'failure.png') });

@@ -13,7 +13,7 @@ spec = importlib.util.spec_from_file_location('responses_tutor', FILE)
 tutor = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(tutor)
 CONFIG = {'kind': 'deepseek', 'provider': 'Demo', 'model': 'deepseek-flash', 'mode': 'cloud',
-          'base_url': 'https://api.deepseek.com', 'api_key': 'demo-credential', 'max_tokens': 4096}
+          'base_url': 'https://api.deepseek.com', 'api_key': 'demo-credential', 'max_tokens': 4096, 'remember_key': False}
 
 
 def response(content='回答', reason='stop', **message):

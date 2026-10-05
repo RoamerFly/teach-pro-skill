@@ -5,7 +5,7 @@
 ## 部署与更新
 
 - 课程根目录：复制 assets 中的 `serve_course.py`、`tutor_chat.py`、`credential_store.py` 和三个 `start-course.*` 启动器。Windows 双击 cmd，macOS 双击 command，Linux 用 `sh start-course.sh`；无图形浏览器时用 `python3 serve_course.py --no-browser`。发布保留 sh/command 的可执行权限。
-- 记住密钥可选安装：在课程目录运行 `start-course.cmd --install-keyring`（Windows）、`sh start-course.command --install-keyring`（macOS）或 `sh start-course.sh --install-keyring`（Linux）。脚本只在当前课程 `.teach-runtime/` 创建隔离环境、安装固定版本 keyring；启动器优先使用它。无网络或 venv/pip 不可用时明确失败，核心服务仍可用；不在浏览器请求中安装包，不自动改全局 Python。直接运行服务时选择该环境的 Python，或自行在使用的环境安装同版本依赖。
+- 记住密钥可选安装：在课程目录运行 `start-course.cmd --install-keyring`（Windows）、`sh start-course.command --install-keyring`（macOS）或 `sh start-course.sh --install-keyring`（Linux）。脚本只在当前课程 `.teach-runtime/` 创建隔离环境、安装固定版本 keyring；启动器与直接运行服务均优先复用它。无网络或 venv/pip 不可用时明确失败，核心服务仍可用；不在浏览器请求中安装包，不自动改全局 Python，也不在普通启动时下载依赖。
 - 网页 assets：复制 `style.css`、`course.js`、`sync.js`、`tutor.js`、`tutor-settings.js`、`tutor-markdown.js` 和完整 `vendor/`，包括固定发行脚本与许可证。课页底部仍只需加载 `../assets/tutor.js`；它加载本地排版组件，不依赖 CDN 或 npm。
 - 将 `assets/course-settings.html` 复制为根目录 `settings.html`，沿用课程名称、`data-course-key` 和 `data-visual-theme`。所有页左侧置顶设置入口：根页 `./settings.html`，子页 `../settings.html`。正式课保留 `#learning-input`，内容区首个标题栏使用模板的 `.lesson-toolbar`；旧课标题区由 Tutor 原位适配，不重复创建课末入口。
 - 未配置时不自动获取模型、测试或请求回答；仅恢复同源设置与本课历史，没有聊天不创建空文件。file:// 时保留入口与启动提示，请求控件不可用。
@@ -13,7 +13,7 @@
 
 ## 学员流程与界面
 
-1. 从“课程设置”选服务 → 输入 Key → 获取并选择模型 → 保存并启用。Key 默认 password，小眼睛主动切换；保存后清空。支持系统凭据存储时默认勾选“记住此设备”，重启自动恢复，浏览器不回填已保存 Key；取消勾选并保存则只用于本次会话。同目的地更新模型/预算可留空保留 Key；换目的地须输入新 Key。
+1. 从“课程设置”选服务 → 输入 Key → 获取并选择模型 → 保存并启用。Key 默认 password，小眼睛主动切换；保存后清空。每次打开设置默认勾选“记住此设备”，旧会话配置不覆盖默认值；保存时记住，重启自动恢复，浏览器不回填已保存 Key。服务可用时选项可点击，取消勾选并保存则只用于本次会话。同目的地更新模型/预算可留空保留 Key；换目的地须输入新 Key。
 2. 非自定义 kind 自动填默认地址与模式，自定义保留地址并展开高级设置。模型下拉框和获取按钮同高对齐，窄屏按顺序堆叠；获取、保存、连接测试成功用绿色提示，加载和未应用修改不显示为成功。地址、提供商、预算和 DeepSeek 思考模式折叠；测试可选，发送一个不含课程的简短请求。修改表单须保存后才应用。
 3. 内容区顶部冻结一行工具栏：最左侧为唯一“问 AI”按钮，右侧为“第 N 课 · 本课标题”的 H1 和小字说明。主题相关的浅色渐变、强调分隔线与轻阴影区别于正文。栏仅占正文宽度，随导航折叠伸展，窄屏不换成多排按钮；长文字省略但保留完整文本及 title。时间、阶段和进度放在栏下，正文锚点预留栏高；打印恢复普通完整标题。原生 dialog 展示当前课与模型，桌面约 94vw/90dvh、手机近全屏；页头/输入区固定，对话独立滚动，颜色与当前课程主题一致。不放重复勾选、上下文预览和长技术说明，点击发送即触发该次请求。
 4. 打开前可引用选中课文；关闭保留草稿、历史和课程位置，已发送请求继续接收。Enter 发送、Shift+Enter 换行，中文输入法不误发；生成中不重复提交。阅读历史不强制滚到底，提供最新消息定位。
@@ -59,7 +59,7 @@ DeepSeek `deepseek-flash` / `deepseek-v4-pro` 默认显式关闭思考，深入�
 
 ## 后台约束与验收
 
-Key 不进入 HTML、localStorage、聊天、日志或课程配置；`.tutor-settings.json` 只存非密钥参数及记住/启用状态。`credential_store.py` 统一通过 keyring 的 set/get/delete 接口使用本机系统凭据服务：Windows Credential Locker、macOS Keychain、Linux Secret Service/KWallet。不自行维护三套加密实现，仅允许内置系统后端；链式后端也不得回退到明文文件、远程服务或空后端。Linux 仍需运行并解锁桌面密钥环及对应 D-Bus 支持。没有库或系统后端时禁用记住选项并给简短组件提示；保存/解锁失败明确报错，不降级为明文或声称已保存。
+Key 不进入 HTML、localStorage、聊天、日志或课程配置；`.tutor-settings.json` 只存非密钥参数及记住/启用状态。`credential_store.py` 统一通过 keyring 的 set/get/delete 接口使用本机系统凭据服务：Windows Credential Locker、macOS Keychain、Linux Secret Service/KWallet。不自行维护三套加密实现，仅允许内置系统后端；链式后端也不得回退到明文文件、远程服务或空后端。Linux 仍需运行并解锁桌面密钥环及对应 D-Bus 支持。没有库或系统后端时保持默认选项可切换，显示简短修复提示；保存/解锁失败明确报错，不静默改为会话模式、不降级为明文或声称已保存。
 
 凭据按课程绝对路径隔离，并绑定 kind、完整 base_url 和 mode；复制课程或更改目的地不会恢复原 Key。课程移动后需重新配置，旧凭据可从原位置设置页或系统凭据管理器删除。启动恢复只读本机存储，不测试模型或发送课程；恢复失败保留课程阅读，提示重新输入。不在代码中放固定解密密码，不把密钥传入命令行参数；系统保护不保证当前用户会话被控制后的保密。原始作答、聊天、配置、设备凭据、`.teach-runtime/` 和缓存不入 Git 或提交包。接口、后端和 Linux 环境条件见 [keyring 官方文档](https://keyring.readthedocs.io/en/stable/)。
 

@@ -1251,7 +1251,7 @@ textarea[data-save-key]:focus, .quiz-option:focus-within, [data-quiz] label:focu
 :where(button, .button)[disabled] { opacity: .55; cursor: not-allowed; }
 .settings-credential { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1rem; }
 .tutor-config .settings-credential label { display: inline-flex; align-items: center; gap: .45rem; margin: 0; font-size: .85rem; }
-.tutor-config .settings-credential input[type="checkbox"] { width: 1rem; min-height: 1rem; margin: 0; accent-color: var(--accent); }
+.tutor-config .settings-credential input[type="checkbox"] { width: 1rem; height: 1rem; min-height: 1rem; padding: 0; margin: 0; flex: 0 0 auto; accent-color: var(--accent); cursor: pointer; }
 .settings-credential button { font: inherit; font-size: .8rem; padding: .35rem .65rem; border: 1px solid var(--danger); border-radius: var(--radius-sm, .5rem); cursor: pointer; }
 .settings-credential .resource-access { margin: 0; font-size: .8rem; }
 .tutor-config :where(input, select):focus-visible,
