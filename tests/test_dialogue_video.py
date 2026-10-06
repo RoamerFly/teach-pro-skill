@@ -1,5 +1,6 @@
 """Offline subtitle and actual-answer preservation checks for the demo video."""
 import importlib.util
+import json
 import sys
 import struct
 import unittest
@@ -14,6 +15,42 @@ spec.loader.exec_module(video)
 
 
 class DialogueVideoTests(unittest.TestCase):
+    def test_short_reactions_join_readable_caption_without_changing_text(self):
+        text='哦，原来历史得自己带上。那带上历史消息，就算智能体了吗？'
+        parts=video.subtitle_parts(text)
+        self.assertEqual(''.join(parts),text)
+        self.assertTrue(parts[0].startswith('哦，原来'))
+        self.assertNotIn('哦，',parts)
+        self.assertTrue(all(len(p)<=26 for p in parts))
+
+    def test_demo_flow_has_causal_setup_before_config_and_continuation(self):
+        plan=json.loads((SCRIPTS.parent/'dialogue-plan.json').read_text(encoding='utf8'))
+        ids=[s['id'] for s in plan['scenes']]
+        self.assertLess(ids.index('lesson'),ids.index('question-origin'))
+        self.assertLess(ids.index('question-origin'),ids.index('settings'))
+        self.assertLess(ids.index('settings'),ids.index('connection'))
+        self.assertLess(ids.index('connection'),ids.index('tutor-answer'))
+        self.assertLess(ids.index('save'),ids.index('continuation'))
+        self.assertLess(ids.index('continuation'),ids.index('adaptive'))
+        self.assertIn('代码',plan['scenes'][ids.index('question-origin')]['turns'][0]['text'])
+        for scene in plan['scenes']:
+            for turn in scene['turns']:
+                video.speech_payload(turn.get('text','真实回答'),video.turn_role(plan['roles'][turn['role']],turn))
+
+    def test_delivery_changes_native_controls_not_voice_identity(self):
+        role={'model':video.hd.MODEL,'voice':'approved-A','speed':1.3,'tempo':1}
+        actual=video.turn_role(role,{'speech':{'speed':1.24,'emotion':'happy'},'delivery':'亲切引导'})
+        self.assertEqual(actual,{**role,'speed':1.24,'emotion':'happy'})
+        self.assertEqual(role['speed'],1.3)
+        self.assertEqual(video.speech_payload('问得好。',actual)['input']['voice_setting']['emotion'],'happy')
+
+    def test_delivery_rejects_voice_replacement_and_unsupported_student_controls(self):
+        for controls in ({'voice':'other'},{'model':'other'},None):
+            with self.subTest(controls=controls),self.assertRaises(RuntimeError):
+                video.turn_role({'model':video.hd.MODEL,'voice':'A'},{'speech':controls})
+        with self.assertRaises(RuntimeError):
+            video.turn_role({'model':'qwen3-tts-flash','voice':'Andre'},{'speech':{'emotion':'happy'}})
+
     def test_hd_uses_native_speed_and_automatic_emotion(self):
         body=video.speech_payload('讲解',{'model':video.hd.MODEL,'voice':'Chinese (Mandarin)_Wise_Women','speed':1.3,'tempo':1})
         self.assertEqual(body,video.hd.payload('讲解','Chinese (Mandarin)_Wise_Women',1.3))

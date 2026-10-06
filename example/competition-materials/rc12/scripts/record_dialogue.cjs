@@ -20,6 +20,8 @@ let key = '';
   key = await new Promise(resolve => reader.once('line', line => resolve(line.trim()))); reader.close();
   assert(key.length > 10, 'Missing credential');
   const plan = JSON.parse(await fs.readFile(path.join(materials,'dialogue-plan.json'),'utf8'));
+  const prepared = JSON.parse(await fs.readFile(path.join(session,'script-voice-plan.json'),'utf8'));
+  assert.deepEqual(prepared.script_plan,plan,'Prepare the current script audio before recording');
   await fs.mkdir(session,{recursive:true});
   const course = await fs.mkdtemp(path.join(session,'isolated-course-'));
   await fs.cp(source,course,{recursive:true,filter:p=>!['learner-submissions','learner-chats','.tutor-settings.json','.teach-runtime','__pycache__'].includes(path.basename(p))});
@@ -50,6 +52,11 @@ let key = '';
     const scroll=async selector=>{await page.locator(selector).first().evaluate(el=>{const toolbar=document.querySelector('.lesson-toolbar');window.scrollTo({top:el.getBoundingClientRect().top+scrollY-(toolbar?.getBoundingClientRect().height||0)-18,behavior:'smooth'});});await wait(700);await page.screenshot();};
     const label=async text=>page.evaluate(value=>{document.getElementById('recording-label')?.remove();const el=document.createElement('span');el.id='recording-label';el.textContent=value;el.style.cssText='position:fixed;top:12px;right:18px;z-index:9999;font:13px Microsoft YaHei;background:#eaf0fb;color:#395b9b;padding:4px 9px;border:1px solid #bfcfea;border-radius:20px;pointer-events:none';document.body.append(el);},text);
     const click=async selector=>{const el=page.locator(selector).first();await el.hover();await wait(300);await el.click();};
+    const atTurn=async(scene,index,fraction=0)=>{
+      const turn=prepared.scenes.find(s=>s.id===scene.id).turns[index];
+      assert(Number.isFinite(turn.start_seconds)&&Number.isFinite(turn.seconds),'Missing measured script timing');
+      await wait(Math.max(0,scene.capture_start_ms+(turn.start_seconds+turn.seconds*fraction)*1000-(Date.now()-clock)));
+    };
     const request=async(endpoint,selector)=>{
       const start=Date.now();
       const waiting=page.waitForResponse(r=>new URL(r.url()).pathname==='/api/tutor/'+endpoint&&r.request().method()==='POST',{timeout:65000});
@@ -67,17 +74,23 @@ let key = '';
         case 'assessment':
           await goto('practice/entry-assessment.html');await label('演示作答');
           await page.waitForFunction(()=>document.querySelector('.sync-status')?.dataset.state==='ready');
-          await scroll('#q1');await wait(1200);await page.locator('#q1 input[data-correct="true"]').check();await click('#q1 [data-quiz-submit]');await wait(2000);
+          await scroll('#q1');await atTurn(scene,0,.12);await page.locator('#q1 input[data-correct="true"]').check();await click('#q1 [data-quiz-submit]');await wait(1200);
           await scroll('#q6');await page.locator('#entry-q6-goals').fill('演示学员：基础 Python，会调用模型 API，没有 Agent 项目经验。每周五小时，希望独立开发安全情报 Agent。偏好先看图，再理解代码。');break;
-        case 'lesson': await goto('lessons/'+slug+'.html');await scroll('#what-happens');await wait(5000);await scroll('#minimal-code');break;
-        case 'resources': await scroll('#resources');await wait(1200);await click('[data-resource-id="video-lee-agent"] summary');await wait(2000);break;
+        case 'lesson': await goto('lessons/'+slug+'.html');await scroll('#what-happens');await atTurn(scene,0,.5);await scroll('#minimal-code');break;
+        case 'resources': await atTurn(scene,1);await scroll('#resources');await atTurn(scene,1,.55);await click('[data-resource-id="video-lee-agent"] summary');break;
+        case 'question-origin':
+          await scroll('#minimal-code');await atTurn(scene,1,.1);await click('.tutor-open');
+          await page.waitForFunction(()=>document.querySelector('#tutor-dialog[open] [data-tutor-model]')?.textContent==='未连接模型');
+          assert(await page.locator('.tutor-empty a').isVisible(),'First-use connection entry missing');
+          plan.first_use_connection_entry_verified=true;break;
         case 'settings': {
-          await click('.course-settings-nav a');await page.waitForFunction(()=>!document.querySelector('select[name="kind"]').disabled);
-          await scroll('#ai-model');await page.locator('select[name="kind"]').selectOption('deepseek');
+          await atTurn(scene,0);await click('.tutor-empty a');await page.waitForFunction(()=>!document.querySelector('select[name="kind"]').disabled);
+          assert(new URL(page.url()).searchParams.get('lesson')===slug,'Original lesson return context lost');
+          await scroll('#ai-model');await atTurn(scene,0,.7);await page.locator('select[name="kind"]').selectOption('deepseek');
           const field=page.locator('input[name="api_key"]');assert.equal(await field.getAttribute('type'),'password');
-          await field.fill(key);await field.evaluate(el=>el.blur());await wait(1200);
+          await atTurn(scene,1);await field.fill(key);await field.evaluate(el=>el.blur());await wait(500);
           const list=await request('models','[data-settings-models]');assert(list.models.some(m=>m.id===plan.model),'Requested model not in actual list');
-          await page.locator('select[name="model"]').selectOption(plan.model);await wait(900);
+          await page.locator('select[name="model"]').selectOption(plan.model);await atTurn(scene,2,.05);
           // Use the actual OS vault when available; do not simulate device memory.
           const boot=await page.evaluate(()=>fetch('/api/tutor/bootstrap').then(r=>r.json()));
           if(!boot.credential_storage?.available && await page.locator('[data-storage-hint]').isVisible()) await page.locator('input[name="remember_key"]').uncheck();
@@ -86,30 +99,37 @@ let key = '';
           remember=!!saved.settings?.remember_key;plan.remembered_device=remember;
           assert.equal(await field.inputValue(),'');assert(!(await fs.readFile(path.join(course,'.tutor-settings.json'),'utf8')).includes(key));break;
         }
-        case 'connection': await request('test','[data-settings-test]');await wait(1500);await click('.sidebar-settings-return');break;
+        case 'connection':
+          await request('test','[data-settings-test]');scene.result_ready_ms=Date.now()-clock;
+          await atTurn(scene,0,.28);await click('.sidebar-settings-return');
+          await page.waitForFunction(()=>document.querySelector('#tutor-dialog')?.open===true);
+          assert(new URL(page.url()).pathname.endsWith('/'+slug+'.html'),'Returned to a different lesson');
+          plan.return_to_same_tutor_verified=true;break;
         case 'tutor-answer':
         case 'followup': {
-          if(scene.id==='tutor-answer')await click('.tutor-open');
-          await page.locator('#tutor-message').fill(scene.question);await wait(1600);
+          if(scene.id==='tutor-answer'&&!await page.locator('#tutor-dialog').evaluate(el=>el.open))await click('.tutor-open');
+          await page.locator('#tutor-message').fill(scene.question);await atTurn(scene,0,.9);
           await page.evaluate(()=>{window.__recordedDeltas=[];const el=document.querySelector('.tutor-messages');window.__deltaObserver=new MutationObserver(()=>{const last=el.querySelector('.is-assistant:last-child');const n=last?.textContent.length||0;if(n&&n!==window.__recordedDeltas.at(-1)?.characters)window.__recordedDeltas.push({ms:performance.now(),characters:n});});window.__deltaObserver.observe(el,{subtree:true,childList:true,characterData:true});});
-          const chat=await request('chat-stream/'+slug,'.tutor-question button[type="submit"]');scene.live_answer=chat.messages.at(-1).content;
+          const chat=await request('chat-stream/'+slug,'.tutor-question button[type="submit"]');scene.live_answer=chat.messages.at(-1).content;scene.answer_ready_ms=Date.now()-clock;
           scene.stream_observations=await page.evaluate(()=>{window.__deltaObserver.disconnect();return window.__recordedDeltas;});
           assert(scene.stream_observations.length>1,'No incremental answer observed');await page.locator('.tutor-messages').evaluate(el=>el.scrollTop=el.scrollHeight);break;
         }
         case 'save': {
-          await click('[data-tutor-close]');await label('演示作答');await scroll('#learning-input');
+          await click('[data-tutor-close]');await label('演示作答');await atTurn(scene,1,.1);await scroll('#learning-input');
           await page.locator('#lesson-0001-evidence-explain').fill('演示学员：模型只看本次 messages；历史要由程序再次带上。工具型 Agent 还需要受控工具循环，把结果送回模型。');await wait(2200);
-          await scroll('#lesson-0001-troubles');await page.locator('#lesson-0001-troubles').fill('演示疑难：下一课能否用一次工具调用说明程序怎样控制执行？');
+          await atTurn(scene,1,.5);await scroll('#lesson-0001-troubles');await page.locator('#lesson-0001-troubles').fill('演示疑难：下一课能否用一次工具调用说明程序怎样控制执行？');
           await page.waitForFunction(()=>document.querySelector('.sync-status')?.dataset.state==='saved');
           const submissions=await fs.readFile(path.join(course,'learner-submissions',slug+'.json'),'utf8');const chat=await fs.readFile(path.join(course,'learner-chats',slug+'.json'),'utf8');assert(!submissions.includes(key)&&!chat.includes(key));
           assert.equal(JSON.parse(chat).messages.length,4);plan.local_save_verified=true;break;
         }
-        case 'adaptive': await goto('index.html');await label('已生成课程结果回放');await scroll('#lessons');await wait(3000);await goto('lessons/0003-safe-tool-contract.html');await label('已生成课程结果回放');await scroll('#contract');await wait(2500);await goto('lessons/0002-s01-injection-without-thought.html');await label('关联补充课 · 已生成结果回放');break;
+        case 'continuation': await page.setContent(await fs.readFile(path.join(materials,'assets/video-overview.html'),'utf8'));await page.evaluate(()=>document.body.classList.add('continuation'));break;
+        case 'adaptive': await goto('index.html');await label('已生成课程结果回放');await scroll('#lessons');await atTurn(scene,0,.3);await goto('lessons/0003-safe-tool-contract.html');await label('已生成课程结果回放');await scroll('#contract');await atTurn(scene,0,.64);await goto('lessons/0002-s01-injection-without-thought.html');await label('关联补充课 · 已生成结果回放');break;
         case 'closing': await page.setContent(await fs.readFile(path.join(materials,'assets/video-overview.html'),'utf8'));await page.evaluate(()=>document.body.classList.add('closing'));break;
         default: throw new Error('Unknown scene');
       }
       scene.action_end_ms=Date.now()-clock;
-      await wait(Math.max(5000,scene.budget*1000-(scene.action_end_ms-scene.capture_start_ms)));
+      const spoken=prepared.scenes.find(s=>s.id===scene.id).seconds+(scene.turns.some(t=>t.source==='live-answer')?12:0);
+      await wait(Math.max(2500,Math.max(scene.budget,spoken)*1000-(scene.action_end_ms-scene.capture_start_ms)));
       scene.capture_end_ms=Date.now()-clock;
       await page.screenshot({path:path.join(output,`scene-${String(index+1).padStart(2,'0')}.png`)});
       console.log(`RECORDED ${index+1}/${plan.scenes.length}: ${scene.id}`);

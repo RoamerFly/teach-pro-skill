@@ -6,16 +6,40 @@
     "teacher": {"voice":"Chinese (Mandarin)_Wise_Women","model":"MiniMax/speech-2.8-hd","label":"老师","speed":1.3,"tempo":1}
   },
   "scenes": [
-    {"id":"home","title":"01 · Skill 技能包：导入与调用示意","budget":21,"turns":[{"role":"teacher","text":"学途智伴，是一个 Skill 技能包。把它导入 TeleAgent，告诉 AI 你想学什么，它就会先了解你的基础，再带你一节一节学。遇到问题，随时追问；学完一课，再根据你的掌握情况接着教。"}]},
-    {"id":"assessment","title":"02 · 了解基础，先评估再开课","budget":17,"turns":[{"role":"student","text":"我会一点 Python，想学智能体开发与安全，该从哪里开始？"},{"role":"teacher","text":"先评估，再安排路线。启动课程，在网页里作答，教学 AI 读取本地答案，安排第一课。"}]},
-    {"id":"lesson","title":"03 · 智鉴课程：先看图，再理解代码","budget":14,"turns":[{"role":"teacher","text":"这是技能生成的智鉴课程。第一课先用图解说明消息如何传递，再对照代码理解一次模型调用。每次聚焦一个目标，学懂以后再往前走。"}]},
-    {"id":"resources","title":"04 · 本课一手阅读与视频导学","budget":11,"turns":[{"role":"teacher","text":"论文和视频，都有具体入口与学习任务。带着问题去看，再留下自己的解释。"}]},
-    {"id":"settings","title":"05 · 配置 DeepSeek：密钥始终遮蔽","budget":18,"turns":[{"role":"teacher","text":"选深度求索，输入遮蔽的密钥，获取并选择闪速模型，再保存。课内答疑是可选功能，配置整门课共用。"}]},
-    {"id":"connection","title":"06 · 测试连接，返回原课程","budget":7,"turns":[{"role":"teacher","text":"连接成功。点左上角返回按钮，回到刚才的课，接着学习。"}]},
-    {"id":"tutor-answer","title":"07 · 首轮真实答疑：边生成，边阅读","budget":19,"question":"为什么第二次只发新问题，就不知道上一轮的信息？请结合本课的 messages 代码，用不超过65字的一段话解释，不写代码。","turns":[{"role":"student","text":"为什么第二次只发新问题，就不知道上一轮的信息？"},{"role":"teacher","source":"live-answer"}]},
-    {"id":"followup","title":"08 · 继续追问：多轮聊天与 Agent","budget":19,"question":"那把历史 messages 带上，就算 Agent 了吗？请接着刚才的解释，用不超过65字区分多轮聊天和工具型 Agent，不写代码。","turns":[{"role":"student","text":"那把历史消息带上，就算智能体了吗？"},{"role":"teacher","source":"live-answer"}]},
-    {"id":"save","title":"09 · 自己解释，留下学习记录","budget":13,"turns":[{"role":"teacher","text":"在课末留下自己的解释和疑难，答案与聊天保存到本地。回到 TeleAgent 请求续课，AI 读取记录再教。"}]},
-    {"id":"adaptive","title":"10 · 已生成结果回放：正式课与补充课","budget":14,"turns":[{"role":"teacher","text":"这里回放已有的续课结果。正式课推进工具契约这个新目标，上一课的误解放到独立补充页。课程主线和针对性补充，可以一起推进。"}]},
-    {"id":"closing","title":"11 · 学途智伴：每次学懂一节，下一次接着学","budget":16,"turns":[{"role":"teacher","text":"Skill 指导教学，网页承载学习，答疑解释问题，本地记录支持续课。每次学懂一节，下一次接着学。"}]}
+    {"id":"home","title":"01 · 有学习目标，先调用 Skill","budget":22,"turns":[
+      {"role":"student","delivery":"沉稳地求教，句尾自然上扬","text":"老师，我会一点 Python，也调用过模型接口。可想做安全情报智能体，还是不知道从哪儿开始。"},
+      {"role":"teacher","speech":{"emotion":"happy","speed":1.26},"delivery":"接住学生的问题，亲切引导","text":"那就从你的基础开始。学途智伴是一个 Skill 技能包，导入 TeleAgent，用它提出学习目标，先评估，再开课。"}]},
+    {"id":"assessment","title":"02 · 把基础与目标交给教学 AI","budget":15,"turns":[
+      {"role":"teacher","speech":{"speed":1.28},"delivery":"边操作边讲，强调评估的用途","text":"先做几道入门题，再写下目标和每周能学多久。答案自动保存，教学 AI 据此安排课程。接下来，看已经生成的第一课。"}]},
+    {"id":"lesson","title":"03 · 第一课：从图解读到代码","budget":13,"turns":[
+      {"role":"teacher","speech":{"emotion":"calm","speed":1.26},"delivery":"解释机制，再抛出观察任务","text":"先看图：程序把消息发给模型，再拿回回答。对照下面的代码，找一找，这次请求到底带了哪些消息。"}]},
+    {"id":"resources","title":"04 · 想深入，就带着任务读原资料","budget":12,"turns":[
+      {"role":"student","delivery":"好奇提问，保持沉稳","text":"如果想再深入一点，去哪儿看？"},
+      {"role":"teacher","speech":{"emotion":"happy","speed":1.3},"delivery":"自然接话，给出具体学习入口","text":"往下就是本课论文和视频。这里给了阅读位置和小任务，先把当前概念看懂，再回来解释。"}]},
+    {"id":"question-origin","title":"05 · 代码引出疑问，再打开课内答疑","budget":17,"turns":[
+      {"role":"student","delivery":"发现疑点，先思考再问","text":"欸，代码里只放了这次的消息。那上一轮说过的话，模型还知道吗？"},
+      {"role":"teacher","speech":{"emotion":"happy","speed":1.24},"delivery":"肯定问题，再解释为什么要连接模型","text":"问得好。点顶部的“问 AI”，它能结合这一课解释。第一次用，先连接一个答疑模型。"}]},
+    {"id":"settings","title":"06 · 为刚才的疑问连接 DeepSeek","budget":20,"turns":[
+      {"role":"teacher","speech":{"speed":1.28},"delivery":"讲清入口与服务选择","text":"点“连接答疑模型”，进入课程设置。这里用深度求索。"},
+      {"role":"teacher","speech":{"speed":1.3},"delivery":"按操作顺序讲清密钥与模型","text":"填入密钥，点“获取模型”，从真实列表选闪速模型。"},
+      {"role":"teacher","speech":{"speed":1.3},"delivery":"收束设置步骤，说明全课程共用","text":"再保存并启用。这份配置整门课共用，以后不用每节课都重填。"}]},
+    {"id":"connection","title":"07 · 连接通过，回到刚才的疑问","budget":11,"voice_lead":2,"turns":[
+      {"role":"teacher","speech":{"emotion":"happy","speed":1.28},"delivery":"轻快确认，提醒回到同一个问题","text":"连接成功！点“返回第一课”，答疑窗口就回来了。现在，把刚才代码里的疑问发给它。"}]},
+    {"id":"tutor-answer","title":"08 · 首问：模型为什么不记得上一轮","budget":20,"question":"为什么第二次只发新问题，就不知道上一轮的信息？请结合本课的 messages 代码，用不超过65字的一段话解释，不写代码。","turns":[
+      {"role":"student","delivery":"接着刚才的问题求证","text":"好，那为什么第二次只发新问题，就不知道上一轮的信息？"},
+      {"role":"teacher","speech":{"emotion":"calm","speed":1.25},"delivery":"朗读真实答疑，突出本次请求与历史的区别","source":"live-answer"}]},
+    {"id":"followup","title":"09 · 理解上个回答，再追问 Agent","budget":20,"question":"那把历史 messages 带上，就算 Agent 了吗？请接着刚才的解释，用不超过65字区分多轮聊天和工具型 Agent，不写代码。","turns":[
+      {"role":"student","delivery":"先恍然大悟，再自然追问","text":"哦，原来历史得自己带上。那带上历史消息，就算智能体了吗？"},
+      {"role":"teacher","speech":{"speed":1.24},"delivery":"朗读真实答疑，语气从纠正转为解释","source":"live-answer"}]},
+    {"id":"save","title":"10 · 说出理解，再写进学习记录","budget":19,"turns":[
+      {"role":"student","delivery":"有领悟地总结，不喊口号","text":"明白了！带上历史只是聊天，智能体还得受控地调用工具。"},
+      {"role":"teacher","speech":{"emotion":"happy","speed":1.28},"delivery":"肯定理解，连接到练习与续课","text":"对。把这句解释写进练习，再记下疑难。答案和对话都会保存，接下来让教学 AI 据此安排续课。"}]},
+    {"id":"continuation","title":"11 · 续课提示词示意：带着记录回到宿主","budget":10,"turns":[
+      {"role":"teacher","speech":{"speed":1.28},"delivery":"明确下一步操作，不跳到课程结果","text":"回到 TeleAgent，请它读取学习记录，再生成下一课。这样，下一课才知道你学会了什么、还卡在哪里。"}]},
+    {"id":"adaptive","title":"12 · 已有结果回放：主线推进，误解另补","budget":15,"turns":[
+      {"role":"teacher","speech":{"speed":1.3},"delivery":"承接续课步骤，解释两类课程的作用","text":"这里看已有的续课结果。正式课继续学工具契约；旧课里的误解，放进关联补充页。补薄弱处，也不耽误学习新内容。"}]},
+    {"id":"closing","title":"13 · 目标、理解与证据，串成长期学习","budget":11,"turns":[
+      {"role":"student","delivery":"理解后的轻松和期待","text":"这样，下一次就能从我真正学会的地方接着学了。"},
+      {"role":"teacher","speech":{"emotion":"happy","speed":1.28},"delivery":"温暖回应，简洁收束","text":"没错。学途智伴，用一个 Skill，把评估、理解、提问和续课，串成持续的学习。"}]}
   ]
 }

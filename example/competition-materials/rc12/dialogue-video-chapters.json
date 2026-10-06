@@ -1,5 +1,5 @@
 {
-  "seconds": 122.221333,
+  "seconds": 168.461333,
   "resolution": "1440x900",
   "fps": 25,
   "version": "1.1.0-rc.12",
@@ -25,7 +25,7 @@
     {
       "operation": "models",
       "local_http_status": 200,
-      "elapsed_ms": 826,
+      "elapsed_ms": 660,
       "model_ids": [
         "deepseek-flash",
         "deepseek-v4-pro"
@@ -34,166 +34,199 @@
     {
       "operation": "test",
       "local_http_status": 200,
-      "elapsed_ms": 1176
+      "elapsed_ms": 1218
     },
     {
       "operation": "chat",
       "local_http_status": 200,
-      "elapsed_ms": 1495,
+      "elapsed_ms": 1643,
       "message_count": 2,
       "context_version": "004b4ca0371ad07e37c5747460dc6f8683dd13d0cd61f9791e7b20d3a2db566c",
-      "answer_characters": 67,
-      "answer_sha256": "a27108adc6e19995743dede07f8427fec55dd5397c6829de919dbb6ade372b9d",
+      "answer_characters": 59,
+      "answer_sha256": "3fc665d7068dfde6904fdb9a177763aab54d39353fbcd50d017cf3212747a77e",
       "diagnostics": {
         "finish_reason": "stop",
         "has_reasoning": false,
-        "answer_characters": 67,
+        "answer_characters": 59,
         "usage": {
           "prompt_tokens": 4427,
-          "completion_tokens": 33,
-          "total_tokens": 4460
+          "completion_tokens": 32,
+          "total_tokens": 4459
         },
         "streaming": true,
         "http_status": 200,
-        "elapsed_ms": 939
+        "elapsed_ms": 1092
       },
       "usage": {
         "prompt_tokens": 4427,
-        "completion_tokens": 33,
-        "total_tokens": 4460
+        "completion_tokens": 32,
+        "total_tokens": 4459
       },
       "transport": "stream"
     },
     {
       "operation": "chat",
       "local_http_status": 200,
-      "elapsed_ms": 1553,
+      "elapsed_ms": 1658,
       "message_count": 4,
       "context_version": "004b4ca0371ad07e37c5747460dc6f8683dd13d0cd61f9791e7b20d3a2db566c",
-      "answer_characters": 65,
-      "answer_sha256": "a0c8b08979ebe9c5a10165dfe4375e6a591fb876458a9d3ccb9d6f17f69b01a9",
+      "answer_characters": 60,
+      "answer_sha256": "f901c5efc8be25932b8b9cb70ff7f40a03e0cfdda9f9dfa50cde1dc8c0f4c273",
       "diagnostics": {
         "finish_reason": "stop",
         "has_reasoning": false,
-        "answer_characters": 65,
+        "answer_characters": 60,
         "usage": {
-          "prompt_tokens": 4497,
-          "completion_tokens": 38,
-          "total_tokens": 4535
+          "prompt_tokens": 4496,
+          "completion_tokens": 36,
+          "total_tokens": 4532
         },
         "streaming": true,
         "http_status": 200,
-        "elapsed_ms": 987
+        "elapsed_ms": 1110
       },
       "usage": {
-        "prompt_tokens": 4497,
-        "completion_tokens": 38,
-        "total_tokens": 4535
+        "prompt_tokens": 4496,
+        "completion_tokens": 36,
+        "total_tokens": 4532
       },
       "transport": "stream"
     }
   ],
   "remembered_device": true,
   "local_save_verified": true,
+  "first_use_connection_entry_verified": true,
+  "return_to_same_tutor_verified": true,
   "chapters": [
     {
       "id": "home",
-      "title": "01 · Skill 技能包：导入与调用示意",
+      "title": "01 · 有学习目标，先调用 Skill",
       "start": 0,
-      "seconds": 14.52,
-      "removed_wait_seconds": 6.48,
+      "seconds": 17.44,
+      "removed_wait_seconds": 4.564,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_overview_screenshot"
+      "picture_source": "actual_overview_screenshot",
+      "edit_strategy": "static_overview"
     },
     {
       "id": "assessment",
-      "title": "02 · 了解基础，先评估再开课",
-      "start": 14.52,
-      "seconds": 12.04,
-      "removed_wait_seconds": 4.968,
+      "title": "02 · 把基础与目标交给教学 AI",
+      "start": 17.44,
+      "seconds": 10.36,
+      "removed_wait_seconds": 4.655,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "lesson",
-      "title": "03 · 智鉴课程：先看图，再理解代码",
-      "start": 26.56,
-      "seconds": 11.12,
-      "removed_wait_seconds": 2.885,
+      "title": "03 · 第一课：从图解读到代码",
+      "start": 27.8,
+      "seconds": 9.12,
+      "removed_wait_seconds": 3.884,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "resources",
-      "title": "04 · 本课一手阅读与视频导学",
-      "start": 37.68,
-      "seconds": 6.84,
-      "removed_wait_seconds": 4.174,
+      "title": "04 · 想深入，就带着任务读原资料",
+      "start": 36.92,
+      "seconds": 9.88,
+      "removed_wait_seconds": 2.131,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
+    },
+    {
+      "id": "question-origin",
+      "title": "05 · 代码引出疑问，再打开课内答疑",
+      "start": 46.800000000000004,
+      "seconds": 14.44,
+      "removed_wait_seconds": 2.562,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "settings",
-      "title": "05 · 配置 DeepSeek：密钥始终遮蔽 · 等待已剪短",
-      "start": 44.519999999999996,
-      "seconds": 14.0,
-      "removed_wait_seconds": 4.012,
+      "title": "06 · 为刚才的疑问连接 DeepSeek",
+      "start": 61.24,
+      "seconds": 15.28,
+      "removed_wait_seconds": 4.735,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "connection",
-      "title": "06 · 测试连接，返回原课程 · 等待已剪短",
-      "start": 58.519999999999996,
-      "seconds": 5.68,
-      "removed_wait_seconds": 2.386,
+      "title": "07 · 连接通过，回到刚才的疑问",
+      "start": 76.52,
+      "seconds": 9.8,
+      "removed_wait_seconds": 1.208,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "tutor-answer",
-      "title": "07 · 首轮真实答疑：边生成，边阅读 · 等待已剪短",
-      "start": 64.19999999999999,
-      "seconds": 15.0,
-      "removed_wait_seconds": 4.007,
+      "title": "08 · 首问：模型为什么不记得上一轮",
+      "start": 86.32,
+      "seconds": 15.48,
+      "removed_wait_seconds": 11.521,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "followup",
-      "title": "08 · 继续追问：多轮聊天与 Agent · 等待已剪短",
-      "start": 79.19999999999999,
-      "seconds": 15.0,
-      "removed_wait_seconds": 4.011,
+      "title": "09 · 理解上个回答，再追问 Agent",
+      "start": 101.8,
+      "seconds": 18.4,
+      "removed_wait_seconds": 8.602,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "save",
-      "title": "09 · 自己解释，留下学习记录",
-      "start": 94.19999999999999,
-      "seconds": 8.68,
-      "removed_wait_seconds": 4.332,
+      "title": "10 · 说出理解，再写进学习记录",
+      "start": 120.19999999999999,
+      "seconds": 15.88,
+      "removed_wait_seconds": 3.135,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
+    },
+    {
+      "id": "continuation",
+      "title": "11 · 续课提示词示意：带着记录回到宿主",
+      "start": 136.07999999999998,
+      "seconds": 9.4,
+      "removed_wait_seconds": 0.612,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_overview_screenshot",
+      "edit_strategy": "static_overview"
     },
     {
       "id": "adaptive",
-      "title": "10 · 已生成结果回放：正式课与补充课",
-      "start": 102.88,
-      "seconds": 10.48,
-      "removed_wait_seconds": 3.523,
+      "title": "12 · 已有结果回放：主线推进，误解另补",
+      "start": 145.48,
+      "seconds": 10.0,
+      "removed_wait_seconds": 5.005,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_recording",
+      "edit_strategy": "continuous_actions; trailing_idle_only"
     },
     {
       "id": "closing",
-      "title": "11 · 学途智伴：每次学懂一节，下一次接着学",
-      "start": 113.36,
-      "seconds": 8.84,
-      "removed_wait_seconds": 7.173,
+      "title": "13 · 目标、理解与证据，串成长期学习",
+      "start": 155.48,
+      "seconds": 12.96,
+      "removed_wait_seconds": 0.008,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording"
+      "picture_source": "actual_overview_screenshot",
+      "edit_strategy": "static_overview"
     }
   ],
   "subtitle_timing": "utterance_aligned_proportional_phrase_timing",

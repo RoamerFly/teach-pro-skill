@@ -45,7 +45,15 @@ def plain_answer(text):
 
 def subtitle_parts(text, limit=26):
     sentences = re.findall(r'[^，。；！？、]+[，。；！？、]?', text)
-    return [part[i:i+limit] for part in sentences for i in range(0, len(part), limit) if part[i:i+limit].strip()]
+    chunks = [part[i:i+limit] for part in sentences for i in range(0, len(part), limit) if part[i:i+limit].strip()]
+    parts = []
+    for chunk in chunks:
+        # Do not flash a one-word conversational reaction as a separate caption.
+        if parts and (len(parts[-1]) < 6 or len(chunk) < 6) and len(parts[-1]) + len(chunk) <= limit:
+            parts[-1] += chunk
+        else:
+            parts.append(chunk)
+    return parts
 
 
 def canonical_pcm_wave(data):
@@ -102,33 +110,51 @@ def speech_payload(text, role):
     return body
 
 
-def voice(session, cached_only=False):
-    plan = json.loads((session/'capture-plan.json').read_text(encoding='utf8'))
+def turn_role(role, turn):
+    """Scene delivery may vary, but the approved voice/model cannot be replaced."""
+    controls = turn.get('speech', {})
+    if not isinstance(controls, dict) or set(controls) - {'speed', 'emotion'}:
+        raise RuntimeError('Invalid per-turn speech controls')
+    if controls and role['model'] != hd.MODEL:
+        raise RuntimeError('This voice has no per-turn speed/emotion protocol')
+    return {**role, **controls}
+
+
+def voice(session, cached_only=False, script_only=False):
     current = json.loads((MATERIALS/'dialogue-plan.json').read_text(encoding='utf8'))
-    if [s['id'] for s in current['scenes']] != [s['id'] for s in plan['scenes']]:
-        raise RuntimeError('Recorded scenes differ from current dialogue plan')
-    for scene, source in zip(plan['scenes'], current['scenes']):
-        if scene.get('question') != source.get('question'):
-            raise RuntimeError('Live question changed; recapture instead of relabeling the actual answer')
-        scene['turns'] = source['turns']
+    plan = json.loads(json.dumps(current)) if script_only else json.loads((session/'capture-plan.json').read_text(encoding='utf8'))
+    if not script_only:
+        if [s['id'] for s in current['scenes']] != [s['id'] for s in plan['scenes']]:
+            raise RuntimeError('Recorded scenes differ from current dialogue plan')
+        for scene, source in zip(plan['scenes'], current['scenes']):
+            if scene.get('question') != source.get('question'):
+                raise RuntimeError('Live question changed; recapture instead of relabeling the actual answer')
+            scene['turns'] = source['turns']
     plan['roles'] = current['roles']
     plan['script_fingerprint'] = fingerprint(current)
+    if script_only:
+        plan['script_plan'] = current
     key = '' if cached_only else getpass.getpass('Bailian API Key (hidden): ').strip()
     if not key and not cached_only:
         raise RuntimeError('Missing speech credential')
     audio = session/'audio'; audio.mkdir(exist_ok=True)
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
-    report = {'kind':'two_role_synthetic_speech', 'region':'beijing', 'roles':plan['roles'],
+    report = {'kind':'script_only_preparation' if script_only else 'two_role_synthetic_speech', 'region':'beijing', 'roles':plan['roles'],
               'new_synthesis_requests':0, 'verification_mode':'cached_only' if cached_only else 'synthesis_or_cache',
               'subjective_listening_review':'pending', 'utterances':[]}
     timeline = 0
     for index, scene in enumerate(plan['scenes'], 1):
         scene['voice_start_seconds'] = timeline
-        local = .2
+        local = max(scene.get('voice_lead', .2), (scene.get('result_ready_ms',0)-scene.get('capture_start_ms',0))/1000+.15)
         clips, cues = [], []
         for turn_index, turn in enumerate(scene['turns'], 1):
+            if script_only and turn.get('source') == 'live-answer':
+                continue  # Actual answers are synthesized only after genuine recording.
+            if turn.get('source') == 'live-answer':
+                ready = scene.get('answer_ready_ms', scene.get('action_end_ms', 0))
+                local = max(local, (ready-scene.get('capture_start_ms',0))/1000+.15)
             text = plain_answer(scene['live_answer']) if turn.get('source') == 'live-answer' else turn['text']
-            role = plan['roles'][turn['role']]
+            role = turn_role(plan['roles'][turn['role']], turn)
             body = speech_payload(text, role)
             name = f'{index:02}-{turn_index:02}'
             raw, cache = audio/(name+'.wav'), audio/(name+'.source.json')
@@ -162,14 +188,15 @@ def voice(session, cached_only=False):
             source=playback_clip(source,audio/(name+'.playback.wav'),tempo)
             length=seconds(source)
             run('ffmpeg','-v','error','-xerror','-i',source,'-f','null','-')
-            clips.append((source,local)); turn['spoken_text']=text; turn['seconds']=length
+            clips.append((source,local)); turn['spoken_text']=text; turn['seconds']=length; turn['start_seconds']=local
             parts = subtitle_parts(text,limit=36); weight = sum(map(len, parts)); start = local
             for part in parts:
                 end = start + length*len(part)/weight
                 cues.append({'start':start,'end':end,'text':part,'role':turn['role']}); start=end
             report['utterances'].append({'scene':scene['id'],'role':turn['role'],'voice':role['voice'],
                 'model':role['model'],'text':text,'seconds':length,'source_seconds':source_length,
-                'tempo':tempo,'provider_speed':role.get('speed'),
+                'tempo':tempo,'provider_speed':role.get('speed'),'provider_emotion':role.get('emotion'),
+                'turn_index':turn_index,'delivery':turn.get('delivery'),
                 'playback_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
                 'source':turn.get('source','script'),
                 'sha256':hashlib.sha256(provider_bytes).hexdigest(),'pcm_header_repaired':canonical!=provider_bytes,'decode':'pass'})
@@ -177,7 +204,8 @@ def voice(session, cached_only=False):
             print(f'SPEECH {name} {turn["role"]}: {length:.2f}s',flush=True)
         # Faster delivery must not eliminate time to watch configuration or read answers.
         reading_floor = {'settings':14,'tutor-answer':15,'followup':15}.get(scene['id'],0)
-        length = math.ceil(max(local+.45, reading_floor)*25)/25
+        action_floor = (scene.get('action_end_ms',0)-scene.get('capture_start_ms',0))/1000
+        length = math.ceil(max(local+.45, reading_floor, action_floor+.25)*25)/25
         scene['seconds']=length; scene['subtitle_cues']=cues
         inputs, streams = [], []
         for n,(file,delay) in enumerate(clips):
@@ -189,8 +217,8 @@ def voice(session, cached_only=False):
             '-ar','24000','-ac','1','-c:a','pcm_s16le',target)
         timeline += length
     report['seconds']=timeline
-    (session/'voice-plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf8')
-    (session/'dialogue-voice-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
+    (session/('script-voice-plan.json' if script_only else 'voice-plan.json')).write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf8')
+    (session/('script-voice-audit.json' if script_only else 'dialogue-voice-audit.json')).write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
     if timeline>=180:
         raise RuntimeError(f'Speech timeline {timeline:.2f}s exceeds contest limit; shorten script instead of exceeding the modest tempo range')
     print(f'PASS: measured two-role timeline {timeline:.2f}s',flush=True)
@@ -230,19 +258,17 @@ def render(session):
         length=scene['seconds']; start=scene['capture_start_ms']/1000+offset
         captured=(scene['capture_end_ms']-scene['capture_start_ms'])/1000
         title=scene['title'];inputs=['-ss',f'{start:.4f}','-i',str(raw)];audio_index=1
-        if scene['id']=='home':
+        if scene['id'] in ('home','continuation','closing'):
             # Chromium's initial about:blank screencast can retain its old surface size.
             # This is a static overview card: use its actual full-viewport screenshot.
             inputs=['-loop','1','-framerate','25','-i',str(session/f'capture/scene-{i:02}.png')]
             vf='[0:v]setpts=PTS-STARTPTS,'
-        elif captured>length+.4:
-            lead=min(3,length/4);tail=length-lead
-            inputs+=['-ss',f'{scene["capture_end_ms"]/1000+offset-tail:.4f}','-i',str(raw)]
-            vf=f'[0:v]trim=duration={lead},setpts=PTS-STARTPTS[a];[1:v]trim=duration={tail},setpts=PTS-STARTPTS[b];[a][b]concat=n=2:v=1:a=0,'
-            audio_index=2
-            if scene['id'] in ('settings','connection','tutor-answer','followup'): title+=' · 等待已剪短'
         else:
             vf='[0:v]setpts=PTS-STARTPTS,'
+            # Keep all operations in their original order; trim only trailing idle time.
+            action_seconds=(scene['action_end_ms']-scene['capture_start_ms'])/1000
+            if length<action_seconds:
+                raise RuntimeError('Speech timeline would cut an actual operation')
         # Clone only the last genuine frame when speech is longer than the recording.
         vf+=f'tpad=stop_mode=clone:stop_duration={max(0,length-captured)+.1},fps=25,trim=end_frame={round(length*25)},pad=1440:900:0:0:color=0x172c40,ass=scene-{i:02}.ass[v]'
         lines=[f'Dialogue: 0,0:00:00.00,{stamp(length,True)},Chapter,,0,0,0,,{title}']
@@ -260,7 +286,8 @@ def render(session):
         clips.append(clip)
         chapters.append({'id':scene['id'],'title':title,'start':scene['voice_start_seconds'],'seconds':length,
             'removed_wait_seconds':round(max(0,captured-length),3),'added_reading_hold_seconds':round(max(0,length-captured),3),
-            'picture_source':'actual_overview_screenshot' if scene['id']=='home' else 'actual_recording'})
+            'picture_source':'actual_overview_screenshot' if scene['id'] in ('home','continuation','closing') else 'actual_recording',
+            'edit_strategy':'static_overview' if scene['id'] in ('home','continuation','closing') else 'continuous_actions; trailing_idle_only'})
         print(f'RENDERED {i}/{len(plan["scenes"])}: {scene["id"]}',flush=True)
     listing=work/'concat.txt';listing.write_text('\n'.join(f"file '{p.name}'" for p in clips)+'\n',encoding='utf8')
     target=work/'dialogue-final.mp4'
@@ -273,6 +300,8 @@ def render(session):
     public={'seconds':duration,'resolution':'1440x900','fps':25,'version':plan['version'],
         'voice_strategy':'two_role_synthetic','roles':plan['roles'],'model':plan['model'],'provider_requests':4,
         'live_operations':operations,'remembered_device':plan['remembered_device'],'local_save_verified':plan['local_save_verified'],
+        'first_use_connection_entry_verified':plan.get('first_use_connection_entry_verified',False),
+        'return_to_same_tutor_verified':plan.get('return_to_same_tutor_verified',False),
         'chapters':chapters,'subtitle_timing':'utterance_aligned_proportional_phrase_timing','subjective_listening_review':'pending'}
     (MATERIALS/'dialogue-video-chapters.json').write_text(json.dumps(public,ensure_ascii=False,indent=2)+'\n',encoding='utf8')
     run('ffmpeg','-v','error','-y','-ss','2','-i',target,'-frames:v','1',MATERIALS/'assets/dialogue-video-poster.png')
@@ -309,10 +338,10 @@ def audit(session):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser();parser.add_argument('phase',choices=['record','voice','render','audit']);parser.add_argument('session',type=Path);parser.add_argument('--cached-only',action='store_true');args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('phase',choices=['prepare','record','voice','render','audit']);parser.add_argument('session',type=Path);parser.add_argument('--cached-only',action='store_true');args=parser.parse_args()
     try:
         session=args.session.resolve();session.mkdir(exist_ok=True,parents=True)
-        if args.phase=='voice': voice(session,args.cached_only)
+        if args.phase in ('prepare','voice'): voice(session,args.cached_only,args.phase=='prepare')
         else: {'record':record,'render':render,'audit':audit}[args.phase](session)
     except Exception as error:
         print(str(error) if isinstance(error,RuntimeError) else 'Recording, synthesis or media validation failed; inspect local work artifacts.',file=sys.stderr)
