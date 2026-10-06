@@ -17,6 +17,6 @@ Teach Pro 1.1.0-rc.12 的公开展示副本，主线为智能体开发与安全�
 
 ## 来源与证据
 
-展示使用合成学习场景，内容经人工校核，不附真实学员答案、聊天或密钥。它不是新的 TeleAgent 行为测试，也不用于宣称学生长期学习效果。来源见 [PROVENANCE](./PROVENANCE.md)，新版说明与视频方案见 [参赛材料](../competition-materials/rc12/README.md)。
+展示使用合成学习场景，内容经人工校核，不附真实学员答案、聊天或密钥。它不是新的 TeleAgent 行为测试，也不用于宣称学生长期学习效果。来源见 [PROVENANCE](./PROVENANCE.md)，新版说明与视频方案见 [参赛材料](https://github.com/RoamerFly/teach-pro-skill/tree/main/example/competition-materials/rc12)。
 
 复制到新目录体验后，请保留自己的 `learner-submissions` 和 `learner-chats`，不要提交到公开仓库。
