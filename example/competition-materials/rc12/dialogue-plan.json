@@ -1,0 +1,21 @@
+{
+  "version": "1.1.0-rc.12",
+  "model": "deepseek-flash",
+  "roles": {
+    "student": {"voice":"Andre","model":"qwen3-tts-flash","label":"同学"},
+    "teacher": {"voice":"Elias","model":"qwen3-tts-instruct-flash","label":"老师","instructions":"用成熟教师的普通话女声，沉着、亲切、有耐心，像在面对面向大学生讲清一件事。语速自然适中，不拖长句尾；概念前轻停顿，因果和转折有自然轻重。讲操作时连贯，解释问题时认真但不说教，结尾温暖坚定。声音稳重，不幼态，不撒娇，不用播音腔、广告腔或整齐划一的朗读节奏。Skill 与 TeleAgent 按英文单词自然读，API 逐字母读。不添加笑声，不读出括号里的角色名。"}
+  },
+  "scenes": [
+    {"id":"home","title":"01 · Skill 技能包：导入与调用示意","budget":21,"turns":[{"role":"teacher","text":"学途智伴，是一个面向大学生长期学习的 Skill 技能包。教学规则、网页模板和本地工具，都在包里。导入 TeleAgent，调用这个技能，告诉 AI 你的目标，它就会按这套规则开展教学。"}]},
+    {"id":"assessment","title":"02 · 了解基础，先评估再开课","budget":17,"turns":[{"role":"student","text":"我会一点 Python，想学智能体开发与安全，该从哪里开始？"},{"role":"teacher","text":"先评估，再安排路线。启动课程，在网页里作答，教学 AI 读取本地答案，安排第一课。"}]},
+    {"id":"lesson","title":"03 · 智鉴课程：先看图，再理解代码","budget":14,"turns":[{"role":"teacher","text":"这是技能生成的智鉴课程。第一课先用图解说明消息如何传递，再对照代码理解一次模型调用。每次聚焦一个目标，学懂以后再往前走。"}]},
+    {"id":"resources","title":"04 · 本课一手阅读与视频导学","budget":11,"turns":[{"role":"teacher","text":"论文和视频，都有具体入口与学习任务。带着问题去看，再留下自己的解释。"}]},
+    {"id":"settings","title":"05 · 配置 DeepSeek：密钥始终遮蔽","budget":18,"turns":[{"role":"teacher","text":"选深度求索，输入遮蔽的密钥，获取并选择闪速模型，再保存。课内答疑是可选功能，配置整门课共用。"}]},
+    {"id":"connection","title":"06 · 测试连接，返回原课程","budget":7,"turns":[{"role":"teacher","text":"连接成功。点左上角返回按钮，回到刚才的课，接着学习。"}]},
+    {"id":"tutor-answer","title":"07 · 首轮真实答疑：边生成，边阅读","budget":19,"question":"为什么第二次只发新问题，就不知道上一轮的信息？请结合本课的 messages 代码，用不超过65字的一段话解释，不写代码。","turns":[{"role":"student","text":"为什么第二次只发新问题，就不知道上一轮的信息？"},{"role":"teacher","source":"live-answer"}]},
+    {"id":"followup","title":"08 · 继续追问：多轮聊天与 Agent","budget":19,"question":"那把历史 messages 带上，就算 Agent 了吗？请接着刚才的解释，用不超过65字区分多轮聊天和工具型 Agent，不写代码。","turns":[{"role":"student","text":"那把历史消息带上，就算智能体了吗？"},{"role":"teacher","source":"live-answer"}]},
+    {"id":"save","title":"09 · 自己解释，留下学习记录","budget":13,"turns":[{"role":"teacher","text":"在课末留下自己的解释和疑难，答案与聊天保存到本地。回到 TeleAgent 请求续课，AI 读取记录再教。"}]},
+    {"id":"adaptive","title":"10 · 已生成结果回放：正式课与补充课","budget":14,"turns":[{"role":"teacher","text":"这里回放已有的续课结果。正式课推进工具契约这个新目标，上一课的误解放到独立补充页。课程主线和针对性补充，可以一起推进。"}]},
+    {"id":"closing","title":"11 · 学途智伴：每次学懂一节，下一次接着学","budget":16,"turns":[{"role":"teacher","text":"Skill 指导教学，网页承载学习，答疑解释问题，本地记录支持续课。每次学懂一节，下一次接着学。"}]}
+  ]
+}

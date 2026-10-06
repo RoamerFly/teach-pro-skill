@@ -1,0 +1,199 @@
+{
+  "seconds": 175.141333,
+  "resolution": "1440x900",
+  "fps": 25,
+  "version": "1.1.0-rc.12",
+  "voice_strategy": "two_role_synthetic",
+  "roles": {
+    "student": {
+      "voice": "Andre",
+      "model": "qwen3-tts-flash",
+      "label": "同学"
+    },
+    "teacher": {
+      "voice": "Elias",
+      "model": "qwen3-tts-instruct-flash",
+      "label": "老师",
+      "instructions": "用成熟教师的普通话女声，沉着、亲切、有耐心，像在面对面向大学生讲清一件事。语速自然适中，不拖长句尾；概念前轻停顿，因果和转折有自然轻重。讲操作时连贯，解释问题时认真但不说教，结尾温暖坚定。声音稳重，不幼态，不撒娇，不用播音腔、广告腔或整齐划一的朗读节奏。Skill 与 TeleAgent 按英文单词自然读，API 逐字母读。不添加笑声，不读出括号里的角色名。"
+    }
+  },
+  "model": "deepseek-flash",
+  "provider_requests": 4,
+  "live_operations": [
+    {
+      "operation": "models",
+      "local_http_status": 200,
+      "elapsed_ms": 826,
+      "model_ids": [
+        "deepseek-flash",
+        "deepseek-v4-pro"
+      ]
+    },
+    {
+      "operation": "test",
+      "local_http_status": 200,
+      "elapsed_ms": 1176
+    },
+    {
+      "operation": "chat",
+      "local_http_status": 200,
+      "elapsed_ms": 1495,
+      "message_count": 2,
+      "context_version": "004b4ca0371ad07e37c5747460dc6f8683dd13d0cd61f9791e7b20d3a2db566c",
+      "answer_characters": 67,
+      "answer_sha256": "a27108adc6e19995743dede07f8427fec55dd5397c6829de919dbb6ade372b9d",
+      "diagnostics": {
+        "finish_reason": "stop",
+        "has_reasoning": false,
+        "answer_characters": 67,
+        "usage": {
+          "prompt_tokens": 4427,
+          "completion_tokens": 33,
+          "total_tokens": 4460
+        },
+        "streaming": true,
+        "http_status": 200,
+        "elapsed_ms": 939
+      },
+      "usage": {
+        "prompt_tokens": 4427,
+        "completion_tokens": 33,
+        "total_tokens": 4460
+      },
+      "transport": "stream"
+    },
+    {
+      "operation": "chat",
+      "local_http_status": 200,
+      "elapsed_ms": 1553,
+      "message_count": 4,
+      "context_version": "004b4ca0371ad07e37c5747460dc6f8683dd13d0cd61f9791e7b20d3a2db566c",
+      "answer_characters": 65,
+      "answer_sha256": "a0c8b08979ebe9c5a10165dfe4375e6a591fb876458a9d3ccb9d6f17f69b01a9",
+      "diagnostics": {
+        "finish_reason": "stop",
+        "has_reasoning": false,
+        "answer_characters": 65,
+        "usage": {
+          "prompt_tokens": 4497,
+          "completion_tokens": 38,
+          "total_tokens": 4535
+        },
+        "streaming": true,
+        "http_status": 200,
+        "elapsed_ms": 987
+      },
+      "usage": {
+        "prompt_tokens": 4497,
+        "completion_tokens": 38,
+        "total_tokens": 4535
+      },
+      "transport": "stream"
+    }
+  ],
+  "remembered_device": true,
+  "local_save_verified": true,
+  "chapters": [
+    {
+      "id": "home",
+      "title": "01 · Skill 技能包：导入与调用示意",
+      "start": 0,
+      "seconds": 20.84,
+      "removed_wait_seconds": 0.16,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_overview_screenshot"
+    },
+    {
+      "id": "assessment",
+      "title": "02 · 了解基础，先评估再开课",
+      "start": 20.84,
+      "seconds": 15.2,
+      "removed_wait_seconds": 1.808,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "lesson",
+      "title": "03 · 智鉴课程：先看图，再理解代码",
+      "start": 36.04,
+      "seconds": 16.36,
+      "removed_wait_seconds": 0,
+      "added_reading_hold_seconds": 2.355,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "resources",
+      "title": "04 · 本课一手阅读与视频导学",
+      "start": 52.4,
+      "seconds": 10.44,
+      "removed_wait_seconds": 0.574,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "settings",
+      "title": "05 · 配置 DeepSeek：密钥始终遮蔽 · 等待已剪短",
+      "start": 62.839999999999996,
+      "seconds": 16.68,
+      "removed_wait_seconds": 1.332,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "connection",
+      "title": "06 · 测试连接，返回原课程 · 等待已剪短",
+      "start": 79.52,
+      "seconds": 7.56,
+      "removed_wait_seconds": 0.506,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "tutor-answer",
+      "title": "07 · 首轮真实答疑：边生成，边阅读",
+      "start": 87.08,
+      "seconds": 22.32,
+      "removed_wait_seconds": 0,
+      "added_reading_hold_seconds": 3.313,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "followup",
+      "title": "08 · 继续追问：多轮聊天与 Agent",
+      "start": 109.4,
+      "seconds": 18.8,
+      "removed_wait_seconds": 0.211,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "save",
+      "title": "09 · 自己解释，留下学习记录",
+      "start": 128.20000000000002,
+      "seconds": 16.28,
+      "removed_wait_seconds": 0,
+      "added_reading_hold_seconds": 3.268,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "adaptive",
+      "title": "10 · 已生成结果回放：正式课与补充课",
+      "start": 144.48000000000002,
+      "seconds": 15.56,
+      "removed_wait_seconds": 0,
+      "added_reading_hold_seconds": 1.557,
+      "picture_source": "actual_recording"
+    },
+    {
+      "id": "closing",
+      "title": "11 · 学途智伴：每次学懂一节，下一次接着学",
+      "start": 160.04000000000002,
+      "seconds": 15.08,
+      "removed_wait_seconds": 0.933,
+      "added_reading_hold_seconds": 0,
+      "picture_source": "actual_recording"
+    }
+  ],
+  "subtitle_timing": "utterance_aligned_proportional_phrase_timing",
+  "subjective_listening_review": "pending"
+}

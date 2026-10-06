@@ -6,16 +6,38 @@
 
 - [新版 Demo](../../competition-demo-rc12/README.md)：三节正式课和一节关联补充课，八个页面。
 - [Word 技能说明](./学途智伴技能说明文档.docx)：五页，包含作品简介、设计思路、使用说明、设置与答疑、验证结果，已渲染并逐页复核。
-- [视频讲解脚本](./视频讲解脚本.md)：从 Skill 技能包、TeleAgent 调用开始，依次展示生成的课程、DeepSeek 配置、两轮真实答疑和基于记录的续课；十一段分镜预算约 170 秒。
-- [旁白计划](./video-scenes.json)：统一维护新版口播正文，完整配音待重制。旧约 156 秒连续旁白、男女声试样、字幕及[音频检查](./audio/voice-audit.json)保留作历史对照，不适配新版口播。
+- [师生演示视频](./学途智伴师生演示视频.mp4)：约 2 分 55 秒，学生 Andre 男声、教师 Elias 女声；录制真实课程操作及 DeepSeek 两轮流式答疑，字幕放在课程画面下方。
+- [视频讲解脚本](./视频讲解脚本.md)：说明 Skill 技能包与宿主、课程及答疑的关系。开场为调用方式示意，续课为已生成结果回放，课堂操作和提供商请求为本轮真实录制。
+- [师生口播计划](./dialogue-plan.json)、[实际章节](./dialogue-video-chapters.json)、[配音检查](./audio/dialogue-voice-audit.json)：分角色维护解说；答疑教师配音使用实际返回的答案，仅去除 Markdown 标记。技术检查已完成，主观听感待试看。
+- 快速试听：[学生沉稳男声](./audio/学生沉稳男声.mp3)、[教师成熟女声](./audio/教师成熟女声.mp3)。
+- [旧单人口播计划](./video-scenes.json)：旧连续旁白、男女声试样、字幕及[音频检查](./audio/voice-audit.json)保留作历史对照，不适配师生版。
 - [情感配音试样](./audio/expressive-voice-audit.json)：百炼 Qwen 指令型语音，同一音色、同一段 Skill 开场对比“亲切讲解”和“同学分享”，实际时长与合成状态以检查记录为准；待试听选定，不覆盖完整旁白。
 - [截图与浏览器检查](./capture-checks.json)：隔离副本采集，未调用模型；设置截图中的密钥为无效示例值。
 
-旧版文档和视频保留于上一级目录。Word 已完成首轮更新；新版讲解正文已明确作品的 Skill 定位，尚无新版完整配音与视频成片。最终制作时同步文档与新脚本，录制 rc.12 真实问答，重制旁白及字幕，通过成片检查后制作最终提交包。
+旧版文档和视频保留于上一级目录。师生版已完成首版录制、合成与技术检查；最终提交前确认听感、术语发音和字幕同步，并将说明文档与最终视频同步。本轮没有重新执行 TeleAgent 技能导入或课程生成。
 
 ## 重建
 
 在仓库根目录运行，使用已准备好的 Python、python-docx、Node、Playwright、Sharp 和浏览器。材料工具依赖与学员运行依赖分开。
+
+### 师生版视频
+
+录制与合成串行执行。DeepSeek 和百炼凭据分别通过隐藏输入读取，只在进程内传递。工作目录位于仓库外；录制器复制干净 Demo，不读取原学员答案、聊天或配置。系统凭据服务可用时实际展示设备记忆，录制结束删除该隔离课程的临时凭据。
+
+```powershell
+python example/competition-materials/rc12/scripts/make_dialogue_video.py record <工作目录>
+python example/competition-materials/rc12/scripts/make_dialogue_video.py voice <工作目录>
+python example/competition-materials/rc12/scripts/make_dialogue_video.py render <工作目录>
+python example/competition-materials/rc12/scripts/make_dialogue_video.py audit <工作目录>
+```
+
+用 `TEACH_PRO_NODE`、`NODE_PATH`、`TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 指定录制所需 Node、Playwright、浏览器和课程 Python；后两步还需 FFmpeg/ffprobe。脚本不将凭据放入命令行参数。录制包含四次真实提供商请求，不使用合成模型接口；两轮回答和演示作答只保留在隔离工作区。
+
+语音使用官方音色 Andre / Qwen3-TTS-Flash 与 Elias / Qwen3-TTS-Instruct-Flash。修改解说后只生成缓存不匹配的片段，不自动重试；`voice --cached-only` 离线重建音轨和字幕，无需凭据。教师回答取实际保存的答案；问题变化时必须重新录制，不能重新标注旧答案。Flash 的已完成 PCM 若携带流式 WAV 长度占位头，仅在独立副本修正长度，原始音频与所有样本保留。
+
+声音保持原速。先测量完整时间线，超过三分钟时精简解说；不加速声音。字幕按句段分配在实测语音片段内，仍需人工复核同步；章节记录说明等待剪短和阅读停留。只发布最终 MP4、SRT、章节和去敏检查记录，原始录屏、WAV、缓存和学习文件不随包提交。
+
+### 文档与静态截图
 
 ```powershell
 node example/competition-materials/rc12/scripts/capture_and_check.cjs
@@ -24,7 +46,9 @@ python example/competition-materials/rc12/scripts/build_document.py
 python example/competition-materials/rc12/scripts/audit_document.py
 ```
 
-旁白制作需要 FFmpeg、ffprobe 与 edge-tts。它只处理公开讲解文字，不读取模型密钥或学员记录；语音合成会将讲解文字发送到在线语音服务。在仓库外创建工作目录后运行：
+### 历史单人旁白
+
+旧方案使用 FFmpeg、ffprobe 与 edge-tts，仅处理公开讲解文字。在仓库外创建工作目录后运行：
 
 ```powershell
 python example/competition-materials/scripts/build_video_voice.py <工作目录> --script example/competition-materials/rc12/video-scenes.json --tts-packages <edge-tts安装目录>

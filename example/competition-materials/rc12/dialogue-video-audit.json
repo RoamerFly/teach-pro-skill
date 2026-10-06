@@ -1,0 +1,12 @@
+{
+  "seconds": 175.141333,
+  "bytes": 18080993,
+  "sha256": "77ffc46dabde27ee32d855b3c81b7fc3a085ee4f9096021183aa66d608d0308e",
+  "full_decode": "pass",
+  "max_volume_db": -4.6,
+  "subtitle_cues": 64,
+  "provider_requests": 4,
+  "visual_review": "representative_frames_pass_after_intro_repair",
+  "representative_frames": 22,
+  "subjective_listening_review": "pending"
+}
