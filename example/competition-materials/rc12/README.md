@@ -46,6 +46,19 @@ python example/competition-materials/rc12/scripts/build_document.py
 python example/competition-materials/rc12/scripts/audit_document.py
 ```
 
+### 高质量语音候选
+
+当前影片仍为 Qwen 师生版。下一轮候选为百炼托管的 `MiniMax/speech-2.8-hd`，直接使用模型原生的 `speed` 与情感设置，试听不作后期倍速。2026-10-06 的实际短样请求被产品未开通状态阻止，尚未产生 HD 音频；见[连接记录](./audio/hd-connection-check.json)。开通模型服务后再进行对比，不把模型名当作听感验收结果。
+
+独立工具使用官方北京公共端点与隐藏凭据输入，只查询系统音色，不创建或复刻音色：
+
+```powershell
+python example/competition-materials/rc12/scripts/bailian_hd_speech.py voices <工作目录>
+python example/competition-materials/rc12/scripts/bailian_hd_speech.py audition <工作目录> --plan <短样计划.json>
+```
+
+短样计划包含公共讲解 `text` 与 `variants`；每个候选提供 `id`、实际系统音色 `voice`、原生 `speed`，可选 `emotion` 或独立 `text`。合成缓存匹配时不重复请求，`--cached-only` 可离线复核。原始 WAV 与缓存留在仓库外，输出 MP3 只统一响度。先对比成熟女声与沉稳男声，再重建整片，当前成片和口播计划不因候选试验改变。协议见[MiniMax 同步语音合成](https://help.aliyun.com/zh/model-studio/minimax-synchronous-speech-synthesis-api)、[系统音色查询](https://help.aliyun.com/zh/model-studio/sound-management)。
+
 ### 历史单人旁白
 
 旧方案使用 FFmpeg、ffprobe 与 edge-tts，仅处理公开讲解文字。在仓库外创建工作目录后运行：
