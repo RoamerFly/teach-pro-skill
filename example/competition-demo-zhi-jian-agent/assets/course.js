@@ -73,7 +73,7 @@
     const scroll = document.createElement('div');
     scroll.className = 'sidebar-scroll';
     [...sidebar.children].forEach((child) => {
-      if (!child.classList.contains('sidebar-collapse') && !child.classList.contains('sidebar-close')) scroll.appendChild(child);
+      if (!child.classList.contains('sidebar-collapse') && !child.classList.contains('sidebar-close') && !child.classList.contains('sidebar-settings-return')) scroll.appendChild(child);
     });
     sidebar.appendChild(scroll);
     sidebar.classList.add('has-theme-control');
@@ -129,6 +129,88 @@
     });
     sidebar.appendChild(control);
     updateTheme();
+  }
+
+  // Course-local navigation state. Settings must not replace the reader's scroll.
+  if (sidebar && typeof URL === 'function' && location.href) {
+    const settingsLink = sidebar.querySelector('.course-settings-nav a');
+    const courseRoot = settingsLink ? new URL('.', settingsLink.href) : new URL('.', location.href);
+    const courseScope = `${document.body.dataset.courseKey || 'default'}:${courseRoot.pathname}`;
+    const isSettings = document.body.classList.contains('settings-page');
+    let navigationStorage;
+    try { navigationStorage = window.sessionStorage; } catch {}
+    const readNavigation = (key) => {
+      try { return JSON.parse(navigationStorage?.getItem(key) || 'null'); } catch { return null; }
+    };
+    const writeNavigation = (key, value) => {
+      try { navigationStorage?.setItem(key, JSON.stringify(value)); } catch {}
+    };
+    const returnKey = `course-return:${courseScope}`;
+    const withinCourse = (value) => {
+      try {
+        const url = new URL(value, courseRoot);
+        const relative = url.pathname.slice(courseRoot.pathname.length);
+        if (url.origin !== courseRoot.origin || !url.pathname.startsWith(courseRoot.pathname)
+          || !/^(?:index|(?:lessons|practice|reference)\/[a-z0-9][a-z0-9-]*)\.html$/.test(relative)
+          || url.search) return null;
+        return url;
+      } catch { return null; }
+    };
+    const saveReader = () => {
+      if (!isSettings && withinCourse(location.href)) {
+        writeNavigation(returnKey, { href: location.href, title: document.querySelector('main h1')?.textContent.trim() || document.title });
+      }
+    };
+    saveReader();
+    if (isSettings) {
+      const remembered = readNavigation(returnKey);
+      const lesson = new URLSearchParams(location.search).get('lesson');
+      let target = withinCourse(remembered?.href);
+      let title = target && typeof remembered.title === 'string' ? remembered.title.slice(0, 180) : '课程首页';
+      if (/^[a-z0-9][a-z0-9-]{0,79}$/.test(lesson || '')) {
+        const explicit = new URL(`lessons/${lesson}.html#lesson-tutor`, courseRoot);
+        if (!target || target.pathname !== explicit.pathname) title = '本课答疑';
+        target = explicit;
+      }
+      if (!target) target = new URL('index.html', courseRoot);
+      const back = sidebar.querySelector('.sidebar-settings-return') || document.createElement('a');
+      back.className = 'sidebar-settings-return';
+      back.href = target.href;
+      back.textContent = '← 返回' + title;
+      back.title = back.textContent;
+      if (!back.isConnected) sidebar.prepend(back);
+      document.querySelectorAll('[data-settings-return]').forEach((link) => {
+        link.href = target.href;
+        link.textContent = back.textContent;
+      });
+    }
+    const scroll = sidebar.querySelector('.sidebar-scroll') || sidebar;
+    const scrollKey = `course-nav-scroll:${courseScope}:${isSettings ? 'settings' : 'reader'}`;
+    const saveScroll = () => {
+      // Hidden/collapsed navigation has no meaningful geometry to persist.
+      if (shell?.classList.contains('is-sidebar-collapsed') || !scroll.clientHeight) return;
+      const bounds = scroll.getBoundingClientRect();
+      const anchor = [...scroll.querySelectorAll('.course-list a')].find((link) => {
+        const rect = link.getBoundingClientRect();
+        return rect.bottom > bounds.top && rect.top < bounds.bottom;
+      });
+      writeNavigation(scrollKey, { top: scroll.scrollTop, anchor: anchor?.href || '',
+        offset: anchor ? anchor.getBoundingClientRect().top - bounds.top : 0 });
+    };
+    const restoreScroll = () => {
+      const saved = readNavigation(scrollKey);
+      if (!saved || !Number.isFinite(saved.top) || saved.top < 0) return;
+      scroll.scrollTop = saved.top;
+      const anchor = [...scroll.querySelectorAll('.course-list a')].find((link) => link.href === saved.anchor);
+      if (anchor && Number.isFinite(saved.offset)) {
+        scroll.scrollTop += anchor.getBoundingClientRect().top - scroll.getBoundingClientRect().top - saved.offset;
+      }
+    };
+    restoreScroll();
+    scroll.addEventListener('scroll', saveScroll, { passive: true });
+    sidebar.addEventListener('click', (event) => { if (event.target.closest('a')) saveScroll(); });
+    window.addEventListener('pagehide', () => { saveScroll(); saveReader(); });
+    window.addEventListener('pageshow', (event) => { if (!event.persisted) restoreScroll(); });
   }
 
   document.querySelectorAll('pre').forEach((pre) => {

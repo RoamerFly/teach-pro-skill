@@ -1,0 +1,31 @@
+{
+  "kind": "synthetic_expressive_auditions",
+  "model": "qwen3-tts-instruct-flash",
+  "voice": "Serena",
+  "region": "beijing",
+  "subjective_listening_review": "pending",
+  "new_synthesis_requests": 2,
+  "text": "会调用大模型了，就能做出一个智能体吗？我一开始，也有这个疑问。我们做了学途智伴，想陪一个大学生，把下一步学清楚。比如，模型为什么不记得上一轮？先沿着图，看程序传了哪些消息，再对照代码。还没想明白，就接着问。学完以后，留下自己的解释；下一次打开，继续往前学。",
+  "samples": [
+    {
+      "id": "warm",
+      "file": "亲切讲解试样.mp3",
+      "seconds": 25.92,
+      "instructions": "用年轻女性的普通话，像耐心的同学面对面分享自己的学习经历，声音自然清晰，中等语速。开头的问句带一点好奇，问完短暂停顿；‘我一开始，也有这个疑问’平实亲近。解释消息与代码时放缓一点，轻轻强调‘传了哪些消息’。最后两句带温暖和信心，语调自然收束。不要新闻播报式断句，不要广告式拔高或刻意撒娇，不添加笑声。",
+      "sha256": "d6913299f84c69fe23c231bcc8fcf784d116b7e604718e16e0d6fafffe07c19d",
+      "raw_sha256": "f06fde70b3bd2d197fedec793cfcc3454c21ce880c226dfc6e0ce691ab4888f2",
+      "peak_db": -2.4,
+      "decode": "pass"
+    },
+    {
+      "id": "lively",
+      "file": "同学分享试样.mp3",
+      "seconds": 24.72,
+      "instructions": "用年轻女性的普通话，像大学生在向同学展示自己做的作品，语速适中，精神饱满但不夸张。开头问句略微上扬，随后分享个人疑问时轻松坦诚。‘比如’后稍停顿，解释时耐心且有自然轻重；‘还没想明白，就接着问’带鼓励。结尾轻轻强调‘自己的解释’，最后‘继续往前学’温和坚定。避免一成不变的朗读节奏、播音腔和宣传腔，不添加拟声效果。",
+      "sha256": "f6b2f4b784bddff0fd07ed6dd4633132023520374102293ca5c880e3b5e9c4dc",
+      "raw_sha256": "08700f56fbe02d1ea3fab4bb67025ee9f4c84430ae69b23981e796d5ec6b2f5a",
+      "peak_db": -2.4,
+      "decode": "pass"
+    }
+  ]
+}

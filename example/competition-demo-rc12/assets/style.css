@@ -789,10 +789,24 @@ body {
   font-size: 15.2px;
   line-height: 1.68;
 }
+/* Reader appearance also governs the navigation, in every visual language. */
+html[data-theme] {
+  --sidebar-start: color-mix(in srgb, var(--surface) 94%, var(--accent) 6%);
+  --sidebar-mid: color-mix(in srgb, var(--surface-2) 96%, var(--accent) 4%);
+  --sidebar-end: var(--surface-2);
+  --sidebar-border: var(--border);
+  --sidebar-link: var(--text);
+  --sidebar-muted: var(--muted);
+  --sidebar-hover: color-mix(in srgb, var(--accent-soft) 70%, var(--surface) 30%);
+  --sidebar-active-bg: var(--accent-soft);
+  --sidebar-active-text: var(--accent);
+  --brand-mark: var(--accent-soft);
+  --brand-mark-text: var(--accent);
+}
 .sidebar {
   background: linear-gradient(175deg, var(--sidebar-start) 0%, var(--sidebar-mid) 52%, var(--sidebar-end) 100%);
   border-right: 1px solid var(--sidebar-border);
-  scrollbar-color: #54747d transparent;
+  scrollbar-color: var(--sidebar-muted) transparent;
 }
 .sidebar-collapse {
   position: sticky;
@@ -807,20 +821,43 @@ body {
   border: 1px solid var(--sidebar-muted);
   border-radius: .5rem;
   background: var(--sidebar-start);
-  color: #fff;
+  color: var(--sidebar-link);
   cursor: pointer;
   font-size: 1.1rem;
   line-height: 1;
 }
 .sidebar-collapse:hover { background: var(--sidebar-hover); }
-.sidebar-collapse:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.sidebar-collapse:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sidebar-settings-return {
+  position: absolute;
+  top: 1rem;
+  left: 3.5rem;
+  right: .8rem;
+  height: 2rem;
+  padding: .3rem .45rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  border: 1px solid var(--sidebar-border);
+  border-radius: .5rem;
+  background: var(--sidebar-hover);
+  color: var(--sidebar-link);
+  font-size: .75rem;
+  text-decoration: none;
+}
+.sidebar-settings-return:hover { background: var(--sidebar-active-bg); color: var(--sidebar-active-text); }
+.sidebar-settings-return:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 900px) {
+  .settings-page .sidebar-scroll { margin-top: 2.5rem; }
+  .sidebar-settings-return { left: .8rem; right: 3.6rem; }
+}
 @media (min-width: 901px) {
   .page-shell.is-sidebar-collapsed { grid-template-columns: 3.35rem minmax(0, 1fr); }
   .page-shell.is-sidebar-collapsed .sidebar { padding: .65rem .4rem; overflow: hidden; }
   .page-shell.is-sidebar-collapsed .sidebar > :not(.sidebar-collapse) { display: none; }
   .page-shell.is-sidebar-collapsed .sidebar-collapse { margin: 0 auto; }
 }
-.brand-block { border-color: rgba(219, 246, 245, .15); padding: .55rem .6rem .95rem; }
+.brand-block { border-color: var(--sidebar-border); padding: .55rem .6rem .95rem; }
 .brand-block::before {
   content: "✦";
   display: inline-grid;
@@ -835,7 +872,7 @@ body {
   vertical-align: middle;
 }
 .sidebar .eyebrow, .sidebar-section h2 { color: var(--sidebar-muted); }
-.sidebar .course-title { color: #f4ffff; font-size: .94rem; }
+.sidebar .course-title { color: var(--sidebar-link); font-size: .94rem; }
 .sidebar .course-list li { color: var(--sidebar-muted); font-size: .82rem; }
 .sidebar .site-brand {
   display: block;
@@ -843,19 +880,19 @@ body {
   max-width: 100%;
   padding: .24rem .38rem;
   border-radius: .4rem;
-  color: #f4ffff;
+  color: var(--sidebar-link);
   font-size: .92rem;
   font-weight: 740;
   line-height: 1.4;
   text-decoration: none;
 }
-.sidebar .site-brand:hover { background: var(--sidebar-hover); color: #fff; }
-.sidebar .site-brand:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.sidebar .site-brand:hover { background: var(--sidebar-hover); color: var(--sidebar-link); }
+.sidebar .site-brand:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sidebar-section { margin-top: .9rem; }
 .sidebar-section h2 { font-size: .7rem; letter-spacing: .12em; }
 .toc-list a, .course-list a, .course-list .nav-pending { color: var(--sidebar-link); font-size: .82rem; }
 .course-list .nav-pending { color: var(--sidebar-muted); opacity: .78; }
-.toc-list a:hover, .course-list a:hover { background: var(--sidebar-hover); color: #fff; }
+.toc-list a:hover, .course-list a:hover { background: var(--sidebar-hover); color: var(--sidebar-link); }
 .toc-list a.is-active, .course-list a[aria-current="page"] {
   background: var(--sidebar-active-bg);
   color: var(--sidebar-active-text);
@@ -1031,7 +1068,7 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 .resource-footer { font-size: .88rem; color: var(--muted); }
 .tutor-panel { border-top: 2px solid var(--accent); padding-top: .7rem; }
 .course-settings-nav { position: sticky; top: 2.3rem; z-index: 2; padding: .3rem 0 .65rem; background: var(--sidebar-start); }
-.course-settings-nav a { display: block; padding: .55rem .65rem; border: 1px solid var(--sidebar-muted); border-radius: .5rem; color: #fff; font-size: .86rem; font-weight: 650; text-decoration: none; }
+.course-settings-nav a { display: block; padding: .55rem .65rem; border: 1px solid var(--sidebar-border); border-radius: .5rem; color: var(--sidebar-link); font-size: .86rem; font-weight: 650; text-decoration: none; }
 .course-settings-nav a:hover, .course-settings-nav a[aria-current="page"] { background: var(--sidebar-hover); border-color: var(--sidebar-link); }
 .course-settings-nav a[aria-current="page"]::after { content: ' · 当前'; font-size: .75rem; }
 .tutor-status { font-size: .88rem; padding: .5rem .7rem; border-radius: .5rem; background: var(--accent-soft); }
