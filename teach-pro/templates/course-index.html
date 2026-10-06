@@ -65,7 +65,17 @@
 
       <section id="roadmap" class="content-section">
         <h2>路线与阶段</h2>
-        {{ROADMAP_HTML}}
+        <!-- ROADMAP_HTML 只填阶段条目，不重复包网格。数字与说明分开：
+        <article class="phase-card">
+          <span class="phase-number">01</span>
+          <h3>阶段主题</h3>
+          <strong>当前阶段或候选范围</strong>
+          <p>本阶段目标与产出。</p>
+        </article>
+        长标签可改用 phase-label；不把整段说明塞进数字徽标。 -->
+        <div class="phase-grid">
+          {{ROADMAP_HTML}}
+        </div>
       </section>
 
       <section id="lessons" class="content-section">

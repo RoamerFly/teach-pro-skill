@@ -14,6 +14,8 @@ Markdown 仅用于 AI 内部状态。不得把 `DAILY-LESSON-FORMAT.md` 之类�
 
 `{{REVIEW_AND_NEXT_HTML}}` 应以简短列表呈现已验证能力、待验证或具体误区，并说明下一课为什么推进、补救或先诊断。区分学员自述、原始作答、AI 判断与运行结果；引用可供 AI 追溯的课节和记录位置。尚无作答时显示诚实的空状态与下一行动，不把“已打开课程”写成掌握。
 
+首页模板已提供 `.phase-grid`，`{{ROADMAP_HTML}}` 只填 `.phase-card` 条目。短编号用 `<span class="phase-number">01</span>`，阶段名称用 H3，当前状态或课节范围用 strong，目标用段落；完整阶段标签可用 `.phase-label`。不要把编号、状态和说明拼成固定尺寸徽标。长标签须自然换行并占据实际高度，不能溢出后覆盖标题；共享样式兼容旧的普通 span 与 eyebrow 标签。
+
 ### `lessons/*.html`
 
 一页一目标，含正式课与关联补充课。分类元数据、首页分区、导航层级与稳定保存 ID 按 [LESSON-DELIVERY-POLICY.md](./LESSON-DELIVERY-POLICY.md)；使用同一课页模板，不新建服务。正式课以新目标教学为主体，补充页用够用的解释和练习处理旧课问题。

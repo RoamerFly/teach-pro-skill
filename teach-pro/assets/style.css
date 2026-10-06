@@ -300,7 +300,27 @@ progress { width: 100%; height: .75rem; accent-color: var(--accent); }
 .flow-diagram figcaption { margin-top: .65rem; color: var(--muted); font-size: .86rem; }
 .phase-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: .7rem; }
 .phase-card { padding: .8rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
-.phase-card > span { display: inline-grid; place-items: center; width: 1.85rem; height: 1.85rem; border-radius: 50%; background: var(--accent); color: white; font-size: .84rem; font-weight: 800; }
+.phase-card > span {
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 1.85rem;
+  min-height: 1.85rem;
+  padding: .16rem .5rem;
+  border-radius: .55rem;
+  background: var(--accent);
+  color: white;
+  font-size: .84rem;
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+  vertical-align: top;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  letter-spacing: normal;
+  text-transform: none;
+}
+.phase-card > .phase-number { padding-inline: .3rem; border-radius: 50%; }
 .phase-card h3 { margin: .55rem 0 .2rem; }
 .phase-card p { color: var(--muted); }
 .start-list li { margin: .5rem 0; }
@@ -1046,6 +1066,7 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
 .lesson-card[data-status="locked"] .eyebrow { font-size: .67rem; }
 .phase-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; }
 .phase-card {
+  min-width: 0;
   min-height: 0;
   padding: .52rem .65rem;
   border: 0;
@@ -1053,10 +1074,11 @@ h3 { margin: 1.2rem 0 .45rem; font-size: 1.08rem; }
   border-radius: 0;
   background: transparent;
   box-shadow: none;
+  overflow-wrap: anywhere;
 }
 .phase-card:nth-child(3n + 2) { border-top-color: var(--phase-b); }
 .phase-card:nth-child(3n) { border-top-color: var(--phase-c); }
-.phase-card > span { background: var(--hero-start); width: 1.7rem; height: 1.7rem; }
+.phase-card > span { background: var(--hero-start); min-width: 1.7rem; min-height: 1.7rem; }
 .phase-card h3 { margin: .42rem 0 .12rem; font-size: 1rem; }
 .phase-card strong { color: var(--accent); font-size: .79rem; }
 .phase-card p { margin: .3rem 0 0; font-size: .87rem; line-height: 1.52; }
