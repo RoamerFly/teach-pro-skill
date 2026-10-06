@@ -69,6 +69,19 @@ def record(session):
         input=key+'\n', text=True, encoding='utf8')
 
 
+def playback_clip(source, target, tempo=1):
+    """Modest pitch-preserving pacing; original provider audio stays untouched."""
+    if isinstance(tempo, bool) or not isinstance(tempo, (int, float)) or not math.isfinite(tempo) or not 1 <= tempo <= 1.15:
+        raise RuntimeError('Dialogue tempo must be a number between 1 and 1.15')
+    if tempo == 1:
+        return source
+    if Path(source).resolve() == Path(target).resolve():
+        raise RuntimeError('Playback target must not overwrite the source audio')
+    run('ffmpeg','-v','error','-y','-i',source,'-af',f'atempo={tempo}',
+        '-ar','24000','-ac','1','-c:a','pcm_s16le',target)
+    return target
+
+
 def voice(session, cached_only=False):
     plan = json.loads((session/'capture-plan.json').read_text(encoding='utf8'))
     current = json.loads((MATERIALS/'dialogue-plan.json').read_text(encoding='utf8'))
@@ -121,9 +134,13 @@ def voice(session, cached_only=False):
             source=raw
             if canonical!=provider_bytes:
                 source=audio/(name+'.pcm.wav');source.write_bytes(canonical)
-            length = seconds(source)
-            if not .5 < length < 60:
+            source_length = seconds(source)
+            if not .5 < source_length < 60:
                 raise RuntimeError('Unexpected utterance duration')
+            run('ffmpeg','-v','error','-xerror','-i',source,'-f','null','-')
+            tempo=role.get('tempo',1)
+            source=playback_clip(source,audio/(name+'.playback.wav'),tempo)
+            length=seconds(source)
             run('ffmpeg','-v','error','-xerror','-i',source,'-f','null','-')
             clips.append((source,local)); turn['spoken_text']=text; turn['seconds']=length
             parts = subtitle_parts(text,limit=36); weight = sum(map(len, parts)); start = local
@@ -131,12 +148,14 @@ def voice(session, cached_only=False):
                 end = start + length*len(part)/weight
                 cues.append({'start':start,'end':end,'text':part,'role':turn['role']}); start=end
             report['utterances'].append({'scene':scene['id'],'role':turn['role'],'voice':role['voice'],
-                'model':role['model'],'text':text,'seconds':length,'source':turn.get('source','script'),
+                'model':role['model'],'text':text,'seconds':length,'source_seconds':source_length,
+                'tempo':tempo,'playback_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+                'source':turn.get('source','script'),
                 'sha256':hashlib.sha256(provider_bytes).hexdigest(),'pcm_header_repaired':canonical!=provider_bytes,'decode':'pass'})
             local += length + .35
             print(f'SPEECH {name} {turn["role"]}: {length:.2f}s',flush=True)
-        # Keep actual answers readable without artificially accelerating speech.
-        reading_floor = 15 if scene['id'] in ('tutor-answer','followup') else 0
+        # Faster delivery must not eliminate time to watch configuration or read answers.
+        reading_floor = {'settings':14,'tutor-answer':15,'followup':15}.get(scene['id'],0)
         length = math.ceil(max(local+.45, reading_floor)*25)/25
         scene['seconds']=length; scene['subtitle_cues']=cues
         inputs, streams = [], []
@@ -152,8 +171,8 @@ def voice(session, cached_only=False):
     (session/'voice-plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2),encoding='utf8')
     (session/'dialogue-voice-audit.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf8')
     if timeline>=180:
-        raise RuntimeError(f'Speech timeline {timeline:.2f}s exceeds contest limit; shorten script, do not speed up voices')
-    print(f'PASS: natural-speed two-role timeline {timeline:.2f}s',flush=True)
+        raise RuntimeError(f'Speech timeline {timeline:.2f}s exceeds contest limit; shorten script instead of exceeding the modest tempo range')
+    print(f'PASS: measured two-role timeline {timeline:.2f}s',flush=True)
 
 
 ASS_HEADER = '''[Script Info]

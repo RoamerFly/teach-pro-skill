@@ -2,8 +2,8 @@
   "version": "1.1.0-rc.12",
   "model": "deepseek-flash",
   "roles": {
-    "student": {"voice":"Andre","model":"qwen3-tts-flash","label":"同学"},
-    "teacher": {"voice":"Elias","model":"qwen3-tts-instruct-flash","label":"老师","instructions":"用成熟教师的普通话女声，沉着、亲切、有耐心，像在面对面向大学生讲清一件事。语速自然适中，不拖长句尾；概念前轻停顿，因果和转折有自然轻重。讲操作时连贯，解释问题时认真但不说教，结尾温暖坚定。声音稳重，不幼态，不撒娇，不用播音腔、广告腔或整齐划一的朗读节奏。Skill 与 TeleAgent 按英文单词自然读，API 逐字母读。不添加笑声，不读出括号里的角色名。"}
+    "student": {"voice":"Andre","model":"qwen3-tts-flash","label":"同学","tempo":1.04},
+    "teacher": {"voice":"Elias","model":"qwen3-tts-instruct-flash","label":"老师","tempo":1.08,"instructions":"用成熟教师的普通话女声，像面对面和大学生聊一个有意思的问题：亲切、明快，带着自然的热情和微笑感。采用正常交谈中略偏快的语速，短句连贯，句间只作短停顿，句尾利落。介绍功能时轻快有活力，解释原因时用自然的重音和语调起伏突出关键，结尾温暖、积极。保持成熟稳重的音色，不用播音腔或广告腔，不添加笑声。Skill 与 TeleAgent 按英文单词自然读，API 逐字母读。"}
   },
   "scenes": [
     {"id":"home","title":"01 · Skill 技能包：导入与调用示意","budget":21,"turns":[{"role":"teacher","text":"学途智伴，是一个面向大学生长期学习的 Skill 技能包。教学规则、网页模板和本地工具，都在包里。导入 TeleAgent，调用这个技能，告诉 AI 你的目标，它就会按这套规则开展教学。"}]},

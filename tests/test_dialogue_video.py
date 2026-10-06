@@ -3,6 +3,7 @@ import importlib.util
 import sys
 import struct
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 SCRIPTS=Path(__file__).resolve().parents[1]/'example/competition-materials/rc12/scripts'
@@ -13,6 +14,30 @@ spec.loader.exec_module(video)
 
 
 class DialogueVideoTests(unittest.TestCase):
+    def test_unmodified_playback_reuses_source(self):
+        with patch.object(video,'run') as command:
+            self.assertEqual(video.playback_clip(Path('source.wav'),Path('playback.wav')),Path('source.wav'))
+            command.assert_not_called()
+
+    def test_playback_uses_pitch_preserving_tempo_and_separate_target(self):
+        with patch.object(video,'run') as command:
+            target=Path('playback.wav')
+            self.assertEqual(video.playback_clip(Path('source.wav'),target,1.08),target)
+            args=command.call_args.args
+            self.assertEqual(args[args.index('-af')+1],'atempo=1.08')
+            self.assertEqual(args[-1],target)
+
+    def test_excessive_or_invalid_tempo_is_rejected(self):
+        for tempo in (0.9,1.16,float('nan'),float('inf'),True,'1.08'):
+            with self.subTest(tempo=tempo),patch.object(video,'run') as command:
+                with self.assertRaises(RuntimeError): video.playback_clip(Path('a'),Path('b'),tempo)
+                command.assert_not_called()
+
+    def test_playback_never_overwrites_provider_source(self):
+        with patch.object(video,'run') as command:
+            with self.assertRaises(RuntimeError): video.playback_clip(Path('a.wav'),Path('a.wav'),1.08)
+            command.assert_not_called()
+
     def test_spoken_live_answer_only_removes_markdown(self):
         text='### 原因\n模型仅看 **本次请求** 的 `messages`。\n带回历史才能延续上下文。'
         self.assertEqual(video.plain_answer(text),'原因\n模型仅看 本次请求 的 messages。\n带回历史才能延续上下文。')
