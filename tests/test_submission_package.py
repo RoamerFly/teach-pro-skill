@@ -31,6 +31,12 @@ class SubmissionGuardTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             module.check_member('document.docx', buffer.getvalue())
 
+    def test_attribute_names_do_not_look_like_credentials(self):
+        module.check_member('vendor.js', b'mask.mask-type.max.' * 20)
+        for prefix in (b'"', b"'", b' ', b'='):
+            with self.subTest(prefix=prefix), self.assertRaises(ValueError):
+                module.check_member('settings.json', prefix + b'sk-' + b'x' * 32)
+
     def test_whitelist_preserves_skill_demo_and_evidence(self):
         self.assertEqual(module.remap('teach-pro/SKILL.md'), 'Skill技能包/teach-pro/SKILL.md')
         self.assertEqual(module.remap(module.DEMO + 'assets/style.css'), '课程Demo/assets/style.css')

@@ -22,7 +22,7 @@ MEDIA = ('学途智伴技能说明文档.docx', '学途智伴师生演示视频.
 EVIDENCE = 'evals/records/2026-10-06-guided-dialogue-flow.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
-SECRET = re.compile(rb'sk-[A-Za-z0-9_.-]{24,}')
+SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
 
 
 def digest(data):
