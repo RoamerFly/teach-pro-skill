@@ -1,0 +1,22 @@
+{
+  "revision": "d6ba4add127600819a5ac57145b60a13fc1d11fc",
+  "version": "1.1.0-rc.12",
+  "status": "submission-ready",
+  "integrity": "pass",
+  "manifest_checksums": "pass",
+  "unix_permissions": "755",
+  "video_seconds": 168.461333,
+  "package_members": 93,
+  "archives": [
+    {
+      "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.zip",
+      "bytes": 16182104,
+      "sha256": "4b783a8c9f8d8cb886ef393a0065af4f0828faa6547c283d11613a169ef666d8"
+    },
+    {
+      "file": "teach-pro-1.1.0-rc.12.zip",
+      "bytes": 177614,
+      "sha256": "0db287fde619907c7ecaa22624a3b4c026a4c94f81c83aa51c6657f373703dbb"
+    }
+  ]
+}
