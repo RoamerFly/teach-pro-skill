@@ -48,7 +48,9 @@ python example/competition-materials/rc12/scripts/audit_document.py
 
 ### 高质量语音候选
 
-当前影片仍为 Qwen 师生版。下一轮候选为百炼托管的 `MiniMax/speech-2.8-hd`，直接使用模型原生的 `speed` 与情感设置，试听不作后期倍速。2026-10-06 的实际短样请求被产品未开通状态阻止，尚未产生 HD 音频；见[连接记录](./audio/hd-connection-check.json)。开通模型服务后再进行对比，不把模型名当作听感验收结果。
+当前影片仍为 Qwen 师生版。高质量候选使用百炼托管的 `MiniMax/speech-2.8-hd`，直接设置原生语速和情感，试听不作后期倍速。2026-10-06 用户开通服务后，查询到 303 个系统音色并成功生成四段短样；此前未开通的失败记录仍保留于[连接记录](./audio/hd-connection-check.json)。
+
+教师同文对比：[A · 成熟自然](./audio/teacher-wise-auto.mp3)、[B · 成熟活泼](./audio/teacher-wise-happy.mp3)、[C · 温柔自然](./audio/teacher-gentle-auto.mp3)，原生语速均为 1.30；[学生沉稳提问](./audio/student-college-calm.mp3)为 1.15。A/B 使用实际系统音色“阅历姐姐”，只改变是否显式设置 happy 情感；C 使用“温柔学姐”，学生使用“青年大学生”。[短样计划](./hd-audition-plan.json)与[音频检查](./audio/hd-audition-audit.json)记录完整参数、时长和哈希。听感确认前不替换整片，不把模型名或技术检查当作自然度验收。
 
 独立工具使用官方北京公共端点与隐藏凭据输入，只查询系统音色，不创建或复刻音色：
 

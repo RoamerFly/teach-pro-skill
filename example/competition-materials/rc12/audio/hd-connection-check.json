@@ -3,13 +3,18 @@
   "provider": "Alibaba Bailian",
   "region": "beijing",
   "candidate_model": "MiniMax/speech-2.8-hd",
-  "status": "requires_product_activation",
+  "status": "verified; HD auditions ready for listening",
   "operations": [
     {"operation":"query_system_voices","model":"MiniMax/speech-2.8-turbo","http_status":400,"code":"InvalidParameter","detail":"not retained in first diagnostic"},
-    {"operation":"short_synthesis_probe","model":"MiniMax/speech-2.8-hd","http_status":400,"code":"InvalidParameter","detail":"The product is not activated, please confirm that you have activated products and try again after activation."}
+    {"operation":"short_synthesis_probe","model":"MiniMax/speech-2.8-hd","http_status":400,"code":"InvalidParameter","detail":"The product is not activated, please confirm that you have activated products and try again after activation."},
+    {"operation":"query_system_voices_after_activation","model":"MiniMax/speech-2.8-turbo","result":"success","system_voices":303},
+    {"operation":"teacher-wise-auto","model":"MiniMax/speech-2.8-hd","result":"complete audio returned; decode pass"},
+    {"operation":"teacher-wise-happy","model":"MiniMax/speech-2.8-hd","result":"complete audio returned; decode pass"},
+    {"operation":"teacher-gentle-auto","model":"MiniMax/speech-2.8-hd","result":"complete audio returned; decode pass"},
+    {"operation":"student-college-calm","model":"MiniMax/speech-2.8-hd","result":"complete audio returned; decode pass"}
   ],
-  "successful_new_audio": 0,
+  "successful_new_audio": 4,
   "automatic_retries": 0,
   "existing_video_replaced": false,
-  "listening_comparison": "not started; no HD audio returned"
+  "listening_comparison": "three teacher options and one student sample; user review pending"
 }
