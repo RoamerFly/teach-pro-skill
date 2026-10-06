@@ -73,7 +73,7 @@
     const scroll = document.createElement('div');
     scroll.className = 'sidebar-scroll';
     [...sidebar.children].forEach((child) => {
-      if (!child.classList.contains('sidebar-collapse') && !child.classList.contains('sidebar-close') && !child.classList.contains('sidebar-settings-return')) scroll.appendChild(child);
+      if (!child.classList.contains('sidebar-collapse') && !child.classList.contains('sidebar-close') && !child.classList.contains('sidebar-settings-return') && !child.classList.contains('sidebar-actions')) scroll.appendChild(child);
     });
     sidebar.appendChild(scroll);
     sidebar.classList.add('has-theme-control');
@@ -178,7 +178,15 @@
       back.href = target.href;
       back.textContent = '← 返回' + title;
       back.title = back.textContent;
-      if (!back.isConnected) sidebar.prepend(back);
+      // Share a layout row rather than aligning an absolute link by offsets.
+      const actions = sidebar.querySelector('.sidebar-actions') || document.createElement('div');
+      actions.className = 'sidebar-actions';
+      if (!actions.isConnected) sidebar.prepend(actions);
+      const collapse = sidebar.querySelector('.sidebar-collapse');
+      const close = sidebar.querySelector('.sidebar-close');
+      if (collapse) actions.appendChild(collapse);
+      if (close) actions.appendChild(close);
+      actions.appendChild(back);
       document.querySelectorAll('[data-settings-return]').forEach((link) => {
         link.href = target.href;
         link.textContent = back.textContent;

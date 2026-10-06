@@ -2,9 +2,10 @@
 import base64
 import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import MagicMock, Mock
+from unittest.mock import MagicMock, Mock, patch
 
 MATERIALS = Path(__file__).resolve().parents[1] / 'example/competition-materials/rc12'
 spec = importlib.util.spec_from_file_location('expressive_voice', MATERIALS / 'scripts/build_expressive_samples.py')
@@ -32,6 +33,22 @@ class ExpressiveVoiceTests(unittest.TestCase):
             self.plan['text'] = text
             with self.assertRaises(ValueError):
                 voice.payload(self.plan, self.plan['variants'][0])
+
+    def test_cached_only_missing_source_never_contacts_provider_or_reads_key(self):
+        with tempfile.TemporaryDirectory() as output, \
+             patch.object(voice.sys, 'argv', ['voice', output, '--cached-only', '--key-stdin']), \
+             patch.object(voice.getpass, 'getpass') as read_key, \
+             patch.object(voice.urllib.request, 'build_opener') as build:
+            with self.assertRaisesRegex(RuntimeError, 'Matching cached source unavailable'):
+                voice.main()
+            read_key.assert_not_called()
+            build.return_value.open.assert_not_called()
+
+    def test_missing_peak_has_controlled_diagnostic(self):
+        with patch.object(voice.subprocess, 'check_output', return_value='30.0'), \
+             patch.object(voice.subprocess, 'run', return_value=Mock(stderr='不可解析的测量结果')):
+            with self.assertRaisesRegex(RuntimeError, 'Audio peak measurement unavailable'):
+                voice.check_audio(Path('中文试样.mp3'), 'ffmpeg', 'ffprobe')
 
     def test_inline_audio_is_decoded_without_download(self):
         opener = Mock()

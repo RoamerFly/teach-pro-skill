@@ -6,12 +6,12 @@
 
 - [新版 Demo](../../competition-demo-rc12/README.md)：三节正式课和一节关联补充课，八个页面。
 - [Word 技能说明](./学途智伴技能说明文档.docx)：五页，包含作品简介、设计思路、使用说明、设置与答疑、验证结果，已渲染并逐页复核。
-- [视频讲解脚本](./视频讲解脚本.md)：十一段渐进分镜，新增阅读与视频导学；包含 DeepSeek 配置与两轮真实答疑的录制要求。
-- [旁白计划](./video-scenes.json)：统一维护旁白正文。连续旁白候选约 156 秒，男女声试样使用相同文字；[音频检查](./audio/voice-audit.json)记录时长、哈希与配音边界，主观听感待试听。
-- [情感配音试样](./audio/expressive-voice-audit.json)：百炼 Qwen 指令型语音，同一音色、同一文字对比“亲切讲解”和“同学分享”，约 26/25 秒；已实际合成，待试听选定，不覆盖完整旁白。
+- [视频讲解脚本](./视频讲解脚本.md)：从 Skill 技能包、TeleAgent 调用开始，依次展示生成的课程、DeepSeek 配置、两轮真实答疑和基于记录的续课；十一段分镜预算约 170 秒。
+- [旁白计划](./video-scenes.json)：统一维护新版口播正文，完整配音待重制。旧约 156 秒连续旁白、男女声试样、字幕及[音频检查](./audio/voice-audit.json)保留作历史对照，不适配新版口播。
+- [情感配音试样](./audio/expressive-voice-audit.json)：百炼 Qwen 指令型语音，同一音色、同一段 Skill 开场对比“亲切讲解”和“同学分享”，实际时长与合成状态以检查记录为准；待试听选定，不覆盖完整旁白。
 - [截图与浏览器检查](./capture-checks.json)：隔离副本采集，未调用模型；设置截图中的密钥为无效示例值。
 
-旧版文档和视频保留于上一级目录。本轮完成 Word 更新、连续合成旁白候选与字幕候选，尚无新视频成片。下一步录制 rc.12 真实问答，合成音画并重排字幕，通过成片检查后制作最终提交包。
+旧版文档和视频保留于上一级目录。Word 已完成首轮更新；新版讲解正文已明确作品的 Skill 定位，尚无新版完整配音与视频成片。最终制作时同步文档与新脚本，录制 rc.12 真实问答，重制旁白及字幕，通过成片检查后制作最终提交包。
 
 ## 重建
 
@@ -48,6 +48,8 @@ python example/competition-materials/rc12/scripts/build_expressive_samples.py <�
 ```
 
 工具串行生成两段，不自动重试；已成功且脚本未变的原始音频可复用。统一试听音量，不修改语速、音高或停顿。公开交付只复制 MP3 和 `expressive-voice-audit.json`；原始 WAV、缓存和工作目录不随包发布。听感确定后再制作完整旁白与重新对齐字幕。
+
+本地检查中断后可用 `--cached-only` 离线复核，无需密钥、不重新请求语音；缓存必须与当前文字、语气和地域匹配。报告中的 `new_synthesis_requests` 仅统计该次执行，离线复核为零，不表示源音频未经过合成。
 
 协议来源：[Qwen-TTS API](https://help.aliyun.com/zh/model-studio/qwen-tts-api)、[音色列表](https://help.aliyun.com/zh/model-studio/qwen-tts-voice-list)。
 

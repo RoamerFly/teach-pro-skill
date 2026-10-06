@@ -74,13 +74,16 @@ def fingerprint(value):
 
 def check_audio(path, ffmpeg, ffprobe):
     seconds = float(subprocess.check_output([ffprobe, '-v', 'error', '-show_entries', 'format=duration',
-                                            '-of', 'default=noprint_wrappers=1:nokey=1', str(path)], text=True))
+                                            '-of', 'default=noprint_wrappers=1:nokey=1', str(path)], text=True, encoding='utf-8', errors='replace'))
     if not 10 < seconds < 60:
         raise RuntimeError('Unexpected audition length; inspect source audio')
     subprocess.run([ffmpeg, '-v', 'error', '-xerror', '-i', str(path), '-f', 'null', '-'], check=True)
     volume = subprocess.run([ffmpeg, '-hide_banner', '-i', str(path), '-af', 'volumedetect',
-                             '-f', 'null', '-'], capture_output=True, text=True, check=True)
-    peak = float(re.search(r'max_volume: ([\-\d.]+) dB', volume.stderr)[1])
+                             '-f', 'null', '-'], capture_output=True, text=True, encoding='utf-8', errors='replace', check=True)
+    match = re.search(r'max_volume: ([\-\d.]+) dB', volume.stderr)
+    if not match:
+        raise RuntimeError('Audio peak measurement unavailable')
+    peak = float(match[1])
     if peak >= 0:
         raise RuntimeError('Candidate has clipped peaks')
     return seconds, peak
@@ -91,11 +94,14 @@ def main():
     parser.add_argument('output', type=Path)
     parser.add_argument('--region', choices=ENDPOINTS, default='beijing')
     parser.add_argument('--key-stdin', action='store_true', help='Read key without command-line arguments or files')
+    parser.add_argument('--cached-only', action='store_true', help='Recheck matching cached sources offline; never request synthesis')
     parser.add_argument('--ffmpeg', default='ffmpeg')
     parser.add_argument('--ffprobe', default='ffprobe')
     args = parser.parse_args()
-    key = (getpass.getpass('API Key (hidden): ') if sys.stdin.isatty() else sys.stdin.readline()).strip() if args.key_stdin else os.environ.get('DASHSCOPE_API_KEY', '').strip()
-    if not key:
+    key = ''
+    if not args.cached_only:
+        key = (getpass.getpass('API Key (hidden): ') if sys.stdin.isatty() else sys.stdin.readline()).strip() if args.key_stdin else os.environ.get('DASHSCOPE_API_KEY', '').strip()
+    if not key and not args.cached_only:
         raise RuntimeError('Set DASHSCOPE_API_KEY or use --key-stdin')
     plan = json.loads((Path(__file__).resolve().parents[1] / 'expressive-voice-plan.json').read_text(encoding='utf8'))
     output = args.output.resolve()
@@ -103,6 +109,7 @@ def main():
     opener = urllib.request.build_opener(urllib.request.ProxyHandler({}), NoRedirect())
     report = {'kind': 'synthetic_expressive_auditions', 'model': plan['model'], 'voice': plan['voice'],
               'region': args.region, 'subjective_listening_review': 'pending', 'new_synthesis_requests': 0,
+              'verification_mode': 'cached_only' if args.cached_only else 'synthesis_or_cache',
               'text': plan['text'], 'samples': []}
     for variant in plan['variants']:
         body = payload(plan, variant)
@@ -112,6 +119,8 @@ def main():
         signature = fingerprint({'request': body, 'region': args.region})
         cached = json.loads(stamp.read_text(encoding='utf8')) if stamp.exists() else {}
         if not raw.exists() or cached.get('fingerprint') != signature:
+            if args.cached_only:
+                raise RuntimeError('Matching cached source unavailable; no provider request sent')
             request = urllib.request.Request(ENDPOINTS[args.region], data=json.dumps(body).encode(),
                        headers={'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key})
             result = json.loads(read_response(opener, request, 25 * 1024 * 1024))
@@ -130,7 +139,8 @@ def main():
              'raw_sha256': hashlib.sha256(raw.read_bytes()).hexdigest(), 'peak_db': peak, 'decode': 'pass'})
         print(f'{variant["id"]}: {seconds:.2f}s; decoded; peak {peak}dB', flush=True)
     (output / 'expressive-voice-audit.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf8')
-    print('PASS: emotional instructions submitted; listening review pending', flush=True)
+    print('PASS: cached audio rechecked offline; listening review pending' if args.cached_only
+          else 'PASS: emotional instructions submitted; listening review pending', flush=True)
 
 
 if __name__ == '__main__':
