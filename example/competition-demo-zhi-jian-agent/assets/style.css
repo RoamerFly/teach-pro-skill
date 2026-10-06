@@ -632,7 +632,9 @@ details[open] { padding-bottom: .6rem; }
   --sidebar-width: 196px;
   --page-pattern: none;
   --page-pattern-size: auto;
-  --hero-pattern: radial-gradient(circle at 92% 16%, transparent 0 5rem, rgba(255,255,255,.11) 5.05rem 5.12rem, transparent 5.16rem), radial-gradient(circle at 92% 16%, transparent 0 9rem, rgba(255,255,255,.07) 9.05rem 9.12rem, transparent 9.16rem);
+  --hero-pattern-ink: color-mix(in srgb, var(--accent) 10%, transparent);
+  --hero-pattern-faint: color-mix(in srgb, var(--accent) 6%, transparent);
+  --hero-pattern: radial-gradient(circle at 92% 16%, transparent 0 5rem, var(--hero-pattern-ink) 5.05rem 5.12rem, transparent 5.16rem), radial-gradient(circle at 92% 16%, transparent 0 9rem, var(--hero-pattern-faint) 9.05rem 9.12rem, transparent 9.16rem);
   --hero-pattern-size: auto;
   --on-accent: #fff;
   --page-glow: rgba(25, 166, 145, .10);
@@ -706,7 +708,7 @@ html[data-visual-theme="systems"] {
   --phase-a: #79a3ec; --phase-b: #78bac4; --phase-c: #c2a3d8;
   --page-pattern: linear-gradient(rgba(50, 98, 181, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(50, 98, 181, .035) 1px, transparent 1px);
   --page-pattern-size: 48px 48px, 48px 48px;
-  --hero-pattern: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  --hero-pattern: linear-gradient(var(--hero-pattern-ink) 1px, transparent 1px), linear-gradient(90deg, var(--hero-pattern-ink) 1px, transparent 1px);
   --hero-pattern-size: 58px 58px, 58px 58px;
 }
 html[data-visual-theme="reading"] {
@@ -725,7 +727,7 @@ html[data-visual-theme="reading"] {
   --phase-a: #d49aac; --phase-b: #bba2cd; --phase-c: #d8b47d;
   --page-pattern: repeating-linear-gradient(0deg, transparent 0 35px, rgba(125, 77, 96, .028) 35px 36px);
   --page-pattern-size: auto;
-  --hero-pattern: repeating-linear-gradient(0deg, transparent 0 34px, rgba(255,255,255,.06) 34px 35px);
+  --hero-pattern: repeating-linear-gradient(0deg, transparent 0 34px, var(--hero-pattern-faint) 34px 35px);
   --hero-pattern-size: auto;
 }
 html[data-visual-theme="field"] {
@@ -744,7 +746,7 @@ html[data-visual-theme="field"] {
   --phase-a: #8bc28d; --phase-b: #8bb8b0; --phase-c: #d1b87c;
   --page-pattern: radial-gradient(circle at 50% 50%, transparent 0 46%, rgba(72, 128, 77, .035) 46.3% 46.7%, transparent 47%);
   --page-pattern-size: 340px 340px;
-  --hero-pattern: radial-gradient(circle at 90% 72%, transparent 0 11%, rgba(255,255,255,.13) 11.2% 11.4%, transparent 11.6% 23%, rgba(255,255,255,.09) 23.2% 23.4%, transparent 23.6%);
+  --hero-pattern: radial-gradient(circle at 90% 72%, transparent 0 11%, var(--hero-pattern-ink) 11.2% 11.4%, transparent 11.6% 23%, var(--hero-pattern-faint) 23.2% 23.4%, transparent 23.6%);
   --hero-pattern-size: auto;
 }
 html[data-visual-theme="systems"]:is([data-theme="dark"]),
@@ -953,9 +955,10 @@ html[data-theme] {
   position: relative;
   overflow: hidden;
   padding: 1.25rem 1.45rem;
-  border: 0;
-  background: linear-gradient(118deg, var(--hero-start) 0%, var(--hero-mid) 66%, var(--hero-end) 100%);
-  color: #fff;
+  border-color: var(--lesson-hero-border);
+  background: linear-gradient(118deg, var(--lesson-hero-start), var(--surface-2));
+  color: var(--text);
+  overflow-wrap: anywhere;
 }
 .course-hero::after {
   content: "";
@@ -965,10 +968,13 @@ html[data-theme] {
   background-size: var(--hero-pattern-size);
   pointer-events: none;
 }
-.course-hero > * { position: relative; z-index: 1; }
-.course-hero .eyebrow { color: var(--hero-detail); }
-.course-hero h1 { color: #fff; font-size: clamp(1.65rem, 2.8vw, 2.25rem); max-width: 18ch; }
-.course-hero .lead { color: var(--hero-lead); max-width: 66ch; }
+.course-hero > * { position: relative; z-index: 1; min-width: 0; }
+.course-hero .eyebrow { color: var(--accent); }
+.course-hero h1 { color: var(--text); font-size: clamp(1.65rem, 2.8vw, 2.25rem); max-width: 18ch; }
+.course-hero .lead { color: var(--muted); max-width: 66ch; }
+@media (min-width: 901px) {
+  .course-hero { grid-template-columns: minmax(0, 1fr) minmax(0, 32%); }
+}
 .hero-facts { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .95rem; }
 .hero-facts span {
   padding: .22rem .58rem;
@@ -980,13 +986,17 @@ html[data-theme] {
   font-weight: 680;
 }
 .course-hero .progress-panel {
-  min-width: 184px;
-  border-color: rgba(225, 255, 249, .27);
-  background: rgba(5, 49, 56, .30);
-  color: #fff;
-  backdrop-filter: blur(6px);
+  min-width: 0;
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
 }
-.course-hero .progress-panel small { display: block; color: #c7e9e3; margin-top: .35rem; }
+.course-hero .progress-panel small { display: block; color: var(--muted); margin-top: .35rem; }
+.course-hero .hero-facts span {
+  border-color: var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
 .lesson-hero {
   position: relative;
   overflow: hidden;
@@ -1450,6 +1460,7 @@ html[data-theme="dark"] th { background: var(--surface-2); }
   body { background: #fff; }
   .course-hero, .lesson-hero { background: #fff; color: #000; border: 1px solid #bbb; }
   .course-hero h1, .course-hero .lead, .course-hero .eyebrow { color: #000; }
+  .course-hero::after { background-image: none; }
   .sidebar { display: none !important; }
   .video-lesson video { display: none; }
   .media-transcript { display: block; }
