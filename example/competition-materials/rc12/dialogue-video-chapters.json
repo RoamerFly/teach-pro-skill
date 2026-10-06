@@ -1,5 +1,5 @@
 {
-  "seconds": 150.421333,
+  "seconds": 122.221333,
   "resolution": "1440x900",
   "fps": 25,
   "version": "1.1.0-rc.12",
@@ -9,14 +9,14 @@
       "voice": "Andre",
       "model": "qwen3-tts-flash",
       "label": "同学",
-      "tempo": 1.04
+      "tempo": 1
     },
     "teacher": {
-      "voice": "Elias",
-      "model": "qwen3-tts-instruct-flash",
+      "voice": "Chinese (Mandarin)_Wise_Women",
+      "model": "MiniMax/speech-2.8-hd",
       "label": "老师",
-      "tempo": 1.08,
-      "instructions": "用成熟教师的普通话女声，像面对面和大学生聊一个有意思的问题：亲切、明快，带着自然的热情和微笑感。采用正常交谈中略偏快的语速，短句连贯，句间只作短停顿，句尾利落。介绍功能时轻快有活力，解释原因时用自然的重音和语调起伏突出关键，结尾温暖、积极。保持成熟稳重的音色，不用播音腔或广告腔，不添加笑声。Skill 与 TeleAgent 按英文单词自然读，API 逐字母读。"
+      "speed": 1.3,
+      "tempo": 1
     }
   },
   "model": "deepseek-flash",
@@ -100,42 +100,42 @@
       "id": "home",
       "title": "01 · Skill 技能包：导入与调用示意",
       "start": 0,
-      "seconds": 19.32,
-      "removed_wait_seconds": 1.68,
+      "seconds": 14.52,
+      "removed_wait_seconds": 6.48,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_overview_screenshot"
     },
     {
       "id": "assessment",
       "title": "02 · 了解基础，先评估再开课",
-      "start": 19.32,
-      "seconds": 13.44,
-      "removed_wait_seconds": 3.568,
+      "start": 14.52,
+      "seconds": 12.04,
+      "removed_wait_seconds": 4.968,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "lesson",
       "title": "03 · 智鉴课程：先看图，再理解代码",
-      "start": 32.76,
-      "seconds": 15.08,
-      "removed_wait_seconds": 0,
-      "added_reading_hold_seconds": 1.075,
+      "start": 26.56,
+      "seconds": 11.12,
+      "removed_wait_seconds": 2.885,
+      "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "resources",
       "title": "04 · 本课一手阅读与视频导学",
-      "start": 47.839999999999996,
-      "seconds": 8.44,
-      "removed_wait_seconds": 2.574,
+      "start": 37.68,
+      "seconds": 6.84,
+      "removed_wait_seconds": 4.174,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "settings",
       "title": "05 · 配置 DeepSeek：密钥始终遮蔽 · 等待已剪短",
-      "start": 56.279999999999994,
+      "start": 44.519999999999996,
       "seconds": 14.0,
       "removed_wait_seconds": 4.012,
       "added_reading_hold_seconds": 0,
@@ -143,55 +143,55 @@
     },
     {
       "id": "connection",
-      "title": "06 · 测试连接，返回原课程",
-      "start": 70.28,
-      "seconds": 9.24,
-      "removed_wait_seconds": 0,
-      "added_reading_hold_seconds": 1.174,
+      "title": "06 · 测试连接，返回原课程 · 等待已剪短",
+      "start": 58.519999999999996,
+      "seconds": 5.68,
+      "removed_wait_seconds": 2.386,
+      "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "tutor-answer",
       "title": "07 · 首轮真实答疑：边生成，边阅读 · 等待已剪短",
-      "start": 79.52,
-      "seconds": 16.48,
-      "removed_wait_seconds": 2.527,
+      "start": 64.19999999999999,
+      "seconds": 15.0,
+      "removed_wait_seconds": 4.007,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "followup",
       "title": "08 · 继续追问：多轮聊天与 Agent · 等待已剪短",
-      "start": 96.0,
-      "seconds": 16.4,
-      "removed_wait_seconds": 2.611,
+      "start": 79.19999999999999,
+      "seconds": 15.0,
+      "removed_wait_seconds": 4.011,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "save",
       "title": "09 · 自己解释，留下学习记录",
-      "start": 112.4,
-      "seconds": 11.16,
-      "removed_wait_seconds": 1.852,
+      "start": 94.19999999999999,
+      "seconds": 8.68,
+      "removed_wait_seconds": 4.332,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "adaptive",
       "title": "10 · 已生成结果回放：正式课与补充课",
-      "start": 123.56,
-      "seconds": 12.72,
-      "removed_wait_seconds": 1.283,
+      "start": 102.88,
+      "seconds": 10.48,
+      "removed_wait_seconds": 3.523,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     },
     {
       "id": "closing",
       "title": "11 · 学途智伴：每次学懂一节，下一次接着学",
-      "start": 136.28,
-      "seconds": 14.12,
-      "removed_wait_seconds": 1.893,
+      "start": 113.36,
+      "seconds": 8.84,
+      "removed_wait_seconds": 7.173,
       "added_reading_hold_seconds": 0,
       "picture_source": "actual_recording"
     }

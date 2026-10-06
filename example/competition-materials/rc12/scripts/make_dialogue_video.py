@@ -1,4 +1,4 @@
-"""Serial recording, two-role Qwen speech and subtitle-rail rendering for rc.12."""
+"""Serial recording, mixed-provider speech and subtitle-rail rendering for rc.12."""
 import argparse
 import getpass
 import hashlib
@@ -14,6 +14,7 @@ import urllib.request
 from pathlib import Path
 
 from build_expressive_samples import ENDPOINTS, NoRedirect, audio_bytes, fingerprint, read_response
+import bailian_hd_speech as hd
 
 MATERIALS = Path(__file__).resolve().parents[1]
 
@@ -82,6 +83,25 @@ def playback_clip(source, target, tempo=1):
     return target
 
 
+def speech_payload(text, role):
+    """Use each model's native protocol; playback pacing is not a provider input."""
+    if not isinstance(text, str) or not 0 < len(text) <= 600:
+        raise RuntimeError('Speech utterance outside character budget')
+    model = role['model']
+    if model == hd.MODEL:
+        if role.get('instructions'):
+            raise RuntimeError('HD speech does not accept Qwen instructions')
+        return hd.payload(text, role['voice'], role.get('speed', 1), role.get('emotion'))
+    if model not in ('qwen3-tts-flash', 'qwen3-tts-instruct-flash'):
+        raise RuntimeError('Unsupported dialogue speech model')
+    body = {'model': model, 'input': {'text': text, 'voice': role['voice'], 'language_type': 'Chinese'}}
+    if role.get('instructions'):
+        if model != 'qwen3-tts-instruct-flash':
+            raise RuntimeError('Speech instructions require the Qwen instruct model')
+        body['input'].update(instructions=role['instructions'], optimize_instructions=True)
+    return body
+
+
 def voice(session, cached_only=False):
     plan = json.loads((session/'capture-plan.json').read_text(encoding='utf8'))
     current = json.loads((MATERIALS/'dialogue-plan.json').read_text(encoding='utf8'))
@@ -109,11 +129,7 @@ def voice(session, cached_only=False):
         for turn_index, turn in enumerate(scene['turns'], 1):
             text = plain_answer(scene['live_answer']) if turn.get('source') == 'live-answer' else turn['text']
             role = plan['roles'][turn['role']]
-            body = {'model':role['model'], 'input':{'text':text, 'voice':role['voice'], 'language_type':'Chinese'}}
-            if role.get('instructions'):
-                body['input'].update(instructions=role['instructions'], optimize_instructions=True)
-            if not 0 < len(text) <= 600:
-                raise RuntimeError('Speech utterance outside character budget')
+            body = speech_payload(text, role)
             name = f'{index:02}-{turn_index:02}'
             raw, cache = audio/(name+'.wav'), audio/(name+'.source.json')
             signature = fingerprint(body)
@@ -121,12 +137,16 @@ def voice(session, cached_only=False):
             if not raw.exists() or old.get('fingerprint') != signature:
                 if cached_only:
                     raise RuntimeError('Matching speech cache unavailable; no provider request sent')
-                request = urllib.request.Request(ENDPOINTS['beijing'], data=json.dumps(body).encode(),
-                    headers={'Content-Type':'application/json', 'Authorization':'Bearer '+key})
-                data = json.loads(read_response(opener, request, 25*1024*1024))
-                if data.get('code'):
-                    raise RuntimeError('Speech provider reported failure; no automatic retry')
-                raw.write_bytes(audio_bytes(data, opener))
+                if role['model'] == hd.MODEL:
+                    speech = hd.audio_bytes(hd.request(key, body))
+                else:
+                    request = urllib.request.Request(ENDPOINTS['beijing'], data=json.dumps(body).encode(),
+                        headers={'Content-Type':'application/json', 'Authorization':'Bearer '+key})
+                    data = json.loads(read_response(opener, request, 25*1024*1024))
+                    if data.get('code'):
+                        raise RuntimeError('Speech provider reported failure; no automatic retry')
+                    speech = audio_bytes(data, opener)
+                raw.write_bytes(speech)
                 cache.write_text(json.dumps({'fingerprint':signature}), encoding='utf8')
                 report['new_synthesis_requests'] += 1
             provider_bytes=raw.read_bytes()
@@ -149,7 +169,8 @@ def voice(session, cached_only=False):
                 cues.append({'start':start,'end':end,'text':part,'role':turn['role']}); start=end
             report['utterances'].append({'scene':scene['id'],'role':turn['role'],'voice':role['voice'],
                 'model':role['model'],'text':text,'seconds':length,'source_seconds':source_length,
-                'tempo':tempo,'playback_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+                'tempo':tempo,'provider_speed':role.get('speed'),
+                'playback_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
                 'source':turn.get('source','script'),
                 'sha256':hashlib.sha256(provider_bytes).hexdigest(),'pcm_header_repaired':canonical!=provider_bytes,'decode':'pass'})
             local += length + .35

@@ -2,11 +2,11 @@
   "version": "1.1.0-rc.12",
   "model": "deepseek-flash",
   "roles": {
-    "student": {"voice":"Andre","model":"qwen3-tts-flash","label":"同学","tempo":1.04},
-    "teacher": {"voice":"Elias","model":"qwen3-tts-instruct-flash","label":"老师","tempo":1.08,"instructions":"用成熟教师的普通话女声，像面对面和大学生聊一个有意思的问题：亲切、明快，带着自然的热情和微笑感。采用正常交谈中略偏快的语速，短句连贯，句间只作短停顿，句尾利落。介绍功能时轻快有活力，解释原因时用自然的重音和语调起伏突出关键，结尾温暖、积极。保持成熟稳重的音色，不用播音腔或广告腔，不添加笑声。Skill 与 TeleAgent 按英文单词自然读，API 逐字母读。"}
+    "student": {"voice":"Andre","model":"qwen3-tts-flash","label":"同学","tempo":1},
+    "teacher": {"voice":"Chinese (Mandarin)_Wise_Women","model":"MiniMax/speech-2.8-hd","label":"老师","speed":1.3,"tempo":1}
   },
   "scenes": [
-    {"id":"home","title":"01 · Skill 技能包：导入与调用示意","budget":21,"turns":[{"role":"teacher","text":"学途智伴，是一个面向大学生长期学习的 Skill 技能包。教学规则、网页模板和本地工具，都在包里。导入 TeleAgent，调用这个技能，告诉 AI 你的目标，它就会按这套规则开展教学。"}]},
+    {"id":"home","title":"01 · Skill 技能包：导入与调用示意","budget":21,"turns":[{"role":"teacher","text":"学途智伴，是一个 Skill 技能包。把它导入 TeleAgent，告诉 AI 你想学什么，它就会先了解你的基础，再带你一节一节学。遇到问题，随时追问；学完一课，再根据你的掌握情况接着教。"}]},
     {"id":"assessment","title":"02 · 了解基础，先评估再开课","budget":17,"turns":[{"role":"student","text":"我会一点 Python，想学智能体开发与安全，该从哪里开始？"},{"role":"teacher","text":"先评估，再安排路线。启动课程，在网页里作答，教学 AI 读取本地答案，安排第一课。"}]},
     {"id":"lesson","title":"03 · 智鉴课程：先看图，再理解代码","budget":14,"turns":[{"role":"teacher","text":"这是技能生成的智鉴课程。第一课先用图解说明消息如何传递，再对照代码理解一次模型调用。每次聚焦一个目标，学懂以后再往前走。"}]},
     {"id":"resources","title":"04 · 本课一手阅读与视频导学","budget":11,"turns":[{"role":"teacher","text":"论文和视频，都有具体入口与学习任务。带着问题去看，再留下自己的解释。"}]},

@@ -1,11 +1,11 @@
 {
-  "seconds": 150.421333,
-  "bytes": 14883727,
-  "sha256": "b79e5ec77e0d94d6ab174968fd08fa0221de2bf940f3a7d828a39cfd6bf6f9ae",
+  "seconds": 122.221333,
+  "bytes": 11733438,
+  "sha256": "22d4ef23de45ff5865eb63f08a6d3d0fb9b3269ce0b70b1a38ade05b0675c51b",
   "full_decode": "pass",
   "max_volume_db": -4.8,
-  "subtitle_cues": 64,
+  "subtitle_cues": 65,
   "provider_requests": 4,
-  "visual_review": "pass: 22 representative frames checked; key masking, content visibility and separate subtitle rail preserved",
+  "visual_review": "pass: 22 chapter representative frames; settings and two-turn chat checked at full resolution",
   "subjective_listening_review": "pending"
 }

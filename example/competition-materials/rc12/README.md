@@ -6,7 +6,7 @@
 
 - [新版 Demo](../../competition-demo-rc12/README.md)：三节正式课和一节关联补充课，八个页面。
 - [Word 技能说明](./学途智伴技能说明文档.docx)：五页，包含作品简介、设计思路、使用说明、设置与答疑、验证结果，已渲染并逐页复核。
-- [师生演示视频](./学途智伴师生演示视频.mp4)：约 2 分 30 秒，学生 Andre 男声、教师 Elias 女声；教师语气明快、亲切，节奏更接近日常交谈。录制真实课程操作及 DeepSeek 两轮流式答疑，字幕放在课程画面下方。
+- [师生演示视频](./学途智伴师生演示视频.mp4)：约 2 分 02 秒，教师采用已选定的 A“阅历姐姐”HD 女声，学生恢复之前的 Andre 男声原音；两角色均不作后期提速。保留真实课程操作及 DeepSeek 两轮流式答疑，字幕放在课程画面下方。
 - [视频讲解脚本](./视频讲解脚本.md)：说明 Skill 技能包与宿主、课程及答疑的关系。开场为调用方式示意，续课为已生成结果回放，课堂操作和提供商请求为本轮真实录制。
 - [师生口播计划](./dialogue-plan.json)、[实际章节](./dialogue-video-chapters.json)、[配音检查](./audio/dialogue-voice-audit.json)：分角色维护解说；答疑教师配音使用实际返回的答案，仅去除 Markdown 标记。技术检查已完成，主观听感待试看。
 - 快速试听：[学生沉稳男声](./audio/学生沉稳男声.mp3)、[教师成熟女声](./audio/教师成熟女声.mp3)。
@@ -33,9 +33,9 @@ python example/competition-materials/rc12/scripts/make_dialogue_video.py audit <
 
 用 `TEACH_PRO_NODE`、`NODE_PATH`、`TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 指定录制所需 Node、Playwright、浏览器和课程 Python；后两步还需 FFmpeg/ffprobe。脚本不将凭据放入命令行参数。录制包含四次真实提供商请求，不使用合成模型接口；两轮回答和演示作答只保留在隔离工作区。
 
-语音使用官方音色 Andre / Qwen3-TTS-Flash 与 Elias / Qwen3-TTS-Instruct-Flash。修改解说后只生成缓存不匹配的片段，不自动重试；`voice --cached-only` 离线重建音轨和字幕，无需凭据。教师回答取实际保存的答案；问题变化时必须重新录制，不能重新标注旧答案。Flash 的已完成 PCM 若携带流式 WAV 长度占位头，仅在独立副本修正长度，原始音频与所有样本保留。
+语音使用 Andre / Qwen3-TTS-Flash 与“阅历姐姐”/ MiniMax Speech 2.8 HD，均通过百炼合成。工具按模型选择协议，不向 HD 接口发送 Qwen 语气指令。修改解说后只生成缓存不匹配的片段，不自动重试；`voice --cached-only` 离线重建音轨和字幕，无需凭据。教师回答取实际保存的答案；问题变化时必须重新录制，不能重新标注旧答案。Flash 的已完成 PCM 若携带流式 WAV 长度占位头，仅在独立副本修正长度，原始音频与所有样本保留。
 
-教师通过语气指令重新合成，再用保音高的 `atempo` 作小幅节奏调整：教师 1.08、学生 1.04。原始语音保留，字幕和混音采用调整后文件的实测时长；语音报告分别记录源时长、播放时长、倍率和哈希。设置镜头至少 14 秒，两轮答疑镜头各至少 15 秒，不改变真实录屏播放速度。若仍超过三分钟，精简解说，不继续提高倍率。字幕按句段分配在实测语音片段内，仍需人工复核同步；章节记录说明等待剪短和阅读停留。只发布最终 MP4、SRT、章节和去敏检查记录，原始录屏、WAV、缓存和学习文件不随包提交。
+教师使用 A 的原生语速 1.30，情感由模型自动匹配正文；开场直接复用已选定的试听原音，其余十段使用同一音色与参数。学生三段复用此前的 Andre 原始语音，取消先前 1.04 倍后期提速。两角色播放时长等于源时长，最终混音只统一响度，不改变音高或语速。报告记录原生语速、播放倍率、源时长和哈希。设置镜头至少 14 秒，两轮答疑镜头各至少 15 秒，不改变真实录屏播放速度。字幕按句段分配在实测语音片段内，仍需人工复核同步；章节记录说明等待剪短和阅读停留。只发布最终 MP4、SRT、章节和去敏检查记录，原始录屏、WAV、缓存和学习文件不随包提交。
 
 ### 文档与静态截图
 
@@ -48,9 +48,9 @@ python example/competition-materials/rc12/scripts/audit_document.py
 
 ### 高质量语音候选
 
-当前影片仍为 Qwen 师生版。高质量候选使用百炼托管的 `MiniMax/speech-2.8-hd`，直接设置原生语速和情感，试听不作后期倍速。2026-10-06 用户开通服务后，查询到 303 个系统音色并成功生成四段短样；此前未开通的失败记录仍保留于[连接记录](./audio/hd-connection-check.json)。
+高质量候选使用百炼托管的 `MiniMax/speech-2.8-hd`，直接设置原生语速和情感，试听不作后期倍速。2026-10-06 用户开通服务后，查询到 303 个系统音色并成功生成四段短样；此前未开通的失败记录仍保留于[连接记录](./audio/hd-connection-check.json)。用户已选定教师 A；学生 HD 候选未采用，当前影片恢复 Andre 原音。
 
-教师同文对比：[A · 成熟自然](./audio/teacher-wise-auto.mp3)、[B · 成熟活泼](./audio/teacher-wise-happy.mp3)、[C · 温柔自然](./audio/teacher-gentle-auto.mp3)，原生语速均为 1.30；[学生沉稳提问](./audio/student-college-calm.mp3)为 1.15。A/B 使用实际系统音色“阅历姐姐”，只改变是否显式设置 happy 情感；C 使用“温柔学姐”，学生使用“青年大学生”。[短样计划](./hd-audition-plan.json)与[音频检查](./audio/hd-audition-audit.json)记录完整参数、时长和哈希。听感确认前不替换整片，不把模型名或技术检查当作自然度验收。
+教师同文对比：[A · 成熟自然，已采用](./audio/teacher-wise-auto.mp3)、[B · 成熟活泼](./audio/teacher-wise-happy.mp3)、[C · 温柔自然](./audio/teacher-gentle-auto.mp3)，原生语速均为 1.30；[学生 HD 候选，未采用](./audio/student-college-calm.mp3)为 1.15。A/B 使用实际系统音色“阅历姐姐”，只改变是否显式设置 happy 情感；C 使用“温柔学姐”，学生候选使用“青年大学生”。[短样计划](./hd-audition-plan.json)与[音频检查](./audio/hd-audition-audit.json)记录完整参数、时长和哈希。短样与历史检查保留，整片听感和术语发音仍需试看。
 
 独立工具使用官方北京公共端点与隐藏凭据输入，只查询系统音色，不创建或复刻音色：
 
@@ -59,7 +59,7 @@ python example/competition-materials/rc12/scripts/bailian_hd_speech.py voices <�
 python example/competition-materials/rc12/scripts/bailian_hd_speech.py audition <工作目录> --plan <短样计划.json>
 ```
 
-短样计划包含公共讲解 `text` 与 `variants`；每个候选提供 `id`、实际系统音色 `voice`、原生 `speed`，可选 `emotion` 或独立 `text`。合成缓存匹配时不重复请求，`--cached-only` 可离线复核。原始 WAV 与缓存留在仓库外，输出 MP3 只统一响度。先对比成熟女声与沉稳男声，再重建整片，当前成片和口播计划不因候选试验改变。协议见[MiniMax 同步语音合成](https://help.aliyun.com/zh/model-studio/minimax-synchronous-speech-synthesis-api)、[系统音色查询](https://help.aliyun.com/zh/model-studio/sound-management)。
+短样计划包含公共讲解 `text` 与 `variants`；每个候选提供 `id`、实际系统音色 `voice`、原生 `speed`，可选 `emotion` 或独立 `text`。合成缓存匹配时不重复请求，`--cached-only` 可离线复核。原始 WAV 与缓存留在仓库外，输出 MP3 只统一响度。候选工具独立于整片构建；选定后更新师生口播计划并重新生成字幕与成片。协议见[MiniMax 同步语音合成](https://help.aliyun.com/zh/model-studio/minimax-synchronous-speech-synthesis-api)、[系统音色查询](https://help.aliyun.com/zh/model-studio/sound-management)。
 
 ### 历史单人旁白
 

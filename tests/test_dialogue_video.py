@@ -14,6 +14,29 @@ spec.loader.exec_module(video)
 
 
 class DialogueVideoTests(unittest.TestCase):
+    def test_hd_uses_native_speed_and_automatic_emotion(self):
+        body=video.speech_payload('讲解',{'model':video.hd.MODEL,'voice':'Chinese (Mandarin)_Wise_Women','speed':1.3,'tempo':1})
+        self.assertEqual(body,video.hd.payload('讲解','Chinese (Mandarin)_Wise_Women',1.3))
+        self.assertNotIn('emotion',body['input']['voice_setting'])
+        self.assertNotIn('language_type',body['input'])
+
+    def test_student_payload_preserves_original_cache_at_any_playback_tempo(self):
+        role={'model':'qwen3-tts-flash','voice':'Andre','tempo':1}
+        expected={'model':'qwen3-tts-flash','input':{'text':'提问','voice':'Andre','language_type':'Chinese'}}
+        self.assertEqual(video.speech_payload('提问',role),expected)
+        self.assertEqual(video.speech_payload('提问',{**role,'tempo':1.04}),expected)
+
+    def test_instruction_protocol_is_model_specific(self):
+        role={'model':'qwen3-tts-instruct-flash','voice':'Elias','instructions':'亲切讲解'}
+        self.assertEqual(video.speech_payload('讲解',role)['input']['instructions'],'亲切讲解')
+        for model in ('qwen3-tts-flash',video.hd.MODEL):
+            with self.subTest(model=model),self.assertRaises(RuntimeError):
+                video.speech_payload('讲解',{**role,'model':model})
+
+    def test_unknown_model_and_empty_text_are_rejected(self):
+        with self.assertRaises(RuntimeError): video.speech_payload('讲解',{'model':'unknown','voice':'Andre'})
+        with self.assertRaises(RuntimeError): video.speech_payload('',{'model':'qwen3-tts-flash','voice':'Andre'})
+
     def test_unmodified_playback_reuses_source(self):
         with patch.object(video,'run') as command:
             self.assertEqual(video.playback_clip(Path('source.wav'),Path('playback.wav')),Path('source.wav'))
