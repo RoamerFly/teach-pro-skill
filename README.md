@@ -91,6 +91,17 @@ evals/         合成案例与可复现检查
 git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.12.zip HEAD:teach-pro
 ```
 
+### 双版本发布
+
+日常使用版保留当前目录和兼容元数据；赛事提交版使用顶层中文字段，将教学规范归入 `references/specs/`、页面模板归入 `assets/templates/`，面向校园生活赛道。两者由同一 Git 提交构建，教学与运行功能一致，不维护第二套源码。
+
+```sh
+python example/competition-materials/rc12/scripts/package_submission.py <日常版目录> --ref <提交> --profile normal_use --skill-only --extract
+python example/competition-materials/rc12/scripts/package_submission.py <赛事版目录> --ref <提交> --profile competition_submit --extract
+```
+
+输出目录必须位于仓库外且为空或尚不存在。目录中提供可直接导入的 `teach-pro/`、ZIP 与逐文件来源校验；赛事版另附完整参赛材料包。参考评审规则适配不等同于官方成绩。
+
 行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；三种续课决策已观察，原生内容仍有失败项。展示校核与运行检查见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)。
 
 ## 文档与反馈

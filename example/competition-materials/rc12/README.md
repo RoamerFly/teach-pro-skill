@@ -28,6 +28,17 @@ python example/competition-materials/rc12/scripts/package_submission.py <新的�
 
 查看输出目录中的 `package-audit.json` 核对源码版本、包大小及 SHA-256。重新构建必须使用新的目录，不覆盖既有交付。
 
+### 日常版与赛事版
+
+两个发布配置由同一提交派生，不修改日常 Skill 源码。日常版保留兼容格式；赛事版适配参考评审 v2.1 的四个顶层字段，将规范收纳到 `references/specs/`、模板收纳到 `assets/templates/` 并同步所有引用及示例构建路径。`agents/openai.yaml` 保留显式调用策略；共享样式、交互、服务、密钥组件与模板内容不变。
+
+```powershell
+python example/competition-materials/rc12/scripts/package_submission.py <日常版空目录> --ref <提交> --profile normal_use --skill-only --extract
+python example/competition-materials/rc12/scripts/package_submission.py <赛事版空目录> --ref <提交> --profile competition_submit --extract
+```
+
+`--extract` 同时提供干净的可导入文件夹；不会合并或覆盖既有文件。`package-audit.json` 记录发布配置、路径迁移、源码与发布文件 SHA-256、视频时长和 ZIP 校验结果。赛事版的额外顶层中文字段不适用当前日常 Codex 校验器；不得标为通用格式校验通过。实际宿主导入、课程生成与参考评分仍需单独确认。
+
 ## 重建
 
 在仓库根目录运行，使用已准备好的 Python、python-docx、Node、Playwright、Sharp 和浏览器。材料工具依赖与学员运行依赖分开。
