@@ -1,0 +1,16 @@
+{
+  "checks": [
+    "file-mode-feedback",
+    "change-answer-reset",
+    "browser-restore",
+    "file-sync",
+    "cancel-preserves-file",
+    "restart-new-browser-restore",
+    "six-layout-states",
+    "lesson-evidence-and-question-sync",
+    "masked-unconfigured-settings"
+  ],
+  "externalRequests": 0,
+  "pageErrors": [],
+  "synthetic": true
+}
