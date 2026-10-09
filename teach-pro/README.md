@@ -38,6 +38,8 @@
 
 ## Skill 包结构
 
+中文名称与简介保存在 `SKILL.md` 的 `metadata.name_cn` / `metadata.description_cn`，教学入口仍为 `name` / `description`；`agents/openai.yaml` 保留中文界面名称与显式调用策略。
+
 - `SKILL.md`：主行为规范。
 - `COURSE-WORKSPACE-SPEC.md`：课程工作区结构。
 - `LESSON-DELIVERY-POLICY.md`：正式课、补充课的交付、编号和展示。
@@ -51,6 +53,9 @@
 - `assets/`：默认网页样式和交互脚本。
 - `scripts/check_course.py`：只读结构检查，定位属性、链接、题量和保存组件问题，并提示 SVG 颜色变量与缩放风险；不评判教学正确性或实际渲染效果。
 - `agents/openai.yaml`：显式调用策略与界面元数据。
+- [统计学最小示例](./references/examples/statistics/README.md)：访谈、评估、首课与续课的输入输出约定，可离线构建并检查页面，不需调用模型。
+
+依赖来源与许可见 [本地排版依赖](./assets/vendor/README.md)；发布变化见 [版本记录](./CHANGELOG.md)。
 
 交付后可运行 `python scripts/check_course.py <课程目录> --json`。脚本位于 Skill 包内，不需复制到课程；不会读取答案、聊天或模型密钥配置。
 

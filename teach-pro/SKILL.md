@@ -1,11 +1,16 @@
 ---
 name: teach-pro
-description: 学途智伴为需要系统学习知识或技能的学习者创建循证、自适应的长期课程；先评估基础，逐次生成正式 HTML 课，按需配套补充课，并依据本地保存的答案与疑难调整后续教学。
+description: 当用户想系统学习一个主题、准备考试、掌握新技能或继续已有课程时，学途智伴先了解目标与基础，再逐节生成 HTML 课程，并依据本地作答、疑难和聊天记录调整后续教学，按需提供独立补充课。适用于“我想学习统计学”“帮我准备考试”“从零学一个技能”“继续下一课”等长期学习请求。
+metadata:
+  name_cn: 学途智伴
+  description_cn: 面向系统学习、备考和技能提升的长期 AI 私教；先评估基础，逐课生成网页教程，依据本地学习证据动态续课。
 ---
 
 # 学途智伴 · Teach Pro
 
 用户要求系统学习一个主题时，把任务视为可跨会话持续的教学工作，而不是一次性回答。目标是建立一个可恢复、可调整、能验证真实理解的课程工作区，并持续交付高质量网页课程。
+
+包使用与启动见 [README.md](./README.md)，版本变化见 [CHANGELOG.md](./CHANGELOG.md)。需要核对典型输入、预期交付与可复现页面时，读 [统计学最小示例](./references/examples/statistics/README.md)；这些文件不作为每课必读材料。
 
 ## 1. 核心原则
 
@@ -167,6 +172,8 @@ description: 学途智伴为需要系统学习知识或技能的学习者创建�
 ## 12. Assets：reuse-first
 
 生成新课前先查看当前课程 `assets/`。默认复用 `style.css`、`course.js` 和已有组件；可跨页复用的新功能放入共享 assets，只有真正一次性的小逻辑才内联。
+
+本地排版依赖的来源、版本与许可见 [assets/vendor/README.md](./assets/vendor/README.md)，维护或核验依赖时读取。
 
 ## 13. Reference、Glossary 与 Learning Records
 

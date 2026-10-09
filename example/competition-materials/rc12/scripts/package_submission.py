@@ -136,6 +136,11 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
 
 项目与后续更新：https://github.com/RoamerFly/teach-pro-skill
 '''.encode('utf-8')
+    if 'teach-pro/references/examples/statistics/README.md' in files:
+        note += ('\n独立 Skill 包也附带[统计学最小输入输出示例](Skill技能包/teach-pro/references/examples/statistics/README.md)。'
+                 '在 Skill 根目录运行 `python scripts/build_example.py <新目录> --stage assessment` 或 `--stage lesson`，'
+                 '可离线组装评估与首课页面，再用 `scripts/check_course.py` 检查；不调用模型，不预填学员记录。'
+                 '它是可复现页面夹具，教学 AI 的新生成行为需在宿主中另行验证。\n').encode('utf-8')
     records = []
     selected = [(remap(name), info, data) for name, (info, data) in files.items()
                 if name != PREFIX + 'dialogue-video-audit.json']
