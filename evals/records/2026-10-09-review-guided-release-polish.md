@@ -37,3 +37,13 @@
 复现：在仓库根目录运行 `python -m unittest discover -s tests`，在已有 Playwright / Edge 环境运行 `node tests/skill-example.browser.cjs`。EXAMPLE_SKILL_ROOT 可指向新包解压后的 Skill，EXAMPLE_QA_DIR 指向仓库外审计输出。
 
 本轮没有重新调用 TeleAgent 生成课程、没有运行参考评审工具，也不宣称分数已提升。页面夹具验证输入组件与结构，不替代宿主教学行为或真实学习效果验证。
+
+## 发布包验证
+
+- 源码提交：`15e018da90ac43e9ef5f78fd059cc06c0d74b815`，已推送 main。
+- 新交付目录：仓库外 `competition-submission/2026-10-09-rc12-review-polish/`；保留旧目录与原评审报告。
+- 97 项完整参赛包、独立 Skill ZIP 的 CRC / 清单哈希 / Unix 755 权限 / 视频哈希及 168.46 秒时长均核验通过。审计见 [2026-10-09-review-polish-package-audit.json](./2026-10-09-review-polish-package-audit.json)。
+- 从参赛 ZIP 解压的 Skill 再运行最小示例浏览器测试，通过全部九类操作检查；Demo 8 页结构、4 路由访问、上下文提取、合成答案写入及服务重启恢复通过；基础 Skill 校验通过。
+- 测试只写隔离副本。另提供未测试写入的干净 Skill 与完整参赛包解压目录，供用户复评；没有学员作答、聊天或模型配置。新包与仓库 SKILL.md 哈希一致。
+- 用新打包器重建上一源码 `3a8fb28`，完整包与独立 Skill 包 SHA256 均与上次交付完全一致；历史重建未受新示例入口影响。
+- 新完整参赛 ZIP SHA256：`012e10948789814f907b4c7bc54e6552c595b2cb76af4e61d10dca64f97898aa`；测试后原包未改变。
