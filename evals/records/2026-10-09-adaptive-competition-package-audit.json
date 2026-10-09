@@ -1,0 +1,420 @@
+{
+  "revision": "2af3d9e1751c387407fe3f6e6bdde4c101994a57",
+  "version": "1.1.0-rc.12",
+  "status": "release-built",
+  "integrity": "pass",
+  "manifest_checksums": "pass",
+  "unix_permissions": "755",
+  "video_seconds": 168.461333,
+  "package_members": 211,
+  "archives": [
+    {
+      "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.zip",
+      "bytes": 16601265,
+      "sha256": "5c6bd689eb906deedc56369f4e314be8a5d11b75a11fbe91b1dc24e792b9c231"
+    },
+    {
+      "file": "teach-pro-1.1.0-rc.12.zip",
+      "bytes": 211387,
+      "sha256": "c42032292bc046791f628f31a14a7c4c7597b8045d1e959f59926233b2c626a1"
+    }
+  ],
+  "adaptive_showcase": {
+    "pages": 19,
+    "source": "committed-synthetic-fixture",
+    "model_calls": 0
+  },
+  "profile": "competition_submit",
+  "reference_links": "pass",
+  "runtime_byte_parity": "pass",
+  "source_parity": [
+    {
+      "source": "teach-pro/CHANGELOG.md",
+      "release": "teach-pro/CHANGELOG.md",
+      "source_sha256": "3056b32433294ca1a79eea911d6f650806ff27f4f9b473ac5ff716017df79126",
+      "release_sha256": "3056b32433294ca1a79eea911d6f650806ff27f4f9b473ac5ff716017df79126"
+    },
+    {
+      "source": "teach-pro/COURSE-WORKSPACE-SPEC.md",
+      "release": "teach-pro/references/specs/COURSE-WORKSPACE-SPEC.md",
+      "source_sha256": "8f1650b5ea39e39b2ddf5b4704f028f25ac95e9717545a58685f070c0f483f93",
+      "release_sha256": "4bfb465ee8ab8d709dafb650a6f77858c720012ed3b8fb4a82407ce04e7f997a"
+    },
+    {
+      "source": "teach-pro/DAILY-LESSON-FORMAT.md",
+      "release": "teach-pro/references/specs/DAILY-LESSON-FORMAT.md",
+      "source_sha256": "bd05d081f379f8775a16a46656c6c76d70f414e6f12c0536bee4f36bb21f6932",
+      "release_sha256": "780d4ae4c413750089e79d52cbb44e9f36aa9a99bd428adb7b969c151ce3257f"
+    },
+    {
+      "source": "teach-pro/ENTRY-ASSESSMENT-FORMAT.md",
+      "release": "teach-pro/references/specs/ENTRY-ASSESSMENT-FORMAT.md",
+      "source_sha256": "7b729356d0b13f8255cd34d0debf9eb128b2afed70dd601cdbfeefae2dd8e14c",
+      "release_sha256": "5a6e22a25d85bd0fa1d731cfdff8ed75c08e24a7c867f3d79f561fb0af772dc5"
+    },
+    {
+      "source": "teach-pro/EXERCISE-FORMAT.md",
+      "release": "teach-pro/references/specs/EXERCISE-FORMAT.md",
+      "source_sha256": "221985c0937e6b61a97394431f9da82eb4dbab1d519af1572709562c46a4032f",
+      "release_sha256": "221985c0937e6b61a97394431f9da82eb4dbab1d519af1572709562c46a4032f"
+    },
+    {
+      "source": "teach-pro/GLOSSARY-FORMAT.md",
+      "release": "teach-pro/references/specs/GLOSSARY-FORMAT.md",
+      "source_sha256": "527a1ae6aa7de22af44de3f305b7afe0832f423e7a474c2cc142866ae3b34b81",
+      "release_sha256": "527a1ae6aa7de22af44de3f305b7afe0832f423e7a474c2cc142866ae3b34b81"
+    },
+    {
+      "source": "teach-pro/HTML-OUTPUT-SPEC.md",
+      "release": "teach-pro/references/specs/HTML-OUTPUT-SPEC.md",
+      "source_sha256": "4696ac1d0225e3d11636f282a8e5fb0f511eac638299e7750eca3cce758efd00",
+      "release_sha256": "3a176c9f74ebd3051aad28468c68a05fce98c082569a737169cbf06deab3d3f1"
+    },
+    {
+      "source": "teach-pro/LEARNER-PROFILE-FORMAT.md",
+      "release": "teach-pro/references/specs/LEARNER-PROFILE-FORMAT.md",
+      "source_sha256": "7c2a7662e6c8671d69c8b87b4d47082a9bc8504063b67a23ad39a704e7907f35",
+      "release_sha256": "7c2a7662e6c8671d69c8b87b4d47082a9bc8504063b67a23ad39a704e7907f35"
+    },
+    {
+      "source": "teach-pro/LEARNING-RECORD-FORMAT.md",
+      "release": "teach-pro/references/specs/LEARNING-RECORD-FORMAT.md",
+      "source_sha256": "747e867eafb2cd14ea4b1378d8b4e9a5ca9f4c1ac0123c39277c282672928f25",
+      "release_sha256": "747e867eafb2cd14ea4b1378d8b4e9a5ca9f4c1ac0123c39277c282672928f25"
+    },
+    {
+      "source": "teach-pro/LESSON-DELIVERY-POLICY.md",
+      "release": "teach-pro/references/specs/LESSON-DELIVERY-POLICY.md",
+      "source_sha256": "d640233c5397615060e63e513f56567f7bcd54dfad9e66e4a50c10c5caf23114",
+      "release_sha256": "d640233c5397615060e63e513f56567f7bcd54dfad9e66e4a50c10c5caf23114"
+    },
+    {
+      "source": "teach-pro/LOCAL-SYNC-SPEC.md",
+      "release": "teach-pro/references/specs/LOCAL-SYNC-SPEC.md",
+      "source_sha256": "a6adf7501bb51272ebd8907049ddffaaba882494225eb2831df8bbd33825f797",
+      "release_sha256": "88ecb7c01dc1ca89fff743a7eacb9c570a316a2f5a44494ebe915c58d38118c8"
+    },
+    {
+      "source": "teach-pro/LOCAL-TUTOR-SPEC.md",
+      "release": "teach-pro/references/specs/LOCAL-TUTOR-SPEC.md",
+      "source_sha256": "6dd867b2c2244f3e08a419933dca0992b35c9b2efb1610a88822af89752511a1",
+      "release_sha256": "6dd867b2c2244f3e08a419933dca0992b35c9b2efb1610a88822af89752511a1"
+    },
+    {
+      "source": "teach-pro/MISSION-FORMAT.md",
+      "release": "teach-pro/references/specs/MISSION-FORMAT.md",
+      "source_sha256": "ab115c6f6093cb7f595a67abbd4c1b52fd3daf19647b5791e20d1ae709f655fc",
+      "release_sha256": "ab115c6f6093cb7f595a67abbd4c1b52fd3daf19647b5791e20d1ae709f655fc"
+    },
+    {
+      "source": "teach-pro/QUALITY-CHECKLIST.md",
+      "release": "teach-pro/references/specs/QUALITY-CHECKLIST.md",
+      "source_sha256": "396d2540c969c992daa86e85b20c748a7809073a4fdcfc95adfbdfcf6c7d9cd2",
+      "release_sha256": "396d2540c969c992daa86e85b20c748a7809073a4fdcfc95adfbdfcf6c7d9cd2"
+    },
+    {
+      "source": "teach-pro/README.md",
+      "release": "teach-pro/README.md",
+      "source_sha256": "1879d5c8bcbec4bd63960ad6c071d1e691a3fb7ba23f8c5e93cfafec4cdf5f56",
+      "release_sha256": "e0fb1e2035f428bbf93cdf71bb781fe5688c8ca2208107957a943c47d8fadddb"
+    },
+    {
+      "source": "teach-pro/RESOURCE-SELECTION-POLICY.md",
+      "release": "teach-pro/references/specs/RESOURCE-SELECTION-POLICY.md",
+      "source_sha256": "4a050c3d3e57cb188babc99468b358cc37d132eb16d6f30d1ddb91fd039bfc5d",
+      "release_sha256": "4a050c3d3e57cb188babc99468b358cc37d132eb16d6f30d1ddb91fd039bfc5d"
+    },
+    {
+      "source": "teach-pro/RESOURCES-FORMAT.md",
+      "release": "teach-pro/references/specs/RESOURCES-FORMAT.md",
+      "source_sha256": "04a28784d7a255a1b63458eaa3df82a40c52c4c085c29a97ef064473d04f7428",
+      "release_sha256": "04a28784d7a255a1b63458eaa3df82a40c52c4c085c29a97ef064473d04f7428"
+    },
+    {
+      "source": "teach-pro/ROADMAP-FORMAT.md",
+      "release": "teach-pro/references/specs/ROADMAP-FORMAT.md",
+      "source_sha256": "6ad3eb076443e0e1c8c9f4901b424b1703952f06f2f44309c8f1b07cf467e81a",
+      "release_sha256": "6640ad6315639d867baf12b3d6f1805a3805b75c49aef5c76acfa4410e5e298b"
+    },
+    {
+      "source": "teach-pro/SKILL.md",
+      "release": "teach-pro/SKILL.md",
+      "source_sha256": "22a203c37d5936a496ef83d0198574e70e5e58a3fbdb0a80e4d526965b4f18b2",
+      "release_sha256": "ca31d84a2ed3927809ada7aea76f1bedf7ce2e86a1d18258d582d4961670dcc3"
+    },
+    {
+      "source": "teach-pro/TEACHING-MODES.md",
+      "release": "teach-pro/references/specs/TEACHING-MODES.md",
+      "source_sha256": "46875cdc87a312e6a71b9cc73e9f47a51d77c688f114466e8ccf861b87ab1776",
+      "release_sha256": "46875cdc87a312e6a71b9cc73e9f47a51d77c688f114466e8ccf861b87ab1776"
+    },
+    {
+      "source": "teach-pro/VERSION.md",
+      "release": "teach-pro/references/specs/VERSION.md",
+      "source_sha256": "5e0e8e37368be6393815cdb94de49596d7af390197489f7fbfeca990779ee437",
+      "release_sha256": "5e0e8e37368be6393815cdb94de49596d7af390197489f7fbfeca990779ee437"
+    },
+    {
+      "source": "teach-pro/WEEKLY-REVIEW-FORMAT.md",
+      "release": "teach-pro/references/specs/WEEKLY-REVIEW-FORMAT.md",
+      "source_sha256": "859d17f04269039ca15569ae97e70cd5a57bcf56f4de3b46ad25b781bf42499c",
+      "release_sha256": "859d17f04269039ca15569ae97e70cd5a57bcf56f4de3b46ad25b781bf42499c"
+    },
+    {
+      "source": "teach-pro/agents/openai.yaml",
+      "release": "teach-pro/agents/openai.yaml",
+      "source_sha256": "7271b40c14e8bb8a438ac7f845462d8cc1005332858a44a8d632bc083c62f026",
+      "release_sha256": "7271b40c14e8bb8a438ac7f845462d8cc1005332858a44a8d632bc083c62f026"
+    },
+    {
+      "source": "teach-pro/assets/course-settings.html",
+      "release": "teach-pro/assets/course-settings.html",
+      "source_sha256": "f85b998d1309cbcce8373bf7251d167470e4eae5b78784578c48ba413acc32f1",
+      "release_sha256": "f85b998d1309cbcce8373bf7251d167470e4eae5b78784578c48ba413acc32f1"
+    },
+    {
+      "source": "teach-pro/assets/course.js",
+      "release": "teach-pro/assets/course.js",
+      "source_sha256": "b265e86f160fb2267016268df3682df677dcea331f583516b303dec5b464e70a",
+      "release_sha256": "b265e86f160fb2267016268df3682df677dcea331f583516b303dec5b464e70a"
+    },
+    {
+      "source": "teach-pro/assets/credential_store.py",
+      "release": "teach-pro/assets/credential_store.py",
+      "source_sha256": "c0739fd54587a4706876fa873e7c6884e7ff682381b580b4165ece06c7a1111a",
+      "release_sha256": "c0739fd54587a4706876fa873e7c6884e7ff682381b580b4165ece06c7a1111a"
+    },
+    {
+      "source": "teach-pro/assets/serve_course.py",
+      "release": "teach-pro/assets/serve_course.py",
+      "source_sha256": "0ea5d7c55c5f6a26f7569873067c2ee959b05501751b79f02c0e019923437438",
+      "release_sha256": "0ea5d7c55c5f6a26f7569873067c2ee959b05501751b79f02c0e019923437438"
+    },
+    {
+      "source": "teach-pro/assets/start-course.cmd",
+      "release": "teach-pro/assets/start-course.cmd",
+      "source_sha256": "5cd1d8a89fd82695d14a363a26f8e5f781b6ebcc1225cf0dc82cb43061685b1d",
+      "release_sha256": "5cd1d8a89fd82695d14a363a26f8e5f781b6ebcc1225cf0dc82cb43061685b1d"
+    },
+    {
+      "source": "teach-pro/assets/start-course.command",
+      "release": "teach-pro/assets/start-course.command",
+      "source_sha256": "188f2e76c211860706d8385b125b45e8a2f02e96d5b7299e8cae8aea7521a233",
+      "release_sha256": "188f2e76c211860706d8385b125b45e8a2f02e96d5b7299e8cae8aea7521a233"
+    },
+    {
+      "source": "teach-pro/assets/start-course.sh",
+      "release": "teach-pro/assets/start-course.sh",
+      "source_sha256": "188f2e76c211860706d8385b125b45e8a2f02e96d5b7299e8cae8aea7521a233",
+      "release_sha256": "188f2e76c211860706d8385b125b45e8a2f02e96d5b7299e8cae8aea7521a233"
+    },
+    {
+      "source": "teach-pro/assets/style.css",
+      "release": "teach-pro/assets/style.css",
+      "source_sha256": "e105817cd2232425e35b9ffca9b83b220298aa483235f9951835ea07f0d73f8e",
+      "release_sha256": "e105817cd2232425e35b9ffca9b83b220298aa483235f9951835ea07f0d73f8e"
+    },
+    {
+      "source": "teach-pro/assets/sync.js",
+      "release": "teach-pro/assets/sync.js",
+      "source_sha256": "f500568bc26554836e8ca6e8076805a3b4b52695a3772b1935416e30bf9b65c5",
+      "release_sha256": "f500568bc26554836e8ca6e8076805a3b4b52695a3772b1935416e30bf9b65c5"
+    },
+    {
+      "source": "teach-pro/assets/tutor-markdown.js",
+      "release": "teach-pro/assets/tutor-markdown.js",
+      "source_sha256": "8dfc03b74759a2afb015757d20e394e72a6d1e382e6193ff3e9dedd9c2324370",
+      "release_sha256": "8dfc03b74759a2afb015757d20e394e72a6d1e382e6193ff3e9dedd9c2324370"
+    },
+    {
+      "source": "teach-pro/assets/tutor-settings.js",
+      "release": "teach-pro/assets/tutor-settings.js",
+      "source_sha256": "cefc96a14f6301300c6b29b45bf69e23ea5813034487e297638b3b483ae11c14",
+      "release_sha256": "cefc96a14f6301300c6b29b45bf69e23ea5813034487e297638b3b483ae11c14"
+    },
+    {
+      "source": "teach-pro/assets/tutor.js",
+      "release": "teach-pro/assets/tutor.js",
+      "source_sha256": "022242dd28813496d8710ed5d2786c1af605354fab4d4d71daa211817205cc1c",
+      "release_sha256": "022242dd28813496d8710ed5d2786c1af605354fab4d4d71daa211817205cc1c"
+    },
+    {
+      "source": "teach-pro/assets/tutor_chat.py",
+      "release": "teach-pro/assets/tutor_chat.py",
+      "source_sha256": "1ad296a5676e1beef670907602d4ed8a5061560541f6d88f713431d183970f01",
+      "release_sha256": "1ad296a5676e1beef670907602d4ed8a5061560541f6d88f713431d183970f01"
+    },
+    {
+      "source": "teach-pro/assets/vendor/README.md",
+      "release": "teach-pro/assets/vendor/README.md",
+      "source_sha256": "7bdd42ecd7c4077691a4c1024d5eb3c7f01c4148832442c69fcf5ee55259d9b1",
+      "release_sha256": "7bdd42ecd7c4077691a4c1024d5eb3c7f01c4148832442c69fcf5ee55259d9b1"
+    },
+    {
+      "source": "teach-pro/assets/vendor/dompurify.LICENSE",
+      "release": "teach-pro/assets/vendor/dompurify.LICENSE",
+      "source_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5",
+      "release_sha256": "3ddf9be5c28fe27dad143a5dc76eea25222ad1dd68934a047064e56ed2fa40c5"
+    },
+    {
+      "source": "teach-pro/assets/vendor/dompurify.LICENSE-MPL",
+      "release": "teach-pro/assets/vendor/dompurify.LICENSE-MPL",
+      "source_sha256": "cde215e5b42363eb28ca2462c4558ff4807b38f383c537624c31e44657ac58f4",
+      "release_sha256": "cde215e5b42363eb28ca2462c4558ff4807b38f383c537624c31e44657ac58f4"
+    },
+    {
+      "source": "teach-pro/assets/vendor/marked.LICENSE",
+      "release": "teach-pro/assets/vendor/marked.LICENSE",
+      "source_sha256": "ce0bfbb1e2d31127e33538a15a0ae4a12d3408036ae6f894e3498a52c634c4fa",
+      "release_sha256": "ce0bfbb1e2d31127e33538a15a0ae4a12d3408036ae6f894e3498a52c634c4fa"
+    },
+    {
+      "source": "teach-pro/assets/vendor/marked.umd.js",
+      "release": "teach-pro/assets/vendor/marked.umd.js",
+      "source_sha256": "21568877a938d2c4e7d74e27f18e60da96bb73a68809610ca39216e1efebae62",
+      "release_sha256": "21568877a938d2c4e7d74e27f18e60da96bb73a68809610ca39216e1efebae62"
+    },
+    {
+      "source": "teach-pro/assets/vendor/purify.min.js",
+      "release": "teach-pro/assets/vendor/purify.min.js",
+      "source_sha256": "2c90a9b46d6463f26038a29b686e82bc91de01fdac9d5229e7cfe3b360134ea2",
+      "release_sha256": "2c90a9b46d6463f26038a29b686e82bc91de01fdac9d5229e7cfe3b360134ea2"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics-adaptive/README.md",
+      "release": "teach-pro/references/examples/statistics-adaptive/README.md",
+      "source_sha256": "c362c613aafa859a688d0046c8dde2abb32e2f9885125251976518bc04fa2362",
+      "release_sha256": "5220a7c77ad8854999f5638f58a36adebfe829fd84b1d764a48eb47e3d867959"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics-adaptive/cases.json",
+      "release": "teach-pro/references/examples/statistics-adaptive/cases.json",
+      "source_sha256": "5eeeb0a5a3fe56f325498cd78dda71febfee05df8de93313678c1e4bdf848e53",
+      "release_sha256": "5eeeb0a5a3fe56f325498cd78dda71febfee05df8de93313678c1e4bdf848e53"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics-adaptive/first-lesson.html",
+      "release": "teach-pro/references/examples/statistics-adaptive/first-lesson.html",
+      "source_sha256": "0df140f0e458b1fbb9592a5e0bf20f2b012dfbaaa95bfa04a3e0a2eb65f6255c",
+      "release_sha256": "0df140f0e458b1fbb9592a5e0bf20f2b012dfbaaa95bfa04a3e0a2eb65f6255c"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics-adaptive/resources.json",
+      "release": "teach-pro/references/examples/statistics-adaptive/resources.json",
+      "source_sha256": "3f31a659639717e8f1ba31190fa645b3e2ac2834e8cd2f453715a9c33ae034e8",
+      "release_sha256": "3f31a659639717e8f1ba31190fa645b3e2ac2834e8cd2f453715a9c33ae034e8"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics-adaptive/second-lesson.html",
+      "release": "teach-pro/references/examples/statistics-adaptive/second-lesson.html",
+      "source_sha256": "99546b25741c6aa1af605c8a6b8db1051115c166b1f37afdae6269c52a39bc0b",
+      "release_sha256": "99546b25741c6aa1af605c8a6b8db1051115c166b1f37afdae6269c52a39bc0b"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics-adaptive/supplement.html",
+      "release": "teach-pro/references/examples/statistics-adaptive/supplement.html",
+      "source_sha256": "b71febc800b6e6f7fea1262b43399a9464a215b951e97a9ccbf7c8de622f8c0b",
+      "release_sha256": "b71febc800b6e6f7fea1262b43399a9464a215b951e97a9ccbf7c8de622f8c0b"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics/README.md",
+      "release": "teach-pro/references/examples/statistics/README.md",
+      "source_sha256": "b56b9188238d2e9284d8f79c2941ac86c8562f891735f604cd814d2846a50743",
+      "release_sha256": "7a643bd82b5a0ef2244c9ce9d56c976451ea055bf478d536ba25f24850207afd"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics/assessment-questions.html",
+      "release": "teach-pro/references/examples/statistics/assessment-questions.html",
+      "source_sha256": "4bad90a859c8e15a565a746b8b566d462cfe4f502b09918cc59fe3d679bda0df",
+      "release_sha256": "4bad90a859c8e15a565a746b8b566d462cfe4f502b09918cc59fe3d679bda0df"
+    },
+    {
+      "source": "teach-pro/references/examples/statistics/lesson-body.html",
+      "release": "teach-pro/references/examples/statistics/lesson-body.html",
+      "source_sha256": "5ffe7272501e661d4ed2fc981c676388568e81e47a507ca50d1da02bee8eb70e",
+      "release_sha256": "5ffe7272501e661d4ed2fc981c676388568e81e47a507ca50d1da02bee8eb70e"
+    },
+    {
+      "source": "teach-pro/scripts/build_adaptive_example.py",
+      "release": "teach-pro/scripts/build_adaptive_example.py",
+      "source_sha256": "88c05f38fb607eb37b1d0c1e71e75f9900e3b5037220efa718e79a622d73fb63",
+      "release_sha256": "88c05f38fb607eb37b1d0c1e71e75f9900e3b5037220efa718e79a622d73fb63"
+    },
+    {
+      "source": "teach-pro/scripts/build_example.py",
+      "release": "teach-pro/scripts/build_example.py",
+      "source_sha256": "c5086d8d01e27b7aa258a32af7a2da3fa861fbab9fbb90258645258edaf31f8c",
+      "release_sha256": "3e56ea4a22e740349cac220d5d30cdcc2e2d78e32d50868d367be39dc1fc16f4"
+    },
+    {
+      "source": "teach-pro/scripts/check_course.py",
+      "release": "teach-pro/scripts/check_course.py",
+      "source_sha256": "38e54ec75fa91545f6ad34342579ccdee4092fef708dc8ccf633481e1599d07c",
+      "release_sha256": "38e54ec75fa91545f6ad34342579ccdee4092fef708dc8ccf633481e1599d07c"
+    },
+    {
+      "source": "teach-pro/templates/course-index.html",
+      "release": "teach-pro/assets/templates/course-index.html",
+      "source_sha256": "b4fb025a192f6c0539a3beb8de1cc739fa1366e8976bd96c4105f347e5f37e94",
+      "release_sha256": "b4fb025a192f6c0539a3beb8de1cc739fa1366e8976bd96c4105f347e5f37e94"
+    },
+    {
+      "source": "teach-pro/templates/course.gitignore",
+      "release": "teach-pro/assets/templates/course.gitignore",
+      "source_sha256": "b4750848110e726e05778ea63dba30e267d70ea438fe5f7dfb816ee746543e10",
+      "release_sha256": "b4750848110e726e05778ea63dba30e267d70ea438fe5f7dfb816ee746543e10"
+    },
+    {
+      "source": "teach-pro/templates/entry-assessment.html",
+      "release": "teach-pro/assets/templates/entry-assessment.html",
+      "source_sha256": "5d5f926b23f4d9aae4af63903397ccc32c2ec18c33cb6599b95e7dd5f5d75fe6",
+      "release_sha256": "5d5f926b23f4d9aae4af63903397ccc32c2ec18c33cb6599b95e7dd5f5d75fe6"
+    },
+    {
+      "source": "teach-pro/templates/lesson.html",
+      "release": "teach-pro/assets/templates/lesson.html",
+      "source_sha256": "ed32ce717b405711d17c399174c8653d382cfdf219d05beca0cc127f5527ee7e",
+      "release_sha256": "ed32ce717b405711d17c399174c8653d382cfdf219d05beca0cc127f5527ee7e"
+    },
+    {
+      "source": "teach-pro/templates/quiz.html",
+      "release": "teach-pro/assets/templates/quiz.html",
+      "source_sha256": "cbfbda2821cbc4960b03e134add994dbeddaef336c06f106dd27e2f9397d24e2",
+      "release_sha256": "cbfbda2821cbc4960b03e134add994dbeddaef336c06f106dd27e2f9397d24e2"
+    },
+    {
+      "source": "teach-pro/templates/reference.html",
+      "release": "teach-pro/assets/templates/reference.html",
+      "source_sha256": "573c9a8e92b6177724b0c4fdb4001b4cbcc02d8836c8999ebd7accbed5b645a2",
+      "release_sha256": "573c9a8e92b6177724b0c4fdb4001b4cbcc02d8836c8999ebd7accbed5b645a2"
+    }
+  ],
+  "moved_paths": {
+    "teach-pro/COURSE-WORKSPACE-SPEC.md": "teach-pro/references/specs/COURSE-WORKSPACE-SPEC.md",
+    "teach-pro/DAILY-LESSON-FORMAT.md": "teach-pro/references/specs/DAILY-LESSON-FORMAT.md",
+    "teach-pro/ENTRY-ASSESSMENT-FORMAT.md": "teach-pro/references/specs/ENTRY-ASSESSMENT-FORMAT.md",
+    "teach-pro/EXERCISE-FORMAT.md": "teach-pro/references/specs/EXERCISE-FORMAT.md",
+    "teach-pro/GLOSSARY-FORMAT.md": "teach-pro/references/specs/GLOSSARY-FORMAT.md",
+    "teach-pro/HTML-OUTPUT-SPEC.md": "teach-pro/references/specs/HTML-OUTPUT-SPEC.md",
+    "teach-pro/LEARNER-PROFILE-FORMAT.md": "teach-pro/references/specs/LEARNER-PROFILE-FORMAT.md",
+    "teach-pro/LEARNING-RECORD-FORMAT.md": "teach-pro/references/specs/LEARNING-RECORD-FORMAT.md",
+    "teach-pro/LESSON-DELIVERY-POLICY.md": "teach-pro/references/specs/LESSON-DELIVERY-POLICY.md",
+    "teach-pro/LOCAL-SYNC-SPEC.md": "teach-pro/references/specs/LOCAL-SYNC-SPEC.md",
+    "teach-pro/LOCAL-TUTOR-SPEC.md": "teach-pro/references/specs/LOCAL-TUTOR-SPEC.md",
+    "teach-pro/MISSION-FORMAT.md": "teach-pro/references/specs/MISSION-FORMAT.md",
+    "teach-pro/QUALITY-CHECKLIST.md": "teach-pro/references/specs/QUALITY-CHECKLIST.md",
+    "teach-pro/RESOURCE-SELECTION-POLICY.md": "teach-pro/references/specs/RESOURCE-SELECTION-POLICY.md",
+    "teach-pro/RESOURCES-FORMAT.md": "teach-pro/references/specs/RESOURCES-FORMAT.md",
+    "teach-pro/ROADMAP-FORMAT.md": "teach-pro/references/specs/ROADMAP-FORMAT.md",
+    "teach-pro/TEACHING-MODES.md": "teach-pro/references/specs/TEACHING-MODES.md",
+    "teach-pro/VERSION.md": "teach-pro/references/specs/VERSION.md",
+    "teach-pro/WEEKLY-REVIEW-FORMAT.md": "teach-pro/references/specs/WEEKLY-REVIEW-FORMAT.md",
+    "teach-pro/templates/course-index.html": "teach-pro/assets/templates/course-index.html",
+    "teach-pro/templates/course.gitignore": "teach-pro/assets/templates/course.gitignore",
+    "teach-pro/templates/entry-assessment.html": "teach-pro/assets/templates/entry-assessment.html",
+    "teach-pro/templates/lesson.html": "teach-pro/assets/templates/lesson.html",
+    "teach-pro/templates/quiz.html": "teach-pro/assets/templates/quiz.html",
+    "teach-pro/templates/reference.html": "teach-pro/assets/templates/reference.html"
+  },
+  "official_score": null
+}

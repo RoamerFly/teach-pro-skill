@@ -46,4 +46,25 @@ python scripts/check_course.py <输出目录>/case-b --json
 
 本轮静态与浏览器测试只证明预写案例的内容一致性及页面／文件操作，不证明 TeleAgent 新生成行为、真实学生学习效果或新评审得分。既有宿主行为证据与智鉴 Demo 保留；Word、视频无需因补充案例重录。
 
-实际双版本发布、校验值和源提交将在交付后追加。
+## 实际双版本发布验收
+
+发布源码提交：`2af3d9e1751c387407fe3f6e6bdde4c101994a57`，已推送 origin/main。两个版均由该提交构建，Skill 各 60 个文件；日常源码字节一致，赛事版仍只作字段／路径适配，冻结的运行组件、模板和调用策略保持字节一致。
+
+- 解压后的日常、赛事 Skill 各自执行完整案例浏览器脚本：均为 10 类交互、30 个布局状态通过，页面错误／外部请求／模型调用均 0。赛事解压包还执行原最小示例的 9 类浏览器回归，全部通过。
+- 实际包内的 19 个完整案例页面重新检查，起点／A／B 分别 5／6／7 页，结构问题和 SVG 风险提示均 0；模拟输入的正文摘要与各自首课匹配。日常目录另提供同源构建的可阅读案例，不扩充独立 Skill ZIP 为整套工作区。
+- 所有解压 Skill 文件匹配审计中的发布 SHA；三个 ZIP CRC、校验值、完整包内部清单与解压逐文件匹配，所有 `.sh` / `.command` 保持 0755。完整包 211 项，含可直接打开的案例；没有答案、聊天、配置或运行缓存目录。
+- 原智鉴 Demo 8 页结构通过；在另一个 QA 副本启动 session-only 服务，四个页面路由、课内上下文、空聊天、合成答案写文件及重启恢复通过。没有接触交付目录的学员状态或提供商。
+- Word SHA-256 `145156493ab4760cd8abb302b7eda0f5e2fc66e9849c078223b79f1544878665`、视频 `51fb962e98797095d9beea39f901f7893840f60ea32e54bab671bca1ce8c1d73` 与已接受材料一致，视频 168.461333 秒。
+- 最新总入口、课页截图已查看，标题不再孤字换行；共享浅／深主题与内容图示可读。
+
+交付位置仍为仓库外 `competition-submission/normal_use` 与 `competition-submission/competition_submit`。旧两版完整保留于 `competition-submission/history/2026-10-09-before-adaptive-showcase/`。旧复审报告与评分数据随其对应旧包保存，未删除或伪装为新案例版本评分。
+
+| 发布文件 | 字节 | SHA-256 |
+| --- | ---: | --- |
+| normal_use/teach-pro-1.1.0-rc.12.zip | 210327 | 2926858a5e771c505ae29620d19f549f7f76169908ba3b18fc20b09aa6f5fdd1 |
+| competition_submit/teach-pro-1.1.0-rc.12.zip | 211387 | c42032292bc046791f628f31a14a7c4c7597b8045d1e959f59926233b2c626a1 |
+| competition_submit/重邮FFBond+学途智伴——大学生长期自适应学习智能体.zip | 16601265 | 5c6bd689eb906deedc56369f4e314be8a5d11b75a11fbe91b1dc24e792b9c231 |
+
+对应原始 JSON 为同目录 `2026-10-09-adaptive-{normal,competition}-package-audit.json`、`2026-10-09-adaptive-{normal,competition}-browser-audit.json` 及 `2026-10-09-adaptive-minimal-browser-audit.json`。
+
+旧参考报告 SHA-256：`fbb0e663ed613199e4f758929ae7d202dce63d39e19af1a31b07a53f5c24bd3e`；旧评分 JSON：`5a2d6baeeafb655a6e7d16c388e729316c46c765bfaa8d730765efe5d9561945`。96.5/S 仅属于示例增强前赛事版；本轮没有新的宿主生成或参考复审结果。

@@ -1,0 +1,19 @@
+{
+  "synthetic": true,
+  "modelCalls": 0,
+  "checks": [
+    "portal-three-snapshots",
+    "wrong-answer-feedback",
+    "edited-answer-feedback-reset",
+    "first-answer-file-save",
+    "supplement-independent-save",
+    "new-formal-independent-save",
+    "fixture-not-overwritten",
+    "restart-fresh-browser-restore-three-pages",
+    "branch-isolation",
+    "no-provider-configuration"
+  ],
+  "layoutChecks": 30,
+  "pageErrors": [],
+  "externalRequests": 0
+}
