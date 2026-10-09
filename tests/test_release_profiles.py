@@ -105,6 +105,40 @@ class ReleaseProfileTests(unittest.TestCase):
                 self.assertEqual((course / 'assets/style.css').read_bytes(), self.files['teach-pro/assets/style.css'][1])
                 self.assertFalse((course / 'learner-submissions').exists())
 
+    def test_complete_adaptive_example_builds_after_relocation(self):
+        actual, _ = module.profile_files(self.files, 'competition_submit')
+        with tempfile.TemporaryDirectory(prefix='teach-adaptive-profile-') as temporary:
+            root = Path(temporary)
+            archive_path = root / 'skill.zip'
+            with ZipFile(archive_path, 'w') as archive:
+                for name, (info, data) in actual.items():
+                    module.write_member(archive, name, data, info)
+            module.extract_archive(archive_path, root)
+            output = root / 'showcase'
+            result = subprocess.run([sys.executable, '-X', 'utf8', '-B',
+                                     str(root / 'teach-pro/scripts/build_adaptive_example.py'), str(output)],
+                                    capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            for name, pages in (('start', 5), ('case-a', 6), ('case-b', 7)):
+                course = output / name
+                check = subprocess.run([sys.executable, '-X', 'utf8', '-B',
+                                        str(root / 'teach-pro/scripts/check_course.py'), str(course), '--json'],
+                                       capture_output=True, text=True)
+                self.assertEqual(check.returncode, 0, check.stdout + check.stderr)
+                self.assertEqual(len(list(course.rglob('*.html'))), pages)
+                self.assertEqual((course / 'assets/style.css').read_bytes(), self.files['teach-pro/assets/style.css'][1])
+
+    def test_packaged_showcase_is_ready_to_open_and_has_no_runtime_data(self):
+        actual, _ = module.profile_files(self.files, 'competition_submit')
+        members = module.build_showcase_members(actual)
+        self.assertEqual(sum(name.endswith('.html') for name, _, _ in members), 19)
+        self.assertIn('自适应教学案例/index.html', {name for name, _, _ in members})
+        self.assertIn('自适应教学案例/case-b/synthetic-inputs/0001-answer.json', {name for name, _, _ in members})
+        for name, info, data in members:
+            module.check_member(name, data)
+            if name.endswith(('.sh', '.command')):
+                self.assertEqual(info.external_attr >> 16 & 0o777, 0o755)
+
 
 if __name__ == '__main__':
     unittest.main()

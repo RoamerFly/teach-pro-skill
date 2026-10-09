@@ -53,6 +53,8 @@ $teach-pro
 
 ## 课程示例
 
+[校园消费统计自适应案例](./teach-pro/references/examples/statistics-adaptive/README.md)展示同一首课的两组模拟作答，以及对应的支持调整与正式／补充交付。在 Skill 根目录运行 `python scripts/build_adaptive_example.py <新目录>`，即可查看完整图解、练习、资源导学和决策依据；这是可复现教学案例，不是模型现场生成。
+
 [比赛 Demo：智鉴 Agent](./example/competition-demo-rc12/README.md) 包含入门评估、三节正式课、一节关联补充课、一手阅读中心与统一模型设置。展示主线推进、按需补充与本地学习记录的衔接。
 
 ```sh

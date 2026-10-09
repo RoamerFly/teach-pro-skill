@@ -11,6 +11,8 @@ from pathlib import Path, PurePosixPath
 import posixpath
 import re
 import subprocess
+import sys
+import tempfile
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
 VERSION = '1.1.0-rc.12'
@@ -185,6 +187,37 @@ def extract_archive(path, output):
                 (output / info.filename).chmod((info.external_attr >> 16) & 0o777)
 
 
+def build_showcase_members(files):
+    """Render only the archived Skill's synthetic sources, without learner data."""
+    if 'teach-pro/scripts/build_adaptive_example.py' not in files:
+        return []
+    with tempfile.TemporaryDirectory(prefix='teach-release-showcase-') as temporary:
+        root = Path(temporary)
+        for name, (_, data) in files.items():
+            if name.startswith('teach-pro/'):
+                check_member(name, data)
+                target = root / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(data)
+        output = root / 'showcase'
+        subprocess.run([sys.executable, '-X', 'utf8', '-B',
+                        str(root / 'teach-pro/scripts/build_adaptive_example.py'), str(output)],
+                       check=True, capture_output=True, text=True)
+        members = []
+        for path in sorted(output.rglob('*')):
+            if not path.is_file():
+                continue
+            name = '自适应教学案例/' + path.relative_to(output).as_posix()
+            data = path.read_bytes()
+            check_member(name, data)
+            info = ZipInfo(name)
+            info.external_attr = (0o100755 if path.suffix in {'.sh', '.command'} else 0o100644) << 16
+            members.append((name, info, data))
+        if sum(name.endswith('.html') for name, _, _ in members) != 19:
+            raise ValueError('Unexpected adaptive showcase page count')
+        return members
+
+
 def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
     if profile is not None and profile not in PROFILES:
         raise ValueError('Unknown release profile')
@@ -270,9 +303,20 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
                  '在 Skill 根目录运行 `python scripts/build_example.py <新目录> --stage assessment` 或 `--stage lesson`，'
                  '可离线组装评估与首课页面，再用 `scripts/check_course.py` 检查；不调用模型，不预填学员记录。'
                  '它是可复现页面夹具，教学 AI 的新生成行为需在宿主中另行验证。\n').encode('utf-8')
+    if 'teach-pro/references/examples/statistics-adaptive/README.md' in files:
+        note += ('\n专家可对照[校园统计完整自适应案例](Skill技能包/teach-pro/references/examples/statistics-adaptive/README.md)。'
+                 '在 Skill 根目录运行 `python scripts/build_adaptive_example.py <新目录>`，'
+                 '打开输出的 `index.html` 查看共同起点、两组模拟作答和对应的正式／补充交付；'
+                 '复用原运行组件，可真实体验保存。案例是预写的教学结果对照，不是现场模型生成。\n').encode('utf-8')
     records = []
     selected = [(remap(name), info, data) for name, (info, data) in files.items()
                 if name != PREFIX + 'dialogue-video-audit.json']
+    showcase = [] if skill_only else build_showcase_members(files)
+    if showcase:
+        selected.extend(showcase)
+        note += ('\n## 完整案例直接体验\n\n打开[自适应教学案例/index.html](自适应教学案例/index.html)，'
+                 '按“共同起点 → 案例 A／B”查看。两条分支进入同一新目标，分别采用迁移练习和分步支架；'
+                 'B 还交付独立补充课。页面与输入为合成案例，文件保存可实际体验，不计作模型行为测试。\n').encode('utf-8')
     for name, info, data in selected:
         records.append({'path': name, 'bytes': len(data), 'sha256': digest(data),
                         'unix_mode': oct((info.external_attr >> 16) & 0o777)})
@@ -315,6 +359,8 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
               'video_seconds': audit['seconds'], 'package_members': 0 if skill_only else len(records) + 1,
               'archives': [{'file': path.name, 'bytes': path.stat().st_size,
                             'sha256': digest(path.read_bytes())} for path, _ in archive_checks]}
+    if showcase:
+        report['adaptive_showcase'] = {'pages': 19, 'source': 'committed-synthetic-fixture', 'model_calls': 0}
     if profile is not None:
         parity = [{'source': name, 'release': path_mapping.get(name, name),
                    'source_sha256': source_sha, 'release_sha256': digest(files[path_mapping.get(name, name)][1])}

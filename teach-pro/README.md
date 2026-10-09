@@ -54,6 +54,7 @@
 - `scripts/check_course.py`：只读结构检查，定位属性、链接、题量和保存组件问题，并提示 SVG 颜色变量与缩放风险；不评判教学正确性或实际渲染效果。
 - `agents/openai.yaml`：显式调用策略与界面元数据。
 - [统计学最小示例](./references/examples/statistics/README.md)：访谈、评估、首课与续课的输入输出约定，可离线构建并检查页面，不需调用模型。
+- [完整自适应案例](./references/examples/statistics-adaptive/README.md)：同一首课、两组模拟作答，对照新正式课的支持调整与独立补充课；附完整图解、迁移练习、资源导学和文件依据。
 
 依赖来源与许可见 [本地排版依赖](./assets/vendor/README.md)；发布变化见 [版本记录](./CHANGELOG.md)。
 

@@ -10,7 +10,7 @@ metadata:
 
 用户要求系统学习一个主题时，把任务视为可跨会话持续的教学工作，而不是一次性回答。目标是建立一个可恢复、可调整、能验证真实理解的课程工作区，并持续交付高质量网页课程。
 
-包使用与启动见 [README.md](./README.md)，版本变化见 [CHANGELOG.md](./CHANGELOG.md)。需要核对典型输入、预期交付与可复现页面时，读 [统计学最小示例](./references/examples/statistics/README.md)；这些文件不作为每课必读材料。
+包使用与启动见 [README.md](./README.md)，版本变化见 [CHANGELOG.md](./CHANGELOG.md)。需要核对典型输入、预期交付与可复现页面时，读 [统计学最小示例](./references/examples/statistics/README.md)；需对照不同作答如何改变后续教学时，读 [完整自适应案例](./references/examples/statistics-adaptive/README.md)。这些文件不作为每课必读材料。
 
 ## 1. 核心原则
 

@@ -1,0 +1,62 @@
+<section id="scene">
+  <h2>一份调查，为什么会有两个“典型消费”？</h2>
+  <p>社团要描述五位同学一天的消费：10、20、20、30、70 元。负责人说“人均 30 元”，另一位同学说“排在中间的人花了 20 元”。这不是谁算错了，而是他们问的问题不同：一个问总额如何平均分摊，一个问排序的中间在哪里。</p>
+  <p>今天的任务是给调查写一句准确的说明：同时算出均值和中位数，并说清每个数字回答什么问题。这里的五个观测只描述这组同学；还不能据此断言全校学生的消费情况。</p>
+</section>
+<section id="mean">
+  <h2>均值：把总额重新平均分摊</h2>
+  <p>先把五人的消费相加：10+20+20+30+70=150 元，再把总额平均分成五份：150÷5=30 元。这个 30 就是<strong>算术均值</strong>，简称均值。它不要求某个人恰好花了 30 元，而是总额平摊后每份的大小。</p>
+  <figure class="visual-figure visual-figure--wide">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 150" role="img" aria-labelledby="pool-title">
+      <title id="pool-title">五人的不同消费合计150元，平均分成五份后每份30元</title>
+      <g fill="var(--surface-2)" stroke="var(--accent)" stroke-width="2"><rect x="20" y="35" width="175" height="78" rx="10"/><rect x="255" y="35" width="365" height="78" rx="10"/></g>
+      <path d="M205 75H243m-10-8 10 8-10 8" fill="none" stroke="var(--accent)" stroke-width="3"/>
+      <g fill="var(--text)" text-anchor="middle" font-size="19"><text x="107" y="65">合计 150 元</text><text x="107" y="96">10+20+20+30+70</text><text x="437" y="65">30　30　30　30　30</text><text x="437" y="96">同一总额，平均分成五份</text></g>
+    </svg>
+    <figcaption>从左向右读：原来的五份可以不同，重新平摊后的五份相同。图表示分摊关系，不表示真实退款或消费变化。</figcaption>
+  </figure>
+  <p>写成一个可复用的规则就是：<strong>均值 = 所有观测值的总和 ÷ 观测个数</strong>。分子是钱的总额，分母是人数，所以结果仍以“元”为单位。记录人数也很重要：总额 150 元若对应三人，均值是 50 元，不是 30 元。</p>
+</section>
+<section id="median">
+  <h2>中位数：先排序，再找中间位置</h2>
+  <p><strong>中位数</strong>看的是排序位置。把数据从小到大排列，再找居中的值。五个数的中间是第 3 个，因为它左边有两个、右边有两个。因此这里中位数为 20 元。重复值也分别占一个位置：两位同学都花 20 元，不能合并成一个人。</p>
+  <figure class="visual-figure visual-figure--wide">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 165" role="img" aria-labelledby="positions-title">
+      <title id="positions-title">排序后五个位置分别为10、20、20、30、70，第三个位置是中位数20</title>
+      <path d="M65 70H575" stroke="var(--border)" stroke-width="3"/>
+      <g fill="var(--surface-2)" stroke="var(--accent)" stroke-width="2"><circle cx="65" cy="70" r="32"/><circle cx="192" cy="70" r="32"/><circle cx="320" cy="70" r="32"/><circle cx="447" cy="70" r="32"/><circle cx="575" cy="70" r="32"/></g>
+      <g fill="var(--text)" text-anchor="middle" font-size="22"><text x="65" y="78">10</text><text x="192" y="78">20</text><text x="320" y="78">20</text><text x="447" y="78">30</text><text x="575" y="78">70</text><text x="320" y="140">左右各两人 → 第 3 个位置</text></g>
+    </svg>
+    <figcaption>圆圈间距表示名次，不表示金额差距。读图时先数位置，再读该位置的数值。</figcaption>
+  </figure>
+  <p>若只有四个数 10、20、30、70，中间就有第 2 和第 3 两个位置。数值型数据通常取这两个值的均值：(20+30)÷2=25 元。<strong>中间位置与位置上的数值不是一回事</strong>：25 元甚至不必出现在原数据中。</p>
+  <details><summary>停一下：未排序的 70、10、30、20，中位数是多少？</summary><p>先排列成 10、20、30、70，再取中间的 20 和 30，结果是 25。直接拿录入顺序中间的 10 和 30 算出 20，会把录入位置错当排序位置。</p></details>
+</section>
+<section id="conditions">
+  <h2>替换与新增：先看条件，再说结论</h2>
+  <p>只把五人中的最大值 70 改成 700：人数仍为五，中间第三个仍为 20。所以中位数不变；总额却变成 780，均值变为 780÷5=156 元。这里的条件是<strong>人数和决定中位数的中间值都没有改变</strong>，不能缩写成“中位数总是不受极端值影响”。</p>
+  <div class="compare-grid">
+    <section><h3>替换一条记录</h3><p>10、20、20、30、700。仍是五个数，第 3 个为 20；中位数仍是 20。</p></section>
+    <section><h3>新增一条记录</h3><p>在原五个数后增加 1000：10、20、20、30、70、1000。现在有六个数，中间两个为 20 和 30；中位数变成 25。</p></section>
+  </div>
+  <p>新增也不是“一定改变”：若原中间附近的值相同，新中位数可能仍相同。人数不变也不是充分条件；若修改的是中间的数，或修改后排序中间值改变，中位数仍可能变化。可靠的方法是每次重新排序、定位、取值。</p>
+</section>
+<section id="use">
+  <h2>给调查写一句有用途的结论</h2>
+  <p>若问“这五人的总额平摊后是多少”，用均值 30 元；若问“按消费排序，中间位置是多少”，用中位数 20 元。均值把每个金额都带入计算，中位数聚焦中间位置，没有谁对所有用途都更好。</p>
+  <p>可写：“这五位同学当天消费合计 150 元，均值 30 元，中位数 20 元；其中一位消费 70 元，均值高于中位数。”这句话保留人数、时间范围和一个分布线索。它没有把中位数说成“所有人的消费”，也没有用五人数据推断全校。</p>
+</section>
+<section id="transfer">
+  <h2>教学后练习：换一组数据解释</h2>
+  <p>四人消费为 10、20、30、100 元。先算均值与中位数，再分别处理：①把 100 替换为 1000；②保留原四人，新增一人消费 1000。把每种情况的人数、中间位置与计算过程写到页尾。两个变化不要混在一起。</p>
+  <div data-quiz data-save-key="lesson-0001-change" data-correct-answer="新增一人后，排序中间第三个为30元。">
+    <p>情形②新增后，中位数是多少？</p>
+    <div class="quiz-options">
+      <label class="quiz-option"><input type="radio" name="added-median" value="median-25" data-feedback="25来自原四人的中间两个值；新增后人数为五，需要重新定位。">中位数为 25 元</label>
+      <label class="quiz-option"><input type="radio" name="added-median" value="median-30" data-correct="true" data-feedback="五个值排序后第三个为30；请在解释中写出人数与中间位置。">中位数为 30 元</label>
+      <label class="quiz-option"><input type="radio" name="added-median" value="median-232" data-feedback="232是总额1160除以5所得的均值，不是排序中间值。">中位数为 232 元</label>
+    </div>
+    <button class="quiz-submit" type="button" data-quiz-submit>检查回答</button><div data-quiz-feedback aria-live="polite"></div>
+  </div>
+  <details><summary>写完解释后核对</summary><p>原均值为 160÷4=40，中位数为 (20+30)÷2=25。替换后均值为 1060÷4=265，中位数仍为 25。新增后均值为 1160÷5=232，中位数为 30。完整解释应区分“替换”和“新增”的人数变化，而不只是报出数字。</p></details>
+</section>

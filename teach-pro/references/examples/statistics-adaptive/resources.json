@@ -1,0 +1,52 @@
+{
+  "checked_on": "2026-10-09",
+  "records": [
+    {
+      "id": "center-reading", "lesson": "0001", "type": "教材章节", "priority": "优先阅读", "publisher": "OpenStax / Rice University",
+      "title": "Introductory Statistics 2e · 2.5 Measures of the Center of the Data",
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data",
+      "location": "开头的均值／中位数定义，以及奇偶个数的中间位置说明；不需通读本章",
+      "task": "先预测偶数个观测的中间位置；读定义后，用自己的10、20、30、100解释位置和数值的区别。把这段解释写到本课答案。",
+      "budget": "约6分钟，含解释产出", "language": "英文，可用浏览器翻译对照术语",
+      "access": "公开网页；网络不可用时完成本课排序练习即可", "verification": "本次读取具体章节正文，核验定义和奇偶位置说明；没有复制教材例题、图片或正文到案例",
+      "reason": "提供原始教材定义；本课自己的数据与图解负责完整讲解"
+    },
+    {
+      "id": "center-video", "lesson": "0001", "type": "视频", "priority": "选看", "publisher": "Khan Academy / Sal Khan",
+      "title": "Statistics intro: Mean, median, & mode",
+      "url": "https://en.khanacademy.org/math/statistics-probability/summarizing-quantitative-data/mean-median-basics/v/statistics-intro-mean-median-and-mode",
+      "location": "该单集的均值与中位数讲解；不要求学习众数，不指定未经核验的时间戳",
+      "task": "看前预测两种中心是否相同；看到排序／平均步骤时暂停，用本课五人数据重画一次；看后解释它们分别回答什么问题。",
+      "budget": "自主选看约6–10分钟，含暂停与产出，并非声称该视频片长", "language": "英文；可对照公开英文文字稿并用本课中文术语记录",
+      "access": "视频播放受网络环境影响；可改读同页文字稿或完成本课图解任务", "verification": "官方页面搜索索引提供标题、作者、简介与文字稿；直接打开未返回可提取正文，未实测播放和字幕，不编造时段",
+      "reason": "演示视角补充定义阅读；只链接发布者页面，不嵌入播放器或复制视频"
+    },
+    {
+      "id": "spread-reading", "lesson": "0002", "type": "教材章节", "priority": "选读", "publisher": "OpenStax / Rice University",
+      "title": "Introductory Statistics 2e · 2.7 Measures of the Spread of the Data",
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/2-7-measures-of-the-spread-of-the-data",
+      "location": "开头集中／分散的说明，以及两组中心相同但变异不同的比较；本次不计算标准差",
+      "task": "读完用本课甲乙两组点图写一句“中心相同不等于分布相同”；指出本课MAD与该章标准差不是同一计算。",
+      "budget": "约5分钟，含比较产出", "language": "英文，可用浏览器翻译",
+      "access": "公开网页；无法访问时使用本课同刻度点图", "verification": "本次读取具体章节正文；核验分散概念及标准差的不同定义，不将它当MAD公式来源",
+      "reason": "把本课距离模型连接到后续离散程度学习，而不引入未讲解公式"
+    },
+    {
+      "id": "spread-video", "lesson": "0002", "type": "视频", "priority": "优先选看", "publisher": "Khan Academy",
+      "title": "Mean absolute deviation | Data and statistics | 6th grade | Khan Academy",
+      "url": "https://www.youtube.com/watch?v=GdIkEngwGNU",
+      "location": "具体单集的平均绝对偏差计算；自行定位均值→各点距离→平均距离，不标注未经核验的秒数",
+      "task": "先预测正负偏差为什么会抵消；计算距离时暂停，改用甲组数据填表；看后不用视频提示计算乙组MAD并解释单位。",
+      "budget": "自主选看约8分钟，含暂停练习，不等同视频片长", "language": "英文；配合本课中文距离表使用",
+      "access": "YouTube受网络环境影响；无法观看时完成本课距离表和迁移题", "verification": "发布者视频公开索引确认官方账号、标题、日期2015-02-09及MAD计算简介；直接播放与完整时间线未实测",
+      "reason": "补充逐步计算演示，不取代课内完整示范"
+    }
+  ],
+  "decisions": [
+    "首课选教材定义为优先项，视频为选看；第二课评估MAD具体视频并提供文字替代，教材章节作后续概念连接。",
+    "本次检索了中文B站统计学与可汗译制合集，但未完成发布者归属及具体分P内容核验，未选入；不向学员输出缺席理由。",
+    "均值、中位数及描述性MAD的初学目标不需要原始研究论文；研究史与稳健统计论文延后到相关阶段，不机械凑论文。",
+    "补充课复用首课资源评估，只使用新的排序表示与复核题，不增加阅读负担。",
+    "外部资源只给标题、具体链接与原创导学任务；未下载或重打包教材、图片、视频、字幕。"
+  ]
+}
