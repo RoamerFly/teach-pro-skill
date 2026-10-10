@@ -2,6 +2,7 @@
 from pathlib import Path
 from zipfile import ZipFile
 import hashlib
+import json
 import re
 from docx import Document
 from docx.oxml.ns import qn
@@ -33,5 +34,10 @@ with ZipFile(file) as archive:
     assert not re.search(r'sk-[A-Za-z0-9]{16,}', xml)
     assert 'w:del ' not in xml and 'w:ins ' not in xml
     assert not any(n.startswith('word/comments') for n in archive.namelist())
+    figure = (root / 'assets/teach-pro-workflow-architecture-v1.png').read_bytes()
+    assert any(archive.read(n) == figure for n in archive.namelist() if n.startswith('word/media/'))
+    duration = round(json.loads((root / 'dialogue-video-audit.json').read_text(encoding='utf8'))['seconds'])
+    assert f'{duration // 60} 分 {duration % 60} 秒' in xml
+    assert '工作流程与系统架构' in xml and '教学 AI' in xml and '课内 Tutor' in xml
 print('PASS: five sections, five annotated images, one matrix, rc.12 metadata, no secret patterns')
 print('SHA256:', hashlib.sha256(file.read_bytes()).hexdigest())

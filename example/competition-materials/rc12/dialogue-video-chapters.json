@@ -1,5 +1,5 @@
 {
-  "seconds": 168.461333,
+  "seconds": 177.861333,
   "resolution": "1440x900",
   "fps": 25,
   "version": "1.1.0-rc.12",
@@ -100,18 +100,18 @@
   "chapters": [
     {
       "id": "home",
-      "title": "01 · 有学习目标，先调用 Skill",
+      "title": "01 · Skill 架构：先评估，再按学习记录续课",
       "start": 0,
-      "seconds": 17.44,
+      "seconds": 26.840000000000003,
       "removed_wait_seconds": 4.564,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_overview_screenshot",
-      "edit_strategy": "static_overview"
+      "picture_source": "architecture_figure_and_detail",
+      "edit_strategy": "approved_home_and_continuation_voice; architecture_overview_then_detail"
     },
     {
       "id": "assessment",
       "title": "02 · 把基础与目标交给教学 AI",
-      "start": 17.44,
+      "start": 26.840000000000003,
       "seconds": 10.36,
       "removed_wait_seconds": 4.655,
       "added_reading_hold_seconds": 0,
@@ -121,7 +121,7 @@
     {
       "id": "lesson",
       "title": "03 · 第一课：从图解读到代码",
-      "start": 27.8,
+      "start": 37.2,
       "seconds": 9.12,
       "removed_wait_seconds": 3.884,
       "added_reading_hold_seconds": 0,
@@ -131,7 +131,7 @@
     {
       "id": "resources",
       "title": "04 · 想深入，就带着任务读原资料",
-      "start": 36.92,
+      "start": 46.32,
       "seconds": 9.88,
       "removed_wait_seconds": 2.131,
       "added_reading_hold_seconds": 0,
@@ -141,7 +141,7 @@
     {
       "id": "question-origin",
       "title": "05 · 代码引出疑问，再打开课内答疑",
-      "start": 46.800000000000004,
+      "start": 56.2,
       "seconds": 14.44,
       "removed_wait_seconds": 2.562,
       "added_reading_hold_seconds": 0,
@@ -151,7 +151,7 @@
     {
       "id": "settings",
       "title": "06 · 为刚才的疑问连接 DeepSeek",
-      "start": 61.24,
+      "start": 70.64,
       "seconds": 15.28,
       "removed_wait_seconds": 4.735,
       "added_reading_hold_seconds": 0,
@@ -161,7 +161,7 @@
     {
       "id": "connection",
       "title": "07 · 连接通过，回到刚才的疑问",
-      "start": 76.52,
+      "start": 85.92,
       "seconds": 9.8,
       "removed_wait_seconds": 1.208,
       "added_reading_hold_seconds": 0,
@@ -171,7 +171,7 @@
     {
       "id": "tutor-answer",
       "title": "08 · 首问：模型为什么不记得上一轮",
-      "start": 86.32,
+      "start": 95.72,
       "seconds": 15.48,
       "removed_wait_seconds": 11.521,
       "added_reading_hold_seconds": 0,
@@ -181,7 +181,7 @@
     {
       "id": "followup",
       "title": "09 · 理解上个回答，再追问 Agent",
-      "start": 101.8,
+      "start": 111.2,
       "seconds": 18.4,
       "removed_wait_seconds": 8.602,
       "added_reading_hold_seconds": 0,
@@ -191,7 +191,7 @@
     {
       "id": "save",
       "title": "10 · 说出理解，再写进学习记录",
-      "start": 120.19999999999999,
+      "start": 129.6,
       "seconds": 15.88,
       "removed_wait_seconds": 3.135,
       "added_reading_hold_seconds": 0,
@@ -201,7 +201,7 @@
     {
       "id": "continuation",
       "title": "11 · 续课提示词示意：带着记录回到宿主",
-      "start": 136.07999999999998,
+      "start": 145.48,
       "seconds": 9.4,
       "removed_wait_seconds": 0.612,
       "added_reading_hold_seconds": 0,
@@ -211,7 +211,7 @@
     {
       "id": "adaptive",
       "title": "12 · 已有结果回放：主线推进，误解另补",
-      "start": 145.48,
+      "start": 154.88,
       "seconds": 10.0,
       "removed_wait_seconds": 5.005,
       "added_reading_hold_seconds": 0,
@@ -221,7 +221,7 @@
     {
       "id": "closing",
       "title": "13 · 目标、理解与证据，串成长期学习",
-      "start": 155.48,
+      "start": 164.88,
       "seconds": 12.96,
       "removed_wait_seconds": 0.008,
       "added_reading_hold_seconds": 0,
@@ -230,5 +230,9 @@
     }
   ],
   "subtitle_timing": "utterance_aligned_proportional_phrase_timing",
-  "subjective_listening_review": "pending"
+  "subjective_listening_review": "approved source voices reused; revised film awaits user viewing",
+  "opening_revision": "2026-10-10",
+  "new_provider_requests": 0,
+  "new_speech_synthesis_requests": 0,
+  "body_edit": "accepted scenes 02–13 concatenated without re-encoding"
 }

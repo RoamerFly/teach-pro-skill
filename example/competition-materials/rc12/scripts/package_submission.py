@@ -24,6 +24,7 @@ MEDIA = ('学途智伴技能说明文档.docx', '学途智伴师生演示视频.
          '学途智伴师生演示字幕.srt', '视频讲解脚本.md')
 FIGURES = {'assets/teach-pro-workflow-architecture-v1.png': '学途智伴工作流程架构图.png'}
 EVIDENCE = 'evals/records/2026-10-06-guided-dialogue-flow.md'
+ARCHITECTURE_EVIDENCE = 'evals/records/2026-10-10-architecture-media.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -169,7 +170,7 @@ def remap(name):
         return '参赛材料/' + name.removeprefix(PREFIX)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
         return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
-    if name == EVIDENCE:
+    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE):
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
 
@@ -239,7 +240,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)
@@ -266,7 +267,8 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
     document = files[PREFIX + '学途智伴技能说明文档.docx'][1]
     with ZipFile(io.BytesIO(document)) as doc:
         xml = doc.read('word/document.xml').decode()
-        if '新版需重录' in xml or '2 分 48 秒' not in xml:
+        duration_label = f"{round(audit['seconds']) // 60} 分 {round(audit['seconds']) % 60} 秒"
+        if '新版需重录' in xml or duration_label not in xml:
             raise ValueError('Document is not synchronized with the accepted film')
 
     path_mapping = {}
@@ -285,8 +287,8 @@ Skill 版本：Teach Pro {VERSION}
 ## 提交材料
 
 - `Skill技能包/teach-pro`：SKILL.md、教学参考、网页模板和运行资源。
-- `参赛材料/学途智伴技能说明文档.docx`：五页技能说明，包含简介、设计思路与使用说明。
-- `参赛材料/学途智伴师生演示视频.mp4`：2 分 48 秒，含配音及画面下方字幕；展示真实 DeepSeek 配置与两轮流式答疑。
+- `参赛材料/学途智伴技能说明文档.docx`：技能说明，包含简介、工作流程与系统架构、设计思路及使用说明。
+- `参赛材料/学途智伴师生演示视频.mp4`：{duration_label}，含配音及画面下方字幕；展示架构讲解、真实 DeepSeek 配置与两轮流式答疑。
 - `参赛材料` 同时提供独立字幕与讲解脚本，便于核对。
 - `课程Demo`：智鉴 Agent 三节正式课及一节关联补充课，可阅读和实际作答。
 - `验证记录` 与 `文件清单.json`：操作来源、验证范围、源码版本和逐文件校验值。
@@ -297,9 +299,9 @@ Skill 版本：Teach Pro {VERSION}
 
 Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内答疑需要 Python 3.11 或更新版本。Windows 双击 `start-course.cmd`；macOS 双击 `start-course.command`；Linux 在课程目录执行 `sh start-course.sh`。启动器检查运行环境并准备设备密钥依赖。可选答疑在课程设置中填写自己的 API Key，选择模型并测试连接。
 
-继续学习时，让宿主中的教学 AI 读取该课程目录的学习记录，再生成下一课。浏览器 Tutor 负责本课答疑，不承担完整课程生成。
+继续学习时，让宿主中的教学 AI 读取该课程目录的学习记录，再生成下一课。浏览器 Tutor 专注本课答疑，帮助学员理解内容、讨论问题。
 
-演示课程已经整理完成，视频中的续课结果为已有课程回放。Demo 不附学员原始作答、聊天或模型凭据；实际作答保存到体验者自己的本地副本。Windows 已实机检查，macOS/Linux 提供启动器，未声称完成原生实机验收。
+演示课程呈现从评估、理解、练习到答疑和续课的学习闭环。实际作答保存到体验者自己的本地副本，教学 AI 读取记录后接续教学。提供 Windows、macOS 与 Linux 启动器；运行检查与验证记录见配套文件。
 
 项目与后续更新：https://github.com/RoamerFly/teach-pro-skill
 '''.encode('utf-8')
@@ -313,7 +315,7 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
     if profile == 'competition_submit':
         note += ('\n## 赛事适配\n\n此包使用顶层中文字段；教学规范位于 `references/specs/`，'
                  '页面模板位于 `assets/templates/`。`agents/openai.yaml` 保留显式调用策略。'
-                 '教学与运行能力不变。字段适配依据参考评审 v2.1，不代表官方评审得分。\n').encode('utf-8')
+                         '教学与运行能力保持一致。字段适配依据参考评审 v2.1。\n').encode('utf-8')
     if 'teach-pro/references/examples/statistics/README.md' in files:
         note += ('\n独立 Skill 包也附带[统计学最小输入输出示例](Skill技能包/teach-pro/references/examples/statistics/README.md)。'
                  '在 Skill 根目录运行 `python scripts/build_example.py <新目录> --stage assessment` 或 `--stage lesson`，'
@@ -323,7 +325,7 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
         note += ('\n专家可对照[校园统计完整自适应案例](Skill技能包/teach-pro/references/examples/statistics-adaptive/README.md)。'
                  '在 Skill 根目录运行 `python scripts/build_adaptive_example.py <新目录>`，'
                  '打开输出的 `index.html` 查看共同起点、两组模拟作答和对应的正式／补充交付；'
-                 '复用原运行组件，可真实体验保存。案例是预写的教学结果对照，不是现场模型生成。\n').encode('utf-8')
+                 '复用原运行组件，可实际体验保存。离线案例用于展示教学结果对照，新课程由宿主中的教学 AI 生成。\n').encode('utf-8')
     records = []
     selected = [(remap(name), info, data) for name, (info, data) in files.items()
                 if name != PREFIX + 'dialogue-video-audit.json']
@@ -332,7 +334,7 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
         selected.extend(showcase)
         note += ('\n## 完整案例直接体验\n\n打开[自适应教学案例/index.html](自适应教学案例/index.html)，'
                  '按“共同起点 → 案例 A／B”查看。两条分支进入同一新目标，分别采用迁移练习和分步支架；'
-                 'B 还交付独立补充课。页面与输入为合成案例，文件保存可实际体验，不计作模型行为测试。\n').encode('utf-8')
+                 'B 还交付独立补充课。页面与输入来自可复现的合成学习场景，支持实际体验文件保存。\n').encode('utf-8')
     for name, info, data in selected:
         records.append({'path': name, 'bytes': len(data), 'sha256': digest(data),
                         'unix_mode': oct((info.external_attr >> 16) & 0o777)})
