@@ -22,6 +22,7 @@ PREFIX = 'example/competition-materials/rc12/'
 DEMO = 'example/competition-demo-rc12/'
 MEDIA = ('学途智伴技能说明文档.docx', '学途智伴师生演示视频.mp4',
          '学途智伴师生演示字幕.srt', '视频讲解脚本.md')
+FIGURES = {'assets/teach-pro-workflow-architecture-v1.png': '学途智伴工作流程架构图.png'}
 EVIDENCE = 'evals/records/2026-10-06-guided-dialogue-flow.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
@@ -166,6 +167,8 @@ def remap(name):
         return '课程Demo/' + name.removeprefix(DEMO)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in MEDIA:
         return '参赛材料/' + name.removeprefix(PREFIX)
+    if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
+        return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
     if name == EVIDENCE:
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
@@ -234,6 +237,12 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
         ['git', 'rev-parse', '--verify', ref + '^{commit}'], cwd=root, text=True).strip()
     paths = ['teach-pro', DEMO.rstrip('/'), EVIDENCE,
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
+    # Historical revisions remain buildable when the later optional figure is absent.
+    if not skill_only:
+        figure_paths = [PREFIX + name for name in FIGURES]
+        available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
+                                            cwd=root, text=True).splitlines()
+        paths.extend(name for name in figure_paths if name in available)
     raw = subprocess.check_output(['git', 'archive', '--format=zip', revision, *paths], cwd=root)
     files = {}
     with ZipFile(io.BytesIO(raw)) as source:
@@ -294,6 +303,13 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
 
 项目与后续更新：https://github.com/RoamerFly/teach-pro-skill
 '''.encode('utf-8')
+    figures = [(name, destination) for name, destination in FIGURES.items() if PREFIX + name in files]
+    if figures:
+        note += '\n## 工作流程与系统架构\n\n'.encode('utf-8')
+        for _, destination in figures:
+            note += f'![学途智伴工作流程与系统架构](参赛材料/{destination})\n\n'.encode('utf-8')
+        note += ('上半部分展示访谈、评估、逐课教学、作答、证据审阅与自适应续课；'
+                 '下半部分区分宿主教学 AI、浏览器、本地服务、可选课内 Tutor 与课程工作区。\n').encode('utf-8')
     if profile == 'competition_submit':
         note += ('\n## 赛事适配\n\n此包使用顶层中文字段；教学规范位于 `references/specs/`，'
                  '页面模板位于 `assets/templates/`。`agents/openai.yaml` 保留显式调用策略。'
@@ -361,6 +377,10 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
                             'sha256': digest(path.read_bytes())} for path, _ in archive_checks]}
     if showcase:
         report['adaptive_showcase'] = {'pages': 19, 'source': 'committed-synthetic-fixture', 'model_calls': 0}
+    if figures:
+        report['architecture_figures'] = [{'file': '参赛材料/' + destination,
+                                          'sha256': digest(files[PREFIX + name][1])}
+                                         for name, destination in figures]
     if profile is not None:
         parity = [{'source': name, 'release': path_mapping.get(name, name),
                    'source_sha256': source_sha, 'release_sha256': digest(files[path_mapping.get(name, name)][1])}
@@ -379,7 +399,7 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
              ('\n参赛提交使用以队伍名和作品名命名的完整 ZIP，已包含 Word、视频和干净 Demo。'
               '赛事版中文字段在顶层；日常 Codex 使用请选择 normal_use 版。\n'
               if profile == 'competition_submit' else '\n保留日常兼容格式与原有目录；中文字段位于 metadata。\n') +
-             '\n两个版本来自同一提交。逐文件差异与 ZIP 校验值见 package-audit.json。\n'), encoding='utf-8')
+             '\n日常版与赛事版共享教学源码，按不同发布配置组织。该包来源提交、逐文件差异与 ZIP 校验值见 package-audit.json。\n'), encoding='utf-8')
     if extract:
         extract_archive(skill_path, output)
         if not skill_only:
