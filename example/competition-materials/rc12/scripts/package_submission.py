@@ -26,6 +26,7 @@ FIGURES = {'assets/teach-pro-workflow-architecture-v2-connected.png': '学途智
 EVIDENCE = 'evals/records/2026-10-06-guided-dialogue-flow.md'
 ARCHITECTURE_EVIDENCE = 'evals/records/2026-10-10-architecture-media.md'
 CONNECTED_FIGURE_EVIDENCE = 'evals/records/2026-10-10-connected-architecture-media.md'
+VALUE_EVIDENCE = 'evals/records/2026-10-10-value-positioning.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -171,7 +172,7 @@ def remap(name):
         return '参赛材料/' + name.removeprefix(PREFIX)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
         return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
-    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE):
+    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE):
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
 
@@ -241,7 +242,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)
@@ -284,6 +285,10 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
 赛道：校园生活
 Skill 版本：Teach Pro {VERSION}
 源码快照：{revision}
+
+## 用途与价值
+
+大学生系统学习需要持续整理目标、作答表现与未解决问题，并据此安排下一步。学途智伴把学习目标、课程与本地学习记录连接起来：先评估基础，再逐课教学；请求继续时读取作答与疑难，调整下一节正式课，并按需提供独立补充课。学习者主要负责学习、作答和提问，减少反复说明背景、整理进度与自行编排课程的负担。
 
 ## 提交材料
 
@@ -398,6 +403,8 @@ Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内�
         (output / 'README.md').write_text(
             ('# 学途智伴 · ' + ('赛事提交版' if profile == 'competition_submit' else '日常使用版') +
              '\n\n版本：' + VERSION + '\n源码提交：' + revision +
+             '\n\n把学习目标、课程与本地学习记录连接起来，先评估基础，再逐课教学，依据作答与疑难安排下一步。'
+             '用途和操作见 [Skill 使用说明](teach-pro/README.md)。' +
              '\n\n导入 `teach-pro/` 或独立 Skill ZIP；课程生成和启动方式见包内 README。\n' +
              ('\n参赛提交使用以队伍名和作品名命名的完整 ZIP，已包含 Word、视频和干净 Demo。'
               '赛事版中文字段在顶层；日常 Codex 使用请选择 normal_use 版。\n'

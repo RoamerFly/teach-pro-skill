@@ -59,6 +59,10 @@ class SubmissionGuardTests(unittest.TestCase):
         self.assertEqual(module.remap(module.CONNECTED_FIGURE_EVIDENCE),
                          '验证记录/2026-10-10-connected-architecture-media.md')
 
+    def test_value_positioning_evidence_has_explicit_path(self):
+        self.assertEqual(module.remap(module.VALUE_EVIDENCE),
+                         '验证记录/2026-10-10-value-positioning.md')
+
     def test_generated_zip_keeps_unix_mode(self):
         buffer = io.BytesIO()
         source = module.ZipInfo('start-course.command')
