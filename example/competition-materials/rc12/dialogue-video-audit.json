@@ -1,12 +1,12 @@
 {
   "seconds": 177.861333,
-  "bytes": 15987468,
-  "sha256": "f91ca4c9973715bf30d3db641bcbda48673668f30e7384482a5df5ca6ef60eb4",
+  "bytes": 15975107,
+  "sha256": "fb8119ecd89c7c65767726f64b88d32b6bfb61b9dd2010202b52b0759dfe0c25",
   "full_decode": "pass",
   "max_volume_db": -4.9,
   "subtitle_cues": 80,
   "provider_requests": 4,
-  "visual_review": "pass: opening overview and responsibility detail checked at full resolution; assessment, masked settings, two answers, continuation and closing representative frames checked; 3775 body video packet hashes identical to accepted source",
+  "visual_review": "pass: connected architecture overview and detail checked; assessment, masked settings, answer, continuation and closing representative frames checked; 3775 encoded body video packets match the accepted source exactly",
   "subjective_listening_review": "approved source voices reused; revised film awaits user viewing",
   "opening_revision": "2026-10-10",
   "new_provider_requests": 0,
@@ -17,7 +17,7 @@
     "packet_sha256_sequence_sha256": "27893079b28b64fd153d6be193d4b934b141c59d79b02bedbe28f32f60b713d6"
   },
   "accepted_source_sha256": "51fb962e98797095d9beea39f901f7893840f60ea32e54bab671bca1ce8c1d73",
-  "architecture_sha256": "b3bc1b3d0911b4752f56ce4b4d92f9f6ceee448305ddeb5941a3c70dff8ac5a7",
+  "architecture_sha256": "e556c1046270e45c83b8d8f286b1133b463e49a0c951515701ea4e0f624f4a18",
   "preserved_body_clips": [
     {
       "scene": 2,

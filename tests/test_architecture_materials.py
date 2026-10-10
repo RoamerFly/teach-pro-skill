@@ -25,6 +25,8 @@ class ArchitectureMaterialsTests(unittest.TestCase):
         self.assertEqual(audit['new_provider_requests'], 0)
         self.assertEqual(audit['new_speech_synthesis_requests'], 0)
         self.assertEqual(len(audit['preserved_body_clips']), 12)
+        figure = ROOT / 'assets/teach-pro-workflow-architecture-v2-connected.png'
+        self.assertEqual(audit['architecture_sha256'], hashlib.sha256(figure.read_bytes()).hexdigest())
 
     def test_chapters_preserve_original_real_operations(self):
         plan = json.loads((ROOT / 'dialogue-video-chapters.json').read_text(encoding='utf8'))
@@ -52,7 +54,7 @@ class ArchitectureMaterialsTests(unittest.TestCase):
             previous = value(end)
 
     def test_document_embeds_exact_figure_and_synchronized_duration(self):
-        expected = (ROOT / 'assets/teach-pro-workflow-architecture-v1.png').read_bytes()
+        expected = (ROOT / 'assets/teach-pro-workflow-architecture-v2-connected.png').read_bytes()
         with ZipFile(ROOT / '学途智伴技能说明文档.docx') as doc:
             self.assertIsNone(doc.testzip())
             self.assertTrue(any(doc.read(n)==expected for n in doc.namelist() if n.startswith('word/media/')))

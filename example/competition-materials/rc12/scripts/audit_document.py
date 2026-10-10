@@ -34,7 +34,7 @@ with ZipFile(file) as archive:
     assert not re.search(r'sk-[A-Za-z0-9]{16,}', xml)
     assert 'w:del ' not in xml and 'w:ins ' not in xml
     assert not any(n.startswith('word/comments') for n in archive.namelist())
-    figure = (root / 'assets/teach-pro-workflow-architecture-v1.png').read_bytes()
+    figure = (root / 'assets/teach-pro-workflow-architecture-v2-connected.png').read_bytes()
     assert any(archive.read(n) == figure for n in archive.namelist() if n.startswith('word/media/'))
     duration = round(json.loads((root / 'dialogue-video-audit.json').read_text(encoding='utf8'))['seconds'])
     assert f'{duration // 60} 分 {duration % 60} 秒' in xml

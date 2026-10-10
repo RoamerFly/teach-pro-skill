@@ -45,15 +45,19 @@ class SubmissionGuardTests(unittest.TestCase):
                 module.remap(name)
 
     def test_architecture_figure_has_explicit_submission_path(self):
-        source = module.PREFIX + 'assets/teach-pro-workflow-architecture-v1.png'
+        source = module.PREFIX + 'assets/teach-pro-workflow-architecture-v2-connected.png'
         self.assertEqual(module.remap(source), '参赛材料/学途智伴工作流程架构图.png')
-        for name in ('assets/teach-pro-workflow-architecture-v1.prompt.md', 'assets/unlisted.png'):
+        for name in ('assets/teach-pro-workflow-architecture-v2-connected.prompt.md', 'assets/unlisted.png'):
             with self.subTest(name=name), self.assertRaises(ValueError):
                 module.remap(module.PREFIX + name)
 
     def test_architecture_media_evidence_has_explicit_path(self):
         self.assertEqual(module.remap(module.ARCHITECTURE_EVIDENCE),
                          '验证记录/2026-10-10-architecture-media.md')
+
+    def test_connected_figure_evidence_has_explicit_path(self):
+        self.assertEqual(module.remap(module.CONNECTED_FIGURE_EVIDENCE),
+                         '验证记录/2026-10-10-connected-architecture-media.md')
 
     def test_generated_zip_keeps_unix_mode(self):
         buffer = io.BytesIO()

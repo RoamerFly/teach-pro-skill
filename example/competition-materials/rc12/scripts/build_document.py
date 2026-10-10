@@ -146,7 +146,7 @@ def build():
 
     heading(doc, '设计思路')
     heading(doc, '工作流程与系统架构', 2)
-    picture(doc, 'teach-pro-workflow-architecture-v1.png', '图 2  学习闭环与系统职责', '访谈、评估、逐课教学、作答、证据审阅与自适应续课；宿主教学 AI、浏览器、本地服务、可选 Tutor 与本地课程工作区分工')
+    picture(doc, 'teach-pro-workflow-architecture-v2-connected.png', '图 2  学习闭环与系统职责', '访谈、评估、逐课教学、作答、证据审阅与自适应续课；宿主教学 AI、浏览器、本地服务、可选 Tutor 与本地课程工作区分工')
     body(doc, '学员在宿主中调用 Skill，教学 AI 先访谈和评估，再生成一节课。学员在网页阅读、作答和提问；请求继续后，教学 AI 读取本地记录，决定下一课，并按需提供独立补充课。')
     body(doc, '教学 AI 负责教学决策与课程生成；课内 Tutor 解释本课疑问；本地 Python 服务同步文件及问答请求。答案与聊天分别写入 learner-submissions 和 learner-chats，画像、路线与课程状态用 Markdown 保存，供新会话接续教学。')
     heading(doc, '依据学习证据续课', 2)

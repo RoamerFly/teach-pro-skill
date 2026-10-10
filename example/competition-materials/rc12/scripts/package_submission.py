@@ -22,9 +22,10 @@ PREFIX = 'example/competition-materials/rc12/'
 DEMO = 'example/competition-demo-rc12/'
 MEDIA = ('学途智伴技能说明文档.docx', '学途智伴师生演示视频.mp4',
          '学途智伴师生演示字幕.srt', '视频讲解脚本.md')
-FIGURES = {'assets/teach-pro-workflow-architecture-v1.png': '学途智伴工作流程架构图.png'}
+FIGURES = {'assets/teach-pro-workflow-architecture-v2-connected.png': '学途智伴工作流程架构图.png'}
 EVIDENCE = 'evals/records/2026-10-06-guided-dialogue-flow.md'
 ARCHITECTURE_EVIDENCE = 'evals/records/2026-10-10-architecture-media.md'
+CONNECTED_FIGURE_EVIDENCE = 'evals/records/2026-10-10-connected-architecture-media.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -170,7 +171,7 @@ def remap(name):
         return '参赛材料/' + name.removeprefix(PREFIX)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
         return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
-    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE):
+    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE):
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
 
@@ -240,7 +241,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)

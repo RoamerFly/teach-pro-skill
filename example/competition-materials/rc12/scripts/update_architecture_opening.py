@@ -46,7 +46,7 @@ def build(source, work):
         lines.append(f'Dialogue: 1,{stamp(cue["start"],True)},{stamp(cue["end"],True)},{style},,0,0,0,,{text}')
     (work / 'opening.ass').write_text(ASS_HEADER + '\n'.join(lines)+'\n', encoding='utf8')
     # Whole figure first; then focus on responsibilities and the shared file workspace.
-    figure = MATERIALS / 'assets/teach-pro-workflow-architecture-v1.png'
+    figure = MATERIALS / 'assets/teach-pro-workflow-architecture-v2-connected.png'
     vf = ('[0:v]split=2[full][detail];'
           f'[full]scale=1440:810,setsar=1,trim=duration={opening["seconds"]},setpts=PTS-STARTPTS[a];'
           f'[detail]crop=1672:528:0:400,scale=1440:455,pad=1440:810:0:177:color=white,setsar=1,'
