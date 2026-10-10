@@ -1,0 +1,29 @@
+{
+  "revision": "693078626c78b77a94077cdf24ded0713381cfa9",
+  "package_members": 213,
+  "manifest_files": 212,
+  "added": [
+    "验证记录/2026-10-10-architecture-media.md"
+  ],
+  "changed": [
+    "README.md",
+    "参赛材料/学途智伴师生演示字幕.srt",
+    "参赛材料/学途智伴师生演示视频.mp4",
+    "参赛材料/学途智伴技能说明文档.docx",
+    "参赛材料/视频讲解脚本.md",
+    "文件清单.json"
+  ],
+  "removed": [],
+  "crc": "pass",
+  "manifest_and_extraction_checksums": "pass",
+  "skill_byte_parity_files": 60,
+  "skill_byte_parity": "pass",
+  "document_figure_parity": "pass",
+  "package": {
+    "bytes": 20131422,
+    "sha256": "4c5c8b9ad6000fcf7e0eaa06ae593a25484a4f2899cdd285f3312ba377c04913"
+  },
+  "video_seconds": 177.861333,
+  "docx_pages": 5,
+  "normal_use": "unchanged"
+}
