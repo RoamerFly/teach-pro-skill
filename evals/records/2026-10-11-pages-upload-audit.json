@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-11",
+  "status": "pass",
+  "public_url": "https://roamerfly.github.io/teach-pro-skill/",
+  "source_revision": "d08af0db9b13160285cfb603a05c116564a0f3f7",
+  "deployment": {
+    "conclusion": "success",
+    "headSha": "d08af0db9b13160285cfb603a05c116564a0f3f7",
+    "status": "completed",
+    "url": "https://github.com/RoamerFly/teach-pro-skill/actions/runs/38110053367"
+  },
+  "tracked_history_scan": {
+    "blobs": 853,
+    "credential_or_learner_path_issues": 0
+  },
+  "related_tests_passed": 50,
+  "http_checks": [
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/course/index.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/course/practice/entry-assessment.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/course/lessons/0001-llm-to-agent-api-call.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/course/settings.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/adaptive/index.html",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/assets/demo.mp4",
+      "status": 200,
+      "content_type": "video/mp4"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/assets/workflow.png",
+      "status": 200,
+      "content_type": "image/png"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/downloads/zhijian-agent-course.zip",
+      "status": 200,
+      "content_type": "application/x-zip-compressed"
+    },
+    {
+      "url": "https://roamerfly.github.io/teach-pro-skill/downloads/teach-pro.zip",
+      "status": 200,
+      "content_type": "application/x-zip-compressed"
+    }
+  ],
+  "upload_files": [
+    {
+      "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.zip",
+      "bytes": 211903,
+      "sha256": "9f81b6e90963922fd38c1a00d359b05fa804ea2c4aa31ac665bb516879ebd2b4",
+      "source_identical": true
+    },
+    {
+      "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.docx",
+      "bytes": 1950535,
+      "sha256": "b9cd783c80ca43e48d232e7d0dca0ff53503937958a0b660b815f25b154afa01",
+      "source_identical": true
+    },
+    {
+      "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.mp4",
+      "bytes": 15975107,
+      "sha256": "fb8119ecd89c7c65767726f64b88d32b6bfb61b9dd2010202b52b0759dfe0c25",
+      "source_identical": true
+    }
+  ],
+  "download_checks": [
+    {
+      "archive": "zhijian-agent-course.zip",
+      "crc": "pass",
+      "launchers_mode": "0755",
+      "learner_records_absent": true
+    },
+    {
+      "archive": "teach-pro.zip",
+      "crc": "pass",
+      "launchers_mode": "0755",
+      "learner_records_absent": true
+    }
+  ],
+  "public_build_files": 78,
+  "browser_checks": [
+    "desktop-and-mobile-no-horizontal-overflow",
+    "images-loaded",
+    "answer-restored-after-reload",
+    "quiz-correct-answer-feedback",
+    "dark-theme-switch",
+    "real-answer-exhibit-not-online-simulation",
+    "video-playing-readyState-4-no-error"
+  ],
+  "browser_video": {
+    "seconds": 177.861333,
+    "width": 1440,
+    "height": 900,
+    "readyState": 4,
+    "error": null,
+    "observed_current_time": 25.781211
+  },
+  "skill_core_changed": false,
+  "new_model_or_tts_calls": 0,
+  "video_seconds": 177.861333,
+  "pending_user_checks": [
+    "locked-category-mapping",
+    "actual-form-options-and-limits",
+    "submission-network-reachability",
+    "final-submit"
+  ]
+}
