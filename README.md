@@ -2,9 +2,11 @@
 
 面向长期学习的自适应教学 Skill。把学习目标、课程与本地学习记录连接起来，先评估基础，再逐课教学，依据作答与疑难安排下一步。
 
-当前版本：**1.1.0-rc.12**。正式课逐节推进，补充课按需配套，课内答疑与页面体验持续校核。
+当前版本：**1.1.0-rc.12**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
 
 [在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/competition-demo-rc12/README.md)
+
+[![学途智伴：自适应教学 Skill 技能包，连接学习目标、课程与本地学习记录](./example/competition-pages/assets/cover.jpg)](https://roamerfly.github.io/teach-pro-skill/)
 
 ## 用途与价值
 
@@ -18,11 +20,19 @@
 
 学习者主要负责阅读、作答和提问，教学 AI 维护路线与进度，减少反复说明背景和自行编排课程的负担。
 
+## 工作流程
+
+访谈与评估确定起点，网页课程承载讲解与练习，本地记录连接前后两次教学。学员请求继续时，教学 AI 读取作答与疑难，安排下一节正式课及按需补充课。
+
+![学途智伴工作流程架构：学员、教学 AI、网页课程、本地学习记录与续课相互连接](./example/competition-materials/rc12/assets/teach-pro-workflow-architecture-v2-connected.png)
+
+Skill 提供教学规则、模板与本地工具；宿主教学 AI 负责生成与续课，课内答疑模型负责当前课的讨论。
+
 ## 核心特性
 
 - **自适应教学**：建立学员画像与学习路线，依据学习证据选择下一课。
 - **主线与补充**：每次推进一节正式课，按需同时提供补充课，分别展示与保存。
-- **图文与视频**：支持流程图、架构图、内嵌视频和字幕。
+- **图解教学**：通过流程图、架构图与代码建立理解，配合一手阅读和视频导学。
 - **主题化页面**：按学习主题选择课程级视觉风格与灵活版式，侧栏可折叠。
 - **资源导学**：精选一手阅读与视频，标明学习位置、用途和任务。
 - **本地学习记录**：自动保存作答、疑难与聊天，供课程生成 AI 参考。
@@ -80,6 +90,31 @@ cd teach-pro-skill/example/competition-demo-rc12
 
 [早期课程与项目案例](./example/ai-agent-security-intelligence/README.md) 保留字幕视频和安全情报实验代码，供对照使用。
 
+## 界面预览
+
+### 图解与练习
+
+课程导航、冻结标题栏、图解和代码围绕当前学习目标组织；理解后通过选择题与开放练习留下作答记录。
+
+![智鉴 Agent 第一课实录：左侧课程导航、顶部课内答疑入口与消息流程图解](./example/competition-pages/assets/course-preview.png)
+
+### 多轮课内答疑
+
+围绕本课上下文连续提问，回答流式显示，支持 Markdown 排版和按课保存。下图来自演示视频中 DeepSeek 的实际两轮回答。
+
+![课内答疑实录：从消息上下文追问多轮聊天与工具型 Agent 的区别](./example/competition-pages/assets/tutor-preview.png)
+
+<details>
+<summary>查看统一模型设置界面</summary>
+
+服务预设、遮蔽密钥、获取模型、测试连接与设备记忆集中在“课程设置”，连接后回到当前课继续提问。
+
+![课程设置实录：DeepSeek 服务、模型下拉选择、遮蔽密钥与绿色成功提示](./example/competition-pages/assets/settings-preview.png)
+
+</details>
+
+[观看完整操作演示](https://roamerfly.github.io/teach-pro-skill/#video) · [下载课程与 Skill](https://roamerfly.github.io/teach-pro-skill/#experience)
+
 ## AI 答疑与隐私
 
 每门课程默认提供左侧置顶“课程设置”，无需配置 AI 也能学习。需要课内答疑时，再启动本地服务并配置服务、API Key 和模型。支持 OpenAI-compatible、OpenAI、DeepSeek、Ollama 与自定义地址，以及主动获取模型列表。
@@ -118,7 +153,7 @@ python example/competition-materials/rc12/scripts/package_submission.py <赛事�
 
 输出目录必须位于仓库外且为空或尚不存在。目录中提供可直接导入的 `teach-pro/`、ZIP 与逐文件来源校验；赛事版另附完整参赛材料包。参考评审规则适配不等同于官方成绩。
 
-行为验收以[三项稳定化关卡](./evals/competition-gates.md)为准；三种续课决策已观察，原生内容仍有失败项。展示校核与运行检查见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)。
+教学行为验收见[三项稳定化关卡](./evals/competition-gates.md)；展示与发布校核见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)和 [在线入口验收记录](./evals/records/2026-10-11-pages-upload-ready.md)。
 
 ## 文档与反馈
 
