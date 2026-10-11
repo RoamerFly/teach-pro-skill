@@ -1,0 +1,47 @@
+name: Publish competition showcase
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'example/competition-pages/**'
+      - 'example/competition-demo-rc12/**'
+      - 'example/competition-materials/rc12/**'
+      - 'teach-pro/**'
+      - 'scripts/build_public_demo.py'
+      - 'tests/test_public_demo.py'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Check public build rules
+        run: python -B -m unittest tests.test_public_demo
+      - name: Build selected public materials
+        run: python -B scripts/build_public_demo.py _site --ref HEAD
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy showcase
+        id: deployment
+        uses: actions/deploy-pages@v4
