@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "revision": "defee0c8cdad643b8d51b6a712d719c9c6eae7d4",
+  "publicLessons": 4,
+  "footerOnlyQuestions": true,
+  "inlineAnswers": true,
+  "browserSaveRestored": true,
+  "downloadsMatchDeployedManifest": true,
+  "modelApiRequests": 0,
+  "pageErrors": [],
+  "downloads": [
+    {
+      "file": "zhijian-agent-course.zip",
+      "member_content_matches_after_eol_normalization": true,
+      "eol_only_differences": [
+        ".teach-course.json",
+        "assets/vendor/dompurify.LICENSE",
+        "assets/vendor/dompurify.LICENSE-MPL",
+        "assets/vendor/marked.LICENSE"
+      ],
+      "members": 37,
+      "unix_launchers": "0755"
+    },
+    {
+      "file": "teach-pro.zip",
+      "member_content_matches_after_eol_normalization": true,
+      "eol_only_differences": [
+        "teach-pro/assets/vendor/dompurify.LICENSE",
+        "teach-pro/assets/vendor/dompurify.LICENSE-MPL",
+        "teach-pro/assets/vendor/marked.LICENSE",
+        "teach-pro/references/examples/statistics-adaptive/cases.json",
+        "teach-pro/references/examples/statistics-adaptive/resources.json"
+      ],
+      "members": 60,
+      "unix_launchers": "0755"
+    }
+  ],
+  "deployment": "https://github.com/RoamerFly/teach-pro-skill/actions/runs/39040241925",
+  "zip_note": "Deployed SHA values match the deployed build manifest. Source text can differ only in LF/CRLF between cloud and Windows Git archives; other member bytes match. ZIP containers are not claimed byte-identical."
+}
