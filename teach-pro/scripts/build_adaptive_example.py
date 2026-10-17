@@ -72,7 +72,7 @@ def write_lesson(course, values, filename, number, title, description, body, mod
                 RESOURCES_HTML='' if supplement else resources(number),
                 COURSE_NAVIGATION=navigation('./', has_second, has_supplement),
                 ADDITIONAL_FILES_NAV='<nav class="sidebar-section" aria-label="相关文件"><a href="../practice/entry-assessment.html">入门评估</a><a href="../reference/decision-trace.html">案例依据与教学决策</a></nav>')
-    page['CURRENT_PAGE_NAV'] = ('<li><a href="#orientation">本课目标</a></li><li><a href="#learning-input">答案与疑难</a></li>')
+    page['CURRENT_PAGE_NAV'] = ('<li><a href="#orientation">本课目标</a></li><li><a href="#learning-input">本课疑难</a></li>')
     if number == '0002':
         page['PREVIOUS_LESSON_LINK'] = f'<a href="./{FIRST}">上一正式课</a>'
     elif supplement:
@@ -83,7 +83,7 @@ def write_lesson(course, values, filename, number, title, description, body, mod
     # Keep the shared template; populate a useful lesson-local TOC from body headings.
     sections = re.findall(r'<section id="([\w-]+)">\s*<h2>([^<]+)</h2>', body)
     toc = ''.join(f'<li><a href="#{anchor}">{title}</a></li>' for anchor, title in sections)
-    text = text.replace(page['CURRENT_PAGE_NAV'], toc + '<li><a href="#learning-input">答案与疑难</a></li>')
+    text = text.replace(page['CURRENT_PAGE_NAV'], toc + '<li><a href="#learning-input">本课疑难</a></li>')
     (course / 'lessons' / filename).write_text(text, encoding='utf-8')
 
 
@@ -116,6 +116,8 @@ def branch(course, case, source):
         else:
             scaffold = '<div class="table-wrap"><table><caption>先把乙组的每项距离写出来</caption><thead><tr><th>金额</th><th>减去均值20</th><th>取距离</th></tr></thead><tbody><tr><td>0</td><td>−20</td><td>20</td></tr><tr><td>10</td><td>−10</td><td>10</td></tr><tr><td>20</td><td>0</td><td>0</td></tr><tr><td>30</td><td>10</td><td>10</td></tr><tr><td>40</td><td>20</td><td>20</td></tr></tbody></table></div><p>沿每行从左向右：先减均值，再去掉方向得到距离。最后才把第三列加起来除以五，不能在第二列相加后再取绝对值。</p>'
             transfer = '<p>第一步：14、18、20、22、26的均值为20，请补齐距离6、2、__、__、6，再相加除以五。第二步换数据：12、16、20、24、28，自己求均值与MAD，并说明每个数的单位。</p><details><summary>完成后核对</summary><p>第一组距离6、2、0、2、6，MAD为16÷5=3.2元。第二组均值20，距离8、4、0、4、8，MAD为24÷5=4.8元。正负偏差虽然相加为零，实际距离并没有消失。</p></details>'
+        answer = '<label for="lesson-evidence">你的计算与解释</label><textarea id="lesson-evidence" data-save-key="lesson-0002-evidence" rows="4"></textarea>'
+        transfer = transfer.replace('<details>', answer + '<details>', 1)
         body = (SOURCE / 'second-lesson.html').read_text(encoding='utf-8').replace('{{SCAFFOLD_HTML}}', scaffold).replace('{{TRANSFER_HTML}}', transfer)
         write_lesson(course, values, SECOND, '0002', '比较分散程度', '用同刻度点图和平均绝对偏差，解释中心相同的数据为什么不同。', body,
                      '中心告诉你在哪里，分散程度告诉你离中心多远；MAD先算每项绝对距离再平均，比较时保留单位与点图。',

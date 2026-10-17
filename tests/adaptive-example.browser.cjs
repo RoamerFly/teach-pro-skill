@@ -76,6 +76,9 @@ const names = ['0001-mean-and-median', '0001-s01-median-positions', '0002-spread
     // Replay B's original misconception, not the corrected choice above.
     await page.locator('input[value="median-25"]').check();
     await page.locator('#lesson-evidence').fill(fixture.fields['lesson-0001-evidence']);
+    assert.equal(await page.locator('#learning-input textarea').count(), 1);
+    assert.equal(await page.locator('#transfer #lesson-evidence').count(), 1);
+    await page.locator('#transfer').screenshot({path: path.join(qa, 'inline-answer.png')});
     await page.locator('#lesson-questions').fill(fixture.fields['lesson-0001-questions']);
     await page.waitForFunction(() => document.querySelector('.sync-status')?.dataset.state === 'saved');
     await layout('first-lesson');
@@ -84,6 +87,8 @@ const names = ['0001-mean-and-median', '0001-s01-median-positions', '0002-spread
       await page.goto(base + '/lessons/' + names[index] + '.html');
       const expectedKey = index === 1 ? 'lesson-0001-s01-evidence' : 'lesson-0002-evidence';
       assert.equal(await page.locator('#lesson-evidence').getAttribute('data-save-key'), expectedKey);
+      assert.equal(await page.locator('#learning-input textarea').count(), 1);
+      assert.equal(await page.locator('[data-exercise="open"] #lesson-evidence').count(), 1);
       assert.equal(await page.locator('#lesson-evidence').inputValue(), '');
       await page.locator('#lesson-evidence').fill(answers[index]);
       await page.waitForFunction(() => document.querySelector('.sync-status')?.dataset.state === 'saved');
@@ -107,7 +112,7 @@ const names = ['0001-mean-and-median', '0001-s01-median-positions', '0002-spread
     await page.goto(base + '/reference/decision-trace.html'); await layout('decision-trace');
     assert.deepEqual(errors, []); assert.deepEqual(remote, []);
     assert(!fs.existsSync(path.join(output, 'case-b/.tutor-settings.json')));
-    const report = {synthetic: true, modelCalls: 0, checks: ['portal-three-snapshots', 'wrong-answer-feedback', 'edited-answer-feedback-reset', 'first-answer-file-save', 'supplement-independent-save', 'new-formal-independent-save', 'fixture-not-overwritten', 'restart-fresh-browser-restore-three-pages', 'branch-isolation', 'no-provider-configuration'], layoutChecks, pageErrors: errors, externalRequests: remote.length};
+    const report = {synthetic: true, modelCalls: 0, checks: ['inline-answer-placement', 'footer-only-questions', 'portal-three-snapshots', 'wrong-answer-feedback', 'edited-answer-feedback-reset', 'first-answer-file-save', 'supplement-independent-save', 'new-formal-independent-save', 'fixture-not-overwritten', 'restart-fresh-browser-restore-three-pages', 'branch-isolation', 'no-provider-configuration'], layoutChecks, pageErrors: errors, externalRequests: remote.length};
     fs.writeFileSync(path.join(qa, 'audit.json'), JSON.stringify(report, null, 2));
     console.log('PASS: ' + JSON.stringify(report));
   } finally {

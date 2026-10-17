@@ -70,7 +70,7 @@ def build(output: Path, stage: str = 'assessment') -> Path:
     if stage == 'lesson':
         values['ADDITIONAL_FILES_NAV'] = assessment_link.format(prefix='../')
         values['COURSE_NAVIGATION'] = f'<li><a href="./{LESSON}" aria-current="page">第 1 课 · 均值与中位数</a></li>'
-        values['CURRENT_PAGE_NAV'] = '<li><a href="#intuition">先看直觉</a></li><li><a href="#calculation">完整计算</a></li><li><a href="#boundary">条件与边界</a></li><li><a href="#learning-input">答案与疑难</a></li>'
+        values['CURRENT_PAGE_NAV'] = '<li><a href="#intuition">先看直觉</a></li><li><a href="#calculation">完整计算</a></li><li><a href="#boundary">条件与边界</a></li><li><a href="#practice">即时练习</a></li><li><a href="#learning-input">本课疑难</a></li>'
         (output / 'lessons').mkdir()
         (output / 'lessons' / LESSON).write_text(render('lesson.html', values), encoding='utf-8')
     (output / 'COURSE.md').write_text(f'# 校园消费统计\n\n合成页面夹具，非宿主执行结果。\n视觉方向：studio。\n阶段：{stage}。能力待验证，无学员记录。\n', encoding='utf-8')

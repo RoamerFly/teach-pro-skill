@@ -179,6 +179,22 @@ def check_course(root):
         elif not any(child.tag == 'a' and (file.parent / unquote(urlsplit(child.attrs.get('href') or '').path)).resolve() == root / 'settings.html' for child in nav.descendants()):
             issue(relative, nav.line, 'SETTINGS_NAV', '设置入口未指向当前课程 settings.html')
         if relative.startswith('lessons/'):
+            for exercise in (n for n in page.nodes if n.attrs.get('data-exercise') == 'open'):
+                children = list(exercise.descendants())
+                fields = [n for n in children if n.tag == 'textarea' and n.attrs.get('data-save-key')]
+                if not fields:
+                    issue(relative, exercise.line, 'EXERCISE_INPUT', '开放练习需在题后提供自动保存回答框')
+                else:
+                    first_hint = next((i for i, n in enumerate(children) if n.tag == 'details'), len(children))
+                    if children.index(fields[0]) > first_hint:
+                        issue(relative, fields[0].line, 'EXERCISE_INPUT_ORDER', '回答框应位于提示和解析之前')
+                    for field in fields:
+                        if not any(n.tag == 'label' and n.attrs.get('for') == field.attrs.get('id') for n in children):
+                            issue(relative, field.line, 'EXERCISE_INPUT_LABEL', '题后回答框需有对应标签')
+            footer = next((n for n in page.nodes if n.attrs.get('id') == 'learning-input'), None)
+            if footer and sum(n.tag == 'textarea' for n in footer.descendants()) > 1:
+                warnings.append({'file': relative, 'line': footer.line, 'code': 'GROUPED_ANSWERS',
+                                 'message': '旧页答案集中在课末；建议原位移动到各题后，保留原保存键，课末只留疑难。'})
             if not any(node.attrs.get('id') == 'learning-input' for node in page.nodes):
                 issue(relative, 1, 'TUTOR_ANCHOR', '缺少课末学习记录锚点')
             if not any(node.tag == 'script' and urlsplit(node.attrs.get('src') or '').path == '../assets/tutor.js' for node in page.nodes):

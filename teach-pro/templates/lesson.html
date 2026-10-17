@@ -62,11 +62,12 @@
         {{LESSON_CONTENT_HTML}}
       </article>
 
+      <!-- 开放练习在每道题后直接放带 label、稳定 id / data-save-key 的回答框，置于提示与解析前；选择题原位作答。 -->
       {{EXERCISES_HTML}}
 
       <!-- 先检索或复用并评估视频候选；选入视频默认用具体链接与任务，不嵌入播放器。
            有选定资源时插入“本课一手阅读与视频”语义 section：优先项通常 1–2 项，写清定位、任务、产出和时间预算；
-           选读用 details 折叠。已选资源的访问限制及替代路径可见；产出复用 lesson-evidence。
+           选读用 details 折叠。已选资源的访问限制及替代路径可见；需提交的产出在对应任务后原位输入。
            没有选定资源时删除此占位，不在学员页面解释资源取舍；决策记入 RESOURCES.md。 -->
       {{RESOURCES_HTML}}
 
@@ -81,10 +82,8 @@
       </section>
 
       <section id="learning-input" class="content-section callout note">
-        <h2>本课答案与疑难记录</h2>
-        <p>使用课程启动器打开时，输入会自动写入本地课程目录，AI 下次对话会直接读取。若仅双击 HTML 打开，则保存在浏览器；必要时可下载备份。</p>
-        <label for="lesson-evidence">我的练习答案与掌握证据</label>
-        <textarea id="lesson-evidence" data-save-key="lesson-{{LESSON_NUMBER}}-evidence" placeholder="写下独立完成的答案、作品、代码结果与资源学习产出，说明需要提示的部分。"></textarea>
+        <h2>本课疑难记录</h2>
+        <p>记录还想讨论的问题；各题答案已在题后自动保存。</p>
         <label for="lesson-questions">疑难与希望继续讨论的问题</label>
         <textarea id="lesson-questions" data-save-key="lesson-{{LESSON_NUMBER}}-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
         <div class="learning-input-actions">

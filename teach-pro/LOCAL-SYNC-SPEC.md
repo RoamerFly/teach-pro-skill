@@ -5,7 +5,7 @@
 ## 学员流程
 
 1. 每次学习会话启动一次课程本地服务，浏览器自动打开课程。按系统使用 `start-course.cmd`（Windows）、`start-course.sh`（Linux，`sh start-course.sh`）或 `start-course.command`（macOS，必要时用 `sh start-course.command`）；也可运行 `python3 serve_course.py`，Windows 可用 `py -3 serve_course.py`。无图形浏览器时传 `--no-browser`，在本机浏览器打开打印的 URL；远程机器须自行建立安全访问方式，本服务仍只监听回环。仅阅读课程时仍可直接打开 `index.html`。
-2. 学员在入门评估或课程末尾输入答案、作品说明与疑难；页面先保存浏览器副本，再自动同步到 `learner-submissions/<page-slug>.json`。同步成功须显示“已写入课程目录”；失败须明确显示“仅浏览器保存”并保留备份下载。
+2. 学员在入门评估及每道练习后输入答案或作品说明，课末只填疑难；所有字段由 `data-save-key` 收集，不限定在课末容器内。页面先保存浏览器副本，再自动同步到 `learner-submissions/<page-slug>.json`。同步成功须显示“已写入课程目录”；失败须明确显示“仅浏览器保存”并保留备份下载。
 3. 学员下次在同一工作区向 AI 提问或要求下一课时，只需说“继续”或提出问题，无须每次导出上传。
 
 ## AI 流程
