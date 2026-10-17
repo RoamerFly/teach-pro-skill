@@ -32,7 +32,7 @@
           <li><a href="#resources">一手阅读与视频</a></li>
           <li><a href="#mental-model">带走这个心智模型</a></li>
           <li><a href="#review-plan">复习安排</a></li>
-          <li><a href="#learning-input">本课答案与疑难记录</a></li>
+          <li><a href="#learning-input">本课疑难记录</a></li>
         </ol>
       </nav>
 
@@ -384,14 +384,15 @@
         </div>
 
         <!-- Open exercise: Trace a ReAct loop -->
-        <div class="exercise-card" data-difficulty="hard">
+        <div data-exercise="open" class="exercise-card" data-difficulty="hard">
           <header>
             <span class="eyebrow">练习 4 · 迁移</span>
             <h3>用 ReAct 格式写一个多步推理过程</h3>
           </header>
           <p>场景：你有一个安全情报 Agent，工具包括 <code>search_cve(keyword)</code>（查 CVE 漏洞库）和 <code>read_report(path)</code>（读情报报告）。用户问：「最近有没有和 Apache 中间件相关的高危漏洞？」</p>
           <p>请用 ReAct 格式（Thought → Action → Observation → 重复 → 最终回复）写出 Agent 可能的推理过程，至少包含 2 次工具调用。注意标注每一步的 Thought 内容。</p>
-          <details>
+          <label for="lesson-evidence">你的推理与解释</label>
+        <textarea id="lesson-evidence" data-save-key="lesson-0002-evidence" rows="8" placeholder="写下练习 4 的推理过程，并说明哪些部分需要提示。"></textarea><details>
             <summary>查看自检清单</summary>
             <ul>
               <li>每个 Thought 是否说明了「为什么」要调用这个工具？</li>
@@ -402,13 +403,13 @@
               <li>是否标注「Action 调用提议 → 运行时检查 → 工具执行 → Observation」？检查拒绝时是否返回原因而不执行工具？</li>
             </ul>
           </details>
-          <p>把你的推理过程写在下方「本课答案与疑难记录」的输入框中。</p>
+
         </div>
       </section>
 
       <section id="resources" class="content-section">
         <h2>本课一手阅读与视频</h2>
-        <p>先读论文的指定片段；想观察代码组织方式时，选看中文实作视频。把对照结果写入课末证据框。</p>
+        <p>先读论文的指定片段；想观察代码组织方式时，选看中文实作视频。把对照结果写在本项下方的回答框。</p>
 
         <div class="resource-card">
           <h3>ReAct: Synergizing Reasoning and Acting in Language Models</h3>
@@ -419,7 +420,9 @@
           <p><strong>预计时长：</strong>15 分钟（摘要、引言与第 3.3 节的指定对比）。</p>
           <p><strong>完成标准：</strong>能用自己的话解释思路文本与动作如何交替，并指出上述比较使用的任务、基线与指标；说明这些实验结果为什么不能直接推广为「所有 Agent 都需要 Thought」。</p>
           <p><strong>访问：</strong><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener noreferrer">arxiv.org/abs/2210.03629</a>（英文，免费，无需登录；摘要页面可直接阅读，PDF 可选）</p>
-        </div>
+
+<label for="0002-resource-1">本项学习产出（选填）</label><textarea id="0002-resource-1" data-save-key="0002-resource-1" rows="3" placeholder="在这里写下你的回答。"></textarea>
+</div>
 
         <details class="resource-card" data-resource-id="video-datawhale-react">
           <summary>选看 · Hello-Agents 第四章：智能体范式构建（上）· 中文 · 约 15 分钟</summary>
@@ -427,7 +430,9 @@
           <p><strong>看哪里：</strong>单集 P1，按 ReAct 主题定位；视频全长 22 分 54 秒。分配 10 分钟选看、5 分钟做对照，精确时间段未核验；其他范式留待后续。</p>
           <p><strong>看前预测：</strong>工具超时后，模型应根据什么决定下一步？<strong>暂停任务：</strong>画两轮循环，分别标注模型提议、程序执行和返回结果。<strong>看后产出：</strong>把天气示例换成安全情报查询，写出一次超时后的继续或停止判断；不把可见 Thought 当成执行权限。</p>
           <p class="resource-access">中文；平台访问受限时，可改读<a href="https://github.com/datawhalechina/hello-agents/blob/main/docs/chapter4/第四章%20智能体经典范式构建.md#42-react" target="_blank" rel="noopener noreferrer">项目第四章 4.2 ReAct</a>，或用本课完整示范完成相同产出。</p>
-        </details>
+
+<label for="0002-resource-2">本项学习产出（选填）</label><textarea id="0002-resource-2" data-save-key="0002-resource-2" rows="3" placeholder="在这里写下你的回答。"></textarea>
+</details>
         <details>
           <summary>选读：Anthropic Building effective agents — Agents 部分</summary>
           <div class="resource-card">
@@ -440,7 +445,9 @@
             <p><strong>完成标准：</strong>能说明 Anthropic 对 Agent 的定义与本课 ReAct 循环的对应关系。</p>
             <p><strong>访问：</strong><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener noreferrer">anthropic.com/engineering/building-effective-agents</a>（英文，免费，无需登录）</p>
           </div>
-        </details>
+
+<label for="0002-resource-3">本项学习产出（选填）</label><textarea id="0002-resource-3" data-save-key="0002-resource-3" rows="3" placeholder="在这里写下你的回答。"></textarea>
+</details>
       </section>
 
       <section id="mental-model" class="content-section mental-model">
@@ -463,10 +470,9 @@
       </section>
 
       <section id="learning-input" class="content-section callout note">
-        <h2>本课答案与疑难记录</h2>
-        <p>使用课程启动器打开时，输入会自动写入本地课程目录，AI 下次对话会直接读取。若仅双击 HTML 打开，则保存在浏览器；必要时可下载备份。</p>
-        <label for="lesson-evidence">我的练习答案与掌握证据</label>
-        <textarea id="lesson-evidence" data-save-key="lesson-0002-evidence" rows="8" placeholder="写下三道选择题的作答情况、练习 4 的 ReAct 推理过程，以及哪些部分需要提示才能完成。"></textarea>
+        <h2>本课疑难记录</h2>
+        <p>记录还想讨论的问题；各题答案已在题后自动保存。</p>
+
         <label for="lesson-questions">疑难与希望继续讨论的问题</label>
         <textarea id="lesson-questions" data-save-key="lesson-0002-questions" rows="6" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
         <div class="learning-input-actions">

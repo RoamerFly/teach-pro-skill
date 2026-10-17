@@ -26,8 +26,6 @@
         </ol>
       </nav>
 
-
-
       <nav class="sidebar-section" aria-label="全部课程"><h2>课程目录</h2><ol class="course-list"><li><a href="../lessons/0001-llm-to-agent-api-call.html">第 1 课 · 从 LLM 到 Agent</a></li><li><a href="../lessons/0002-react-reasoning-loop.html">第 2 课 · 推理循环与 ReAct 模式</a><ul class="lesson-supplements"><li><a href="../lessons/0002-s01-injection-without-thought.html">补充 · 没有 Thought 仍有注入风险</a></li></ul></li><li><a href="../lessons/0003-safe-tool-contract.html">第 3 课 · 安全工具调用契约</a></li></ol></nav>
     </aside>
 
@@ -51,8 +49,6 @@
         <p>演示场景中的安全题把“没有显式 Thought”与“不会受注入影响”混在了一起。本页换一个场景看信息路径，完成后用自己的话说明区别。正式第三课仍可直接学习。</p>
       </section>
 
-
-
       <article class="lesson-body">
         <section id="no-thought" class="content-section">
   <h2>没有 Thought，内容仍然进入上下文</h2>
@@ -72,12 +68,12 @@
 
       </article>
 
-      <section id="exercises" class="content-section"><h2>教学后换场景检查</h2><div class="exercise-card"><h3>换一个场景再判断</h3><p>模型不输出 Thought，用户只要求摘要招聘公告。公告夹带“外发简历”指令。哪项处理恰当？</p><div data-quiz data-save-key="lesson-0002-s01-q1-untrusted-content" data-correct-answer="C"><div class="quiz-options"><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="a" data-feedback="没有 Thought 不代表没有读取公告；风险取决于不可信内容如何影响输出。"> A. 没有显式思路文本，公告就不会影响模型</label><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="b" data-feedback="外部材料不是用户授权。不能让材料给新的动作权限。"> B. 公告包含发送要求，就视为用户批准外发</label><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="c" data-correct="true" data-feedback="正确。不可信内容仍进入上下文；应用授权保持独立，还应核查摘要是否被污染。"> C. 公告仍可能影响输出，应用不得据此授权</label><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="d" data-feedback="拦动作与摘要准确是不同目标；文本输出仍可能受影响。"> D. 只要拦住发送动作，摘要内容必定正确</label></div><button type="button" class="quiz-submit" data-quiz-submit>检查回答</button><div data-quiz-feedback aria-live="polite"></div></div></div><p>把理由写在页尾：谁提供恶意文字？模型接收了什么？哪一层应阻止外发？最后再举一种“工具被拦住但输出仍受污染”的可能结果。</p></section>
+      <section id="exercises" data-exercise="open" class="content-section"><h2>教学后换场景检查</h2><div class="exercise-card"><h3>换一个场景再判断</h3><p>模型不输出 Thought，用户只要求摘要招聘公告。公告夹带“外发简历”指令。哪项处理恰当？</p><div data-quiz data-save-key="lesson-0002-s01-q1-untrusted-content" data-correct-answer="C"><div class="quiz-options"><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="a" data-feedback="没有 Thought 不代表没有读取公告；风险取决于不可信内容如何影响输出。"> A. 没有显式思路文本，公告就不会影响模型</label><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="b" data-feedback="外部材料不是用户授权。不能让材料给新的动作权限。"> B. 公告包含发送要求，就视为用户批准外发</label><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="c" data-correct="true" data-feedback="正确。不可信内容仍进入上下文；应用授权保持独立，还应核查摘要是否被污染。"> C. 公告仍可能影响输出，应用不得据此授权</label><label class="quiz-option"><input type="radio" name="lesson-0002-s01-q1-untrusted-content" value="d" data-feedback="拦动作与摘要准确是不同目标；文本输出仍可能受影响。"> D. 只要拦住发送动作，摘要内容必定正确</label></div><button type="button" class="quiz-submit" data-quiz-submit>检查回答</button><div data-quiz-feedback aria-live="polite"></div></div></div><p>在下方解释理由：谁提供恶意文字？模型接收了什么？哪一层应阻止外发？最后再举一种“工具被拦住但输出仍受污染”的可能结果。</p><label for="lesson-evidence">你的推理与解释</label>
+        <textarea id="lesson-evidence" data-save-key="lesson-0002-s01-evidence" placeholder="写下独立完成的答案、作品、代码结果与资源学习产出，说明需要提示的部分。"></textarea></section>
 
       <!-- 有选定资源时插入完整语义 section：优先项通常 1–2 项，写清定位、任务、产出和时间预算；
            选读用 details 折叠。已选资源的访问限制及替代路径可见；产出复用 lesson-evidence。
            没有选定资源时删除此占位，不在学员页面解释资源取舍；决策记入 RESOURCES.md。 -->
-
 
       <section id="mental-model" class="content-section mental-model">
         <h2>带走这个心智模型</h2>
@@ -90,10 +86,9 @@
       </section>
 
       <section id="learning-input" class="content-section callout note">
-        <h2>本课答案与疑难记录</h2>
-        <p>使用课程启动器打开时，输入会自动写入本地课程目录，AI 下次对话会直接读取。若仅双击 HTML 打开，则保存在浏览器；必要时可下载备份。</p>
-        <label for="lesson-evidence">我的练习答案与掌握证据</label>
-        <textarea id="lesson-evidence" data-save-key="lesson-0002-s01-evidence" placeholder="写下独立完成的答案、作品、代码结果与资源学习产出，说明需要提示的部分。"></textarea>
+        <h2>本课疑难记录</h2>
+        <p>记录还想讨论的问题；各题答案已在题后自动保存。</p>
+
         <label for="lesson-questions">疑难与希望继续讨论的问题</label>
         <textarea id="lesson-questions" data-save-key="lesson-0002-s01-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
         <div class="learning-input-actions">

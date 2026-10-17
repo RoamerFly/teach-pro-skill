@@ -9,11 +9,11 @@ const {chromium} = require('playwright');
 const repo = path.resolve(__dirname, '..');
 const source = path.join(repo, 'example/competition-demo-rc12');
 const cases = [
-  ['0001-llm-to-agent-api-call.html', 'video-lee-agent', 'https://www.youtube.com/watch?v=M2Yg1kwPpts', 'lesson-0001-evidence-explain'],
-  ['0002-react-reasoning-loop.html', 'video-datawhale-react', 'https://www.bilibili.com/video/BV12Z63BCEn6/?p=1', 'lesson-0002-evidence'],
+  ['0001-llm-to-agent-api-call.html', 'video-lee-agent', 'https://www.youtube.com/watch?v=M2Yg1kwPpts', '0001-resource-2'],
+  ['0002-react-reasoning-loop.html', 'video-datawhale-react', 'https://www.bilibili.com/video/BV12Z63BCEn6/?p=1', '0002-resource-2'],
 ];
 
-test('video links remain optional, navigable and share the existing local evidence input', {timeout:60000}, async () => {
+test('video links remain optional, navigable and save the adjacent resource task input', {timeout:60000}, async () => {
   const temp = await fs.mkdtemp(path.join(os.tmpdir(), 'teach-video-resources-'));
   const course = path.join(temp, 'course');
   const qa = process.env.RESOURCE_QA_DIR || path.resolve(repo, '../competition-work/2026-10-05-video-resource-qa');
