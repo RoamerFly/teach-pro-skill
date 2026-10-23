@@ -15,7 +15,7 @@
   "demo": {
     "synthetic_scenario": true,
     "content_manually_reviewed": true,
-    "skill_version": "1.1.0-rc.13",
+    "skill_version": "1.1.0-rc.14",
     "teleagent_new_run": false
   }
 }

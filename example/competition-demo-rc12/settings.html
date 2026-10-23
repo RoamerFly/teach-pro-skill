@@ -37,7 +37,7 @@
               <label>提供商名称<input name="provider" maxlength="80" required></label>
               <label>连接模式<select name="mode"><option value="cloud">云端 HTTPS</option><option value="local">本机服务</option></select></label>
               <label class="settings-key-row">API 基础地址<input name="base_url" type="url" maxlength="300" placeholder="https://模型服务域名/v1" required></label>
-              <label>输出 token 上限<input name="max_tokens" type="number" min="128" max="16384" value="4096" required></label>
+              <label>输出 token 预算<input name="max_tokens" type="number" min="1" step="1" placeholder="自动 · 使用模型默认值"></label>
               <label>DeepSeek 思考模式<select name="thinking"><option value="disabled">关闭 · 普通答疑</option><option value="enabled">开启 · 深入推理</option></select></label>
             </div>
             <p class="resource-access" data-settings-protocol></p>

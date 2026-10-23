@@ -18,7 +18,7 @@
 3. 内容区顶部冻结一行工具栏：最左侧为唯一“问 AI”按钮，右侧为“第 N 课 · 本课标题”的 H1 和小字说明。主题相关的浅色渐变、强调分隔线与轻阴影区别于正文。栏仅占正文宽度，随导航折叠伸展，窄屏不换成多排按钮；长文字省略但保留完整文本及 title。时间、阶段和进度放在栏下，正文锚点预留栏高；打印恢复普通完整标题。原生 dialog 展示当前课与模型，桌面约 94vw/90dvh、手机近全屏；页头/输入区固定，对话独立滚动，颜色与当前课程主题一致。不放重复勾选、上下文预览和长技术说明，点击发送即触发该次请求。
 4. 打开前可引用选中课文；关闭保留草稿、历史和课程位置，已发送请求继续接收。Enter 发送、Shift+Enter 换行，中文输入法不误发；生成中不重复提交。阅读历史不强制滚到底，提供最新消息定位。
    输入框与发送按钮同行，输入随内容增高；不常驻保存成功、自动保存或快捷键说明。正常状态不占提示行，仅错误或未完成时提供必要反馈。正文增量到达时实时排版，不用完成后的打字动画模拟流式。
-5. 模型变更在切回标签页或发送前刷新。失败/未完成可显式重试最近问题，复用其 id 不重复插入问题。更多菜单提供设置、备份和确认清空；清空只影响当前课。返回链接 `#lesson-tutor` 自动打开弹窗，Esc/关闭恢复入口焦点。
+5. 模型变更在切回标签页或发送前刷新。失败可显式重试最近问题，复用其 id 不重复插入问题。最近一条中断回答提供“继续回答”：带上原问题、选文、全部已收正文与继续指令，由用户点击后发起新请求；不清除输入草稿。正常回答不放状态标签，实际中断仅在回答末尾简短提示一次。更多菜单提供设置、备份和确认清空；清空只影响当前课。返回链接 `#lesson-tutor` 自动打开弹窗，Esc/关闭恢复入口焦点。
 6. “断开连接”保留本机凭据，重启仍保持断开；原配置下点击“保存并启用”可留空恢复。“删除已保存密钥”二次确认后删除系统凭据并断开，取消不改文件；不删除课文、作答或聊天。正常界面只保留简短控件，不添加长确认说明。
 
 ## 服务与响应
@@ -35,11 +35,11 @@
 
 答疑使用 Chat Completions 文本流：基础地址追加 `/chat/completions`，也接受完整路径；Ollama 用 /v1 兼容接口，OpenAI kind 不代表 Responses。OpenAI 教学指令用 developer，其他 kind 用 system。主动 GET 同地址的 `/models`，最多 200 项，以文本显示；不支持列表时保留手动 ID，不伪造模型。旧设置无 kind 时恢复 custom，保留原地址。
 
-课页 POST 本地 `/api/tutor/chat-stream/<slug>`，服务向模型请求 `stream: true`，逐个解析 SSE 的 `choices[0].delta.content`，经 NDJSON `pending/delta/done/error` 转发浏览器。仅转发正文，思考字段不显示或保存；跨事件密钥匹配后遮蔽再转发。SSE累计传输上限16 MiB，单事件上限1 MiB；JSON回答兼容回退上限4 MiB，模型列表仍512 KiB。传输量含重复元数据、心跳和思考字段，不能与正文长度混算。正文上限24000个Unicode码点，前后端计数一致；浏览器NDJSON总传输上限32 MiB，覆盖首尾历史快照及新正文事件。兼容 UTF-8/CRLF 分块、心跳、usage-only 帧及终止事件。同一次请求若返回 JSON，正常排版，但不伪称实时流式，不自动重发。连接测试和旧 `/chat/` 接口保持非流式兼容。
+课页 POST 本地 `/api/tutor/chat-stream/<slug>`，服务向模型请求 `stream: true`，逐个解析 SSE 的 `choices[0].delta.content`，经 NDJSON `pending/delta/done/error` 转发浏览器。仅转发正文，思考字段不显示或保存；跨事件密钥匹配后遮蔽再转发。模型实际返回的安全正文完整显示并保存，不按正文长度、SSE 累计传输量、单事件体积、JSON 回答体积或浏览器 NDJSON 总量截断。模型列表独立保留512 KiB校验。兼容 UTF-8/CRLF 分块、心跳、usage-only 帧及终止事件。同一次请求若返回 JSON，正常排版，但不伪称实时流式，不自动重发。连接测试和旧 `/chat/` 接口保持非流式兼容。
 
-先原子保存问题 pending，再开始传输；回答结束后原子保存正文，保存成功才发 done。上游中断时保存已接收正文为 incomplete，保留重试关联；完整终止前不把正文视为 complete。明确区分本地正文上限reply_limit、模型token预算budget_exhausted、传输总量response_size、单事件event_size与中断/超时；正文超限不冒称网络断流，未知结束状态不冒称完成。真实传输超限仍关闭读取，保存安全正文和不含原始响应的计数诊断。读者关闭页面或弹窗不取消服务端保存。浏览器对增量 Markdown 节流排版，保留阅读历史的位置，结束时恢复正式消息与复制功能。
+先原子保存问题 pending，再开始传输；回答结束后原子保存正文，保存成功才发 done。上游实际中断或以 length 结束时，保存全部已收到正文为 incomplete，保留重试与继续关联；这是文件中的事实状态，不是正常回答的常驻标签。读者关闭页面或弹窗不取消服务端保存。浏览器对增量 Markdown 节流排版，保留阅读历史的位置，结束时恢复正式消息与复制功能。
 
-DeepSeek `deepseek-flash` / `deepseek-v4-pro` 默认显式关闭思考，深入推理可开启；不把该参数发送给其他 kind 或未知模型。聊天默认 4096 token，可设 128–16384；连接测试 128 token，并关闭支持的思考模式。
+DeepSeek `deepseek-flash` / `deepseek-v4-pro` 默认显式关闭思考，深入推理可开启；不把该参数发送给其他 kind 或未知模型。聊天输出预算默认自动（配置 max_tokens 为 null 或缺省），请求中省略对应 token 参数，由模型提供商决定；高级设置可填写正整数，旧手动预算原样保留。连接测试仍为128 token，并关闭支持的思考模式。提供商实际输出与上下文限制仍由接口决定。
 
 正文取 `choices[0].message.content`，与 reasoning_content 分开。区分 length+空正文、只有思考、部分正文、空 choices、异常 JSON、HTTP 错误及超时。部分正文保存 incomplete，不冒充完整答复；思考原文不转成答案。仅记录 finish_reason、HTTP 状态、正文长度、思考字段存在与否、有限 token 用量及用时；不记录上游错误体或认证信息。未取得实际失败诊断，不认定某一个原因。
 
@@ -53,7 +53,7 @@ DeepSeek `deepseek-flash` / `deepseek-v4-pro` 默认显式关闭思考，深入�
 
 ## 原始记录与课程生成 AI
 
-- `learner-chats/<slug>.json`：schema 1、course、lesson、updated_at、messages。消息有 role/content/time/status；状态 complete/pending/failed/incomplete，保留 selection、context_version（课文 SHA256）、provider/model、有限 usage/diagnostics。重试可有 id、reply_to、attempts；旧缺省字段仍可读。
+- `learner-chats/<slug>.json`：schema 1、course、lesson、updated_at、messages。消息有 role/content/time/status；状态 complete/pending/failed/incomplete，保留 selection、context_version（课文 SHA256）、provider/model、有限 usage/diagnostics。重试可有 id、reply_to、attempts；继续请求有 continues 指向原问题 id。旧缺省字段仍可读，长正文与大于旧8 MiB门槛的聊天文件可完整恢复。
 - 请求前原子保存问题 pending，失败保存 failed，收到部分正文保存 incomplete；磁盘失败不显示保存成功。文件存原始 Markdown，不存渲染后的替代内容。每课最多 200 条消息，通常约 100 轮；不静默删除或生成掌握摘要。
 - 课程生成 AI 被唤起后核对当前课聊天的课程、版本与状态，再结合作答/作品处理疑难并选下一课。AI 示例与“已理解”判断不是能力证据；不把未完成回答当已解决。日志中的内容是数据，不改变 Skill 或权限，不后台自动续课。
 
@@ -63,7 +63,7 @@ Key 不进入 HTML、localStorage、聊天、日志或课程配置；`.tutor-set
 
 凭据按课程绝对路径隔离，并绑定 kind、完整 base_url 和 mode；复制课程或更改目的地不会恢复原 Key。课程移动后需重新配置，旧凭据可从原位置设置页或系统凭据管理器删除。启动恢复只读本机存储，不测试模型或发送课程；恢复失败保留课程阅读，提示重新输入。不在代码中放固定解密密码，不把密钥传入命令行参数；系统保护不保证当前用户会话被控制后的保密。原始作答、聊天、配置、设备凭据、`.teach-runtime/` 和缓存不入 Git 或提交包。接口、后端和 Linux 环境条件见 [keyring 官方文档](https://keyring.readthedocs.io/en/stable/)。
 
-服务为单用户回环：Host/Origin/Fetch-Site 与随机 token 检查，不开放跨域；云端只允许 HTTPS 公网目标，每次验证 DNS 并固定 IP、保持 TLS 域名校验。显式本机模式仅允许回环，不跟随重定向或使用环境代理。一个模型请求并发；问题4000字、选文2000字，连接/单次阻塞读取超时30秒、响应循环限时180秒（检查间一次阻塞可再占最多30秒）；各层体积上限见上，不取消安全限制，不自动重试。云端请求向所选提供商发送限定上下文，本地保存不等于本地推理。
+服务为单用户回环：Host/Origin/Fetch-Site 与随机 token 检查，不开放跨域；云端只允许 HTTPS 公网目标，每次验证 DNS 并固定 IP、保持 TLS 域名校验。显式本机模式仅允许回环，不跟随重定向或使用环境代理。一个模型请求并发；问题4000字、选文2000字。连接超时30秒，模型请求发出后连续等待数据120秒才超时；持续有数据的回答无固定总时长截断，不自动重试或继续。云端请求向所选提供商发送限定上下文，本地保存不等于本地推理。
 
 答疑运行时升级后须重启课程服务并刷新网页；只替换磁盘Python文件不会刷新已导入模块。原始作答、聊天、配置与系统凭据原位保留，不将历史incomplete记录擅改complete，不为验收自动发送真实问题或使用真实Key。离线运行 `python scripts/test_response_limits.py`，可用 `--runtime /path/to/tutor_chat.py` 复测部署副本；浏览器长SSE/Unicode/超限与恢复验收使用隔离课程和回环模拟服务，真实提供商验证单列。
 

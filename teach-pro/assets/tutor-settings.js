@@ -121,7 +121,7 @@
     const data = Object.fromEntries(new FormData(form));
     if (data.model === '__manual__') data.model = data.model_manual.trim();
     delete data.model_manual;
-    data.max_tokens = Number(data.max_tokens);
+    data.max_tokens = data.max_tokens.trim() ? Number(data.max_tokens) : null;
     data.remember_key = remember.checked;
     act(async () => {
       say('正在保存设置…', 'busy');

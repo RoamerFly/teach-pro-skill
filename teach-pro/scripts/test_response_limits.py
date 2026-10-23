@@ -103,14 +103,15 @@ class ResponseTests(unittest.TestCase):
     def test_secret_prefix_flush_at_end(self):
         self.assertEqual(self.stream(frame(event('test-sec'))+frame(event(reason='stop')))['content'], 'test-sec')
 
-    def test_local_limit_does_not_masquerade_as_disconnect(self):
-        result = self.stream(frame(event('字'*(tutor.MAX_REPLY+10))))
-        self.assertEqual(len(result['content']), tutor.MAX_REPLY)
-        self.assertEqual(result['status'], 'incomplete'); self.assertEqual(result['diagnostics']['code'], 'reply_limit')
-        self.assertTrue(result['diagnostics']['local_truncated'])
+    def test_long_body_not_locally_truncated(self):
+        text = '字'*100000
+        result = self.stream(frame(event(text))+frame(event(reason='stop')))
+        self.assertEqual(result['content'], text)
+        self.assertEqual(result['status'], 'complete')
+        self.assertNotIn('local_truncated', result['diagnostics'])
 
-    def test_exact_character_limit_complete(self):
-        self.assertEqual(self.stream(frame(event('🙂'*tutor.MAX_REPLY))+frame(event(reason='stop')))['status'], 'complete')
+    def test_unicode_above_old_character_limit_complete(self):
+        self.assertEqual(self.stream(frame(event('🙂𠮷'*20000))+frame(event(reason='stop')))['content'], '🙂𠮷'*20000)
 
     def test_model_token_limit(self):
         result = self.stream(frame(event('部分'))+frame(event(reason='length')))
@@ -135,16 +136,18 @@ class ResponseTests(unittest.TestCase):
         self.assertNotIn('test-secret-key', ''.join(emitted)+str(raised.exception)+json.dumps(raised.exception.diagnostics))
         return raised.exception
 
-    def test_true_total_limit_retains_partial(self):
-        raw=frame(event('保留'))+(b': '+b'p'*4000+b'\n\n')*(tutor.MAX_STREAM_BYTES//4000+2)
-        exc=self.check_error(raw, 'response_size', '保留')
-        self.assertGreater(exc.diagnostics['response_bytes'], tutor.MAX_STREAM_BYTES)
+    def test_wire_above_old_16m_limit_completes(self):
+        raw=frame(event('开头'))+(b': '+b'p'*4000+b'\n\n')*4200+frame(event('结尾', reason='stop'))
+        result=self.stream(raw)
+        self.assertGreater(result['diagnostics']['response_bytes'],16*1024*1024)
+        self.assertEqual(result['content'],'开头结尾');self.assertEqual(result['status'],'complete')
 
     def test_unterminated_event_bound(self):
-        self.check_error(frame(event('保留'))+b'data: '+b' '*tutor.MAX_EVENT_BYTES, 'event_size', '保留')
+        result=self.stream(frame(event('保留'))+b'data: '+b' '* (1024*1024+1))
+        self.assertEqual(result['content'],'保留');self.assertEqual(result['diagnostics']['code'],'stream_interrupted')
 
     def test_terminated_event_bound(self):
-        self.check_error(frame(event('保留'))+frame({**event('字'), 'large':'x'*tutor.MAX_EVENT_BYTES}), 'event_size', '保留')
+        self.assertEqual(self.stream(frame(event('保留'))+frame({**event('字'), 'large':'x'*(2*1024*1024)})+frame(event(reason='stop')))['content'],'保留字')
 
     def test_invalid_json_partial(self):
         self.check_error(frame(event('保留'))+frame('{broken'), 'stream_interrupted', '保留')
@@ -174,9 +177,10 @@ class ResponseTests(unittest.TestCase):
     def test_socket_timeout_preserves_partial(self):
         self.check_error(frame(event('已收')), 'timeout', '已收', failure=TimeoutError())
 
-    def test_deadline_no_sleep(self):
-        with patch.object(tutor.time,'monotonic',side_effect=[0,tutor.RESPONSE_SECONDS+1]):
-            self.check_error(b'', 'timeout')
+    def test_active_response_has_no_wall_clock_deadline(self):
+        with patch.object(tutor.time,'monotonic',side_effect=AssertionError('No total-time deadline')):
+            result=self.stream(frame(event('持续生成'))+frame(event(reason='stop')))
+        self.assertEqual(result['status'],'complete')
 
     def test_non_string_delta(self):
         self.check_error(frame(event(content=['bad'])), 'response_shape')
@@ -187,15 +191,18 @@ class ResponseTests(unittest.TestCase):
     def test_json_over_old_limit(self):
         raw=json.dumps(answer('有效',reasoning_content='思'*190000),ensure_ascii=False).encode()
         self.assertGreater(len(raw),512*1024)
-        self.assertEqual(tutor.parse_answer(tutor.read_response(Response(raw),tutor.MAX_JSON_BYTES))['content'],'有效')
+        self.assertEqual(tutor.parse_answer(tutor.read_response(Response(raw)))['content'],'有效')
 
-    def test_json_bound(self):
+    def test_model_list_still_validates_its_own_response(self):
         with self.assertRaises(tutor.TutorError) as raised:
-            tutor.read_response(Response(b' '* (tutor.MAX_JSON_BYTES+1)),tutor.MAX_JSON_BYTES)
+            tutor.read_response(Response(b' '* (512*1024+1)),512*1024)
         self.assertEqual(raised.exception.diagnostics['code'],'response_size')
 
-    def test_json_reply_limit(self):
-        self.assertEqual(tutor.parse_answer(answer('甲'*(tutor.MAX_REPLY+1)))['diagnostics']['code'],'reply_limit')
+    def test_large_json_fallback_full_body(self):
+        text='甲'*100000
+        raw=json.dumps(answer(text,reasoning_content='r'*(5*1024*1024)),ensure_ascii=False).encode()
+        result=tutor.parse_answer(tutor.read_response(Response(raw)))
+        self.assertEqual(result['content'],text);self.assertEqual(result['status'],'complete')
 
     def test_json_redaction(self):
         self.assertEqual(tutor.parse_answer(answer('test-secret-key'),'test-secret-key')['content'],'[密钥已隐藏]')
@@ -231,7 +238,7 @@ class ResponseTests(unittest.TestCase):
             (root/'lessons/0001-test.html').write_text('<main><h1>测试课</h1><p>正文</p></main>',encoding='utf-8')
             config={'provider':'mock','kind':'custom','model':'mock','api_key':''}
             def failure(*a,**kw):
-                exc=tutor.TutorError('传输上限',502,{'code':'response_size'});exc.partial_content='已收到的回答';raise exc
+                exc=tutor.TutorError('连接中断，已保留回答。',502,{'code':'stream_interrupted'});exc.partial_content='已收到的回答';raise exc
             with patch.object(tutor,'current_config',return_value=config),patch.object(tutor,'model_request',side_effect=failure),self.assertRaises(tutor.TutorError):
                 tutor.chat(root,'0001-test',{'message':'问题'},emit=lambda *a:None)
             saved=tutor.history(root,'0001-test');self.assertEqual([m['status'] for m in saved['messages']],['incomplete','incomplete'])

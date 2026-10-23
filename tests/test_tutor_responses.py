@@ -51,10 +51,10 @@ class ResponseTests(unittest.TestCase):
                 tutor.parse_answer(payload)
             self.assertEqual(error.exception.diagnostics['code'], code)
 
-    def test_local_reply_limit_is_visible(self):
-        result = tutor.parse_answer(response('文' * (tutor.MAX_REPLY + 1)))
-        self.assertEqual(result['status'], 'incomplete')
-        self.assertTrue(result['diagnostics']['local_truncated'])
+    def test_long_reply_is_complete_and_preserved(self):
+        result = tutor.parse_answer(response('文' * 100000))
+        self.assertEqual(result['status'], 'complete')
+        self.assertEqual(result['content'], '文' * 100000)
 
     def test_provider_specific_payload_and_test_budget(self):
         messages = [{'role': 'user', 'content': '问题'}]
@@ -251,11 +251,10 @@ class StreamTests(unittest.TestCase):
             self.assertEqual(raised.exception.partial_content, '已经到达')
             self.assertEqual(''.join(output), '已经到达')
 
-    def test_reply_limit_stops_stream_and_never_sends_excess_text(self):
-        answer, pieces = self.stream([self.frame('文' * (tutor.MAX_REPLY + 1))])
-        self.assertEqual(answer['status'], 'incomplete')
-        self.assertEqual(len(''.join(pieces)), tutor.MAX_REPLY)
-        self.assertTrue(answer['diagnostics']['local_truncated'])
+    def test_stream_long_answer_is_all_emitted(self):
+        answer, pieces = self.stream([self.frame('文' * 100000), self.frame(reason='stop')])
+        self.assertEqual(answer['status'], 'complete')
+        self.assertEqual(''.join(pieces), '文' * 100000)
 
     def test_streaming_payload_and_json_fallback_use_one_request(self):
         remote = Mock(status=200)

@@ -15,7 +15,7 @@ import sys
 import tempfile
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
-VERSION = '1.1.0-rc.13'
+VERSION = '1.1.0-rc.14'
 TEAM = '重邮FFBond'
 TITLE = '学途智伴——大学生长期自适应学习智能体'
 PREFIX = 'example/competition-materials/rc12/'
@@ -28,6 +28,7 @@ ARCHITECTURE_EVIDENCE = 'evals/records/2026-10-10-architecture-media.md'
 CONNECTED_FIGURE_EVIDENCE = 'evals/records/2026-10-10-connected-architecture-media.md'
 VALUE_EVIDENCE = 'evals/records/2026-10-10-value-positioning.md'
 TUTOR_LIMIT_EVIDENCE = 'evals/records/2026-10-23-tutor-response-limits.md'
+TUTOR_FULL_ANSWER_EVIDENCE = 'evals/records/2026-10-23-tutor-full-answers.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -173,7 +174,7 @@ def remap(name):
         return '参赛材料/' + name.removeprefix(PREFIX)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
         return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
-    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE):
+    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE):
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
 
@@ -243,7 +244,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)
@@ -287,7 +288,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
 Skill 版本：Teach Pro {VERSION}
 源码快照：{revision}
 
-当前技能包与课程运行组件为 rc.13，含答疑分层限额与 Unicode 修复。Word、视频和实录图片沿用 rc.12 的功能演示；当前课页采用题后原位作答。升级既有课程答疑运行组件后重启服务并刷新网页，原学习记录和模型配置保留。
+当前技能包与课程运行组件为 rc.14，支持长回答完整显示与保存、自动输出预算及手动继续回答。Word、视频和实录图片沿用 rc.12 的功能演示；当前课页采用题后原位作答。升级既有课程答疑运行组件后重启服务并刷新网页，原学习记录和模型配置保留。
 
 ## 用途与价值
 

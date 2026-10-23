@@ -63,7 +63,7 @@
     find('[data-tutor-clear]').disabled = !online || busy || !record.messages.length;
     find('[data-tutor-export]').disabled = busy || !record.messages.length;
     find('[data-tutor-connect]').hidden = online; find('[data-tutor-connect]').disabled = busy;
-    dialog.querySelectorAll('[data-tutor-retry]').forEach(button => { button.disabled = !online || !configured || busy; });
+    dialog.querySelectorAll('[data-tutor-retry], [data-tutor-continue]').forEach(button => { button.disabled = !online || !configured || busy; });
     find('.tutor-question').setAttribute('aria-busy', String(busy));
     find('button[type="submit"]').setAttribute('aria-label', busy ? '正在生成回答' : '发送问题');
     find('button[type="submit"]').textContent = busy ? '···' : '发送 ↑';
@@ -81,12 +81,10 @@
     if (!response.ok) { const result = await response.json(); throw new Error(result.error || '课程服务请求失败'); }
     if (!response.headers.get('Content-Type')?.includes('application/x-ndjson') || !response.body) throw new Error('请更新课程的流式答疑组件。');
     const reader = response.body.getReader(), decoder = new TextDecoder('utf-8', { fatal: true });
-    let buffer = '', finished = false, bytes = 0;
+    let buffer = '', finished = false;
     try {
       while (true) {
         const { value, done } = await reader.read();
-        // Includes both pending and final history snapshots, not just new text.
-        bytes += value?.byteLength || 0; if (bytes > 32 * 1024 * 1024) throw new Error('答疑记录传输超过安全上限，请备份后整理。');
         buffer += decoder.decode(value, { stream: !done });
         let end;
         while ((end = buffer.indexOf('\n')) >= 0) {
@@ -115,8 +113,14 @@
         const copy = document.createElement('button'); copy.type = 'button'; copy.className = 'tutor-text-action'; copy.textContent = '复制回答';
         copy.addEventListener('click', async () => { try { await navigator.clipboard.writeText(message.content); copy.textContent = '已复制'; } catch { copy.textContent = '请选中正文复制'; } }); box.append(copy);
       }
-      if (message.status !== 'complete' && !(message.status === 'pending' && busy)) {
+      if (message.status !== 'complete' && !(message.status === 'pending' && busy) &&
+          (message.role === 'assistant' || !data.messages.some(item => item.role === 'assistant' && item.reply_to === message.id))) {
         const note = document.createElement('p'); note.className = 'tutor-message-note'; note.textContent = message.error || message.note || (message.status === 'pending' ? (busy ? 'AI 正在思考怎么讲解…' : '上次对话尚未完成，可重试。') : '回答尚未完成'); box.append(note);
+      }
+      if (message === data.messages.at(-1) && message.role === 'assistant' && message.status === 'incomplete' && message.reply_to) {
+        const resume = document.createElement('button'); resume.type = 'button'; resume.className = 'tutor-text-action';
+        resume.dataset.tutorContinue = message.reply_to; resume.textContent = '继续回答';
+        resume.addEventListener('click', () => send('请继续回答', null, '', message.reply_to)); box.append(resume);
       }
       if (message.role === 'user' && message === latestUser && ['failed', 'incomplete', 'pending'].includes(message.status) && message.id && !(message.status === 'pending' && busy)) {
         const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'tutor-text-action'; retry.dataset.tutorRetry = message.id; retry.textContent = '重新回答'; retry.addEventListener('click', () => send(message.content, message.id, message.selection || '')); box.append(retry);
@@ -141,9 +145,9 @@
     const version = JSON.stringify([token, configured, result.settings]), changed = configVersion !== null && configVersion !== version; configVersion = version;
     find('[data-tutor-model]').textContent = configured ? result.settings.model : '未连接模型'; find('[data-tutor-model]').dataset.connected = String(configured); return changed;
   }
-  async function send(message, retryId, selected = selection) {
+  async function send(message, retryId, selected = selection, continueId) {
     if (busy || !message.trim()) return; busy = true; controls();
-    let body, draft = '', characters = 0, timer, painting = Promise.resolve(), active = true, accepted = false;
+    let body, draft = '', timer, painting = Promise.resolve(), active = true, accepted = false;
     const paint = () => {
       timer = null; const text = draft;
       painting = painting.then(async () => {
@@ -156,18 +160,15 @@
     try {
       await refreshConfig(); if (!configured) { say('先在课程设置中连接模型。', true); return; } say();
       if (!retryId) await render({ ...record, messages: [...record.messages, { role: 'user', content: message, status: 'pending' }] });
-      await streamChat({ message, selection: selected, ...(retryId ? { retry_id: retryId } : {}) }, async (event, data) => {
+      await streamChat({ message, selection: selected, ...(retryId ? { retry_id: retryId } : {}), ...(continueId ? { continue_id: continueId } : {}) }, async (event, data) => {
         if (event === 'pending') {
           accepted = true; await render(data);
-          if (!retryId && prompt.value === message) { prompt.value = ''; selection = ''; showSelection(); grow(); }
+          if (!retryId && !continueId && prompt.value === message) { prompt.value = ''; selection = ''; showSelection(); grow(); }
           const box = document.createElement('article'); box.className = 'tutor-message is-assistant is-streaming';
           const label = document.createElement('div'); label.className = 'tutor-message-label'; label.textContent = '答疑 AI';
           body = document.createElement('div'); body.textContent = '···'; box.append(label, body); log.append(box); if (nearBottom()) latest();
         } else if (event === 'delta') {
-          // Python counts Unicode code points; JS .length counts UTF-16 units.
           if (typeof data.text !== 'string' || !body) throw new Error('流式正文格式不兼容。');
-          characters += Array.from(data.text).length;
-          if (characters > 24000) throw new Error('流式正文超过本地字符上限。');
           draft += data.text; if (!timer) timer = setTimeout(paint, 60);
         } else {
           clearTimeout(timer); active = false; await painting; await render(data); say();
@@ -176,7 +177,9 @@
     } catch (error) {
       clearTimeout(timer); active = false; await painting;
       try { const restored = await api('history/' + lesson); await render(restored); accepted ||= restored.messages.some(item => item.role === 'user' && item.content === message); } catch {}
-      if (accepted && !retryId && prompt.value === message) { prompt.value = ''; grow(); } say(error.message || '连接中断，请稍后重试。', true);
+      if (accepted && !retryId && !continueId && prompt.value === message) { prompt.value = ''; grow(); }
+      // A retained partial answer already carries a concise inline notice.
+      say(record.messages.at(-1)?.status === 'incomplete' ? '' : error.message || '连接中断，请稍后重试。', true);
     } finally { clearTimeout(timer); active = false; busy = false; if (record.messages.some(item => item.status === 'pending')) await render(record); controls(); }
   }
   function grow() { prompt.style.height = 'auto'; prompt.style.height = Math.min(prompt.scrollHeight, 96) + 'px'; }
