@@ -1,0 +1,145 @@
+{
+  "status": "pass",
+  "date": "2026-10-23",
+  "version": "1.1.0-rc.14",
+  "revision": "431e203b3582e2381d8feb83e7759f534698cd3a",
+  "python_tests": {
+    "run": 179,
+    "passed": 170,
+    "skipped": 9
+  },
+  "portable_response_tests_per_runtime": 40,
+  "continuation_tests": 12,
+  "profiles": {
+    "normal_use": {
+      "version": "1.1.0-rc.14",
+      "revision": "431e203b3582e2381d8feb83e7759f534698cd3a",
+      "integrity": "pass",
+      "reference_links": "pass",
+      "runtime_byte_parity": "pass",
+      "archives": [
+        {
+          "file": "teach-pro-1.1.0-rc.14.zip",
+          "bytes": 219121,
+          "sha256": "5d26691f4953ffd2ddb188c970184afa2463cac7d65d517bd13ef68178cafc1d"
+        }
+      ]
+    },
+    "competition_submit": {
+      "version": "1.1.0-rc.14",
+      "revision": "431e203b3582e2381d8feb83e7759f534698cd3a",
+      "integrity": "pass",
+      "reference_links": "pass",
+      "runtime_byte_parity": "pass",
+      "archives": [
+        {
+          "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.zip",
+          "bytes": 19801097,
+          "sha256": "f4b96f56c43436c8850cec005e9a784462da9dba220ec3e02ca23657768cc235"
+        },
+        {
+          "file": "teach-pro-1.1.0-rc.14.zip",
+          "bytes": 220171,
+          "sha256": "f1daefc210b75fd1301b9fee49454786bd8ca8ea424d1a4b8545e427a9754d63"
+        }
+      ]
+    }
+  },
+  "browser": {
+    "status": "pass",
+    "synthetic": true,
+    "cases": [
+      {
+        "case": "normal-long",
+        "status": "complete",
+        "characters": 3153,
+        "code": null,
+        "response_bytes": 936739
+      },
+      {
+        "case": "unicode",
+        "status": "complete",
+        "characters": 40000,
+        "code": null,
+        "response_bytes": 160592
+      },
+      {
+        "case": "json-fallback",
+        "status": "complete",
+        "characters": 11,
+        "code": null,
+        "response_bytes": null
+      },
+      {
+        "case": "reply-limit",
+        "status": "complete",
+        "characters": 100000,
+        "code": null,
+        "response_bytes": 300578
+      },
+      {
+        "case": "event-limit",
+        "status": "complete",
+        "characters": 12,
+        "code": null,
+        "response_bytes": 2098084
+      },
+      {
+        "case": "wire-limit",
+        "status": "complete",
+        "characters": 12,
+        "code": null,
+        "response_bytes": 16817426
+      },
+      {
+        "case": "interrupted",
+        "status": "incomplete",
+        "characters": 8,
+        "code": "stream_interrupted",
+        "response_bytes": 318
+      }
+    ],
+    "refreshPreservesRecords": true,
+    "continuationContextAndDraft": true,
+    "realTimeFirstDelta": true,
+    "frontendOver32MiB": true,
+    "automaticProviderBudget": true,
+    "providerRequests": 0,
+    "loopbackRequests": 9,
+    "externalRequests": 0,
+    "pageErrors": []
+  },
+  "inline_browser": {
+    "synthetic": true,
+    "oldKeysRestored": 3,
+    "lessons": 4,
+    "layoutChecks": 24,
+    "fileSaveAndFreshBrowserRestore": true,
+    "pageErrors": [],
+    "providerRequests": 0
+  },
+  "pages": {
+    "deployment": {
+      "conclusion": "success",
+      "headSha": "431e203b3582e2381d8feb83e7759f534698cd3a",
+      "status": "completed",
+      "url": "https://github.com/RoamerFly/teach-pro-skill/actions/runs/39907967123"
+    },
+    "downloads": [
+      {
+        "path": "downloads/teach-pro.zip",
+        "sha256": "3e6cc6d463ba5b3efce1539452229e3722337407974d16b000ac012013c27bb1",
+        "members": 61
+      },
+      {
+        "path": "downloads/zhijian-agent-course.zip",
+        "sha256": "ce4c0bf0da3c8bd39424f498383c8b6fd270f422cc66ea9d5e3d9592aeda0a84",
+        "members": 37
+      }
+    ]
+  },
+  "history": "E:\\A_Myskill\\teach-pro\\competition-submission\\history\\2026-10-23-before-rc14-full-answers",
+  "media_and_reviews_unchanged": true,
+  "templates_and_lesson_text_unchanged": true,
+  "real_provider_requests": 0
+}
