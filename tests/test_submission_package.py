@@ -63,6 +63,10 @@ class SubmissionGuardTests(unittest.TestCase):
         self.assertEqual(module.remap(module.VALUE_EVIDENCE),
                          '验证记录/2026-10-10-value-positioning.md')
 
+    def test_tutor_limits_evidence_has_explicit_path(self):
+        self.assertEqual(module.remap(module.TUTOR_LIMIT_EVIDENCE),
+                         '验证记录/2026-10-23-tutor-response-limits.md')
+
     def test_generated_zip_keeps_unix_mode(self):
         buffer = io.BytesIO()
         source = module.ZipInfo('start-course.command')

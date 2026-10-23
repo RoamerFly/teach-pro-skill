@@ -85,7 +85,8 @@
     try {
       while (true) {
         const { value, done } = await reader.read();
-        bytes += value?.byteLength || 0; if (bytes > 10 * 1024 * 1024) throw new Error('答疑记录过大，请备份后整理。');
+        // Includes both pending and final history snapshots, not just new text.
+        bytes += value?.byteLength || 0; if (bytes > 32 * 1024 * 1024) throw new Error('答疑记录传输超过安全上限，请备份后整理。');
         buffer += decoder.decode(value, { stream: !done });
         let end;
         while ((end = buffer.indexOf('\n')) >= 0) {
@@ -142,7 +143,7 @@
   }
   async function send(message, retryId, selected = selection) {
     if (busy || !message.trim()) return; busy = true; controls();
-    let body, draft = '', timer, painting = Promise.resolve(), active = true, accepted = false;
+    let body, draft = '', characters = 0, timer, painting = Promise.resolve(), active = true, accepted = false;
     const paint = () => {
       timer = null; const text = draft;
       painting = painting.then(async () => {
@@ -163,7 +164,10 @@
           const label = document.createElement('div'); label.className = 'tutor-message-label'; label.textContent = '答疑 AI';
           body = document.createElement('div'); body.textContent = '···'; box.append(label, body); log.append(box); if (nearBottom()) latest();
         } else if (event === 'delta') {
-          if (typeof data.text !== 'string' || !body || draft.length + data.text.length > 24000) throw new Error('流式正文格式不兼容。');
+          // Python counts Unicode code points; JS .length counts UTF-16 units.
+          if (typeof data.text !== 'string' || !body) throw new Error('流式正文格式不兼容。');
+          characters += Array.from(data.text).length;
+          if (characters > 24000) throw new Error('流式正文超过本地字符上限。');
           draft += data.text; if (!timer) timer = setTimeout(paint, 60);
         } else {
           clearTimeout(timer); active = false; await painting; await render(data); say();

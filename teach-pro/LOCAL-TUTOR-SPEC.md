@@ -35,9 +35,9 @@
 
 答疑使用 Chat Completions 文本流：基础地址追加 `/chat/completions`，也接受完整路径；Ollama 用 /v1 兼容接口，OpenAI kind 不代表 Responses。OpenAI 教学指令用 developer，其他 kind 用 system。主动 GET 同地址的 `/models`，最多 200 项，以文本显示；不支持列表时保留手动 ID，不伪造模型。旧设置无 kind 时恢复 custom，保留原地址。
 
-课页 POST 本地 `/api/tutor/chat-stream/<slug>`，服务向模型请求 `stream: true`，逐个解析 SSE 的 `choices[0].delta.content`，经 NDJSON `pending/delta/done/error` 转发浏览器。仅转发正文，思考字段不显示或保存；跨事件密钥匹配后遮蔽再转发，限制体积、时间和正文长度。兼容 UTF-8/CRLF 分块、心跳、usage-only 帧及终止事件。同一次请求若返回 JSON，正常排版，但不伪称实时流式，不自动重发。连接测试和旧 `/chat/` 接口保持非流式兼容。
+课页 POST 本地 `/api/tutor/chat-stream/<slug>`，服务向模型请求 `stream: true`，逐个解析 SSE 的 `choices[0].delta.content`，经 NDJSON `pending/delta/done/error` 转发浏览器。仅转发正文，思考字段不显示或保存；跨事件密钥匹配后遮蔽再转发。SSE累计传输上限16 MiB，单事件上限1 MiB；JSON回答兼容回退上限4 MiB，模型列表仍512 KiB。传输量含重复元数据、心跳和思考字段，不能与正文长度混算。正文上限24000个Unicode码点，前后端计数一致；浏览器NDJSON总传输上限32 MiB，覆盖首尾历史快照及新正文事件。兼容 UTF-8/CRLF 分块、心跳、usage-only 帧及终止事件。同一次请求若返回 JSON，正常排版，但不伪称实时流式，不自动重发。连接测试和旧 `/chat/` 接口保持非流式兼容。
 
-先原子保存问题 pending，再开始传输；回答结束后原子保存正文，保存成功才发 done。上游中断时保存已接收正文为 incomplete，保留重试关联；完整终止前不把正文视为 complete。读者关闭页面或弹窗不取消服务端保存。浏览器对增量 Markdown 节流排版，保留阅读历史的位置，结束时恢复正式消息与复制功能。
+先原子保存问题 pending，再开始传输；回答结束后原子保存正文，保存成功才发 done。上游中断时保存已接收正文为 incomplete，保留重试关联；完整终止前不把正文视为 complete。明确区分本地正文上限reply_limit、模型token预算budget_exhausted、传输总量response_size、单事件event_size与中断/超时；正文超限不冒称网络断流，未知结束状态不冒称完成。真实传输超限仍关闭读取，保存安全正文和不含原始响应的计数诊断。读者关闭页面或弹窗不取消服务端保存。浏览器对增量 Markdown 节流排版，保留阅读历史的位置，结束时恢复正式消息与复制功能。
 
 DeepSeek `deepseek-flash` / `deepseek-v4-pro` 默认显式关闭思考，深入推理可开启；不把该参数发送给其他 kind 或未知模型。聊天默认 4096 token，可设 128–16384；连接测试 128 token，并关闭支持的思考模式。
 
@@ -63,6 +63,8 @@ Key 不进入 HTML、localStorage、聊天、日志或课程配置；`.tutor-set
 
 凭据按课程绝对路径隔离，并绑定 kind、完整 base_url 和 mode；复制课程或更改目的地不会恢复原 Key。课程移动后需重新配置，旧凭据可从原位置设置页或系统凭据管理器删除。启动恢复只读本机存储，不测试模型或发送课程；恢复失败保留课程阅读，提示重新输入。不在代码中放固定解密密码，不把密钥传入命令行参数；系统保护不保证当前用户会话被控制后的保密。原始作答、聊天、配置、设备凭据、`.teach-runtime/` 和缓存不入 Git 或提交包。接口、后端和 Linux 环境条件见 [keyring 官方文档](https://keyring.readthedocs.io/en/stable/)。
 
-服务为单用户回环：Host/Origin/Fetch-Site 与随机 token 检查，不开放跨域；云端只允许 HTTPS 公网目标，每次验证 DNS 并固定 IP、保持 TLS 域名校验。显式本机模式仅允许回环，不跟随重定向或使用环境代理。一个模型请求并发；问题 4000 字、选文 2000 字、响应体 512 KiB，有连接/读取超时，不自动重试。云端请求向所选提供商发送限定上下文，本地保存不等于本地推理。
+服务为单用户回环：Host/Origin/Fetch-Site 与随机 token 检查，不开放跨域；云端只允许 HTTPS 公网目标，每次验证 DNS 并固定 IP、保持 TLS 域名校验。显式本机模式仅允许回环，不跟随重定向或使用环境代理。一个模型请求并发；问题4000字、选文2000字，连接/单次阻塞读取超时30秒、响应循环限时180秒（检查间一次阻塞可再占最多30秒）；各层体积上限见上，不取消安全限制，不自动重试。云端请求向所选提供商发送限定上下文，本地保存不等于本地推理。
+
+答疑运行时升级后须重启课程服务并刷新网页；只替换磁盘Python文件不会刷新已导入模块。原始作答、聊天、配置与系统凭据原位保留，不将历史incomplete记录擅改complete，不为验收自动发送真实问题或使用真实Key。离线运行 `python scripts/test_response_limits.py`，可用 `--runtime /path/to/tutor_chat.py` 复测部署副本；浏览器长SSE/Unicode/超限与恢复验收使用隔离课程和回环模拟服务，真实提供商验证单列。
 
 验收覆盖：默认入口/静态降级、预设与遮蔽、模型列表和测试、记住/会话模式、服务重启恢复、断开保持与确认删除、凭据损坏/不可用、目的地与课程隔离、配置变更、多轮成对记忆、失败/部分回答/重试关联、本地恢复、复制/备份、键盘/输入法/焦点、关闭中请求、历史滚动、深浅色/手机、Markdown 注入与本地依赖。各系统原生验证与模拟适配器检查分开记录；真实提供商测试独立记录，不以静态检查或展示修订代替 Agent 行为验证。

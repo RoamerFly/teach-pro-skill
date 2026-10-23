@@ -2,7 +2,9 @@
 
 面向长期学习的自适应教学 Skill。把学习目标、课程与本地学习记录连接起来，先评估基础，再逐课教学，依据作答与疑难安排下一步。
 
-当前版本：**1.1.0-rc.12**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
+当前版本：**1.1.0-rc.13**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
+
+rc.13 修复长流式回答的传输限额误判，统一 Unicode 字符计数，并在中断时保留已收到的正文。已有课程升级答疑组件后，重启课程服务并刷新网页即可，原作答、聊天和模型配置保留。
 
 [在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/competition-demo-rc12/README.md)
 
@@ -139,7 +141,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.12.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.13.zip HEAD:teach-pro
 ```
 
 ### 双版本发布

@@ -29,6 +29,11 @@ RESTORE_ERROR = ''
 MAX_BODY = 20000
 MAX_HISTORY = 200
 MAX_REPLY = 24000
+# SSE repeats metadata for every token. Wire bytes are not answer length.
+MAX_STREAM_BYTES = 16 * 1024 * 1024
+MAX_EVENT_BYTES = 1024 * 1024
+MAX_JSON_BYTES = 4 * 1024 * 1024
+RESPONSE_SECONDS = 180
 KINDS = {
     'openai-compatible': {'label': 'OpenAI-compatible', 'base_url': 'https://api.openai.com/v1', 'mode': 'cloud', 'token_parameter': 'max_tokens', 'note': '通用 Chat Completions 兼容接口；默认地址仅为 OpenAI 参考地址，第三方服务请改为其地址。'},
     'openai': {'label': 'OpenAI', 'base_url': 'https://api.openai.com/v1', 'mode': 'cloud', 'token_parameter': 'max_completion_tokens', 'note': 'OpenAI Chat Completions；使用 max_completion_tokens，不是 Responses API。请选择支持该接口的文本模型。'},
@@ -216,18 +221,19 @@ def connection(url, port, mode):
 
 
 def read_response(response, maximum):
-    deadline = time.monotonic() + 45
+    deadline = time.monotonic() + RESPONSE_SECONDS
     chunks = []
     total = 0
     while True:
         if time.monotonic() > deadline:
-            raise TutorError("模型读取超时；未自动重试。", 504)
+            raise TutorError("模型读取超时；未自动重试。", 504, {'code': 'timeout', 'response_bytes': total})
         chunk = response.read1(8192)
         if not chunk:
             break
         total += len(chunk)
         if total > maximum:
-            raise TutorError("模型响应过大，已停止读取。", 502)
+            raise TutorError("模型非流式响应超过安全传输上限，已停止读取。", 502,
+                             {'code': 'response_size', 'response_bytes': total, 'limit_bytes': maximum})
         chunks.append(chunk)
     return json.loads(b''.join(chunks))
 
@@ -271,10 +277,17 @@ def parse_answer(data, key=''):
             code = 'empty_answer'
         raise TutorError(hint, 502, {**info, 'code': code})
     content = content.replace(key, '[密钥已隐藏]') if key else content
-    incomplete = reason == 'length' or len(content) > MAX_REPLY
+    incomplete = reason != 'stop' or len(content) > MAX_REPLY
     note = '回答达到输出上限，可调整预算后重新回答。' if incomplete else ''
     if len(content) > MAX_REPLY:
         info['local_truncated'] = True
+        info['code'] = 'reply_limit'
+        note = f'回答达到本地正文上限（{MAX_REPLY}字符），已保留前段；可针对未讲完的部分继续提问。'
+    elif reason == 'length':
+        info['code'] = 'budget_exhausted'
+    elif reason != 'stop':
+        info['code'] = 'finish_unknown'
+        note = '未收到明确完成状态，已保留回答；可重新回答。'
     return {'content': content[:MAX_REPLY], 'status': 'incomplete' if incomplete else 'complete',
             'note': note, 'usage': usage, 'diagnostics': info}
 
@@ -282,9 +295,10 @@ def parse_answer(data, key=''):
 def read_stream(response, key, emit):
     """Parse bounded SSE frames; forward only text, never reasoning or credentials."""
     pending, total, buffer = '', 0, b''
+    events = 0
     parts, reason, usage, reasoning = [], None, {}, False
     characters = 0
-    deadline = time.monotonic() + 45
+    deadline = time.monotonic() + RESPONSE_SECONDS
 
     def publish(text, final=False):
         nonlocal pending, characters
@@ -307,16 +321,16 @@ def read_stream(response, key, emit):
             if visible:
                 emit(visible)
 
-    def finish(interrupted=False):
+    def finish(interrupted=False, local_limit=False):
         publish('', final=True)
         content = ''.join(parts)
         data = {'choices': [{'message': {'content': content, 'reasoning_content': bool(reasoning)},
                              'finish_reason': reason}], 'usage': usage}
         result = parse_answer(data)
-        if interrupted or reason not in {'stop', 'length', 'content_filter', 'tool_calls', 'function_call'}:
+        if not local_limit and (interrupted or reason not in {'stop', 'length', 'content_filter', 'tool_calls', 'function_call'}):
             result.update(status='incomplete', note='回答中断，可重新回答。')
             result['diagnostics']['code'] = 'stream_interrupted'
-        result['diagnostics']['streaming'] = True
+        result['diagnostics'].update(streaming=True, response_bytes=total, stream_events=events)
         return result
 
     try:
@@ -328,18 +342,22 @@ def read_stream(response, key, emit):
                 # A clean finish frame also supports providers that omit [DONE].
                 return finish(interrupted=bool(buffer.strip()) or reason is None)
             total += len(chunk)
-            if total > 512 * 1024:
-                raise TutorError('模型响应过大，已停止读取。', 502, {'code': 'response_size'})
+            if total > MAX_STREAM_BYTES:
+                raise TutorError('模型流式传输量超过安全上限，已保留已接收的正文。', 502,
+                                 {'code': 'response_size', 'limit_bytes': MAX_STREAM_BYTES})
             buffer += chunk
             while True:
                 boundary = re.search(rb'\r?\n\r?\n', buffer)
                 if boundary is None:
-                    if len(buffer) > 128 * 1024:
-                        raise TutorError('模型流式事件过大。', 502, {'code': 'response_size'})
+                    if len(buffer) > MAX_EVENT_BYTES:
+                        raise TutorError('模型单个流式事件超过安全上限，已保留已接收的正文。', 502,
+                                         {'code': 'event_size', 'limit_bytes': MAX_EVENT_BYTES})
                     break
                 frame, buffer = buffer[:boundary.start()], buffer[boundary.end():]
-                if len(frame) > 128 * 1024:
-                    raise TutorError('模型流式事件过大。', 502, {'code': 'response_size'})
+                if len(frame) > MAX_EVENT_BYTES:
+                    raise TutorError('模型单个流式事件超过安全上限，已保留已接收的正文。', 502,
+                                     {'code': 'event_size', 'limit_bytes': MAX_EVENT_BYTES})
+                events += 1
                 lines = [line[5:].lstrip(b' ') for line in frame.splitlines() if line.startswith(b'data:')]
                 if not lines:
                     continue
@@ -370,14 +388,15 @@ def read_stream(response, key, emit):
                 if text:
                     publish(text)
                 if characters > MAX_REPLY:
-                    return finish()
+                    return finish(local_limit=True)
     except (ValueError, TypeError, OSError, http.client.HTTPException, TutorError) as exc:
         publish('', final=True)
         if not isinstance(exc, TutorError):
             code = 'timeout' if isinstance(exc, TimeoutError) else 'stream_interrupted'
             exc = TutorError('回答中断，可重新回答。', 502, {'code': code})
         exc.partial_content = ''.join(parts)[:MAX_REPLY]
-        exc.diagnostics.update(streaming=True, answer_characters=len(exc.partial_content), has_reasoning=reasoning)
+        exc.diagnostics.update(streaming=True, answer_characters=len(exc.partial_content), has_reasoning=reasoning,
+                               response_bytes=total, stream_events=events)
         raise exc
 
 
@@ -397,7 +416,7 @@ def model_request(config, messages, testing=False, emit=None):
         if emit is not None and 'text/event-stream' in response.getheader('Content-Type', '').lower():
             result = read_stream(response, config['api_key'], emit)
         else:
-            data = read_response(response, 512 * 1024)
+            data = read_response(response, MAX_JSON_BYTES)
             result = parse_answer(data, config['api_key'])
             if emit is not None:
                 emit(result['content'])  # Same request, JSON-only compatible provider.

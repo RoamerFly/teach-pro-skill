@@ -1,6 +1,6 @@
 # 智鉴 Agent 比赛展示
 
-Teach Pro 1.1.0-rc.12 的公开展示副本，主线为智能体开发与安全实战。
+Teach Pro 1.1.0-rc.13 的公开展示副本，主线为智能体开发与安全实战。保留原课程 URL 与作答标识，答疑组件已更新分层响应限额和 Unicode 计数；本地运行旧副本需替换组件后重启服务、刷新网页。
 
 从 `start-course.cmd` 启动 Windows 课程；macOS 使用 `start-course.command`，Linux 使用 `sh start-course.sh`。启动器会检查课程运行环境；设备密钥由系统凭据库管理。直接打开 `index.html` 可阅读，答案仅保存在浏览器。
 
