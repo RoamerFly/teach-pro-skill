@@ -1,64 +1,156 @@
 {
   "seconds": 170.741333,
-  "bytes": 14423980,
-  "sha256": "bf45cf936081399d3992859821bb60c01983e395ba8e4c301ef81dd6933bc4ee",
+  "bytes": 19258684,
+  "sha256": "2e461f3ac5e8f66c32791e5ca59b7af9933e2a0c4dac70c0f7cee39eb67b1cff",
   "full_decode": "pass",
   "subtitle_cues": 76,
   "provider_requests": 4,
   "new_provider_requests": 0,
   "new_speech_synthesis_requests": 0,
-  "media_revision": "2026-10-26",
-  "accepted_source_sha256": "fb8119ecd89c7c65767726f64b88d32b6bfb61b9dd2010202b52b0759dfe0c25",
+  "media_revision": "2026-10-26-rc16-ui",
+  "accepted_source_sha256": "bf45cf936081399d3992859821bb60c01983e395ba8e4c301ef81dd6933bc4ee",
   "architecture_sha256": "e556c1046270e45c83b8d8f286b1133b463e49a0c951515701ea4e0f624f4a18",
   "preserved_body_clips": [
-    "home",
-    "connection",
-    "tutor-answer",
-    "followup",
-    "continuation",
-    "adaptive",
-    "closing"
+    "home"
   ],
   "replaced_shots": [
     "assessment",
     "lesson",
     "resources",
     "question-origin",
-    "settings/context",
-    "save"
+    "settings",
+    "connection",
+    "tutor-answer",
+    "followup",
+    "save",
+    "continuation",
+    "adaptive",
+    "closing"
   ],
   "visual_review": "pass",
-  "subjective_listening_review": "approved source voice reused without speed change",
+  "subjective_listening_review": "previously approved native-pace teacher and student; exact accepted AAC retained",
   "runtime_capture_audit": {
     "status": "pass",
-    "current_version": "1.1.0-rc.15",
-    "clips": {
-      "assessment": {
-        "current_ui": true,
-        "synthetic_answer": true
+    "version": "1.1.0-rc.16",
+    "capture_total_ms": 155891,
+    "scenes": [
+      {
+        "id": "assessment",
+        "seconds": 10.36,
+        "start_ms": 189,
+        "action_end_ms": 4820,
+        "end_ms": 10550
       },
-      "context": {
-        "action_ms": 6718,
-        "start_performance_ms": 984.7000000178814
+      {
+        "id": "lesson",
+        "seconds": 9.12,
+        "start_ms": 10738,
+        "action_end_ms": 15930,
+        "end_ms": 19869
       },
-      "practice": {
-        "file_save": "pass"
+      {
+        "id": "resources",
+        "seconds": 9.88,
+        "start_ms": 20058,
+        "action_end_ms": 25206,
+        "end_ms": 29941
       },
-      "resources": {
-        "current_ui": true
+      {
+        "id": "question-origin",
+        "seconds": 14.44,
+        "start_ms": 30129,
+        "action_end_ms": 36542,
+        "end_ms": 44569
       },
-      "lesson": {
-        "current_ui": true
+      {
+        "id": "settings",
+        "seconds": 17.56,
+        "start_ms": 44757,
+        "action_end_ms": 60014,
+        "end_ms": 62327
       },
-      "question": {
-        "current_ui": true,
-        "unconfigured_tutor": true
+      {
+        "id": "connection",
+        "seconds": 9.8,
+        "start_ms": 62516,
+        "action_end_ms": 66746,
+        "end_ms": 72324
+      },
+      {
+        "id": "tutor-answer",
+        "seconds": 15.48,
+        "start_ms": 72511,
+        "action_end_ms": 87235,
+        "end_ms": 87993
+      },
+      {
+        "id": "followup",
+        "seconds": 18.4,
+        "start_ms": 88180,
+        "action_end_ms": 95873,
+        "end_ms": 106585
+      },
+      {
+        "id": "save",
+        "seconds": 15.88,
+        "start_ms": 106775,
+        "action_end_ms": 116657,
+        "end_ms": 122666
+      },
+      {
+        "id": "continuation",
+        "seconds": 9.4,
+        "start_ms": 122853,
+        "action_end_ms": 122894,
+        "end_ms": 132264
+      },
+      {
+        "id": "adaptive",
+        "seconds": 10,
+        "start_ms": 132453,
+        "action_end_ms": 139004,
+        "end_ms": 142465
+      },
+      {
+        "id": "closing",
+        "seconds": 12.96,
+        "start_ms": 142654,
+        "action_end_ms": 142660,
+        "end_ms": 155626
       }
-    },
-    "provider_requests": 0,
-    "external_requests": 0,
+    ],
+    "requests": [
+      {
+        "operation": "archived-model-list"
+      },
+      {
+        "operation": "local-connection-check"
+      },
+      {
+        "operation": "archived-answer-playback",
+        "scene": "tutor-answer",
+        "sha256": "3fc665d7068dfde6904fdb9a177763aab54d39353fbcd50d017cf3212747a77e"
+      },
+      {
+        "operation": "archived-answer-playback",
+        "scene": "followup",
+        "sha256": "f901c5efc8be25932b8b9cb70ff7f40a03e0cfdda9f9dfa50cde1dc8c0f4c273"
+      }
+    ],
+    "new_provider_requests": 0,
+    "new_speech_synthesis_requests": 0,
+    "answer_mode": "hash-verified accepted real DeepSeek answers replayed through the current HTTP/SSE runtime",
     "page_errors": [],
-    "synthetic_input_saved_only_to_isolated_copy": true
+    "external_browser_requests": 0,
+    "remembered_device_in_isolated_recording": true,
+    "runtime_hashes": {
+      "serve_course.py": "0ea5d7c55c5f6a26f7569873067c2ee959b05501751b79f02c0e019923437438",
+      "tutor_chat.py": "24715b078f068c5bf71f8a4eadb1ba537d5cb1abe3e125b59632da9df985c77a",
+      "credential_store.py": "c0739fd54587a4706876fa873e7c6884e7ff682381b580b4165ece06c7a1111a",
+      "assets/tutor.js": "9c7a40b8486c87da2c353883e350bbcf18906b6498a4d4a0003711c5579ce997",
+      "assets/tutor-settings.js": "f6c9898c2c3fa72770ea954d4dd2c79318172f2c3967df1957dfbd84c264b540",
+      "assets/style.css": "2d2bfff99eb74bb6cd967e61f0e08b1bcebcbb21b6de4c16864e80acb7e6788f"
+    }
   },
   "max_volume_db": -4.9,
   "visual_review_frames": 26,
@@ -73,5 +165,28 @@
     "practice.webm": "ad36ad5b71f06cd7e4fbeedb750bc85e6111e1bbd20eb9f7d6d088e097380419",
     "question.webm": "2e2ddf4b01ded700e0dfffd89358b0889b303c94a58441e5faa9f9151bd71f20",
     "resources.webm": "f60e2364557244eb84bccc7adc0ec4ed6ce6a9ffab1c7ae64f7f2dcce90ad899"
-  }
+  },
+  "version": "1.1.0-rc.16",
+  "audio_stream_identical": true,
+  "audio_stream_sha256": "69e48f6ca9c1f6ee7b4fdb24f3ef98eea8db28445a2347c0fe9cac9e3b3dd367",
+  "subtitle_file_identical": true,
+  "frame_sync_starts": {
+    "assessment": 1.4,
+    "lesson": 11.92,
+    "resources": 21.24,
+    "question-origin": 31.32,
+    "settings": 45.96,
+    "connection": 63.72,
+    "tutor-answer": 73.72,
+    "followup": 89.36,
+    "save": 107.96,
+    "continuation": 124.04,
+    "adaptive": 133.64,
+    "closing": 143.84
+  },
+  "synchronization": "per-scene in-frame markers, excluded from final footage",
+  "frame_sync_spread_ms": 31.0,
+  "sync_markers_in_final_frames": 0,
+  "reviewed_chapter_frames": 26,
+  "visual_review_notes": "All thirteen chapters reviewed at 25% and 75%; full-size assessment, first-question timing and follow-up inspected. Current composer, model/effort selectors, copy/edit controls, aligned settings controls and unoccluded subtitle rail verified."
 }

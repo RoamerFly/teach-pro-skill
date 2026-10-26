@@ -2,7 +2,7 @@
 
 作品：学途智伴——大学生长期自适应学习智能体。队伍：重邮FFBond。版本：Teach Pro 1.1.0-rc.16。
 
-2026-10-26 材料修订：Word 同步 rc.16；视频采用本日 rc.15 界面更新成片，展示整门教材上下文、统一上下文设置和题后原位作答。目录名沿用最初材料路径，便于重建工具和历史引用保持一致。
+2026-10-26 材料修订：Word 与视频均同步 rc.16；视频完整更新课程与答疑画面，展示统一模型与上下文设置、紧凑聊天输入区、消息操作和题后原位作答。目录名沿用最初材料路径，便于重建工具和历史引用保持一致。
 
 ## 用途与价值
 
@@ -54,14 +54,14 @@ python example/competition-materials/rc12/scripts/package_submission.py <赛事�
 
 ### 师生版视频
 
-当前版本由 `scripts/refresh_media_capture.cjs` 采集新版课程界面，再用 `scripts/refresh_rc15_video.py` 替换图解、资源、上下文设置和题后作答镜头。剪辑删去开场重复的续课讲解，复用已认可配音及原真实模型列表、连接和两轮回答，重新生成字幕与章节时间码；本轮未调用模型或语音服务。两个脚本都要求使用新的隔离工作目录。原架构开场脚本 `scripts/update_architecture_opening.py` 和下面的原始录制流程继续保留，便于追溯。
+当前视频由 `scripts/refresh_rc16_capture.cjs` 采集 rc.16 课程界面，再用 `scripts/refresh_rc16_video.py` 替换对应镜头。已验收的两轮 DeepSeek 回答逐字、逐哈希复核，通过新版 HTTP/SSE 组件回放；复制回答、模型与思考程度选择在当前界面操作。配音使用已确认的完整音轨，AAC 字节与字幕时间线保持一致。
 
 ```powershell
-node example/competition-materials/rc12/scripts/refresh_media_capture.cjs <新界面录制目录>
-python example/competition-materials/rc12/scripts/refresh_rc15_video.py <新剪辑目录> <界面录制目录> --accepted-materials <原177秒已验收材料备份目录>
+node example/competition-materials/rc12/scripts/refresh_rc16_capture.cjs <新的录制目录> <原真实答疑录制目录>
+python example/competition-materials/rc12/scripts/refresh_rc16_video.py <新的剪辑目录> <录制目录>
 ```
 
-剪辑器校验原片哈希，输出视频后将视觉复核标为 pending；需检查所有章节代表帧及字幕，再记录实际验收。原片、录屏和页图保留在仓库外的制作工作区。
+工具只复制干净 Demo；录制使用无效示例密钥，网络传输限定为本机的已验收答案回放，不调用模型或语音服务。临时设备凭据在结束时清除。剪辑器验证答案哈希、完整解码、音轨一致、时长与字幕，输出逐章代表帧；通过目视复核后同步发布。历史录制与剪辑工具继续保留，便于重建旧版本。
 
 录制与合成串行执行。DeepSeek 和百炼凭据分别通过隐藏输入读取，只在进程内传递。工作目录位于仓库外；录制器复制干净 Demo，不读取原学员答案、聊天或配置。系统凭据服务可用时实际展示设备记忆，录制结束删除该隔离课程的临时凭据。
 
@@ -75,7 +75,7 @@ python example/competition-materials/rc12/scripts/make_dialogue_video.py audit <
 
 `prepare` 先合成台词并测量各句时间，不预生成模型回答。`record` 校验台词未变，按实测口播时点操作页面，包含四次真实提供商请求。`voice` 补充合成实际答案，复用其他缓存。录制从未连接模型的答疑入口开始，设置携带原课程定位，返回后自动打开同一课答疑窗口。
 
-用 `TEACH_PRO_NODE`、`NODE_PATH`、`TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 指定录制所需 Node、Playwright、浏览器和课程 Python；音视频处理还需 FFmpeg/ffprobe。脚本不将凭据放入命令行参数，不使用合成模型接口；两轮回答和演示作答只保留在隔离工作区。
+用 `TEACH_PRO_NODE`、`NODE_PATH`、`TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 指定录制所需 Node、Playwright、浏览器和课程 Python；音视频处理还需 FFmpeg/ffprobe。原始录制脚本不将凭据放入命令行参数；两轮回答和演示作答只保留在隔离工作区。
 
 语音使用 Andre / Qwen3-TTS-Flash 与“阅历姐姐”/ MiniMax Speech 2.8 HD，均通过百炼合成。工具按模型选择协议，不向 HD 接口发送 Qwen 语气指令。修改解说后只生成缓存不匹配的片段，不自动重试；`voice --cached-only` 离线重建音轨和字幕，无需凭据。教师回答取实际保存的答案；问题变化时必须重新录制，不能重新标注旧答案。Flash 的已完成 PCM 若携带流式 WAV 长度占位头，仅在独立副本修正长度，原始音频与所有样本保留。
 

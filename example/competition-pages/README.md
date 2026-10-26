@@ -16,8 +16,8 @@ GitHub Pages 发布首页、智鉴 Agent 课程、统计学完整自适应案例
 
 在仓库根目录运行 `python scripts/build_public_demo.py <新输出目录> --ref HEAD`。课程、技能、视频和架构图来自指定的已提交快照；入口页来自当前源码。构建只选择公开材料，并检查密钥模式、禁止目录与本地引用。
 
-`assets/course-preview.png`、`tutor-preview.png` 是真实课程操作帧；`settings-preview.png` 展示本轮录制的统一上下文设置。`cover.html` 是可复现封面布局，不合成课程内容。
+`assets/course-preview.png` 是课程操作帧，`tutor-preview.png` 是已录制真实回答在 rc.16 答疑界面的回放帧；`settings-preview.png` 展示本轮录制的统一上下文设置。`cover.html` 是可复现封面布局，不合成课程内容。
 
 `.github/workflows/pages.yml` 在 main 更新时构建并发布；部署目录不含仓库历史、学员记录、本机设置或凭据。完整参赛文件继续使用 `competition-submission/competition_submit` 的赛事版；本目录是在线展示层，不维护第二套 Skill。
 
-2026-10-26 当前下载升级 rc.16，支持复制／编辑分支、左右切换、附件、思考与停止生成。在线静态课程保持阅读与作答功能；答疑功能在下载课程的本地服务中运行。演示视频为本日 rc.15 界面剪辑，保留真实答疑实录。
+2026-10-26 当前下载升级 rc.16，支持复制／编辑分支、左右切换、附件、思考与停止生成。在线静态课程保持阅读与作答功能；答疑功能在下载课程的本地服务中运行。演示视频已完整更新 rc.16 课程与答疑画面，保留原配音及已录制真实回答；模型、思考程度和消息操作均来自当前组件。
