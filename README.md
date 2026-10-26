@@ -2,9 +2,9 @@
 
 面向长期学习的自适应教学 Skill。把学习目标、课程与本地学习记录连接起来，先评估基础，再逐课教学，依据作答与疑难安排下一步。
 
-当前版本：**1.1.0-rc.15**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
+当前版本：**1.1.0-rc.16**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
 
-rc.15 支持整门已生成教材上下文、当前提问页与选文段落定位，统一设置页可调整教材范围和对话记忆。已有课程升级答疑组件后，重启课程服务并刷新网页即可，原作答、聊天和模型配置保留。
+rc.16 新增对话分支、图片与文本附件、思考显示、停止生成，以及聊天内模型与思考程度选择。整门教材、当前提问页与选文定位继续可用。已有课程升级答疑组件后，重启课程服务并刷新网页即可，原作答、聊天和模型配置保留。
 
 [在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/competition-demo-rc12/README.md)
 
@@ -102,7 +102,7 @@ cd teach-pro-skill/example/competition-demo-rc12
 
 ### 多轮课内答疑
 
-围绕当前课连续提问，也可联系之前的课程；回答流式显示，支持 Markdown 排版和按课保存。下图来自演示视频中 DeepSeek 的实际两轮回答。
+围绕当前课连续提问，也可联系之前的课程；正文与提供商返回的思考分别流式显示。支持复制、修改问题、重新生成和左右切换版本，停止生成后保留已收到内容。输入区可选择本次模型与思考程度，并上传、粘贴或拖入图片及文本附件。下图来自演示视频中 DeepSeek 的实际两轮回答。
 
 ![课内答疑实录：从消息上下文追问多轮聊天与工具型 Agent 的区别](./example/competition-pages/assets/tutor-preview.png)
 
@@ -141,7 +141,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.15.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.16.zip HEAD:teach-pro
 ```
 
 ### 双版本发布

@@ -1,0 +1,164 @@
+{
+  "status": "pass",
+  "version": "1.1.0-rc.16",
+  "date": "2026-10-26",
+  "python_tests": {
+    "run": 216,
+    "passed": 207,
+    "skipped": 9
+  },
+  "new_conversation_unit_tests": 17,
+  "response_limits": {
+    "passed": 40
+  },
+  "conversation_browser": {
+    "status": "pass",
+    "synthetic_provider": true,
+    "real_provider_requests": 0,
+    "external_requests": 0,
+    "page_errors": [],
+    "stop_ms": 65,
+    "checks": [
+      "streamed reasoning",
+      "Markdown answer",
+      "copy question and answer",
+      "model/effort payload",
+      "image and text attachments",
+      "edit forks context",
+      "regenerate answer versions",
+      "left/right restore",
+      "refresh restores active branch",
+      "server upstream cancellation",
+      "early stop prevents request",
+      "draft preservation",
+      "paste/drop images"
+    ],
+    "layouts": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "dialogWidth": 1353.59375,
+        "composerLeft": 240,
+        "composerRight": 1200,
+        "bodyOverflow": false,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "dialogWidth": 1353.59375,
+        "composerLeft": 240,
+        "composerRight": 1200,
+        "bodyOverflow": false,
+        "background": "rgb(24, 36, 55)"
+      },
+      {
+        "theme": "light",
+        "width": 390,
+        "dialogWidth": 390,
+        "composerLeft": 13.59375,
+        "composerRight": 376.40625,
+        "bodyOverflow": false,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "theme": "dark",
+        "width": 390,
+        "dialogWidth": 390,
+        "composerLeft": 13.59375,
+        "composerRight": 376.40625,
+        "bodyOverflow": false,
+        "background": "rgb(24, 36, 55)"
+      },
+      {
+        "theme": "light",
+        "width": 320,
+        "dialogWidth": 320,
+        "composerLeft": 13.59375,
+        "composerRight": 306.40625,
+        "bodyOverflow": false,
+        "background": "rgb(255, 255, 255)"
+      },
+      {
+        "theme": "dark",
+        "width": 320,
+        "dialogWidth": 320,
+        "composerLeft": 13.59375,
+        "composerRight": 306.40625,
+        "bodyOverflow": false,
+        "background": "rgb(24, 36, 55)"
+      }
+    ]
+  },
+  "long_answers_browser": {
+    "status": "pass",
+    "synthetic": true,
+    "cases": [
+      {
+        "case": "normal-long",
+        "status": "complete",
+        "characters": 3153,
+        "code": null,
+        "response_bytes": 936739
+      },
+      {
+        "case": "unicode",
+        "status": "complete",
+        "characters": 40000,
+        "code": null,
+        "response_bytes": 160592
+      },
+      {
+        "case": "json-fallback",
+        "status": "complete",
+        "characters": 11,
+        "code": null,
+        "response_bytes": null
+      },
+      {
+        "case": "reply-limit",
+        "status": "complete",
+        "characters": 100000,
+        "code": null,
+        "response_bytes": 300578
+      },
+      {
+        "case": "event-limit",
+        "status": "complete",
+        "characters": 12,
+        "code": null,
+        "response_bytes": 2098084
+      },
+      {
+        "case": "wire-limit",
+        "status": "complete",
+        "characters": 12,
+        "code": null,
+        "response_bytes": 16817426
+      },
+      {
+        "case": "interrupted",
+        "status": "incomplete",
+        "characters": 8,
+        "code": "stream_interrupted",
+        "response_bytes": 318
+      }
+    ],
+    "refreshPreservesRecords": true,
+    "continuationContextAndDraft": true,
+    "realTimeFirstDelta": true,
+    "frontendOver32MiB": true,
+    "automaticProviderBudget": true,
+    "providerRequests": 0,
+    "loopbackRequests": 9,
+    "externalRequests": 0,
+    "pageErrors": []
+  },
+  "document": {
+    "pages": 5,
+    "renderer": "Word read-only PDF export + Poppler",
+    "visual_review": "pass"
+  },
+  "real_provider_requests": 0,
+  "original_user_records_modified": false
+}
