@@ -15,7 +15,7 @@
 - [新版 Demo](../../competition-demo-rc12/README.md)：三节正式课和一节关联补充课，八个页面。
 - [Word 技能说明](./学途智伴技能说明文档.docx)：五页，设计思路部分加入工作流程架构图与职责说明，已通过 Word 导出并逐页复核。
 - [工作流程架构图](./assets/teach-pro-workflow-architecture-v2-connected.png)：以箭头连接学习闭环、课程交付、课内答疑与本地记录，与 Word 和视频开场使用同一版本。
-- [师生演示视频](./学途智伴师生演示视频.mp4)：170.74 秒，约 2 分 51 秒。架构开场后展示评估、图解、资源、模型与上下文设置、多轮答疑、题后作答和续课。教师使用 A“阅历姐姐”HD 女声，学生使用 Andre 男声，字幕放在画面下方。
+- [师生演示视频](./学途智伴师生演示视频.mp4)：170.74 秒，约 2 分 51 秒。架构开场后展示评估、图解、资源、模型与上下文设置、多轮答疑、题后作答和续课。教师使用 A“阅历姐姐”HD 女声，学生使用“温润男声”HD 男声，字幕放在画面下方。
 - [视频讲解脚本](./视频讲解脚本.md)：说明 Skill 技能包、教学宿主、课程工作区及课内答疑的关系，串联从学习目标到自适应续课的演示主线。
 - [师生口播计划](./dialogue-plan.json)、[实际章节](./dialogue-video-chapters.json)、[配音检查](./audio/dialogue-voice-audit.json)：分角色维护解说；答疑教师配音使用实际返回的答案，仅去除 Markdown 标记。技术检查已完成，2026-10-06 用户认可当前演示并要求准备参赛包。
 - 快速试听：[学生沉稳男声](./audio/学生沉稳男声.mp3)、[教师成熟女声](./audio/教师成熟女声.mp3)、[疑问引出答疑](./audio/学习疑问与答疑衔接.mp3)。
@@ -54,47 +54,32 @@ python example/competition-materials/rc12/scripts/package_submission.py <赛事�
 
 ### 师生版视频
 
-当前视频由 `scripts/refresh_rc16_capture.cjs` 采集 rc.16 课程界面，再用 `scripts/refresh_rc16_video.py` 替换对应镜头。已验收的两轮 DeepSeek 回答逐字、逐哈希复核，通过新版 HTTP/SSE 组件回放；复制回答、模型与思考程度选择在当前界面操作。配音使用已确认的完整音轨，AAC 字节与字幕时间线保持一致。
+当前配音由 `scripts/regenerate_expressive_voice.py` 重新生成全部32个语音片段，`scripts/render_expressive_video.py` 按实测音频时长编排对白、字幕和画面。教师保留 A“阅历姐姐”，学生采用“温润男声”，两者均为百炼 `MiniMax/speech-2.8-hd`。
+
+短接话、肯定与鼓励使用 `happy`，发现疑点与求证使用 `surprised`，长解释由模型随台词自动匹配语调。教师原生语速1.27–1.30、学生1.19；角色换人约250毫秒，短接话与长解释间约120毫秒，后期只统一响度。实际参数、时长与哈希见 [配音检查](audio/dialogue-voice-audit.json)，完整表演计划见 [emotional-performance-plan.json](emotional-performance-plan.json)。
 
 ```powershell
-node example/competition-materials/rc12/scripts/refresh_rc16_capture.cjs <新的录制目录> <原真实答疑录制目录>
-python example/competition-materials/rc12/scripts/refresh_rc16_video.py <新的剪辑目录> <录制目录>
+python example/competition-materials/rc12/scripts/regenerate_expressive_voice.py <新工作目录> --accepted <原真实答疑目录> --key-file <本机凭据文件>
+python example/competition-materials/rc12/scripts/render_expressive_video.py layout <工作目录>
+node example/competition-materials/rc12/scripts/refresh_rc16_capture.cjs <新录制目录> <原真实答疑目录> <工作目录>/aligned-plan.json
+python example/competition-materials/rc12/scripts/render_expressive_video.py render <工作目录> --capture <新录制目录>
 ```
 
-工具只复制干净 Demo；录制使用无效示例密钥，网络传输限定为本机的已验收答案回放，不调用模型或语音服务。临时设备凭据在结束时清除。剪辑器验证答案哈希、完整解码、音轨一致、时长与字幕，输出逐章代表帧；通过目视复核后同步发布。历史录制与剪辑工具继续保留，便于重建旧版本。
+凭据只在合成进程中读取，不写入音频检查或公开资源。录制器复制干净 Demo，使用无效示例密钥和本机接口回放已录制真实回答；原两个问句、回答与哈希保持一致，不新增模型问答请求。课程组件保持原始文件，临时系统凭据在结束时清除。剪辑按画面同步标记对齐、移除标记，并检查完整解码、三分钟时长、字幕和逐章画面。
 
-录制与合成串行执行。DeepSeek 和百炼凭据分别通过隐藏输入读取，只在进程内传递。工作目录位于仓库外；录制器复制干净 Demo，不读取原学员答案、聊天或配置。系统凭据服务可用时实际展示设备记忆，录制结束删除该隔离课程的临时凭据。
+原始师生录制工具 `make_dialogue_video.py`、架构开场和前两版界面替换工具保留作历史重建。当前完整配音不复用旧音轨，也不以历史 `delivery` 描述冒充已发送的情感参数。带本地路径的录制计划和原始音频保留在仓库外工作目录。
 
-```powershell
-python example/competition-materials/rc12/scripts/make_dialogue_video.py prepare <工作目录>
-python example/competition-materials/rc12/scripts/make_dialogue_video.py record <工作目录>
-python example/competition-materials/rc12/scripts/make_dialogue_video.py voice <工作目录>
-python example/competition-materials/rc12/scripts/make_dialogue_video.py render <工作目录>
-python example/competition-materials/rc12/scripts/make_dialogue_video.py audit <工作目录>
-```
-
-`prepare` 先合成台词并测量各句时间，不预生成模型回答。`record` 校验台词未变，按实测口播时点操作页面，包含四次真实提供商请求。`voice` 补充合成实际答案，复用其他缓存。录制从未连接模型的答疑入口开始，设置携带原课程定位，返回后自动打开同一课答疑窗口。
-
-用 `TEACH_PRO_NODE`、`NODE_PATH`、`TEACH_PRO_BROWSER`、`TEACH_PRO_PYTHON` 指定录制所需 Node、Playwright、浏览器和课程 Python；音视频处理还需 FFmpeg/ffprobe。原始录制脚本不将凭据放入命令行参数；两轮回答和演示作答只保留在隔离工作区。
-
-语音使用 Andre / Qwen3-TTS-Flash 与“阅历姐姐”/ MiniMax Speech 2.8 HD，均通过百炼合成。工具按模型选择协议，不向 HD 接口发送 Qwen 语气指令。修改解说后只生成缓存不匹配的片段，不自动重试；`voice --cached-only` 离线重建音轨和字幕，无需凭据。教师回答取实际保存的答案；问题变化时必须重新录制，不能重新标注旧答案。Flash 的已完成 PCM 若携带流式 WAV 长度占位头，仅在独立副本修正长度，原始音频与所有样本保留。
-
-教师保留 A 的声线，按句设置 1.24–1.30 原生语速：接住提问、确认成功和肯定理解使用 happy，机制解释使用 calm，其他段落由模型匹配情感。学生保留 Andre，通过自然口语、思考句、疑问与领悟句重写台词；该音色不支持独立指令控制，`delivery` 只记录台词意图，不冒充提供商参数。两角色播放时长等于源时长，混音只统一响度，不改变音高或语速。报告按句记录情感、原生语速、播放倍率、时长和哈希。
-
-剪辑保留连续操作，仅裁去动作完成后的尾部空等，不能跳过设置或提问中段；音轨时间线不得短于真实动作时长。设置镜头至少 14 秒，两轮答疑各至少 15 秒。模型回答返回后才开始相应答疑口播。字幕按实测语音片段分配句段，仍需人工复核同步。原始录屏、WAV、缓存和学习文件不随包提交。
-
-### 文档与静态截图
+### 页面与说明文档
 
 ```powershell
 node example/competition-materials/rc12/scripts/capture_and_check.cjs
-node -e "require('sharp')('example/competition-materials/rc12/assets/architecture.svg',{density:180}).png().toFile('example/competition-materials/rc12/assets/architecture.png')"
 python example/competition-materials/rc12/scripts/build_document.py
 python example/competition-materials/rc12/scripts/audit_document.py
 ```
 
-### 高质量语音候选
+### 历史音色候选
 
-高质量候选使用百炼托管的 `MiniMax/speech-2.8-hd`，直接设置原生语速和情感，试听不作后期倍速。2026-10-06 用户开通服务后，查询到 303 个系统音色并成功生成四段短样；此前未开通的失败记录仍保留于[连接记录](./audio/hd-connection-check.json)。用户已选定教师 A；学生 HD 候选未采用，当前影片保留 Andre 声线。
+高质量候选使用百炼托管的 `MiniMax/speech-2.8-hd`，直接设置原生语速和情感，试听不作后期倍速。2026-10-06 用户开通服务后，查询到 303 个系统音色并成功生成四段短样；此前未开通的失败记录仍保留于[连接记录](./audio/hd-connection-check.json)。用户已选定教师 A；学生 HD 候选未采用，当时影片采用 Andre 声线；本次情感版学生改用“温润男声”。
 
 教师同文对比：[A · 成熟自然，已采用](./audio/teacher-wise-auto.mp3)、[B · 成熟活泼](./audio/teacher-wise-happy.mp3)、[C · 温柔自然](./audio/teacher-gentle-auto.mp3)，原生语速均为 1.30；[学生 HD 候选，未采用](./audio/student-college-calm.mp3)为 1.15。A/B 使用实际系统音色“阅历姐姐”，只改变是否显式设置 happy 情感；C 使用“温柔学姐”，学生候选使用“青年大学生”。[短样计划](./hd-audition-plan.json)与[音频检查](./audio/hd-audition-audit.json)记录完整参数、时长和哈希。短样与历史检查保留，整片听感和术语发音仍需试看。
 

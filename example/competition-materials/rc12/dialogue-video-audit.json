@@ -1,122 +1,119 @@
 {
   "seconds": 170.741333,
-  "bytes": 19258684,
-  "sha256": "2e461f3ac5e8f66c32791e5ca59b7af9933e2a0c4dac70c0f7cee39eb67b1cff",
+  "bytes": 18989958,
+  "sha256": "8cb33013bf1c2f286259860ba3805f44e9d26ac89599de8f28396fb51fa88a85",
+  "version": "1.1.0-rc.16",
+  "media_revision": "2026-10-26-fresh-emotional-voices",
   "full_decode": "pass",
-  "subtitle_cues": 76,
+  "visual_review": "pass",
+  "subjective_listening_review": "pending-user-listening",
+  "max_volume_db": -4.9,
+  "subtitle_cues": 78,
   "provider_requests": 4,
   "new_provider_requests": 0,
-  "new_speech_synthesis_requests": 0,
-  "media_revision": "2026-10-26-rc16-ui",
-  "accepted_source_sha256": "bf45cf936081399d3992859821bb60c01983e395ba8e4c301ef81dd6933bc4ee",
-  "architecture_sha256": "e556c1046270e45c83b8d8f286b1133b463e49a0c951515701ea4e0f624f4a18",
-  "preserved_body_clips": [
-    "home"
-  ],
-  "replaced_shots": [
-    "assessment",
-    "lesson",
-    "resources",
-    "question-origin",
-    "settings",
-    "connection",
-    "tutor-answer",
-    "followup",
-    "save",
-    "continuation",
-    "adaptive",
-    "closing"
-  ],
-  "visual_review": "pass",
-  "subjective_listening_review": "previously approved native-pace teacher and student; exact accepted AAC retained",
+  "new_speech_synthesis_requests": 32,
+  "audio_stream_identical": false,
+  "all_voice_segments_fresh": true,
+  "roles": {
+    "teacher": {
+      "voice": "Chinese (Mandarin)_Wise_Women",
+      "model": "MiniMax/speech-2.8-hd",
+      "label": "老师"
+    },
+    "student": {
+      "voice": "Chinese (Mandarin)_Gentleman",
+      "model": "MiniMax/speech-2.8-hd",
+      "label": "同学"
+    }
+  },
   "runtime_capture_audit": {
     "status": "pass",
     "version": "1.1.0-rc.16",
-    "capture_total_ms": 155891,
+    "capture_total_ms": 155934,
     "scenes": [
       {
         "id": "assessment",
         "seconds": 10.36,
-        "start_ms": 189,
-        "action_end_ms": 4820,
-        "end_ms": 10550
+        "start_ms": 186,
+        "action_end_ms": 5569,
+        "end_ms": 10554
       },
       {
         "id": "lesson",
         "seconds": 9.12,
-        "start_ms": 10738,
-        "action_end_ms": 15930,
-        "end_ms": 19869
+        "start_ms": 10756,
+        "action_end_ms": 15975,
+        "end_ms": 19883
       },
       {
         "id": "resources",
         "seconds": 9.88,
-        "start_ms": 20058,
-        "action_end_ms": 25206,
-        "end_ms": 29941
+        "start_ms": 20070,
+        "action_end_ms": 25249,
+        "end_ms": 29961
       },
       {
         "id": "question-origin",
         "seconds": 14.44,
-        "start_ms": 30129,
-        "action_end_ms": 36542,
-        "end_ms": 44569
+        "start_ms": 30148,
+        "action_end_ms": 37016,
+        "end_ms": 44598
       },
       {
         "id": "settings",
         "seconds": 17.56,
-        "start_ms": 44757,
-        "action_end_ms": 60014,
-        "end_ms": 62327
+        "start_ms": 44785,
+        "action_end_ms": 59966,
+        "end_ms": 62359
       },
       {
         "id": "connection",
         "seconds": 9.8,
-        "start_ms": 62516,
-        "action_end_ms": 66746,
-        "end_ms": 72324
+        "start_ms": 62546,
+        "action_end_ms": 66790,
+        "end_ms": 72360
       },
       {
         "id": "tutor-answer",
         "seconds": 15.48,
-        "start_ms": 72511,
-        "action_end_ms": 87235,
-        "end_ms": 87993
+        "start_ms": 72549,
+        "action_end_ms": 87280,
+        "end_ms": 88037
       },
       {
         "id": "followup",
         "seconds": 18.4,
-        "start_ms": 88180,
-        "action_end_ms": 95873,
-        "end_ms": 106585
+        "start_ms": 88226,
+        "action_end_ms": 95942,
+        "end_ms": 106637
       },
       {
         "id": "save",
         "seconds": 15.88,
-        "start_ms": 106775,
-        "action_end_ms": 116657,
-        "end_ms": 122666
+        "start_ms": 106826,
+        "action_end_ms": 117700,
+        "end_ms": 122722
       },
       {
         "id": "continuation",
         "seconds": 9.4,
-        "start_ms": 122853,
-        "action_end_ms": 122894,
-        "end_ms": 132264
+        "start_ms": 122908,
+        "action_end_ms": 122943,
+        "end_ms": 132316
       },
       {
         "id": "adaptive",
         "seconds": 10,
-        "start_ms": 132453,
-        "action_end_ms": 139004,
-        "end_ms": 142465
+        "start_ms": 132504,
+        "action_end_ms": 139083,
+        "end_ms": 142506
       },
       {
         "id": "closing",
         "seconds": 12.96,
-        "start_ms": 142654,
-        "action_end_ms": 142660,
-        "end_ms": 155626
+        "start_ms": 142695,
+        "action_end_ms": 142706,
+        "end_ms": 155670
       }
     ],
     "requests": [
@@ -152,41 +149,12 @@
       "assets/style.css": "2d2bfff99eb74bb6cd967e61f0e08b1bcebcbb21b6de4c16864e80acb7e6788f"
     }
   },
-  "max_volume_db": -4.9,
-  "visual_review_frames": 26,
-  "document_review_pages": 5,
-  "numbering_review": "plain digits in lesson annotations, prose and figures; annotation points distinct from source line numbers",
-  "capture_workspace": "2026-10-26-rc15-media-capture-v6",
-  "edit_workspace": "2026-10-26-rc15-video-edit-v6",
-  "source_capture_sha256": {
-    "assessment.webm": "fcaa3a637548b690052ba4b5c85bd277fb56799156b3a0b615c9bc8d566ec6c8",
-    "context.webm": "92f3e2c3e1076828d55d9bb50090e7bb4439381d5d53b88e48ce7cd78154134b",
-    "lesson.webm": "3a3b0b990fb513c3431edd537ccfd13e55ea831cff31b42932b9ee7c105032d6",
-    "practice.webm": "ad36ad5b71f06cd7e4fbeedb750bc85e6111e1bbd20eb9f7d6d088e097380419",
-    "question.webm": "2e2ddf4b01ded700e0dfffd89358b0889b303c94a58441e5faa9f9151bd71f20",
-    "resources.webm": "f60e2364557244eb84bccc7adc0ec4ed6ce6a9ffab1c7ae64f7f2dcce90ad899"
-  },
-  "version": "1.1.0-rc.16",
-  "audio_stream_identical": true,
-  "audio_stream_sha256": "69e48f6ca9c1f6ee7b4fdb24f3ef98eea8db28445a2347c0fe9cac9e3b3dd367",
-  "subtitle_file_identical": true,
-  "frame_sync_starts": {
-    "assessment": 1.4,
-    "lesson": 11.92,
-    "resources": 21.24,
-    "question-origin": 31.32,
-    "settings": 45.96,
-    "connection": 63.72,
-    "tutor-answer": 73.72,
-    "followup": 89.36,
-    "save": 107.96,
-    "continuation": 124.04,
-    "adaptive": 133.64,
-    "closing": 143.84
-  },
-  "synchronization": "per-scene in-frame markers, excluded from final footage",
-  "frame_sync_spread_ms": 31.0,
   "sync_markers_in_final_frames": 0,
+  "speech_controls_applied": "native voice_setting emotion/speed on both roles; 32 successfully synthesized source files",
   "reviewed_chapter_frames": 26,
-  "visual_review_notes": "All thirteen chapters reviewed at 25% and 75%; full-size assessment, first-question timing and follow-up inspected. Current composer, model/effort selectors, copy/edit controls, aligned settings controls and unoccluded subtitle rail verified."
+  "native_emotions": [
+    "happy",
+    "surprised",
+    "automatic"
+  ]
 }

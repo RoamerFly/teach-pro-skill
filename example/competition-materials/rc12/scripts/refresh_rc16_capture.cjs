@@ -9,6 +9,7 @@ const {spawn} = require('node:child_process');
 const {chromium} = require('playwright');
 const materials = path.resolve(__dirname, '..'), repo = path.resolve(materials, '../../..');
 const work = path.resolve(process.argv[2]), accepted = path.resolve(process.argv[3]);
+const performance = process.argv[4] ? JSON.parse(fs.readFileSync(path.resolve(process.argv[4]),'utf8')) : null;
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const slug = '0001-llm-to-agent-api-call';
 const hash = text => crypto.createHash('sha256').update(text).digest('hex');
@@ -78,13 +79,13 @@ const hash = text => crypto.createHash('sha256').update(text).digest('hex');
       switch(chapter.id) {
         case 'assessment':
           await page.locator('input[name="q1"]').first().check();await click('[data-quiz-submit]');await scroll('#q1');
-          await at(3.3);await scroll('#q6');await page.locator('#entry-q6-goals').fill('我有 Python 基础，会调用模型 API。每周五小时，先看图解再读代码，目标是开发安全情报 Agent。');break;
+          await at(performance?4:3.3);await scroll('#q6');await page.locator('#entry-q6-goals').fill('我有 Python 基础，会调用模型 API。每周五小时，先看图解再读代码，目标是开发安全情报 Agent。');break;
         case 'lesson':
           await goto('lessons/'+slug+'.html');await scroll('#what-happens');await at(4.2);await scroll('#minimal-code');break;
         case 'resources':
           await scroll('#resources');await at(5);await click('[data-resource-id="video-lee-agent"] summary');break;
         case 'question-origin':
-          await scroll('#minimal-code');await at(6.2);await click('.tutor-open');await page.locator('#tutor-dialog').waitFor({state:'visible'});break;
+          await scroll('#minimal-code');await at(performance?6.7:6.2);await click('.tutor-open');await page.locator('#tutor-dialog').waitFor({state:'visible'});break;
         case 'settings':
           await at(.3);await page.getByRole('link',{name:'连接答疑模型',exact:true}).click();
           await page.waitForFunction(()=>!document.querySelector('[name=kind]').disabled);
@@ -112,9 +113,10 @@ const hash = text => crypto.createHash('sha256').update(text).digest('hex');
           await at(6.7);await click('.tutor-send');await page.waitForFunction(()=>document.querySelectorAll('.is-assistant').length===2&&!document.querySelector('.is-streaming'));
           assert.equal((await page.locator('.is-assistant .tutor-message-body').last().textContent()).trim(),answers[1].live_answer);break;
         case 'save':
-          await at(1.8);await click('[data-tutor-close]');await scroll('#lesson-0001-evidence-explain');
+          await at(performance?4.5:1.8);await click('[data-tutor-close]');await scroll('#lesson-0001-evidence-explain');
+          if(performance)await at(7.0);
           await page.locator('#lesson-0001-evidence-explain').fill('模型只看本次 messages；历史要由程序带上。工具型 Agent 还需要受控工具循环，把执行结果送回模型。');
-          await at(8);await scroll('#learning-input');await page.locator('#lesson-0001-troubles').fill('下一课能否用一次工具调用说明程序怎样控制执行？');
+          await at(performance?9:8);await scroll('#learning-input');await page.locator('#lesson-0001-troubles').fill('下一课能否用一次工具调用说明程序怎样控制执行？');
           await page.waitForFunction(()=>document.querySelector('.sync-status')?.dataset.state==='saved');break;
         case 'adaptive':
           await goto('index.html');await scroll('#lessons');await at(3);await goto('lessons/0003-safe-tool-contract.html');await scroll('#contract');

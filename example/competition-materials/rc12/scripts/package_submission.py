@@ -33,6 +33,7 @@ TUTOR_CONTEXT_EVIDENCE = 'evals/records/2026-10-26-tutor-course-context.md'
 MEDIA_REFRESH_EVIDENCE = 'evals/records/2026-10-26-rc15-media-refresh.md'
 TUTOR_CONVERSATION_EVIDENCE = 'evals/records/2026-10-26-rc16-conversation.md'
 CURRENT_VIDEO_EVIDENCE = 'evals/records/2026-10-26-rc16-video-refresh.md'
+EMOTIONAL_VOICE_EVIDENCE = 'evals/records/2026-10-26-rc16-emotional-voice.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -178,7 +179,7 @@ def remap(name):
         return '参赛材料/' + name.removeprefix(PREFIX)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
         return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
-    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE):
+    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE, EMOTIONAL_VOICE_EVIDENCE):
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
 
@@ -248,7 +249,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE, EMOTIONAL_VOICE_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)

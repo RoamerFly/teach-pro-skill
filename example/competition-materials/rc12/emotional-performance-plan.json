@@ -1,0 +1,1142 @@
+{
+  "version": "1.1.0-rc.16",
+  "revision": "2026-10-26-expressive-v2",
+  "scenes": [
+    {
+      "id": "home",
+      "title": "01 · Skill 架构：先评估，再按学习记录续课",
+      "old_seconds": 17.44,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "老师，我会一点 Python，也调用过模型接口。可想做安全情报智能体，还是不知道从哪儿开始。",
+          "source": "script",
+          "delivery": "沉稳地求教，句尾自然上扬",
+          "segments": [
+            {
+              "text": "老师，我会一点 Python，也调用过模型接口。可想做安全情报智能体，还是不知道从哪儿开始。",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。向熟悉的老师坦诚求教。第一句陈述已有基础，后半句说出困惑，句尾轻轻上扬，有真实求助感。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "file": "01-01-01.wav",
+              "seconds": 7.383969,
+              "sha256": "6de8ceb95dba692b1f0508657f4e083168306b440de40a879fc9b1693245f7fd",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 7.58397
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "那就从你的基础开始！学途智伴是一个 Skill 技能包。导入 TeleAgent，告诉它你想学什么，先评估，再开课。",
+          "source": "script",
+          "delivery": "接住学生的问题，亲切引导",
+          "segments": [
+            {
+              "text": "那就从你的基础开始！",
+              "speed": 1.27,
+              "emotion": "happy",
+              "file": "01-02-01.wav",
+              "seconds": 1.973719,
+              "sha256": "8656403254817bdcdad3d5ab450b0f821c67f987e29b4fbd6e8de12eb1f10549",
+              "start_seconds": 7.83397
+            },
+            {
+              "text": "学途智伴是一个 Skill 技能包。导入 TeleAgent，告诉它你想学什么，先评估，再开课。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "01-02-02.wav",
+              "seconds": 6.5,
+              "sha256": "b9b9804a6cad4d31054a961f56e492383eaf5230893a2aebb36b31989ef13025",
+              "start_seconds": 9.92769
+            }
+          ],
+          "start_seconds": 7.83397,
+          "end_seconds": 16.42769
+        }
+      ],
+      "seconds": 17.44,
+      "start": 0,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.6078159782608696,
+          "role": "student",
+          "text": "老师，我会一点 Python，"
+        },
+        {
+          "start": 2.6078159782608696,
+          "end": 4.052505565217391,
+          "role": "student",
+          "text": "也调用过模型接口。"
+        },
+        {
+          "start": 4.052505565217391,
+          "end": 5.818237282608695,
+          "role": "student",
+          "text": "可想做安全情报智能体，"
+        },
+        {
+          "start": 5.818237282608695,
+          "end": 7.583969,
+          "role": "student",
+          "text": "还是不知道从哪儿开始。"
+        },
+        {
+          "start": 7.833969,
+          "end": 9.807687999999999,
+          "role": "teacher",
+          "text": "那就从你的基础开始！"
+        },
+        {
+          "start": 9.927687999999998,
+          "end": 12.365187999999998,
+          "role": "teacher",
+          "text": "学途智伴是一个 Skill 技能包。"
+        },
+        {
+          "start": 12.365187999999998,
+          "end": 14.125604666666664,
+          "role": "teacher",
+          "text": "导入 TeleAgent，"
+        },
+        {
+          "start": 14.125604666666664,
+          "end": 16.427687999999996,
+          "role": "teacher",
+          "text": "告诉它你想学什么，先评估，再开课。"
+        }
+      ]
+    },
+    {
+      "id": "assessment",
+      "title": "02 · 把基础与目标交给教学 AI",
+      "old_seconds": 10.36,
+      "turns": [
+        {
+          "role": "teacher",
+          "spoken_text": "先做几道入门题，再写下目标和每周能学多久。答案会自动保存，教学 AI 据此安排课程。接下来，看看第一课！",
+          "source": "script",
+          "delivery": "边操作边讲，强调评估的用途",
+          "segments": [
+            {
+              "text": "先做几道入门题，再写下目标和每周能学多久。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "02-01-01.wav",
+              "seconds": 3.77325,
+              "sha256": "ef3fae40107651cad5543bca8176a606aa9c62e1ade835a608f28890a336a6a1",
+              "start_seconds": 0.2
+            },
+            {
+              "text": "答案会自动保存，教学 AI 据此安排课程。接下来，看看第一课！",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "02-01-02.wav",
+              "seconds": 5.212906,
+              "sha256": "f80d0ae00798cd9f54976d3831a55102cddba9c94c2689933009931a0f57c9a4",
+              "start_seconds": 4.09325
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 9.30616
+        }
+      ],
+      "seconds": 10.36,
+      "start": 17.44,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 1.6374285714285715,
+          "role": "teacher",
+          "text": "先做几道入门题，"
+        },
+        {
+          "start": 1.6374285714285715,
+          "end": 3.97325,
+          "role": "teacher",
+          "text": "再写下目标和每周能学多久。"
+        },
+        {
+          "start": 4.09325,
+          "end": 5.438516064516129,
+          "role": "teacher",
+          "text": "答案会自动保存，"
+        },
+        {
+          "start": 5.438516064516129,
+          "end": 8.297206451612904,
+          "role": "teacher",
+          "text": "教学 AI 据此安排课程。接下来，"
+        },
+        {
+          "start": 8.297206451612904,
+          "end": 9.306156000000001,
+          "role": "teacher",
+          "text": "看看第一课！"
+        }
+      ]
+    },
+    {
+      "id": "lesson",
+      "title": "03 · 第一课：从图解读到代码",
+      "old_seconds": 9.12,
+      "turns": [
+        {
+          "role": "teacher",
+          "spoken_text": "先看图：程序把消息发给模型，再拿回回答。对照代码找一找：这次请求，到底带了哪些消息？",
+          "source": "script",
+          "delivery": "解释机制，再抛出观察任务",
+          "segments": [
+            {
+              "text": "先看图：程序把消息发给模型，再拿回回答。",
+              "speed": 1.3,
+              "file": "03-01-01.wav",
+              "seconds": 3.703594,
+              "sha256": "666d5d1033062c34f30ae3ff6635c718cb0ac9dfcc382cae731b1e16beb62311",
+              "start_seconds": 0.2
+            },
+            {
+              "text": "对照代码找一找：这次请求，到底带了哪些消息？",
+              "speed": 1.3,
+              "emotion": "surprised",
+              "file": "03-01-02.wav",
+              "seconds": 3.866125,
+              "sha256": "626a91dea850a4b17dc62a0b1f86e4eda8907ad1319244b6213fa59e82e1cdd9",
+              "start_seconds": 4.02359
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 7.88972
+        }
+      ],
+      "seconds": 9.12,
+      "start": 27.8,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.7925158000000003,
+          "role": "teacher",
+          "text": "先看图：程序把消息发给模型，"
+        },
+        {
+          "start": 2.7925158000000003,
+          "end": 3.9035940000000005,
+          "role": "teacher",
+          "text": "再拿回回答。"
+        },
+        {
+          "start": 4.023594,
+          "end": 6.30812240909091,
+          "role": "teacher",
+          "text": "对照代码找一找：这次请求，"
+        },
+        {
+          "start": 6.30812240909091,
+          "end": 7.889719,
+          "role": "teacher",
+          "text": "到底带了哪些消息？"
+        }
+      ]
+    },
+    {
+      "id": "resources",
+      "title": "04 · 想深入，就带着任务读原资料",
+      "old_seconds": 9.88,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "如果想再深入一点，去哪儿看？",
+          "source": "script",
+          "delivery": "好奇提问，保持沉稳",
+          "segments": [
+            {
+              "text": "如果想再深入一点，去哪儿看？",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。听懂老师讲解后，自然产生兴趣，真诚好奇地问一个简短问题，重点是“去哪儿看”，疑问句尾上扬。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "file": "04-01-01.wav",
+              "seconds": 1.892438,
+              "sha256": "71061e78c5de66c9f36da59cd5a7c650ba8ee1ec36c91b30ed4420844389652e",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 2.09244
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "往下看，就是本课论文和视频。带着这里的小任务去读，回来试着用自己的话解释。",
+          "source": "script",
+          "delivery": "自然接话，给出具体学习入口",
+          "segments": [
+            {
+              "text": "往下看，就是本课论文和视频。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "04-02-01.wav",
+              "seconds": 2.844469,
+              "sha256": "52a71fd4a7ad2cda39cd9a7dc0c72e40e7657fdcda19a270d2584a79aa3a979a",
+              "start_seconds": 2.34244
+            },
+            {
+              "text": "带着这里的小任务去读，回来试着用自己的话解释。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "04-02-02.wav",
+              "seconds": 3.900969,
+              "sha256": "070316c522bec02cb73a810cef3899e5aa03b32b24302baef36349721e21d4cc",
+              "start_seconds": 5.30691
+            }
+          ],
+          "start_seconds": 2.34244,
+          "end_seconds": 9.20788
+        }
+      ],
+      "seconds": 9.88,
+      "start": 36.92,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.092438,
+          "role": "student",
+          "text": "如果想再深入一点，去哪儿看？"
+        },
+        {
+          "start": 2.342438,
+          "end": 5.186907,
+          "role": "teacher",
+          "text": "往下看，就是本课论文和视频。"
+        },
+        {
+          "start": 5.306907,
+          "end": 7.172587826086956,
+          "role": "teacher",
+          "text": "带着这里的小任务去读，"
+        },
+        {
+          "start": 7.172587826086956,
+          "end": 9.207875999999999,
+          "role": "teacher",
+          "text": "回来试着用自己的话解释。"
+        }
+      ]
+    },
+    {
+      "id": "question-origin",
+      "title": "05 · 代码引出疑问，再打开课内答疑",
+      "old_seconds": 14.44,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "欸，代码里只放了这次的消息。那上一轮说过的话，模型还知道吗？",
+          "source": "script",
+          "delivery": "发现疑点，先思考再问",
+          "segments": [
+            {
+              "text": "欸，代码里只放了这次的消息。那上一轮说过的话，模型还知道吗？",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。刚在代码中发现一个疑点，“欸”带轻微惊讶，随后认真求证，重读“上一轮”，最后是真实的疑问语气。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "emotion": "surprised",
+              "file": "05-01-01.wav",
+              "seconds": 5.050344,
+              "sha256": "72e4fc8a3f6076363a193cdf9bd8150eeb8475df3220d24753246cfb7cfd88df",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 5.25034
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "问得好！点顶部的“问 AI”，就能结合教材讨论。第一次用，先连接一个答疑模型。",
+          "source": "script",
+          "delivery": "肯定问题，再解释为什么要连接模型",
+          "segments": [
+            {
+              "text": "问得好！",
+              "speed": 1.27,
+              "emotion": "happy",
+              "file": "05-02-01.wav",
+              "seconds": 1.068125,
+              "sha256": "1e42e9c29bbcb46891a4431c6ca1e380db93daf4d549696680cd7ab82bc468a4",
+              "start_seconds": 5.50034
+            },
+            {
+              "text": "点顶部的“问 AI”，就能结合教材讨论。第一次用，先连接一个答疑模型。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "05-02-02.wav",
+              "seconds": 5.677281,
+              "sha256": "8928eb7e597bfb6f6df0a15e2eea16c436ace852a709ec8528840258ccd3f527",
+              "start_seconds": 6.68847
+            }
+          ],
+          "start_seconds": 5.50034,
+          "end_seconds": 12.36575
+        }
+      ],
+      "seconds": 14.44,
+      "start": 46.800000000000004,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.5568272,
+          "role": "student",
+          "text": "欸，代码里只放了这次的消息。"
+        },
+        {
+          "start": 2.5568272,
+          "end": 4.071930399999999,
+          "role": "student",
+          "text": "那上一轮说过的话，"
+        },
+        {
+          "start": 4.071930399999999,
+          "end": 5.250343999999999,
+          "role": "student",
+          "text": "模型还知道吗？"
+        },
+        {
+          "start": 5.500344,
+          "end": 6.568469,
+          "role": "teacher",
+          "text": "问得好！"
+        },
+        {
+          "start": 6.688469,
+          "end": 8.472757314285715,
+          "role": "teacher",
+          "text": "点顶部的“问 AI”，"
+        },
+        {
+          "start": 8.472757314285715,
+          "end": 10.743669714285716,
+          "role": "teacher",
+          "text": "就能结合教材讨论。第一次用，"
+        },
+        {
+          "start": 10.743669714285716,
+          "end": 12.365750000000002,
+          "role": "teacher",
+          "text": "先连接一个答疑模型。"
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "title": "06 · DeepSeek 配置与统一上下文设置",
+      "old_seconds": 17.56,
+      "turns": [
+        {
+          "role": "teacher",
+          "spoken_text": "点“连接答疑模型”，进入课程设置。这里用深度求索。",
+          "source": "script",
+          "delivery": "讲清入口与服务选择",
+          "segments": [
+            {
+              "text": "点“连接答疑模型”，进入课程设置。这里用深度求索。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "06-01-01.wav",
+              "seconds": 4.35375,
+              "sha256": "2c507dbef8649dc8492d44ff0d4bbc0903481a04feb1290637573870b2ab3098",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 4.55375
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "填入密钥，点“获取模型”，从真实列表选闪速模型。",
+          "source": "script",
+          "delivery": "按操作顺序讲清密钥与模型",
+          "segments": [
+            {
+              "text": "填入密钥，点“获取模型”，从真实列表选闪速模型。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "06-02-01.wav",
+              "seconds": 4.620781,
+              "sha256": "fa2f684b1cab72eaed8dba8f9bce1e03abfb3bfa078f1d234363e3dd0394ab5d",
+              "start_seconds": 4.80375
+            }
+          ],
+          "start_seconds": 4.80375,
+          "end_seconds": 9.42453
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "再保存并启用。这份配置整门课共用，以后不用每节课都重填。",
+          "source": "script",
+          "delivery": "收束设置步骤，说明全课程共用",
+          "segments": [
+            {
+              "text": "再保存并启用。这份配置整门课共用，以后不用每节课都重填。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "06-03-01.wav",
+              "seconds": 5.015531,
+              "sha256": "c6e4a39dec1b250e40366b5be5f7d31705c514fcc8fb196ae70162e460d8014a",
+              "start_seconds": 9.67453
+            }
+          ],
+          "start_seconds": 9.67453,
+          "end_seconds": 14.69006
+        }
+      ],
+      "seconds": 17.56,
+      "start": 61.24,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 1.9414999999999998,
+          "role": "teacher",
+          "text": "点“连接答疑模型”，"
+        },
+        {
+          "start": 1.9414999999999998,
+          "end": 3.1605499999999997,
+          "role": "teacher",
+          "text": "进入课程设置。"
+        },
+        {
+          "start": 3.1605499999999997,
+          "end": 4.55375,
+          "role": "teacher",
+          "text": "这里用深度求索。"
+        },
+        {
+          "start": 4.80375,
+          "end": 7.3066730416666665,
+          "role": "teacher",
+          "text": "填入密钥，点“获取模型”，"
+        },
+        {
+          "start": 7.3066730416666665,
+          "end": 9.424531,
+          "role": "teacher",
+          "text": "从真实列表选闪速模型。"
+        },
+        {
+          "start": 9.674531,
+          "end": 10.92841375,
+          "role": "teacher",
+          "text": "再保存并启用。"
+        },
+        {
+          "start": 10.92841375,
+          "end": 12.719674821428573,
+          "role": "teacher",
+          "text": "这份配置整门课共用，"
+        },
+        {
+          "start": 12.719674821428573,
+          "end": 14.690062000000001,
+          "role": "teacher",
+          "text": "以后不用每节课都重填。"
+        }
+      ]
+    },
+    {
+      "id": "connection",
+      "title": "07 · 连接通过，回到刚才的疑问",
+      "old_seconds": 9.8,
+      "turns": [
+        {
+          "role": "teacher",
+          "spoken_text": "连接成功！点“返回第一课”，答疑窗口就回来了。现在，把刚才代码里的疑问发给它。",
+          "source": "script",
+          "delivery": "轻快确认，提醒回到同一个问题",
+          "segments": [
+            {
+              "text": "连接成功！",
+              "speed": 1.27,
+              "emotion": "happy",
+              "file": "07-01-01.wav",
+              "seconds": 1.300344,
+              "sha256": "c14f565b0d8a7f2d84b9681ae7f5c320285c755f7747d56b99d1dc51106ec769",
+              "start_seconds": 2
+            },
+            {
+              "text": "点“返回第一课”，答疑窗口就回来了。现在，把刚才代码里的疑问发给它。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "07-01-02.wav",
+              "seconds": 5.445094,
+              "sha256": "3414232c8f455d5dc322aa6616ca760753281909cc7b930251c0d3f15f855a0f",
+              "start_seconds": 3.42034
+            }
+          ],
+          "start_seconds": 2,
+          "end_seconds": 8.86544
+        }
+      ],
+      "seconds": 9.8,
+      "start": 78.8,
+      "subtitle_cues": [
+        {
+          "start": 2,
+          "end": 3.300344,
+          "role": "teacher",
+          "text": "连接成功！"
+        },
+        {
+          "start": 3.420344,
+          "end": 4.861692411764706,
+          "role": "teacher",
+          "text": "点“返回第一课”，"
+        },
+        {
+          "start": 4.861692411764706,
+          "end": 6.783490294117646,
+          "role": "teacher",
+          "text": "答疑窗口就回来了。现在，"
+        },
+        {
+          "start": 6.783490294117646,
+          "end": 8.865438,
+          "role": "teacher",
+          "text": "把刚才代码里的疑问发给它。"
+        }
+      ]
+    },
+    {
+      "id": "tutor-answer",
+      "title": "08 · 首问：模型为什么不记得上一轮",
+      "old_seconds": 15.48,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "好，那为什么第二次只发新问题，就不知道上一轮的信息？",
+          "source": "script",
+          "delivery": "接着刚才的问题求证",
+          "segments": [
+            {
+              "text": "好，那为什么第二次只发新问题，就不知道上一轮的信息？",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。承接刚才的讨论，把问题问完整，重读“只发新问题”和“上一轮”，语气认真，句尾有清楚的疑问起伏。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "file": "08-01-01.wav",
+              "seconds": 3.761656,
+              "sha256": "c77d7d045b974975f0136b031b390f34b67c4933bda0f97e4d6b5ab9655c6b96",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 3.96166
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "因为每次调用只把本次 messages 发给模型；第二轮若只放新问题，上一轮的问答没进列表，模型就看不到，自然不知道。",
+          "source": "live-answer",
+          "delivery": "朗读真实答疑，突出本次请求与历史的区别",
+          "segments": [
+            {
+              "text": "因为每次调用只把本次 messages 发给模型；第二轮若只放新问题，上一轮的问答没进列表，模型就看不到，自然不知道。",
+              "speed": 1.3,
+              "file": "08-02-01.wav",
+              "seconds": 8.753938,
+              "sha256": "c81cd3a0108f4033bd14d7896ebd9f7720a3a90eeed9d9ddf7030137fcacf949",
+              "start_seconds": 5.67
+            }
+          ],
+          "start_seconds": 5.67,
+          "end_seconds": 14.42394
+        }
+      ],
+      "seconds": 15.48,
+      "start": 88.6,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.370186153846154,
+          "role": "student",
+          "text": "好，那为什么第二次只发新问题，"
+        },
+        {
+          "start": 2.370186153846154,
+          "end": 3.961656,
+          "role": "student",
+          "text": "就不知道上一轮的信息？"
+        },
+        {
+          "start": 5.67,
+          "end": 9.379295762711864,
+          "role": "teacher",
+          "text": "因为每次调用只把本次 messages 发给模型；"
+        },
+        {
+          "start": 9.379295762711864,
+          "end": 10.863014067796609,
+          "role": "teacher",
+          "text": "第二轮若只放新问题，"
+        },
+        {
+          "start": 10.863014067796609,
+          "end": 12.495104203389829,
+          "role": "teacher",
+          "text": "上一轮的问答没进列表，"
+        },
+        {
+          "start": 12.495104203389829,
+          "end": 13.533707016949151,
+          "role": "teacher",
+          "text": "模型就看不到，"
+        },
+        {
+          "start": 13.533707016949151,
+          "end": 14.423937999999998,
+          "role": "teacher",
+          "text": "自然不知道。"
+        }
+      ]
+    },
+    {
+      "id": "followup",
+      "title": "09 · 理解上个回答，再追问 Agent",
+      "old_seconds": 18.4,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "哦，原来历史得自己带上。那带上历史消息，就算智能体了吗？",
+          "source": "script",
+          "delivery": "先恍然大悟，再自然追问",
+          "segments": [
+            {
+              "text": "哦，原来历史得自己带上。那带上历史消息，就算智能体了吗？",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。先恍然大悟，“哦”自然舒展，语气有明白后的轻松；接着提出新的求证，重读“就算智能体了吗”，结尾上扬。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "emotion": "surprised",
+              "file": "09-01-01.wav",
+              "seconds": 5.085188,
+              "sha256": "31147aa52a3b525b320ff1c4b4767282ea991e606d3c65a7e202393e1a0fc979",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 5.28519
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "不算。带历史只是多轮聊天，让模型看到上下文；工具型 Agent 还要有循环、受控工具调用与结果回填，并能自主选择下一步。",
+          "source": "live-answer",
+          "delivery": "朗读真实答疑，语气从纠正转为解释",
+          "segments": [
+            {
+              "text": "不算。带历史只是多轮聊天，让模型看到上下文；工具型 Agent 还要有循环、受控工具调用与结果回填，并能自主选择下一步。",
+              "speed": 1.3,
+              "file": "09-02-01.wav",
+              "seconds": 9.973,
+              "sha256": "079c427877de2394d3fa9cefc643097bd8b2a2db9a27ec2de6726503562b35c0",
+              "start_seconds": 7.63
+            }
+          ],
+          "start_seconds": 7.63,
+          "end_seconds": 17.603
+        }
+      ],
+      "seconds": 18.4,
+      "start": 104.08,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.3793662857142857,
+          "role": "student",
+          "text": "哦，原来历史得自己带上。"
+        },
+        {
+          "start": 2.3793662857142857,
+          "end": 3.8322771428571425,
+          "role": "student",
+          "text": "那带上历史消息，"
+        },
+        {
+          "start": 3.8322771428571425,
+          "end": 5.285188,
+          "role": "student",
+          "text": "就算智能体了吗？"
+        },
+        {
+          "start": 7.63,
+          "end": 9.790816666666666,
+          "role": "teacher",
+          "text": "不算。带历史只是多轮聊天，"
+        },
+        {
+          "start": 9.790816666666666,
+          "end": 11.286766666666667,
+          "role": "teacher",
+          "text": "让模型看到上下文；"
+        },
+        {
+          "start": 11.286766666666667,
+          "end": 13.946233333333334,
+          "role": "teacher",
+          "text": "工具型 Agent 还要有循环、"
+        },
+        {
+          "start": 13.946233333333334,
+          "end": 15.940833333333334,
+          "role": "teacher",
+          "text": "受控工具调用与结果回填，"
+        },
+        {
+          "start": 15.940833333333334,
+          "end": 17.603,
+          "role": "teacher",
+          "text": "并能自主选择下一步。"
+        }
+      ]
+    },
+    {
+      "id": "save",
+      "title": "10 · 每题后作答，课末记录疑难",
+      "old_seconds": 15.88,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "明白了！带上历史只是聊天，智能体还得受控地调用工具。",
+          "source": "script",
+          "delivery": "有领悟地总结，不喊口号",
+          "segments": [
+            {
+              "text": "明白了！带上历史只是聊天，智能体还得受控地调用工具。",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。刚想通问题，带克制的高兴和确定感说“明白了”，然后流畅说出自己的理解，语气明显比开场更有把握。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "emotion": "happy",
+              "file": "10-01-01.wav",
+              "seconds": 4.330531,
+              "sha256": "619ba0ad1667cf9c9f84514ec00e6875a85eb1420257e6d3cf17e94a7ceecc3e",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 4.53053
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "对，这就说清楚了！把解释写进练习，再记下疑难。答案和对话都会保存，教学 AI 就能据此安排续课。",
+          "source": "script",
+          "delivery": "肯定理解，连接到练习与续课",
+          "segments": [
+            {
+              "text": "对，这就说清楚了！",
+              "speed": 1.27,
+              "emotion": "happy",
+              "file": "10-02-01.wav",
+              "seconds": 1.904063,
+              "sha256": "a4328d52e36476f968d6f84ee6119f721df43b79a7b59aee9392f6942c92b831",
+              "start_seconds": 4.78053
+            },
+            {
+              "text": "把解释写进练习，再记下疑难。答案和对话都会保存，教学 AI 就能据此安排续课。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "10-02-02.wav",
+              "seconds": 6.687375,
+              "sha256": "0fb925d54b2c3a06892c7dda50dff6f7d3e787a371dfd6c84b06724c14e5676f",
+              "start_seconds": 6.80459
+            }
+          ],
+          "start_seconds": 4.78053,
+          "end_seconds": 13.49197
+        }
+      ],
+      "seconds": 15.88,
+      "start": 122.47999999999999,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.3652655,
+          "role": "student",
+          "text": "明白了！带上历史只是聊天，"
+        },
+        {
+          "start": 2.3652655,
+          "end": 4.530531,
+          "role": "student",
+          "text": "智能体还得受控地调用工具。"
+        },
+        {
+          "start": 4.780531,
+          "end": 6.684594,
+          "role": "teacher",
+          "text": "对，这就说清楚了！"
+        },
+        {
+          "start": 6.804594,
+          "end": 8.17636323076923,
+          "role": "teacher",
+          "text": "把解释写进练习，"
+        },
+        {
+          "start": 8.17636323076923,
+          "end": 9.205190153846154,
+          "role": "teacher",
+          "text": "再记下疑难。"
+        },
+        {
+          "start": 9.205190153846154,
+          "end": 10.919901692307691,
+          "role": "teacher",
+          "text": "答案和对话都会保存，"
+        },
+        {
+          "start": 10.919901692307691,
+          "end": 13.491969,
+          "role": "teacher",
+          "text": "教学 AI 就能据此安排续课。"
+        }
+      ]
+    },
+    {
+      "id": "continuation",
+      "title": "11 · 续课提示词示意：带着记录回到宿主",
+      "old_seconds": 9.4,
+      "turns": [
+        {
+          "role": "teacher",
+          "spoken_text": "回到 TeleAgent，请它读取学习记录，再生成下一课。这样，下一课就知道你学会了什么，还卡在哪里。",
+          "source": "script",
+          "delivery": "明确下一步操作，不跳到课程结果",
+          "segments": [
+            {
+              "text": "回到 TeleAgent，请它读取学习记录，再生成下一课。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "11-01-01.wav",
+              "seconds": 4.133156,
+              "sha256": "443f63bed809b8c403c52b9f33458276c12bd6ad64dcaa0f12aed230b6a50d65",
+              "start_seconds": 0.2
+            },
+            {
+              "text": "这样，下一课就知道你学会了什么，还卡在哪里。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "11-01-02.wav",
+              "seconds": 3.796469,
+              "sha256": "68f641464b729418e0fc20c61d38b13b090d4fa5ba9cae86b3ca89fe9507be97",
+              "start_seconds": 4.45316
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 8.24962
+        }
+      ],
+      "seconds": 9.4,
+      "start": 138.35999999999999,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.0527940689655173,
+          "role": "teacher",
+          "text": "回到 TeleAgent，"
+        },
+        {
+          "start": 2.0527940689655173,
+          "end": 3.335497655172414,
+          "role": "teacher",
+          "text": "请它读取学习记录，"
+        },
+        {
+          "start": 3.335497655172414,
+          "end": 4.333156,
+          "role": "teacher",
+          "text": "再生成下一课。"
+        },
+        {
+          "start": 4.453156,
+          "end": 7.214224363636363,
+          "role": "teacher",
+          "text": "这样，下一课就知道你学会了什么，"
+        },
+        {
+          "start": 7.214224363636363,
+          "end": 8.249625,
+          "role": "teacher",
+          "text": "还卡在哪里。"
+        }
+      ]
+    },
+    {
+      "id": "adaptive",
+      "title": "12 · 已有结果回放：主线推进，误解另补",
+      "old_seconds": 10.0,
+      "turns": [
+        {
+          "role": "teacher",
+          "spoken_text": "来看已有的续课结果。正式课继续学工具契约；旧课的误解，放进关联补充页。补上薄弱处，也接着学新内容。",
+          "source": "script",
+          "delivery": "承接续课步骤，解释两类课程的作用",
+          "segments": [
+            {
+              "text": "来看已有的续课结果。",
+              "speed": 1.27,
+              "emotion": "happy",
+              "file": "12-01-01.wav",
+              "seconds": 2.008531,
+              "sha256": "0a581da8f0962ac5f6690cf8b6ef111e120826cacfe289f5d46a86268d155f75",
+              "start_seconds": 0.2
+            },
+            {
+              "text": "正式课继续学工具契约；旧课的误解，放进关联补充页。补上薄弱处，也接着学新内容。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "12-01-02.wav",
+              "seconds": 7.209813,
+              "sha256": "0dcf774fb801560de94f4b968dc267ab9e066729c2c9b2c129809e5ec00e122c",
+              "start_seconds": 2.32853
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 9.53834
+        }
+      ],
+      "seconds": 10.0,
+      "start": 147.76,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 2.2085310000000002,
+          "role": "teacher",
+          "text": "来看已有的续课结果。"
+        },
+        {
+          "start": 2.3285310000000004,
+          "end": 4.362068000000001,
+          "role": "teacher",
+          "text": "正式课继续学工具契约；"
+        },
+        {
+          "start": 4.362068000000001,
+          "end": 5.4712700000000005,
+          "role": "teacher",
+          "text": "旧课的误解，"
+        },
+        {
+          "start": 5.4712700000000005,
+          "end": 6.9502060000000006,
+          "role": "teacher",
+          "text": "放进关联补充页。"
+        },
+        {
+          "start": 6.9502060000000006,
+          "end": 8.059408000000001,
+          "role": "teacher",
+          "text": "补上薄弱处，"
+        },
+        {
+          "start": 8.059408000000001,
+          "end": 9.538344,
+          "role": "teacher",
+          "text": "也接着学新内容。"
+        }
+      ]
+    },
+    {
+      "id": "closing",
+      "title": "13 · 目标、理解与证据，串成长期学习",
+      "old_seconds": 12.96,
+      "turns": [
+        {
+          "role": "student",
+          "spoken_text": "这样，下一次就能从我真正学会的地方接着学了。",
+          "source": "script",
+          "delivery": "理解后的轻松和期待",
+          "segments": [
+            {
+              "text": "这样，下一次就能从我真正学会的地方接着学了。",
+              "direction": "温润磁性、沉稳成年男声，用清楚自然的普通话，与坐在对面的老师交谈。正常偏利落的日常交流语速，短停顿，句子连贯，有明确的重音和语调起伏。轻松、安心地表达对下一次学习的期待，有浅浅笑意，句子自然收束。只朗读给定台词；情绪自然克制，不作新闻播报，不拖长字，不附加其他声音。",
+              "speed": 1.19,
+              "emotion": "happy",
+              "file": "13-01-01.wav",
+              "seconds": 3.692,
+              "sha256": "63482743366734d61dec3ab306e45d499ed31073f34b3aca15d0668638efea24",
+              "start_seconds": 0.2
+            }
+          ],
+          "start_seconds": 0.2,
+          "end_seconds": 3.892
+        },
+        {
+          "role": "teacher",
+          "spoken_text": "没错！学途智伴，用一个 Skill，把评估、理解、提问和续课，串成持续的学习。",
+          "source": "script",
+          "delivery": "温暖回应，简洁收束",
+          "segments": [
+            {
+              "text": "没错！",
+              "speed": 1.27,
+              "emotion": "happy",
+              "file": "13-02-01.wav",
+              "seconds": 1.102969,
+              "sha256": "d6da26c3efdb66c9441a94081494cd8a1e6dc31bc5f194b49a59d329c636e8f8",
+              "start_seconds": 4.142
+            },
+            {
+              "text": "学途智伴，用一个 Skill，把评估、理解、提问和续课，串成持续的学习。",
+              "speed": 1.3,
+              "emotion": "happy",
+              "file": "13-02-02.wav",
+              "seconds": 6.594469,
+              "sha256": "d1035fedf5248c2e96b3edace60da0d6527a66e772070bdef4c66de51deb9c72",
+              "start_seconds": 5.36497
+            }
+          ],
+          "start_seconds": 4.142,
+          "end_seconds": 11.95944
+        }
+      ],
+      "seconds": 12.96,
+      "start": 157.76,
+      "subtitle_cues": [
+        {
+          "start": 0.2,
+          "end": 3.8920000000000003,
+          "role": "student",
+          "text": "这样，下一次就能从我真正学会的地方接着学了。"
+        },
+        {
+          "start": 4.142,
+          "end": 5.244969,
+          "role": "teacher",
+          "text": "没错！"
+        },
+        {
+          "start": 5.364969,
+          "end": 9.394922277777777,
+          "role": "teacher",
+          "text": "学途智伴，用一个 Skill，把评估、理解、"
+        },
+        {
+          "start": 9.394922277777777,
+          "end": 10.494000444444444,
+          "role": "teacher",
+          "text": "提问和续课，"
+        },
+        {
+          "start": 10.494000444444444,
+          "end": 11.959437999999999,
+          "role": "teacher",
+          "text": "串成持续的学习。"
+        }
+      ]
+    }
+  ],
+  "roles": {
+    "teacher": {
+      "voice": "Chinese (Mandarin)_Wise_Women",
+      "model": "MiniMax/speech-2.8-hd",
+      "label": "老师"
+    },
+    "student": {
+      "voice": "Chinese (Mandarin)_Gentleman",
+      "model": "MiniMax/speech-2.8-hd",
+      "label": "同学"
+    }
+  },
+  "sources": [
+    "https://help.aliyun.com/zh/model-studio/minimax-synchronous-speech-synthesis-api",
+    "https://help.aliyun.com/zh/model-studio/qwen3-tts-instruct-flash"
+  ]
+}

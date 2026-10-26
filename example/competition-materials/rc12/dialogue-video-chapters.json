@@ -3,20 +3,17 @@
   "resolution": "1440x900",
   "fps": 25,
   "version": "1.1.0-rc.16",
-  "voice_strategy": "two_role_synthetic",
+  "voice_strategy": "native_bailian_hd_emotion_per_segment",
   "roles": {
-    "student": {
-      "voice": "Andre",
-      "model": "qwen3-tts-flash",
-      "label": "同学",
-      "tempo": 1
-    },
     "teacher": {
       "voice": "Chinese (Mandarin)_Wise_Women",
       "model": "MiniMax/speech-2.8-hd",
-      "label": "老师",
-      "speed": 1.3,
-      "tempo": 1
+      "label": "老师"
+    },
+    "student": {
+      "voice": "Chinese (Mandarin)_Gentleman",
+      "model": "MiniMax/speech-2.8-hd",
+      "label": "同学"
     }
   },
   "model": "deepseek-flash",
@@ -105,8 +102,8 @@
       "seconds": 17.44,
       "removed_wait_seconds": 4.564,
       "added_reading_hold_seconds": 0,
-      "picture_source": "architecture_figure_and_detail",
-      "edit_strategy": "remove duplicated continuation narration; preserve first complete dialogue"
+      "picture_source": "architecture_figure",
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "assessment",
@@ -116,7 +113,7 @@
       "removed_wait_seconds": 4.655,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "lesson",
@@ -126,7 +123,7 @@
       "removed_wait_seconds": 3.884,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "resources",
@@ -136,17 +133,17 @@
       "removed_wait_seconds": 2.131,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "question-origin",
       "title": "05 · 代码引出疑问，再打开课内答疑",
-      "start": 46.8,
+      "start": 46.800000000000004,
       "seconds": 14.44,
       "removed_wait_seconds": 2.562,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "settings",
@@ -156,7 +153,7 @@
       "removed_wait_seconds": 4.735,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "connection",
@@ -166,7 +163,7 @@
       "removed_wait_seconds": 1.208,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "tutor-answer",
@@ -176,7 +173,7 @@
       "removed_wait_seconds": 11.521,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "followup",
@@ -186,27 +183,27 @@
       "removed_wait_seconds": 8.602,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "save",
       "title": "10 · 每题后作答，课末记录疑难",
-      "start": 122.48,
+      "start": 122.47999999999999,
       "seconds": 15.88,
       "removed_wait_seconds": 3.135,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "continuation",
       "title": "11 · 续课提示词示意：带着记录回到宿主",
-      "start": 138.36,
+      "start": 138.35999999999999,
       "seconds": 9.4,
       "removed_wait_seconds": 0.612,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "adaptive",
@@ -216,7 +213,7 @@
       "removed_wait_seconds": 5.005,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     },
     {
       "id": "closing",
@@ -226,15 +223,15 @@
       "removed_wait_seconds": 0.008,
       "added_reading_hold_seconds": 0,
       "picture_source": "current_rc16_ui_recording",
-      "edit_strategy": "current UI, accepted answer replay where applicable, unchanged narration and subtitles"
+      "edit_strategy": "fresh role performance; per-scene synchronized current UI"
     }
   ],
-  "subtitle_timing": "utterance_aligned_proportional_phrase_timing",
-  "subjective_listening_review": "approved voices retained at original pace; no new synthesis",
+  "subtitle_timing": "fresh utterance audio measured; proportional short phrase timing",
+  "subjective_listening_review": "pending-user-listening",
   "opening_revision": "2026-10-10",
   "new_provider_requests": 0,
-  "new_speech_synthesis_requests": 0,
-  "body_edit": "all course UI and tutor shots recaptured; accepted audio retained byte-for-byte",
-  "media_revision": "2026-10-26-rc16-ui",
+  "new_speech_synthesis_requests": 32,
+  "body_edit": "latest UI recorded to revised performance cues",
+  "media_revision": "2026-10-26-fresh-emotional-voices",
   "answer_mode": "hash-verified accepted real DeepSeek answers replayed through the current HTTP/SSE runtime"
 }
