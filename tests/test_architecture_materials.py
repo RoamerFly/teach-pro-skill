@@ -24,7 +24,10 @@ class ArchitectureMaterialsTests(unittest.TestCase):
         self.assertEqual(audit['full_decode'], 'pass')
         self.assertEqual(audit['new_provider_requests'], 0)
         self.assertEqual(audit['new_speech_synthesis_requests'], 0)
-        self.assertEqual(len(audit['preserved_body_clips']), 12)
+        self.assertIn('tutor-answer', audit['preserved_body_clips'])
+        self.assertIn('followup', audit['preserved_body_clips'])
+        self.assertEqual(audit['media_revision'], '2026-10-26')
+        self.assertEqual(audit['runtime_capture_audit']['provider_requests'], 0)
         figure = ROOT / 'assets/teach-pro-workflow-architecture-v2-connected.png'
         self.assertEqual(audit['architecture_sha256'], hashlib.sha256(figure.read_bytes()).hexdigest())
 
@@ -32,7 +35,8 @@ class ArchitectureMaterialsTests(unittest.TestCase):
         plan = json.loads((ROOT / 'dialogue-video-chapters.json').read_text(encoding='utf8'))
         self.assertEqual([op['operation'] for op in plan['live_operations']], ['models','test','chat','chat'])
         self.assertEqual(len(plan['chapters']), 13)
-        self.assertAlmostEqual(plan['chapters'][0]['seconds'], 26.84)
+        self.assertAlmostEqual(plan['chapters'][0]['seconds'], 17.44)
+        self.assertEqual(plan['version'], '1.1.0-rc.15')
         for first, second in zip(plan['chapters'],plan['chapters'][1:]):
             self.assertAlmostEqual(first['start']+first['seconds'], second['start'])
         self.assertEqual(plan['roles']['student']['voice'], 'Andre')
@@ -46,7 +50,7 @@ class ArchitectureMaterialsTests(unittest.TestCase):
             return int(h)*3600 + int(m)*60 + float(seconds)
         previous = 0
         cues = re.findall(r'(\d\d:\d\d:\d\d,\d{3}) --> (\d\d:\d\d:\d\d,\d{3})',text)
-        self.assertEqual(len(cues), 80)
+        self.assertEqual(len(cues), 76)
         for start, end in cues:
             self.assertGreaterEqual(value(start),previous-.002)
             self.assertLess(value(start),value(end))
@@ -59,7 +63,8 @@ class ArchitectureMaterialsTests(unittest.TestCase):
             self.assertIsNone(doc.testzip())
             self.assertTrue(any(doc.read(n)==expected for n in doc.namelist() if n.startswith('word/media/')))
             xml = doc.read('word/document.xml').decode()
-            for phrase in ('工作流程与系统架构','教学 AI','课内 Tutor','2 分 58 秒'):
+            duration = round(json.loads((ROOT / 'dialogue-video-audit.json').read_text(encoding='utf8'))['seconds'])
+            for phrase in ('工作流程与系统架构','教学 AI','课内 Tutor',f'{duration//60} 分 {duration%60} 秒','上下文设置','题后作答'):
                 self.assertIn(phrase,xml)
 
     def test_nonempty_work_is_preserved_before_any_encode(self):

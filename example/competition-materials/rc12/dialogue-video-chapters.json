@@ -1,8 +1,8 @@
 {
-  "seconds": 177.861333,
+  "seconds": 170.741333,
   "resolution": "1440x900",
   "fps": 25,
-  "version": "1.1.0-rc.12",
+  "version": "1.1.0-rc.15",
   "voice_strategy": "two_role_synthetic",
   "roles": {
     "student": {
@@ -102,66 +102,66 @@
       "id": "home",
       "title": "01 · Skill 架构：先评估，再按学习记录续课",
       "start": 0,
-      "seconds": 26.840000000000003,
+      "seconds": 17.44,
       "removed_wait_seconds": 4.564,
       "added_reading_hold_seconds": 0,
       "picture_source": "architecture_figure_and_detail",
-      "edit_strategy": "approved_home_and_continuation_voice; architecture_overview_then_detail"
+      "edit_strategy": "remove duplicated continuation narration; preserve first complete dialogue"
     },
     {
       "id": "assessment",
       "title": "02 · 把基础与目标交给教学 AI",
-      "start": 26.840000000000003,
+      "start": 17.44,
       "seconds": 10.36,
       "removed_wait_seconds": 4.655,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording",
-      "edit_strategy": "continuous_actions; trailing_idle_only"
+      "picture_source": "current_rc15_ui_recording",
+      "edit_strategy": "replace picture with current UI; preserve approved voice and matching subtitles"
     },
     {
       "id": "lesson",
       "title": "03 · 第一课：从图解读到代码",
-      "start": 37.2,
+      "start": 27.8,
       "seconds": 9.12,
       "removed_wait_seconds": 3.884,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording",
-      "edit_strategy": "continuous_actions; trailing_idle_only"
+      "picture_source": "current_rc15_ui_recording",
+      "edit_strategy": "replace picture with current UI; preserve approved voice and matching subtitles"
     },
     {
       "id": "resources",
       "title": "04 · 想深入，就带着任务读原资料",
-      "start": 46.32,
+      "start": 36.92,
       "seconds": 9.88,
       "removed_wait_seconds": 2.131,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording",
-      "edit_strategy": "continuous_actions; trailing_idle_only"
+      "picture_source": "current_rc15_ui_recording",
+      "edit_strategy": "replace picture with current UI; preserve approved voice and matching subtitles"
     },
     {
       "id": "question-origin",
       "title": "05 · 代码引出疑问，再打开课内答疑",
-      "start": 56.2,
+      "start": 46.8,
       "seconds": 14.44,
       "removed_wait_seconds": 2.562,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording",
-      "edit_strategy": "continuous_actions; trailing_idle_only"
+      "picture_source": "current_rc15_ui_recording",
+      "edit_strategy": "replace picture with current UI; preserve approved voice and matching subtitles"
     },
     {
       "id": "settings",
-      "title": "06 · 为刚才的疑问连接 DeepSeek",
-      "start": 70.64,
-      "seconds": 15.28,
+      "title": "06 · DeepSeek 配置与统一上下文设置",
+      "start": 61.24,
+      "seconds": 17.56,
       "removed_wait_seconds": 4.735,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording",
-      "edit_strategy": "continuous_actions; trailing_idle_only"
+      "picture_source": "current_rc15_ui_recording",
+      "edit_strategy": "preserve real model-list sequence; append current context controls; reuse approved voice"
     },
     {
       "id": "connection",
       "title": "07 · 连接通过，回到刚才的疑问",
-      "start": 85.92,
+      "start": 78.8,
       "seconds": 9.8,
       "removed_wait_seconds": 1.208,
       "added_reading_hold_seconds": 0,
@@ -171,7 +171,7 @@
     {
       "id": "tutor-answer",
       "title": "08 · 首问：模型为什么不记得上一轮",
-      "start": 95.72,
+      "start": 88.6,
       "seconds": 15.48,
       "removed_wait_seconds": 11.521,
       "added_reading_hold_seconds": 0,
@@ -181,7 +181,7 @@
     {
       "id": "followup",
       "title": "09 · 理解上个回答，再追问 Agent",
-      "start": 111.2,
+      "start": 104.08,
       "seconds": 18.4,
       "removed_wait_seconds": 8.602,
       "added_reading_hold_seconds": 0,
@@ -190,18 +190,18 @@
     },
     {
       "id": "save",
-      "title": "10 · 说出理解，再写进学习记录",
-      "start": 129.6,
+      "title": "10 · 每题后作答，课末记录疑难",
+      "start": 122.48,
       "seconds": 15.88,
       "removed_wait_seconds": 3.135,
       "added_reading_hold_seconds": 0,
-      "picture_source": "actual_recording",
-      "edit_strategy": "continuous_actions; trailing_idle_only"
+      "picture_source": "current_rc15_ui_recording",
+      "edit_strategy": "replace picture with current UI; preserve approved voice and matching subtitles"
     },
     {
       "id": "continuation",
       "title": "11 · 续课提示词示意：带着记录回到宿主",
-      "start": 145.48,
+      "start": 138.36,
       "seconds": 9.4,
       "removed_wait_seconds": 0.612,
       "added_reading_hold_seconds": 0,
@@ -211,7 +211,7 @@
     {
       "id": "adaptive",
       "title": "12 · 已有结果回放：主线推进，误解另补",
-      "start": 154.88,
+      "start": 147.76,
       "seconds": 10.0,
       "removed_wait_seconds": 5.005,
       "added_reading_hold_seconds": 0,
@@ -221,7 +221,7 @@
     {
       "id": "closing",
       "title": "13 · 目标、理解与证据，串成长期学习",
-      "start": 164.88,
+      "start": 157.76,
       "seconds": 12.96,
       "removed_wait_seconds": 0.008,
       "added_reading_hold_seconds": 0,
@@ -230,9 +230,10 @@
     }
   ],
   "subtitle_timing": "utterance_aligned_proportional_phrase_timing",
-  "subjective_listening_review": "approved source voices reused; revised film awaits user viewing",
+  "subjective_listening_review": "approved voices retained at original pace; no new synthesis",
   "opening_revision": "2026-10-10",
   "new_provider_requests": 0,
   "new_speech_synthesis_requests": 0,
-  "body_edit": "accepted scenes 02–13 concatenated without re-encoding"
+  "body_edit": "current UI shots replace assessment/lesson/resources/question/context/inline answers; accepted real answers retained",
+  "media_revision": "2026-10-26"
 }

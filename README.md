@@ -107,11 +107,11 @@ cd teach-pro-skill/example/competition-demo-rc12
 ![课内答疑实录：从消息上下文追问多轮聊天与工具型 Agent 的区别](./example/competition-pages/assets/tutor-preview.png)
 
 <details>
-<summary>查看统一模型设置界面</summary>
+<summary>查看统一模型与上下文设置界面</summary>
 
-服务预设、遮蔽密钥、获取模型、测试连接与设备记忆集中在“课程设置”，连接后回到当前课继续提问。
+服务预设、遮蔽密钥、获取模型、测试连接与设备记忆集中在“课程设置”。上下文设置可选择整门教材或当前课、参考答案、资源导学和对话记忆，连接后回到当前课继续提问。
 
-![课程设置实录：DeepSeek 服务、模型下拉选择、遮蔽密钥与绿色成功提示](./example/competition-pages/assets/settings-preview.png)
+![统一上下文设置：教材范围、本课记忆轮数、参考答案和资源导学](./example/competition-pages/assets/settings-preview.png)
 
 </details>
 

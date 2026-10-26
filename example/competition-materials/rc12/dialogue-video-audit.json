@@ -1,71 +1,77 @@
 {
-  "seconds": 177.861333,
-  "bytes": 15975107,
-  "sha256": "fb8119ecd89c7c65767726f64b88d32b6bfb61b9dd2010202b52b0759dfe0c25",
+  "seconds": 170.741333,
+  "bytes": 14423980,
+  "sha256": "bf45cf936081399d3992859821bb60c01983e395ba8e4c301ef81dd6933bc4ee",
   "full_decode": "pass",
-  "max_volume_db": -4.9,
-  "subtitle_cues": 80,
+  "subtitle_cues": 76,
   "provider_requests": 4,
-  "visual_review": "pass: connected architecture overview and detail checked; assessment, masked settings, answer, continuation and closing representative frames checked; 3775 encoded body video packets match the accepted source exactly",
-  "subjective_listening_review": "approved source voices reused; revised film awaits user viewing",
-  "opening_revision": "2026-10-10",
   "new_provider_requests": 0,
   "new_speech_synthesis_requests": 0,
-  "body_packet_parity": {
-    "encoded_body_packets": 3775,
-    "encoded_body_parity": "exact",
-    "packet_sha256_sequence_sha256": "27893079b28b64fd153d6be193d4b934b141c59d79b02bedbe28f32f60b713d6"
-  },
-  "accepted_source_sha256": "51fb962e98797095d9beea39f901f7893840f60ea32e54bab671bca1ce8c1d73",
+  "media_revision": "2026-10-26",
+  "accepted_source_sha256": "fb8119ecd89c7c65767726f64b88d32b6bfb61b9dd2010202b52b0759dfe0c25",
   "architecture_sha256": "e556c1046270e45c83b8d8f286b1133b463e49a0c951515701ea4e0f624f4a18",
   "preserved_body_clips": [
-    {
-      "scene": 2,
-      "sha256": "de9d36b0a1a5fc12debd9f8a19add51511f87ac0ca76a529159b71e1e8d922a5"
+    "home",
+    "connection",
+    "tutor-answer",
+    "followup",
+    "continuation",
+    "adaptive",
+    "closing"
+  ],
+  "replaced_shots": [
+    "assessment",
+    "lesson",
+    "resources",
+    "question-origin",
+    "settings/context",
+    "save"
+  ],
+  "visual_review": "pass",
+  "subjective_listening_review": "approved source voice reused without speed change",
+  "runtime_capture_audit": {
+    "status": "pass",
+    "current_version": "1.1.0-rc.15",
+    "clips": {
+      "assessment": {
+        "current_ui": true,
+        "synthetic_answer": true
+      },
+      "context": {
+        "action_ms": 6718,
+        "start_performance_ms": 984.7000000178814
+      },
+      "practice": {
+        "file_save": "pass"
+      },
+      "resources": {
+        "current_ui": true
+      },
+      "lesson": {
+        "current_ui": true
+      },
+      "question": {
+        "current_ui": true,
+        "unconfigured_tutor": true
+      }
     },
-    {
-      "scene": 3,
-      "sha256": "839b86e75f14a6fe9327cf38c84afd3bb75bd0018f5cb68d3b0395f6a035aaa5"
-    },
-    {
-      "scene": 4,
-      "sha256": "a7573e1a9b2314098cd61c5d6e1bad36ff8a5048d9e7e9634a9d32e41ece7eb3"
-    },
-    {
-      "scene": 5,
-      "sha256": "e38212c77927681f13559a2105e37c4752664bad2a0ffaeae230d0cc77b3693f"
-    },
-    {
-      "scene": 6,
-      "sha256": "88f26fdf9dd7f6fa349e09df7af6372e5db4bcbae2d55ba3d31d7a0fde609b16"
-    },
-    {
-      "scene": 7,
-      "sha256": "0216f7b8fbed7d63c265a7b1e914e2cd8052afe6c583549d162ba1626be88ec0"
-    },
-    {
-      "scene": 8,
-      "sha256": "21c7e20badf71b0715dc78bbf8415f1828adc81c3b5f03c865be93eb42c47665"
-    },
-    {
-      "scene": 9,
-      "sha256": "6067d90524eaef88697bd09b2a1fda1282912ca786a9e1392093298a07e0c254"
-    },
-    {
-      "scene": 10,
-      "sha256": "785eb41f75657115166c76570ea4f513517780758a95616cabecf007d9bd5e1e"
-    },
-    {
-      "scene": 11,
-      "sha256": "fdcf40b3c3d94f359bc799b7a8a686f8b72571eb091f4f65d000f42273f502b6"
-    },
-    {
-      "scene": 12,
-      "sha256": "1291f23ecd105a6fa876fd6cf26a8ae40b4666951119df1b9127cb25f18b13f7"
-    },
-    {
-      "scene": 13,
-      "sha256": "44cdfa351c120f94984017f3b869a389c707a998149aeb04ac4fae9577d2829d"
-    }
-  ]
+    "provider_requests": 0,
+    "external_requests": 0,
+    "page_errors": [],
+    "synthetic_input_saved_only_to_isolated_copy": true
+  },
+  "max_volume_db": -4.9,
+  "visual_review_frames": 26,
+  "document_review_pages": 5,
+  "numbering_review": "plain digits in lesson annotations, prose and figures; annotation points distinct from source line numbers",
+  "capture_workspace": "2026-10-26-rc15-media-capture-v6",
+  "edit_workspace": "2026-10-26-rc15-video-edit-v6",
+  "source_capture_sha256": {
+    "assessment.webm": "fcaa3a637548b690052ba4b5c85bd277fb56799156b3a0b615c9bc8d566ec6c8",
+    "context.webm": "92f3e2c3e1076828d55d9bb50090e7bb4439381d5d53b88e48ce7cd78154134b",
+    "lesson.webm": "3a3b0b990fb513c3431edd537ccfd13e55ea831cff31b42932b9ee7c105032d6",
+    "practice.webm": "ad36ad5b71f06cd7e4fbeedb750bc85e6111e1bbd20eb9f7d6d088e097380419",
+    "question.webm": "2e2ddf4b01ded700e0dfffd89358b0889b303c94a58441e5faa9f9151bd71f20",
+    "resources.webm": "f60e2364557244eb84bccc7adc0ec4ed6ce6a9ffab1c7ae64f7f2dcce90ad899"
+  }
 }

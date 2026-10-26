@@ -30,6 +30,7 @@ VALUE_EVIDENCE = 'evals/records/2026-10-10-value-positioning.md'
 TUTOR_LIMIT_EVIDENCE = 'evals/records/2026-10-23-tutor-response-limits.md'
 TUTOR_FULL_ANSWER_EVIDENCE = 'evals/records/2026-10-23-tutor-full-answers.md'
 TUTOR_CONTEXT_EVIDENCE = 'evals/records/2026-10-26-tutor-course-context.md'
+MEDIA_REFRESH_EVIDENCE = 'evals/records/2026-10-26-rc15-media-refresh.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -245,7 +246,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)
@@ -289,7 +290,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
 Skill 版本：Teach Pro {VERSION}
 源码快照：{revision}
 
-当前技能包与课程运行组件为 rc.15，支持整门教材上下文、当前课与选文定位及统一上下文设置，保留长回答与手动继续。Word、视频和实录图片沿用 rc.12 的功能演示；当前课页采用题后原位作答。升级既有课程答疑运行组件后重启服务并刷新网页，原学习记录和模型配置保留。
+当前技能包、课程运行组件和说明材料为 rc.15，支持整门教材上下文、当前课与选文定位及统一上下文设置，保留长回答与手动继续。Word 和视频展示新版设置与题后原位作答。升级既有课程答疑运行组件后重启服务并刷新网页，原学习记录和模型配置保留。
 
 ## 用途与价值
 
@@ -299,7 +300,7 @@ Skill 版本：Teach Pro {VERSION}
 
 - `Skill技能包/teach-pro`：SKILL.md、教学参考、网页模板和运行资源。
 - `参赛材料/学途智伴技能说明文档.docx`：技能说明，包含简介、工作流程与系统架构、设计思路及使用说明。
-- `参赛材料/学途智伴师生演示视频.mp4`：{duration_label}，含配音及画面下方字幕；展示架构讲解、真实 DeepSeek 配置与两轮流式答疑。
+- `参赛材料/学途智伴师生演示视频.mp4`：{duration_label}，含配音及画面下方字幕；展示架构讲解、DeepSeek 配置、上下文设置、真实两轮答疑与题后作答。
 - `参赛材料` 同时提供独立字幕与讲解脚本，便于核对。
 - `课程Demo`：智鉴 Agent 三节正式课及一节关联补充课，可阅读和实际作答。
 - `验证记录` 与 `文件清单.json`：操作来源、验证范围、源码版本和逐文件校验值。

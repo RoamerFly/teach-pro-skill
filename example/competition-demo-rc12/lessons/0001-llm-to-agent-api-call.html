@@ -95,10 +95,10 @@
             <rect x="18" y="40" width="230" height="190" rx="10" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="133" y="66" text-anchor="middle" font-size="15" font-weight="700" fill="var(--text)">你的程序（Python）</text>
             <rect x="34" y="84" width="198" height="52" rx="6" fill="var(--surface)" stroke="var(--border)"/>
-            <text x="133" y="106" text-anchor="middle" font-size="12.5" fill="var(--text)">① 从环境变量取密钥</text>
+            <text x="133" y="106" text-anchor="middle" font-size="12.5" fill="var(--text)">1 从环境变量取密钥</text>
             <text x="133" y="124" text-anchor="middle" font-size="11" fill="var(--muted)">代码里只有名字，没有密钥</text>
             <rect x="34" y="148" width="198" height="64" rx="6" fill="var(--surface)" stroke="var(--border)"/>
-            <text x="133" y="170" text-anchor="middle" font-size="12.5" fill="var(--text)">② 组装 messages</text>
+            <text x="133" y="170" text-anchor="middle" font-size="12.5" fill="var(--text)">2 组装 messages</text>
             <text x="133" y="188" text-anchor="middle" font-size="11" fill="var(--muted)">system（岗位说明书）</text>
             <text x="133" y="204" text-anchor="middle" font-size="11" fill="var(--muted)">user（本轮问题）</text>
             <rect x="472" y="40" width="230" height="190" rx="10" fill="var(--surface)" stroke="var(--border)" stroke-width="1.5"/>
@@ -131,32 +131,32 @@
       <section id="minimal-code" class="content-section">
         <h2>最小代码逐行解剖</h2>
         <p>下面用 11 个讲解点拆解最小文本调用；实际运行需安装 SDK、配置有效密钥并保证服务可用。纸面阅读和练习不需要这些条件：</p>
-        <pre><code class="language-python">import os                                    # ① 标准库：用来读环境变量
-from openai import OpenAI                    # ② OpenAI SDK；此例使用 DeepSeek 的兼容接口
+        <pre><code class="language-python">import os                                    # [1] 标准库：用来读环境变量
+from openai import OpenAI                    # [2] OpenAI SDK；此例使用 DeepSeek 的兼容接口
 
-client = OpenAI(                             # ③ 创建客户端：告诉 SDK 用谁的钥匙、找谁的服务
-    api_key=os.environ.get("LLM_API_KEY"),   # ④ 去环境变量里取密钥，代码里只有名字
-    base_url="https://api.deepseek.com",     # ⑤ 服务地址：DeepSeek，用其他厂商就改这里
+client = OpenAI(                             # [3] 创建客户端：告诉 SDK 用谁的钥匙、找谁的服务
+    api_key=os.environ.get("LLM_API_KEY"),   # [4] 去环境变量里取密钥，代码里只有名字
+    base_url="https://api.deepseek.com",     # [5] 服务地址：DeepSeek，用其他厂商就改这里
 )
 
-response = client.chat.completions.create(   # ⑥ 发起一次调用
-    model="deepseek-flash",                  # ⑦ 指定模型名，不同厂商名字不同
-    messages=[                               # ⑧ 核心参数：消息列表，按对话顺序排列
-        {"role": "system", "content": "你是一个简洁的技术助手。"},   # ⑨ system：给模型的岗位说明书
-        {"role": "user", "content": "用一句话解释什么是 API。"},     # ⑩ user：本轮的问题
+response = client.chat.completions.create(   # [6] 发起一次调用
+    model="deepseek-flash",                  # [7] 指定模型名，不同厂商名字不同
+    messages=[                               # [8] 核心参数：消息列表，按对话顺序排列
+        {"role": "system", "content": "你是一个简洁的技术助手。"},   # [9] system：给模型的岗位说明书
+        {"role": "user", "content": "用一句话解释什么是 API。"},     # [10] user：本轮的问题
     ],
 )
 
-print(response.choices[0].message.content)   # ⑪ 从响应结构里取出模型生成的文本</code></pre>
+print(response.choices[0].message.content)   # [11] 从响应结构里取出模型生成的文本</code></pre>
 
-        <h3>第一组：钥匙与地址（③④⑤）</h3>
+        <h3>第一组：钥匙与地址（讲解点 3、4、5）</h3>
         <p><code>OpenAI(...)</code> 构造的是一个「客户端」对象——它本身还没联系任何服务，只是记住了两件事：<strong>用哪把钥匙</strong>（<code>api_key</code>）和<strong>找谁的服务</strong>（<code>base_url</code>）。</p>
-        <p>第 ④ 行从环境变量读取密钥，避免在源码中硬编码；设置方式、日志、截图与进程环境仍可能泄露它。第 ⑤ 行指定服务地址，换服务时需核对模型名、鉴权与参数兼容性。</p>
+        <p>讲解点 4从环境变量读取密钥，避免在源码中硬编码；设置方式、日志、截图与进程环境仍可能泄露它。讲解点 5指定服务地址，换服务时需核对模型名、鉴权与参数兼容性。</p>
         <div class="callout warning">
           <p><strong>易错点：</strong>把真实密钥直接写进源码、命令或聊天都可能泄露。练习时用不回显输入设置当前会话的环境变量；生产项目使用适当的密钥管理方式，不提交、截图或打印密钥。</p>
         </div>
 
-        <h3>第二组：内容（⑧⑨⑩）</h3>
+        <h3>第二组：内容（讲解点 8、9、10）</h3>
         <p>在本课的基础文本示例中，<code>messages</code> 是消息列表，每条消息至少说明角色与内容。本课先认识两种角色：</p>
         <ul>
           <li><strong>system</strong>：开发者写给模型的整体指令——角色、风格、边界。它是「岗位说明书」，每次调用都随消息列表一起发送。</li>
@@ -164,7 +164,7 @@ print(response.choices[0].message.content)   # ⑪ 从响应结构里取出模�
         </ul>
         <p>消息列表保留了谁提供内容、哪些是助手回复等角色信息。role 不能单独判定每句话是否有权指挥动作；用户消息也可能包含引用资料。应用还应区分获授权任务与待处理内容。</p>
 
-        <h3>第三组：取结果（⑪）</h3>
+        <h3>第三组：取结果（讲解点 11）</h3>
         <p>这个普通文本回复可从 <code>response.choices[0].message.content</code> 读取。<code>choices</code> 是候选结果列表，<code>[0]</code> 取第一项；用量统计属于响应的其他字段。若返回工具调用或其他类型结果，不能一概按此表达式取文本。</p>
 
         <h3>把它跑起来（可选，环境就绪时）</h3>
@@ -276,13 +276,13 @@ print(response.choices[0].message.content)   # 可能回复：你叫小林；实
             <rect x="48" y="86" width="240" height="42" rx="6" fill="var(--accent-soft)" stroke="var(--border)"/>
             <text x="168" y="112" text-anchor="middle" font-size="12" fill="var(--text)">messages 进 → 文本出</text>
             <rect x="48" y="150" width="240" height="52" rx="6" fill="none" stroke="var(--danger)" stroke-width="1.3" stroke-dasharray="6 4"/>
-            <text x="168" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--danger)">缺口 ① 不自动带历史</text>
+            <text x="168" y="171" text-anchor="middle" font-size="12" font-weight="700" fill="var(--danger)">缺口 1 不自动带历史</text>
             <text x="168" y="190" text-anchor="middle" font-size="10.5" fill="var(--muted)">跨轮历史要程序自己搬运</text>
             <rect x="48" y="216" width="240" height="52" rx="6" fill="none" stroke="var(--danger)" stroke-width="1.3" stroke-dasharray="6 4"/>
-            <text x="168" y="237" text-anchor="middle" font-size="12" font-weight="700" fill="var(--danger)">缺口 ② 本例无工具</text>
+            <text x="168" y="237" text-anchor="middle" font-size="12" font-weight="700" fill="var(--danger)">缺口 2 本例无工具</text>
             <text x="168" y="256" text-anchor="middle" font-size="10.5" fill="var(--muted)">没有提供可执行动作</text>
             <rect x="48" y="282" width="240" height="52" rx="6" fill="none" stroke="var(--danger)" stroke-width="1.3" stroke-dasharray="6 4"/>
-            <text x="168" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="var(--danger)">缺口 ③ 装不下</text>
+            <text x="168" y="303" text-anchor="middle" font-size="12" font-weight="700" fill="var(--danger)">缺口 3 装不下</text>
             <text x="168" y="322" text-anchor="middle" font-size="10.5" fill="var(--muted)">上下文窗口有长度上限</text>
             <text x="168" y="356" text-anchor="middle" font-size="11" fill="var(--muted)">比较两种请求与控制方式</text>
             <path d="M 334 205 L 406 205" stroke="var(--accent)" stroke-width="2.5" marker-end="url(#arrowLoop)"/>
@@ -403,7 +403,7 @@ print(response)</code></pre>
           <textarea id="lesson-0001-evidence-code" data-save-key="lesson-0001-evidence-code" rows="6" placeholder="密钥管理：……改为……&#10;参数结构：……&#10;结果呈现：……"></textarea>
 <details>
             <summary>查看提示</summary>
-            <p>分别检查客户端的密钥来源、<code>messages</code> 参数的类型、最后打印结果的那一行。对照本课 ①–⑪ 编号逐行检查。</p>
+            <p>分别检查客户端的密钥来源、<code>messages</code> 参数的类型、最后打印结果的那一行。对照本课讲解点 1 到 11 逐项检查。</p>
           </details>
           <details class="answer">
             <summary>查看答案与解析</summary>
@@ -413,8 +413,8 @@ print(response)</code></pre>
     {"role": "system", "content": "你是漏洞情报摘要助手。"},
     {"role": "user", "content": "请帮我总结这段漏洞情报"},
 ]</code></pre>
-            <p>对应第 ⑧⑨⑩ 行：对话 API 的内容参数是结构化消息列表，不是裸文本——角色边界必须保留。</p>
-            <p><strong>改善 3（结果呈现）：</strong><code>print(response)</code> 本身是合法的 Python 写法，但打印整个响应对象，不符合“只显示摘要”的目标。改为 <code>print(response.choices[0].message.content)</code>。对应第 ⑪ 行。</p>
+            <p>对应讲解点 8、9、10：对话 API 的内容参数是结构化消息列表，不是裸文本——角色边界必须保留。</p>
+            <p><strong>改善 3（结果呈现）：</strong><code>print(response)</code> 本身是合法的 Python 写法，但打印整个响应对象，不符合“只显示摘要”的目标。改为 <code>print(response.choices[0].message.content)</code>。对应讲解点 11。</p>
             <p><strong>再检查：</strong>消息参数可能立即报错，但密钥硬编码未必触发异常。代码能运行不代表密钥管理正确；本题假密钥也不会真的鉴权成功。</p>
           </details>
         </article>
@@ -463,7 +463,7 @@ print(response)</code></pre>
           <p><strong>看哪里：</strong>「调用对话 API」的 Python 样例。<a href="https://api-docs.deepseek.com/zh-cn/#调用对话-api" target="_blank" rel="noopener noreferrer">前往指定章节 →</a></p>
           <p><strong>预计：</strong>约 10 分钟。</p>
           <p><strong>看前预测：</strong>打开前先猜——样例里 <code>api_key</code> 那一行会怎么写？然后去看，和你的预测对照。</p>
-          <p><strong>完成标准：</strong>说出 ①–⑪ 每行的作用，并将一处样例差异写在本项下方；有效密钥和环境就绪后再做练习 3，不把阅读当成运行成功。</p>
+          <p><strong>完成标准：</strong>解释代码中讲解点 1 到 11 的作用，并将一处样例差异写在本项下方；有效密钥和环境就绪后再做练习 3，不把阅读当成运行成功。</p>
           <p class="resource-access">访问：中文、免费、无需登录（申请 API key 需注册 DeepSeek 开放平台）。不用此文档不影响本课——正文已含等价代码。</p>
 
 <label for="0001-resource-1">本项学习产出（选填）</label><textarea id="0001-resource-1" data-save-key="0001-resource-1" rows="3" placeholder="在这里写下你的回答。"></textarea>

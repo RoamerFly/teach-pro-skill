@@ -24,7 +24,7 @@ class ReadmeVisualTests(unittest.TestCase):
             self.assertIn('https://roamerfly.github.io/teach-pro-skill' + suffix, README)
 
     def test_model_settings_preview_is_collapsed(self):
-        self.assertIn('<summary>查看统一模型设置界面</summary>', README)
+        self.assertIn('<summary>查看统一模型与上下文设置界面</summary>', README)
         details = README.split('<details>', 1)[1].split('</details>', 1)[0]
         self.assertIn('settings-preview.png', details)
 

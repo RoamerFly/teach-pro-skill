@@ -1,4 +1,4 @@
-"""Rebuild the rc.12 competition description from the verified public showcase."""
+"""Build the rc.15 competition description from the verified public showcase."""
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -137,7 +137,7 @@ def build():
 
     body(doc, '学途智伴技能说明', 'Title')
     body(doc, '学途智伴——大学生长期自适应学习智能体', 'Subtitle')
-    body(doc, '重邮FFBond  ·  校园生活赛道  ·  Teach Pro 1.1.0-rc.12  ·  2026年10月10日')
+    body(doc, '重邮FFBond  ·  校园生活赛道  ·  Teach Pro 1.1.0-rc.15  ·  2026年10月26日')
     heading(doc, '作品简介')
     body(doc, '大学生的系统学习常跨越数周乃至数月。课程、笔记、练习与 AI 对话分散在不同位置，学习中断后需要重新整理进度；遇到难点时，还需判断是继续新课还是补充基础。')
     body(doc, '学途智伴是一套自适应教学 Skill 技能包，把学习目标、课程与本地学习记录连接起来。先访谈和评估，再逐课生成网页教程；教学 AI 读取作答与疑难，调整下一课并按需提供独立补充课，让学生专注学习、作答和提问，减少反复说明背景与自行编排课程的负担。')
@@ -148,7 +148,7 @@ def build():
     heading(doc, '工作流程与系统架构', 2)
     picture(doc, 'teach-pro-workflow-architecture-v2-connected.png', '图 2  学习闭环与系统职责', '访谈、评估、逐课教学、作答、证据审阅与自适应续课；宿主教学 AI、浏览器、本地服务、可选 Tutor 与本地课程工作区分工')
     body(doc, '学员在宿主中调用 Skill，教学 AI 先访谈和评估，再生成一节课。学员在网页阅读、作答和提问；请求继续后，教学 AI 读取本地记录，决定下一课，并按需提供独立补充课。')
-    body(doc, '教学 AI 负责教学决策与课程生成；课内 Tutor 解释本课疑问；本地 Python 服务同步文件及问答请求。答案与聊天分别写入 learner-submissions 和 learner-chats，画像、路线与课程状态用 Markdown 保存，供新会话接续教学。')
+    body(doc, '教学 AI 负责教学决策与课程生成；课内 Tutor 结合整门已生成教材解释疑问，并标明当前提问课页；本地 Python 服务同步文件及问答请求。答案与聊天分别写入 learner-submissions 和 learner-chats，画像、路线与课程状态用 Markdown 保存，供新会话接续教学。')
     heading(doc, '依据学习证据续课', 2)
     body(doc, '教学 AI 读取作答和疑难，依据学生的识别、解释、应用和迁移表现调整目标、难度与练习支架。课内答疑补充理解线索，练习记录提供能力判断依据，让下一次教学接着上一次的实际表现推进。')
     heading(doc, '正式课和补充课分流', 2)
@@ -159,7 +159,7 @@ def build():
     body(doc, '示例提示词：@teach-pro 我想系统学习 Agent 开发与安全，有基本 Python 和模型 API 使用经验，没有 Agent 项目；目标是独立开发安全的 AI 安全情报 Agent。每周约五小时，图解理解优先。先评估我的基础再开课。')
     for text in [
         '填写入门评估。基础、目标、偏好与时间自动保存到课程目录，教学 AI 读取后安排第一课。',
-        '学习一节课。按图解和代码理解内容，完成练习并查看反馈；选看视频时，先预测、暂停画图，再闭卷解释，把产出和疑难写在页尾。',
+        '学习一节课。按图解和代码理解内容，在每道练习后直接作答并查看反馈；资源学习任务就地记录产出，课末只保留疑难。选看视频时先预测、暂停画图，再闭卷解释。',
         '继续下一课。在教学平台提出“读取本地学习记录，继续下一课”。AI 先处理疑难，再交付一节正式课，必要时配套补充课。',
     ]:
         body(doc, text, 'List Number')
@@ -170,12 +170,12 @@ def build():
     body(doc, '学习中遇到疑问，点击冻结栏左侧的“问 AI”。首次使用可从答疑窗口进入“连接答疑模型”，也可直接打开左侧置顶的“课程设置”。以 DeepSeek 为例，选取服务类型、输入 API Key、获取并选择模型，再保存并测试连接。连接全课程共用。')
     picture(doc, 'masked-key.png', '图 4  API Key 默认遮蔽  点击眼睛才显示', 'API Key 输入框处于 password 状态，图中使用无效演示值')
     body(doc, '默认记住此设备，启动器自动准备 keyring 运行依赖，系统凭据库存储密钥。API Key 输入默认遮蔽，眼睛按钮切换显示；模型连接全课程共用，切换课程后可直接继续答疑。')
-    body(doc, '从答疑入口进入设置时，测试成功后点击“返回第一课”，会回到同一课的答疑窗口。Tutor 结合本课正文与最近对话回答，支持多轮交流、流式显示和 Markdown 排版；输入与发送位于同一行。聊天按课保存，续课教学 AI 可以读取。')
-    picture(doc, 'tutor-dialog.png', '图 5  课内答疑入口与紧凑输入区', '新版答疑弹窗的未连接状态，本图不包含模型生成回答', width=5.8)
-    body(doc, '课内 Tutor 专注当前课的理解与多轮交流，教学 AI 管理路线与下一课。阅读、练习和本地作答组成核心学习流程，学生可按需连接答疑模型。')
+    body(doc, '从答疑进入设置后，点击返回按钮即可回到原课。Tutor 默认结合整门已生成网页教材与本课最近对话回答，选文附带章节和所在段落；即使联系前课，也明确当前提问位置。回答真实流式显示，支持 Markdown 排版和手动继续，聊天按课保存，供续课教学 AI 参考。')
+    picture(doc, 'context-settings.png', '图 5  统一上下文设置', '整门已生成课程或仅当前课、参考答案、资源导学、本课对话轮数均可配置', width=6.9)
+    body(doc, '上下文设置可选择整门教材或仅当前课，控制是否包含参考答案与资源导学，选择最近五轮、十轮或本课全部已完成对话。默认带入整门教材、参考答案和资源导学，保留最近五轮；保存后全课程共用。教学 AI 管理路线与下一课，Tutor 帮助理解和跨课联系。')
 
     heading(doc, '验证结果与参赛演示')
-    body(doc, '通过可复现的学习场景检验页面、作答保存、课内答疑和续课交付。Demo 展示从评估到学习、提问和继续下一课的完整流程，配套记录支持逐项核对。')
+    body(doc, '通过可复现学习场景检验页面、作答保存、答疑与续课交付，配套记录支持逐项核对。')
     matrix(doc, ['验证对象', '已观察结果', '证据范围'], [
         ['页面与导航', '八页链接与锚点有效，三种视口无横向溢出', 'Windows 浏览器检查'],
         ['课程输入', '第三课答案落盘，新浏览器会话可恢复', '隔离副本合成输入'],
@@ -183,23 +183,23 @@ def build():
         ['代码实战', '工具契约成功与拒绝路径通过，拒绝不执行', '课程离线样例'],
         ['资源导学', '两个中文视频提供精确链接和课内产出任务', '来源核对及交互检查'],
         ['课内模型连接', 'DeepSeek 模型获取、连接测试与两轮流式答疑成功', '本轮隔离实录与接口记录'],
+        ['教材与选文上下文', '跨课教材、当前提问页和参考答案段落可定位，设置真实生效', '19项单测及隔离浏览器验证'],
         ['三端运行', '三端启动器及 keyring 凭据接口已提供', '启动器检查与 Windows 验收'],
     ], [1.42, 3.25, 2.23])
     heading(doc, '演示主线', 2)
     seconds = round(json.loads((ROOT / 'dialogue-video-audit.json').read_text(encoding='utf8'))['seconds'])
-    body(doc, f'演示视频长 {seconds // 60} 分 {seconds % 60} 秒。从架构图和学习目标出发，依次展示评估、图解、代码与资源；遇到疑问后连接 DeepSeek，返回本课进行两轮真实答疑，再展示保存与续课。正式课推进主线，补充课巩固难点，串联完整学习闭环。')
+    body(doc, f'演示视频长 {seconds // 60} 分 {seconds % 60} 秒。从架构图和学习目标出发，展示评估、图解、代码与资源；遇到疑问后连接 DeepSeek，展示统一上下文设置，返回原课进行两轮真实答疑，再在题后作答、记录疑难并请求续课。正式课推进主线，补充课巩固难点。')
     heading(doc, '材料组织', 2)
-    body(doc, '技能包包含 SKILL.md、教学参考、模板与运行资源，配套说明文档、架构图和演示视频。公开仓库保留版本与验证记录；课程目录承载个人学习进度，支持跨会话接续教学。')
-    hyperlink(doc, '项目仓库与技能入口', 'https://github.com/RoamerFly/teach-pro-skill')
-    hyperlink(doc, '渐进演示与真实模型请求记录', 'https://github.com/RoamerFly/teach-pro-skill/blob/main/evals/records/2026-10-06-guided-dialogue-flow.md')
+    body(doc, '技能包包含教学规则、模板与运行资源，配套说明、架构图和视频。公开仓库保留版本与验证记录，课程目录保存个人学习进度。')
+    hyperlink(doc, '项目仓库与验证记录', 'https://github.com/RoamerFly/teach-pro-skill')
     props = doc.core_properties
     props.title, props.author = '学途智伴技能说明', '重邮FFBond'
     props.subject = '作品简介 设计思路 使用说明'
     props.last_modified_by = '重邮FFBond'
-    props.keywords = 'Teach Pro, 1.1.0-rc.12, 自适应教学, 正式课与补充课'
+    props.keywords = 'Teach Pro, 1.1.0-rc.15, 自适应教学, 整门教材上下文, 题后作答'
     props.comments = ''
     props.created = datetime(2026, 10, 5, tzinfo=timezone.utc)
-    props.modified = datetime(2026, 10, 10, tzinfo=timezone.utc)
+    props.modified = datetime(2026, 10, 26, tzinfo=timezone.utc)
     doc.save(OUT)
     print(OUT)
 
