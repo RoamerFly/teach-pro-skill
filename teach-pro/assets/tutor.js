@@ -56,7 +56,7 @@
   const find = selector => dialog.querySelector(selector); find('[data-tutor-settings]').href = settings;
   find('.tutor-eyebrow').textContent = document.querySelector('main h1')?.textContent.trim().slice(0, 80) || '本课的学习对话';
   const opener = actions.querySelector('button'), prompt = find('#tutor-message'), log = find('.tutor-messages'), status = find('.tutor-status'), jump = find('.tutor-jump');
-  let token = '', online = false, configured = false, busy = false, selection = '', record = { messages: [] }, composing = false, configVersion = null, rendering = 0;
+  let token = '', online = false, configured = false, busy = false, selection = '', selectionSection = '', record = { messages: [] }, composing = false, configVersion = null, rendering = 0;
   function say(message = '', error = false) { status.textContent = error ? message : ''; status.dataset.state = error ? 'error' : 'ready'; status.hidden = !error; }
   function controls() {
     find('button[type="submit"]').disabled = !online || !configured || busy || !prompt.value.trim();
@@ -160,10 +160,10 @@
     try {
       await refreshConfig(); if (!configured) { say('先在课程设置中连接模型。', true); return; } say();
       if (!retryId) await render({ ...record, messages: [...record.messages, { role: 'user', content: message, status: 'pending' }] });
-      await streamChat({ message, selection: selected, ...(retryId ? { retry_id: retryId } : {}), ...(continueId ? { continue_id: continueId } : {}) }, async (event, data) => {
+      await streamChat({ message, selection: selected, selection_section: selected ? selectionSection : '', ...(retryId ? { retry_id: retryId } : {}), ...(continueId ? { continue_id: continueId } : {}) }, async (event, data) => {
         if (event === 'pending') {
           accepted = true; await render(data);
-          if (!retryId && !continueId && prompt.value === message) { prompt.value = ''; selection = ''; showSelection(); grow(); }
+          if (!retryId && !continueId && prompt.value === message) { prompt.value = ''; selection = ''; selectionSection = ''; showSelection(); grow(); }
           const box = document.createElement('article'); box.className = 'tutor-message is-assistant is-streaming';
           const label = document.createElement('div'); label.className = 'tutor-message-label'; label.textContent = '答疑 AI';
           body = document.createElement('div'); body.textContent = '···'; box.append(label, body); log.append(box); if (nearBottom()) latest();
@@ -187,7 +187,20 @@
   prompt.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing && !composing && event.keyCode !== 229) { event.preventDefault(); if (!find('button[type="submit"]').disabled) send(prompt.value); } });
   find('.tutor-question').addEventListener('submit', event => { event.preventDefault(); if (!find('button[type="submit"]').disabled) send(prompt.value); });
   function showSelection() { find('.tutor-selection').hidden = !selection; find('[data-selection-text]').textContent = selection; }
-  function captureSelection() { const selected = window.getSelection(), main = document.querySelector('main'); if (selected && main?.contains(selected.anchorNode) && main.contains(selected.focusNode) && !entry.contains(selected.anchorNode)) { const text = selected.toString().trim(); if (text) selection = text.slice(0, 2000); } showSelection(); }
+  function captureSelection() {
+    const selected = window.getSelection(), main = document.querySelector('main');
+    if (selected?.rangeCount && main?.contains(selected.anchorNode) && main.contains(selected.focusNode) &&
+        !entry.contains(selected.anchorNode) && !dialog.contains(selected.anchorNode)) {
+      const text = selected.toString().trim();
+      if (text) {
+        selection = text.slice(0, 2000);
+        const node = selected.getRangeAt(0).commonAncestorContainer;
+        const element = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+        selectionSection = element?.closest('[id]')?.id || '';
+      }
+    }
+    showSelection();
+  }
   async function open() {
     if (dialog.open) return; captureSelection(); dialog.showModal(); grow(); prompt.focus({ preventScroll: true });
     if (online && !busy) try { await refreshConfig(); await render(await api('history/' + lesson), true); say(configured ? '可以开始提问' : '先连接模型，随时可以返回课文。'); } catch (error) { say(error.message, true); } controls();
@@ -196,7 +209,7 @@
   dialog.addEventListener('close', () => { find('.tutor-more').open = false; opener.focus({ preventScroll: true }); });
   dialog.addEventListener('cancel', event => { if (find('.tutor-more').open) { event.preventDefault(); find('.tutor-more').open = false; find('.tutor-more summary').focus(); } });
   dialog.addEventListener('click', event => { if (!event.target.closest('.tutor-more')) find('.tutor-more').open = false; });
-  find('[data-tutor-unselect]').addEventListener('click', () => { selection = ''; showSelection(); prompt.focus(); }); jump.addEventListener('click', latest); log.addEventListener('scroll', () => { if (nearBottom()) jump.hidden = true; });
+  find('[data-tutor-unselect]').addEventListener('click', () => { selection = ''; selectionSection = ''; showSelection(); prompt.focus(); }); jump.addEventListener('click', latest); log.addEventListener('scroll', () => { if (nearBottom()) jump.hidden = true; });
   find('[data-tutor-export]').addEventListener('click', () => { const url = URL.createObjectURL(new Blob([JSON.stringify(record, null, 2)], { type: 'application/json' })); const link = document.createElement('a'); link.href = url; link.download = lesson + '-chat.json'; link.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); find('.tutor-more').open = false; });
   find('[data-tutor-clear]').addEventListener('click', async () => {
     find('.tutor-more').open = false; if (busy || !window.confirm('清空本课聊天？此操作无法撤销，练习答案和其他课节不受影响。')) return; busy = true; controls();

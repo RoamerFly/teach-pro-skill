@@ -71,6 +71,10 @@ class SubmissionGuardTests(unittest.TestCase):
         self.assertEqual(module.remap(module.TUTOR_FULL_ANSWER_EVIDENCE),
                          '验证记录/2026-10-23-tutor-full-answers.md')
 
+    def test_course_context_evidence_has_explicit_path(self):
+        self.assertEqual(module.remap(module.TUTOR_CONTEXT_EVIDENCE),
+                         '验证记录/2026-10-26-tutor-course-context.md')
+
     def test_generated_zip_keeps_unix_mode(self):
         buffer = io.BytesIO()
         source = module.ZipInfo('start-course.command')

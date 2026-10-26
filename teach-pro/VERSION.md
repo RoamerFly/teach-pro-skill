@@ -1,7 +1,7 @@
 # Version
 
-- Version: 1.1.0-rc.14
-- Release: Full-length tutor answers and explicit continuation, 2026-10-23; TeleAgent classified-delivery and macOS/Linux native checks pending
+- Version: 1.1.0-rc.15
+- Release: Configurable course-wide context and selected-passage grounding, 2026-10-26; TeleAgent classified-delivery and macOS/Linux native checks pending
 - Edition: Universal Web Tutor · adaptive lessons with local sync
 - Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)
 - Primary output: learner-facing HTML

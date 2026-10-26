@@ -122,6 +122,9 @@
     if (data.model === '__manual__') data.model = data.model_manual.trim();
     delete data.model_manual;
     data.max_tokens = data.max_tokens.trim() ? Number(data.max_tokens) : null;
+    data.context_answers = form.elements.context_answers.checked;
+    data.context_resources = form.elements.context_resources.checked;
+    data.history_turns = data.history_turns === 'all' ? null : Number(data.history_turns);
     data.remember_key = remember.checked;
     act(async () => {
       say('正在保存设置…', 'busy');
@@ -175,7 +178,11 @@
       const result = await api('bootstrap'); token = result.token; configured = result.configured; online = true;
       kinds = result.kinds || {};
       for (const [key, value] of Object.entries(result.settings || {})) {
-        if (form.elements[key] && !['api_key', 'model', 'remember_key'].includes(key)) form.elements[key].value = value;
+        if (['context_answers', 'context_resources'].includes(key)) form.elements[key].checked = value !== false;
+        else if (key === 'history_turns') {
+          if (value !== null && ![5, 10].includes(value)) form.elements[key].add(new Option('最近 ' + value + ' 轮', String(value)));
+          form.elements[key].value = value === null ? 'all' : String(value);
+        } else if (form.elements[key] && !['api_key', 'model', 'remember_key'].includes(key)) form.elements[key].value = value;
       }
       setModels([], result.settings?.model || '');
       if (!result.settings || !Object.keys(result.settings).length) applyPreset();

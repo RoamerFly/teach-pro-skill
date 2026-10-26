@@ -2,9 +2,9 @@
 
 面向长期学习的自适应教学 Skill。把学习目标、课程与本地学习记录连接起来，先评估基础，再逐课教学，依据作答与疑难安排下一步。
 
-当前版本：**1.1.0-rc.14**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
+当前版本：**1.1.0-rc.15**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
 
-rc.14 完整显示和保存长回答，持续输出不再按固定总时长截断；输出预算默认自动，中断后可手动继续回答。已有课程升级答疑组件后，重启课程服务并刷新网页即可，原作答、聊天和模型配置保留。
+rc.15 支持整门已生成教材上下文、当前提问页与选文段落定位，统一设置页可调整教材范围和对话记忆。已有课程升级答疑组件后，重启课程服务并刷新网页即可，原作答、聊天和模型配置保留。
 
 [在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/competition-demo-rc12/README.md)
 
@@ -102,7 +102,7 @@ cd teach-pro-skill/example/competition-demo-rc12
 
 ### 多轮课内答疑
 
-围绕本课上下文连续提问，回答流式显示，支持 Markdown 排版和按课保存。下图来自演示视频中 DeepSeek 的实际两轮回答。
+围绕当前课连续提问，也可联系之前的课程；回答流式显示，支持 Markdown 排版和按课保存。下图来自演示视频中 DeepSeek 的实际两轮回答。
 
 ![课内答疑实录：从消息上下文追问多轮聊天与工具型 Agent 的区别](./example/competition-pages/assets/tutor-preview.png)
 
@@ -123,7 +123,7 @@ cd teach-pro-skill/example/competition-demo-rc12
 
 - API Key 默认遮蔽；默认勾选“记住此设备”，保存时使用系统凭据存储，支持重启恢复，不回填浏览器或写入课程文件。取消勾选可仅用于本次会话。
 - 统一使用 Python keyring 对接 Windows、macOS 与 Linux 系统凭据存储；Linux 还需可用的桌面密钥环与 D-Bus。
-- 点击发送后，云端答疑结合当前课与近期对话回答；连接测试发送简短请求。
+- 默认带入同课程已生成网页教材，明确当前提问页和选文出处；“上下文设置”可切换仅当前课、参考答案、资源导学与本课记忆轮数。教材和对话越多，每轮输入 token 越多；连接测试不发送教材。
 - 作答、聊天和本地配置已加入忽略规则，请勿提交密钥或敏感资料。
 
 本地服务仅面向单用户本机使用。课内答疑与课程生成相互独立，更新 Skill 不会自动更新已生成的课程。
@@ -141,7 +141,7 @@ evals/         合成案例与可复现检查
 在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.14.zip HEAD:teach-pro
+git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.15.zip HEAD:teach-pro
 ```
 
 ### 双版本发布

@@ -41,6 +41,16 @@
             </div>
             <p class="resource-access" data-settings-protocol></p>
           </details>
+          <details class="settings-context" data-context-settings>
+            <summary>上下文设置</summary>
+            <div class="tutor-config-grid">
+              <label>教材范围<select name="context_scope"><option value="course">整门已生成课程</option><option value="current">仅当前课</option></select></label>
+              <label>本课对话记忆<select name="history_turns"><option value="5">最近 5 轮</option><option value="10">最近 10 轮</option><option value="all">全部已完成对话</option></select></label>
+              <label class="settings-context-option"><input name="context_answers" type="checkbox" checked> 包含参考答案</label>
+              <label class="settings-context-option"><input name="context_resources" type="checkbox" checked> 包含资源导学</label>
+            </div>
+            <p class="resource-access">始终标明当前课与选文出处。教材越多，每轮输入 token 越多；对话仍按课保存。</p>
+          </details>
           <div class="tutor-actions"><button type="submit">保存并启用</button><button type="button" data-settings-test>测试连接</button><button type="button" data-settings-disconnect>断开连接</button></div>
           <p class="tutor-status" role="status" aria-live="polite">正在连接课程服务…</p>
         </form>
