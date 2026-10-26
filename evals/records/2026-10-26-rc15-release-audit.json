@@ -1,0 +1,200 @@
+{
+  "status": "pass",
+  "date": "2026-10-26",
+  "version": "1.1.0-rc.15",
+  "revision": "7b20bc1c63b7a9a6fb6547f0dbfd99813636b814",
+  "python_tests": {
+    "run": 199,
+    "passed": 190,
+    "skipped": 9
+  },
+  "context_unit_tests": 19,
+  "portable_response_tests_per_runtime": 40,
+  "profiles": {
+    "normal_use": {
+      "version": "1.1.0-rc.15",
+      "revision": "7b20bc1c63b7a9a6fb6547f0dbfd99813636b814",
+      "integrity": "pass",
+      "reference_links": "pass",
+      "runtime_byte_parity": "pass",
+      "archives": [
+        {
+          "file": "teach-pro-1.1.0-rc.15.zip",
+          "bytes": 223572,
+          "sha256": "662b281669585153e70b543e6a2a2f4e915ee9af9f03e0649e90f48d114b9b65"
+        }
+      ]
+    },
+    "competition_submit": {
+      "version": "1.1.0-rc.15",
+      "revision": "7b20bc1c63b7a9a6fb6547f0dbfd99813636b814",
+      "integrity": "pass",
+      "reference_links": "pass",
+      "runtime_byte_parity": "pass",
+      "archives": [
+        {
+          "file": "重邮FFBond+学途智伴——大学生长期自适应学习智能体.zip",
+          "bytes": 19820483,
+          "sha256": "4135e1767260df9199e17d5d3e8a6d2c281babc472119e79b774fb7bf56aea1c"
+        },
+        {
+          "file": "teach-pro-1.1.0-rc.15.zip",
+          "bytes": 224618,
+          "sha256": "89c863e75687e296f68cdc9fd00c9b900200ce3ce9f6ec6b7a80f4abff3addd5"
+        }
+      ]
+    }
+  },
+  "context_browser": {
+    "status": "pass",
+    "synthetic": true,
+    "defaultCourseScope": true,
+    "selectedAnswerSource": true,
+    "currentFourthSupplement": true,
+    "scopeAndFlagsActuallyAffectPayload": true,
+    "explicitSelectionOverridesBulkExclusion": true,
+    "historyAllRetainsPairs": true,
+    "settingsReload": true,
+    "layout": [
+      {
+        "theme": "light",
+        "width": 1440,
+        "overflow": false,
+        "checkbox": 16,
+        "background": "rgb(235, 240, 250)"
+      },
+      {
+        "theme": "dark",
+        "width": 1440,
+        "overflow": false,
+        "checkbox": 16,
+        "background": "rgb(35, 51, 75)"
+      },
+      {
+        "theme": "light",
+        "width": 390,
+        "overflow": false,
+        "checkbox": 16,
+        "background": "rgb(235, 240, 250)"
+      },
+      {
+        "theme": "dark",
+        "width": 390,
+        "overflow": false,
+        "checkbox": 16,
+        "background": "rgb(35, 51, 75)"
+      }
+    ],
+    "loopbackRequests": 3,
+    "realProviderRequests": 0,
+    "externalRequests": 0,
+    "pageErrors": []
+  },
+  "inline_browser": {
+    "synthetic": true,
+    "oldKeysRestored": 3,
+    "lessons": 4,
+    "layoutChecks": 24,
+    "fileSaveAndFreshBrowserRestore": true,
+    "pageErrors": [],
+    "providerRequests": 0
+  },
+  "long_answers_browser": {
+    "status": "pass",
+    "synthetic": true,
+    "cases": [
+      {
+        "case": "normal-long",
+        "status": "complete",
+        "characters": 3153,
+        "code": null,
+        "response_bytes": 936739
+      },
+      {
+        "case": "unicode",
+        "status": "complete",
+        "characters": 40000,
+        "code": null,
+        "response_bytes": 160592
+      },
+      {
+        "case": "json-fallback",
+        "status": "complete",
+        "characters": 11,
+        "code": null,
+        "response_bytes": null
+      },
+      {
+        "case": "reply-limit",
+        "status": "complete",
+        "characters": 100000,
+        "code": null,
+        "response_bytes": 300578
+      },
+      {
+        "case": "event-limit",
+        "status": "complete",
+        "characters": 12,
+        "code": null,
+        "response_bytes": 2098084
+      },
+      {
+        "case": "wire-limit",
+        "status": "complete",
+        "characters": 12,
+        "code": null,
+        "response_bytes": 16817426
+      },
+      {
+        "case": "interrupted",
+        "status": "incomplete",
+        "characters": 8,
+        "code": "stream_interrupted",
+        "response_bytes": 318
+      }
+    ],
+    "refreshPreservesRecords": true,
+    "continuationContextAndDraft": true,
+    "realTimeFirstDelta": true,
+    "frontendOver32MiB": true,
+    "automaticProviderBudget": true,
+    "providerRequests": 0,
+    "loopbackRequests": 9,
+    "externalRequests": 0,
+    "pageErrors": []
+  },
+  "user_course": {
+    "status": "pass",
+    "protected_file_count": 40,
+    "protected_hashes_unchanged": true,
+    "course_pages": 11,
+    "lesson_pages": 8,
+    "course_text_characters": 49254,
+    "selected_reference_answer_grounded": true,
+    "requires_restart": true
+  },
+  "pages": {
+    "deployment": {
+      "conclusion": "success",
+      "headSha": "7b20bc1c63b7a9a6fb6547f0dbfd99813636b814",
+      "status": "completed",
+      "url": "https://github.com/RoamerFly/teach-pro-skill/actions/runs/40256401708"
+    },
+    "downloads": [
+      {
+        "path": "downloads/teach-pro.zip",
+        "sha256": "1ec3cee450a2fa39c94bf8037fdb8ff6f003cb9e2fbb3486558717082f1e6313",
+        "members": 61
+      },
+      {
+        "path": "downloads/zhijian-agent-course.zip",
+        "sha256": "887063a038d574e319a0b12d13845aca832a275552deb7aaab256977bffc15f4",
+        "members": 37
+      }
+    ]
+  },
+  "history": "E:\\A_Myskill\\teach-pro\\competition-submission\\history\\2026-10-26-before-rc15-course-context",
+  "media_and_reviews_unchanged": true,
+  "templates_and_lesson_text_unchanged": true,
+  "real_provider_requests": 0
+}
