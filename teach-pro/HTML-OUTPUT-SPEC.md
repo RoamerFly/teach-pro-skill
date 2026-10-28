@@ -6,6 +6,8 @@
 
 Markdown 仅用于 AI 内部状态。不得把 `DAILY-LESSON-FORMAT.md` 之类的模板直接当教程交付。
 
+标题、导语、正文、图注、练习反馈和资源卡按 [教学文字规范](./WRITING-POLICY.md) 编写，直接呈现学习任务、知识解释和必要条件。
+
 ## 2. 页面类型
 
 ### `index.html`

@@ -12,7 +12,7 @@ test('rc.12 showcase exposes three formal lessons and one independent supplement
  let formal=0,supplement=0;
  for(const file of lessons){const html=fs.readFileSync(path.join(demo,'lessons',file),'utf8');assert(html.includes('data-course-key="competition-demo-rc12"'));assert(!html.includes('0001-s01-runtime-checks.html'));if(html.includes('data-lesson-kind="formal"'))formal++;if(html.includes('data-lesson-kind="supplement"')){supplement++;assert(html.includes('data-related-lesson="0002"'));assert(html.includes('lesson-0002-s01-evidence'));}}
  assert.equal(formal,3);assert.equal(supplement,1);
- assert.equal(JSON.parse(fs.readFileSync(path.join(demo,'.teach-course.json'),'utf8')).demo.skill_version,'1.1.0-rc.16');
+ assert.equal(JSON.parse(fs.readFileSync(path.join(demo,'.teach-course.json'),'utf8')).demo.skill_version,'1.1.0-rc.17');
  for(const file of ['learner-submissions','learner-chats','.tutor-settings.json'])assert(!fs.existsSync(path.join(demo,file)));
 });
 test('rc.12 showcase copies current runtime exactly and keeps masked key default',()=>{

@@ -95,7 +95,7 @@ def branch(course, case, source):
     key = 'statistics-adaptive-' + (case['id'] if case else 'start')
     values = base_values(key, label, has_second, has_supplement)
     interpretation = case['interpretation'] if case else '模拟评估回答能说明150÷5；中位数算法自述不清楚，暂从两种中心开始。'
-    pending = case['pending'] if case else '尚无首课作答，不把第一课交付写成已掌握。'
+    pending = case['pending'] if case else '第一课已交付，等你提交计算与解释后安排下一步。'
     values['REVIEW_AND_NEXT_HTML'] = f'<p><strong>{escape(label)}</strong> · 合成输入与预期交付。</p><p>{escape(interpretation)}</p><p>{escape(pending)}</p><p><a href="./reference/decision-trace.html">查看原始输入与决策依据</a></p>'
     cards = f'<h3>正式课</h3><div class="lesson-grid"><article class="lesson-card"><a href="./lessons/{FIRST}">第 1 课 · 均值与中位数</a></article>'
     if has_second:
@@ -114,7 +114,7 @@ def branch(course, case, source):
             scaffold = '<p>再推一步：给每个消费值都加10元，均值也加10，所有“观测值−均值”的差不变，所以MAD不变。若全部金额改用分表示，每项差乘100，MAD也乘100；这是单位改变，不是消费变得更分散。</p>'
             transfer = '<p>比较16、18、20、22、24与10、20、20、20、30。自己建立距离表、计算MAD，并解释哪组更分散。然后给第一组全部加10，预测并核算MAD；若改用分作单位，应如何报告？</p><details><summary>完成后核对</summary><p>两组均值20，MAD分别2.4和4元。全部加10后，均值30、MAD仍2.4元；换成分，MAD为240分。差异应连同单位和同一指标报告。</p></details>'
         else:
-            scaffold = '<div class="table-wrap"><table><caption>先把乙组的每项距离写出来</caption><thead><tr><th>金额</th><th>减去均值20</th><th>取距离</th></tr></thead><tbody><tr><td>0</td><td>−20</td><td>20</td></tr><tr><td>10</td><td>−10</td><td>10</td></tr><tr><td>20</td><td>0</td><td>0</td></tr><tr><td>30</td><td>10</td><td>10</td></tr><tr><td>40</td><td>20</td><td>20</td></tr></tbody></table></div><p>沿每行从左向右：先减均值，再去掉方向得到距离。最后才把第三列加起来除以五，不能在第二列相加后再取绝对值。</p>'
+            scaffold = '<div class="table-wrap"><table><caption>先把乙组的每项距离写出来</caption><thead><tr><th>金额</th><th>减去均值20</th><th>取距离</th></tr></thead><tbody><tr><td>0</td><td>−20</td><td>20</td></tr><tr><td>10</td><td>−10</td><td>10</td></tr><tr><td>20</td><td>0</td><td>0</td></tr><tr><td>30</td><td>10</td><td>10</td></tr><tr><td>40</td><td>20</td><td>20</td></tr></tbody></table></div><p>沿每行从左向右：先减均值，再去掉方向得到距离。把第三列的距离加起来，再除以五。这样每项距离都会计入结果；第二列带方向的差相加则会相互抵消。</p>'
             transfer = '<p>第一步：14、18、20、22、26的均值为20，请补齐距离6、2、__、__、6，再相加除以五。第二步换数据：12、16、20、24、28，自己求均值与MAD，并说明每个数的单位。</p><details><summary>完成后核对</summary><p>第一组距离6、2、0、2、6，MAD为16÷5=3.2元。第二组均值20，距离8、4、0、4、8，MAD为24÷5=4.8元。正负偏差虽然相加为零，实际距离并没有消失。</p></details>'
         answer = '<label for="lesson-evidence">你的计算与解释</label><textarea id="lesson-evidence" data-save-key="lesson-0002-evidence" rows="4"></textarea>'
         transfer = transfer.replace('<details>', answer + '<details>', 1)

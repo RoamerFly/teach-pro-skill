@@ -116,6 +116,9 @@ class CourseContextTests(unittest.TestCase):
         record,messages=self.ask(selection='按具体合同抽样',selection_section='exercises')
         prompt=messages[0]['content']
         self.assertIn('第一课唯一教材信号',prompt)
+        self.assertIn('先直接回答学员的问题', prompt)
+        self.assertIn('具体例子', prompt)
+        self.assertIn('不执行工具、代码、改文件或生成下一课', prompt)
         location=json.loads(prompt.split('[当前提问位置]\n')[1].split('\n')[0])
         self.assertEqual(location['number'],'4');self.assertEqual(location['kind'],'supplement')
         self.assertEqual(location['lesson'],SLUG)

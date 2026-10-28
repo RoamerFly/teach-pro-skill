@@ -1,4 +1,4 @@
-"""Build the rc.15 competition description from the verified public showcase."""
+"""Build the rc.17 competition description from the verified public showcase."""
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -137,7 +137,7 @@ def build():
 
     body(doc, '学途智伴技能说明', 'Title')
     body(doc, '学途智伴——大学生长期自适应学习智能体', 'Subtitle')
-    body(doc, '重邮FFBond  ·  校园生活赛道  ·  Teach Pro 1.1.0-rc.16  ·  2026年10月26日')
+    body(doc, '重邮FFBond  ·  校园生活赛道  ·  Teach Pro 1.1.0-rc.17  ·  2026年10月28日')
     heading(doc, '作品简介')
     body(doc, '大学生的系统学习常跨越数周乃至数月。课程、笔记、练习与 AI 对话分散在不同位置，学习中断后需要重新整理进度；遇到难点时，还需判断是继续新课还是补充基础。')
     body(doc, '学途智伴是一套自适应教学 Skill 技能包，把学习目标、课程与本地学习记录连接起来。先访谈和评估，再逐课生成网页教程；教学 AI 读取作答与疑难，调整下一课并按需提供独立补充课，让学生专注学习、作答和提问，减少反复说明背景与自行编排课程的负担。')
@@ -146,11 +146,11 @@ def build():
 
     heading(doc, '设计思路')
     heading(doc, '工作流程与系统架构', 2)
-    picture(doc, 'teach-pro-workflow-architecture-v2-connected.png', '图 2  学习闭环与系统职责', '访谈、评估、逐课教学、作答、证据审阅与自适应续课；宿主教学 AI、浏览器、本地服务、可选 Tutor 与本地课程工作区分工')
+    picture(doc, 'teach-pro-workflow-architecture-v2-connected.png', '图 2  学习闭环与系统职责', '访谈、评估、逐课教学、作答、证据审阅与自适应续课；宿主教学 AI、浏览器、本地服务、可选 Tutor 与本地课程工作区分工', width=6.35)
     body(doc, '学员在宿主中调用 Skill，教学 AI 先访谈和评估，再生成一节课。学员在网页阅读、作答和提问；请求继续后，教学 AI 读取本地记录，决定下一课，并按需提供独立补充课。')
-    body(doc, '教学 AI 负责教学决策与课程生成；课内 Tutor 结合整门已生成教材解释疑问，并标明当前提问课页；本地 Python 服务同步文件及问答请求。答案与聊天分别写入 learner-submissions 和 learner-chats，画像、路线与课程状态用 Markdown 保存，供新会话接续教学。')
+    body(doc, '教学 AI 决定课程与路线；课内 Tutor 结合已生成教材解释疑问，并标明当前提问课页。本地 Python 服务同步文件与问答请求：作答和聊天分别存入 learner-submissions 与 learner-chats，画像和路线用 Markdown 保存，供新会话接续教学。')
     heading(doc, '依据学习证据续课', 2)
-    body(doc, '教学 AI 读取作答和疑难，依据学生的识别、解释、应用和迁移表现调整目标、难度与练习支架。课内答疑补充理解线索，练习记录提供能力判断依据，让下一次教学接着上一次的实际表现推进。')
+    body(doc, '教学 AI 读取作答和疑难，依据学生的识别、解释、应用和迁移表现调整目标、难度与练习支架。课内答疑补充理解线索，练习记录提供能力判断依据，让下一次教学接着上一次的实际表现推进。课程用连贯段落讲清对象、机制与适用条件，反馈指出具体进展和下一步。')
     heading(doc, '正式课和补充课分流', 2)
     body(doc, '正式课推进新目标，补充课巩固具体难点，两类课程独立记录。例如，安全工具契约正式课推进主线，关联补充课澄清“没有 Thought 就没有注入风险”的误解。')
 
@@ -196,10 +196,10 @@ def build():
     props.title, props.author = '学途智伴技能说明', '重邮FFBond'
     props.subject = '作品简介 设计思路 使用说明'
     props.last_modified_by = '重邮FFBond'
-    props.keywords = 'Teach Pro, 1.1.0-rc.16, 自适应教学, 整门教材上下文, 题后作答'
+    props.keywords = 'Teach Pro, 1.1.0-rc.17, 自适应教学, 整门教材上下文, 题后作答'
     props.comments = ''
     props.created = datetime(2026, 10, 5, tzinfo=timezone.utc)
-    props.modified = datetime(2026, 10, 26, tzinfo=timezone.utc)
+    props.modified = datetime(2026, 10, 28, tzinfo=timezone.utc)
     doc.save(OUT)
     print(OUT)
 

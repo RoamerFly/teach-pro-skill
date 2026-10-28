@@ -15,7 +15,7 @@ import sys
 import tempfile
 from zipfile import ZIP_DEFLATED, ZipFile, ZipInfo
 
-VERSION = '1.1.0-rc.16'
+VERSION = '1.1.0-rc.17'
 TEAM = '重邮FFBond'
 TITLE = '学途智伴——大学生长期自适应学习智能体'
 PREFIX = 'example/competition-materials/rc12/'
@@ -34,6 +34,7 @@ MEDIA_REFRESH_EVIDENCE = 'evals/records/2026-10-26-rc15-media-refresh.md'
 TUTOR_CONVERSATION_EVIDENCE = 'evals/records/2026-10-26-rc16-conversation.md'
 CURRENT_VIDEO_EVIDENCE = 'evals/records/2026-10-26-rc16-video-refresh.md'
 EMOTIONAL_VOICE_EVIDENCE = 'evals/records/2026-10-26-rc16-emotional-voice.md'
+DIRECT_WRITING_EVIDENCE = 'evals/records/2026-10-28-rc17-direct-writing.md'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '__pycache__',
              '.teach-runtime', '.git', 'node_modules', '.venv'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}')
@@ -179,7 +180,7 @@ def remap(name):
         return '参赛材料/' + name.removeprefix(PREFIX)
     if name.startswith(PREFIX) and name.removeprefix(PREFIX) in FIGURES:
         return '参赛材料/' + FIGURES[name.removeprefix(PREFIX)]
-    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE, EMOTIONAL_VOICE_EVIDENCE):
+    if name in (EVIDENCE, ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE, EMOTIONAL_VOICE_EVIDENCE, DIRECT_WRITING_EVIDENCE):
         return '验证记录/' + PurePosixPath(name).name
     raise ValueError('Unlisted submission file: ' + name)
 
@@ -249,7 +250,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
              PREFIX + 'dialogue-video-audit.json', *[PREFIX + name for name in MEDIA]]
     # Historical revisions remain buildable when the later optional figure is absent.
     if not skill_only:
-        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE, EMOTIONAL_VOICE_EVIDENCE]
+        figure_paths = [PREFIX + name for name in FIGURES] + [ARCHITECTURE_EVIDENCE, CONNECTED_FIGURE_EVIDENCE, VALUE_EVIDENCE, TUTOR_LIMIT_EVIDENCE, TUTOR_FULL_ANSWER_EVIDENCE, TUTOR_CONTEXT_EVIDENCE, MEDIA_REFRESH_EVIDENCE, TUTOR_CONVERSATION_EVIDENCE, CURRENT_VIDEO_EVIDENCE, EMOTIONAL_VOICE_EVIDENCE, DIRECT_WRITING_EVIDENCE]
         available = subprocess.check_output(['git', 'ls-tree', '-r', '--name-only', revision, '--', *figure_paths],
                                             cwd=root, text=True).splitlines()
         paths.extend(name for name in figure_paths if name in available)
@@ -293,7 +294,7 @@ def build(output, ref='HEAD', profile=None, skill_only=False, extract=False):
 Skill 版本：Teach Pro {VERSION}
 源码快照：{revision}
 
-当前技能包与课程运行组件为 rc.16，说明材料展示整门教材上下文与题后作答。答疑支持对话分支、图片与文本附件、思考显示、停止生成及本次模型选择。Word 和视频展示新版设置与题后原位作答。升级既有课程答疑运行组件后重启服务并刷新网页，原学习记录和模型配置保留。
+当前技能包与课程运行组件为 rc.17，课程采用直接教学表达，讲清对象、机制、适用条件和操作方法。说明材料展示整门教材上下文与题后作答。答疑支持对话分支、图片与文本附件、思考显示、停止生成及本次模型选择。Word 和视频展示新版设置与题后原位作答。升级既有课程答疑运行组件后重启服务并刷新网页，原学习记录和模型配置保留。
 
 ## 用途与价值
 

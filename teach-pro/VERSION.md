@@ -1,7 +1,7 @@
 # Version
 
-- Version: 1.1.0-rc.16
-- Release: Branched multimodal conversations, returned reasoning and cancellation, 2026-10-26; TeleAgent classified-delivery and macOS/Linux native checks pending
+- Version: 1.1.0-rc.17
+- Release: Direct instructional writing across generation, templates and tutor answers, 2026-10-28
 - Edition: Universal Web Tutor · adaptive lessons with local sync
 - Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)
 - Primary output: learner-facing HTML
