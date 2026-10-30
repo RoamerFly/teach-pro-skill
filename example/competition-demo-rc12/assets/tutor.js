@@ -167,6 +167,15 @@
   async function switchBranch(id){if(busy||uploading)return;editing=null;busy=true;controls();try{await render(await api('branch/'+lesson,{message_id:id}));say();}catch(e){say(e.message,true);}finally{busy=false;controls();}}
   async function refreshConfig(){const r=await api('bootstrap');token=r.token;configured=r.configured;const version=JSON.stringify([token,configured,r.settings]),changed=configVersion!==null&&configVersion!==version;configVersion=version;pickers(r.settings||{});find('[data-tutor-model]').textContent=configured?pickedModel:'未连接模型';find('[data-tutor-model]').dataset.connected=String(configured);return changed;}
   async function stop(){if(!requestId||stopping)return;stopWanted=true;if(!requestAccepted){controls();return;}stopping=true;controls();try{await api('stop/'+lesson,{request_id:requestId});}catch(e){if(busy&&!e.message.includes('已结束'))say(e.message,true);}finally{stopping=false;controls();}}
+  function answerSnapshot(){
+    const fields={};
+    for(const field of main.querySelectorAll('[data-save-key]')){
+      if(dialog.contains(field)||field.closest('[hidden], [data-tutor], .tutor-dialog'))continue;
+      if(field.matches('[data-quiz]'))fields[field.dataset.saveKey]=field.querySelector('input[type="radio"]:checked')?.value||'';
+      else if(field.matches('textarea, select, input:not([type="password"]):not([type="hidden"]):not([type="file"]):not([type="radio"]):not([type="checkbox"])'))fields[field.dataset.saveKey]=field.value;
+    }
+    return {fields};
+  }
   async function send(message,options={}){
     if(busy||uploading||(!message.trim()&&!(options.attachments||attachments).length))return;
     const operation=Object.keys(options).some(k=>k.endsWith('_id')),sentFiles=options.attachments??(operation?[]:attachments.map(a=>a.id)),sentSelection=options.selection??(operation?'':selection);
@@ -174,7 +183,7 @@
     const paint=()=>{timer=null;const text=draft,thinking=thoughtDraft;painting=painting.then(async()=>{if(!active||!body?.isConnected)return;const follow=nearBottom(),position=log.scrollTop;try{if(text)await(await markdown).render(body,text);else body.textContent=thinking?'':'···';if(thinking){thoughtDetails.hidden=false;await(await markdown).render(thoughtBody,thinking);}}catch{body.textContent=text;thoughtBody.textContent=thinking;}if(follow)latest();else{log.scrollTop=position;jump.hidden=false;}});};
     try{
       await refreshConfig();if(!configured)throw new Error('先在课程设置中连接模型。');say();if(stopWanted)return;
-      await streamChat({message,selection:sentSelection,selection_section:options.selection_section??(sentSelection?selectionSection:''),attachments:sentFiles,model:modelPicker.value,reasoning_effort:effortPicker.value||'auto',request_id:requestId,expected_leaf:record.active_leaf??null,...options},async(event,data)=>{
+      await streamChat({message,selection:sentSelection,selection_section:options.selection_section??(sentSelection?selectionSection:''),attachments:sentFiles,model:modelPicker.value,reasoning_effort:effortPicker.value||'auto',request_id:requestId,expected_leaf:record.active_leaf??null,...options,answer_snapshot:answerSnapshot()},async(event,data)=>{
         if(event==='pending'){
           accepted=true;requestAccepted=true;if(options.edit_id)editing=null;await render(data);
           if(!operation){if(prompt.value===message){prompt.value='';grow();}attachments=[];draftAttachments();selection='';selectionSection='';showSelection();}

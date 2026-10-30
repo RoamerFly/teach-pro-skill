@@ -14,7 +14,7 @@ assert [p.text for p in doc.paragraphs if p.style.name == 'Heading 1'] == ['作�
 assert len(doc.inline_shapes) == 5
 assert len(doc.tables) == 1
 assert doc.core_properties.author == doc.core_properties.last_modified_by == '重邮FFBond'
-assert '1.1.0-rc.17' in doc.core_properties.keywords
+assert '1.1.0-rc.18' in doc.core_properties.keywords
 assert '上下文设置' in '\n'.join(p.text for p in doc.paragraphs)
 assert '每道练习后直接作答' in '\n'.join(p.text for p in doc.paragraphs)
 for name in ('Title', 'Subtitle', 'Heading 1', 'Heading 2'):
@@ -41,5 +41,5 @@ with ZipFile(file) as archive:
     duration = round(json.loads((root / 'dialogue-video-audit.json').read_text(encoding='utf8'))['seconds'])
     assert f'{duration // 60} 分 {duration % 60} 秒' in xml
     assert '工作流程与系统架构' in xml and '教学 AI' in xml and '课内 Tutor' in xml
-print('PASS: five sections, five annotated images, one matrix, rc.17 metadata, context settings, no secret patterns')
+print('PASS: five sections, five annotated images, one matrix, rc.18 metadata, context settings, no secret patterns')
 print('SHA256:', hashlib.sha256(file.read_bytes()).hexdigest())

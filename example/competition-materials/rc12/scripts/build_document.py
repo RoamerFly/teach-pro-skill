@@ -1,4 +1,4 @@
-"""Build the rc.17 competition description from the verified public showcase."""
+"""Build the rc.18 competition description from the verified public showcase."""
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -137,7 +137,7 @@ def build():
 
     body(doc, '学途智伴技能说明', 'Title')
     body(doc, '学途智伴——大学生长期自适应学习智能体', 'Subtitle')
-    body(doc, '重邮FFBond  ·  校园生活赛道  ·  Teach Pro 1.1.0-rc.17  ·  2026年10月28日')
+    body(doc, '重邮FFBond  ·  校园生活赛道  ·  Teach Pro 1.1.0-rc.18  ·  2026年10月30日')
     heading(doc, '作品简介')
     body(doc, '大学生的系统学习常跨越数周乃至数月。课程、笔记、练习与 AI 对话分散在不同位置，学习中断后需要重新整理进度；遇到难点时，还需判断是继续新课还是补充基础。')
     body(doc, '学途智伴是一套自适应教学 Skill 技能包，把学习目标、课程与本地学习记录连接起来。先访谈和评估，再逐课生成网页教程；教学 AI 读取作答与疑难，调整下一课并按需提供独立补充课，让学生专注学习、作答和提问，减少反复说明背景与自行编排课程的负担。')
@@ -170,7 +170,7 @@ def build():
     body(doc, '学习中遇到疑问，点击冻结栏左侧的“问 AI”。首次使用可从答疑窗口进入“连接答疑模型”，也可直接打开左侧置顶的“课程设置”。以 DeepSeek 为例，选取服务类型、输入 API Key、获取并选择模型，再保存并测试连接。连接全课程共用。')
     picture(doc, 'masked-key.png', '图 4  API Key 默认遮蔽  点击眼睛才显示', 'API Key 输入框处于 password 状态，图中使用无效演示值')
     body(doc, '默认记住此设备，启动器自动准备 keyring 运行依赖，系统凭据库存储密钥。API Key 输入默认遮蔽，眼睛按钮切换显示；模型连接全课程共用，切换课程后可直接继续答疑。')
-    body(doc, '从答疑进入设置后，点击返回按钮即可回到原课。Tutor 默认结合整门已生成网页教材与本课最近对话回答，选文附带章节和所在段落；即使联系前课，也明确当前提问位置。正文与接口返回的思考分区流式显示。支持复制、修改问题、左右切换版本、重新生成与停止；聊天和图片／文本附件按课保存，供续课 AI 参考。')
+    body(doc, '从答疑进入设置后，点击返回按钮即可回到原课。Tutor 默认结合整门已生成网页教材与本课最近对话回答，选文附带章节和所在段落；填写练习后直接提问，Tutor 同时读取当前课最新作答，结合题干点评。正文与接口返回的思考分区流式显示。支持复制、修改问题、左右切换版本、重新生成与停止；聊天和图片／文本附件按课保存，供续课 AI 参考。')
     picture(doc, 'context-settings.png', '图 5  统一上下文设置', '整门已生成课程或仅当前课、参考答案、资源导学、本课对话轮数均可配置', width=6.9)
     body(doc, '上下文设置可选择整门教材或仅当前课，控制是否包含参考答案与资源导学，选择最近五轮、十轮或本课全部已完成对话。默认带入整门教材、参考答案和资源导学，保留最近五轮；保存后全课程共用。输入区可快捷选择本次模型与思考程度，上传、粘贴或拖入图片；教学 AI 管理路线与下一课。')
 
@@ -196,10 +196,10 @@ def build():
     props.title, props.author = '学途智伴技能说明', '重邮FFBond'
     props.subject = '作品简介 设计思路 使用说明'
     props.last_modified_by = '重邮FFBond'
-    props.keywords = 'Teach Pro, 1.1.0-rc.17, 自适应教学, 整门教材上下文, 题后作答'
+    props.keywords = 'Teach Pro, 1.1.0-rc.18, 自适应教学, 整门教材上下文, 题后作答'
     props.comments = ''
     props.created = datetime(2026, 10, 5, tzinfo=timezone.utc)
-    props.modified = datetime(2026, 10, 28, tzinfo=timezone.utc)
+    props.modified = datetime(2026, 10, 30, tzinfo=timezone.utc)
     doc.save(OUT)
     print(OUT)
 
