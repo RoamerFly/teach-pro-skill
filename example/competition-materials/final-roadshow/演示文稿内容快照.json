@@ -1,2446 +1,1953 @@
 {
-  "artifact_ref": "artifact_external_bf5d5e24-7f8a-4494-a5f4-70b9d4ab8c8d",
-  "page_id": "page_b57b4f8a70008191b27d669fa5d8e24d",
-  "canvas": {
-    "width": 1280,
-    "height": 720
-  },
+  "edition": "逻辑与视觉升级版",
+  "delivery": "local_pptx",
+  "sha256": "5cbbfe3347916425de7566985d7705abd1ce02ad7936dec487c5a8273539f8d8",
   "slides": [
     {
       "page": 1,
-      "notes": "第1页  20秒\n\n各位评委好，学途智伴是一套面向大学生长期学习的自适应教学Skill技能包。它把课程、作答和疑问连接起来，根据学习情况安排下一课。先说说设计初衷。\n\n动作提示\n看向评委。封面停留，介绍作品形态后翻页。\n\n材料来源\nteach-pro/SKILL.md",
+      "title": "学途智伴",
+      "notes": "第1页  20秒各位评委好，我带来的是学途智伴，一套面向大学生持续学习的自适应教学Skill技能包。它从学生的学习目标出发，把课程网页、作答和答疑连接起来，像学习私教一样安排下一步。先从我为什么设计它讲起。动作提示看向评委。封面停留，介绍作品形态后翻页。材料来源teach-pro/SKILL.mdassets/skill-learning-journey.png：内置image_gen生成的背景插画",
       "shapes": [
         {
           "text": "学途智伴",
-          "frame": {
-            "left": 78,
-            "top": 112,
-            "width": 700,
-            "height": 100
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "学途智伴",
+          "position_emu": [
+            {
+              "x": "647700",
+              "y": "1066800"
+            },
+            {
+              "cx": "5810250",
+              "cy": "857250"
+            }
+          ]
         },
         {
-          "text": "大学生长期自适应学习智能体",
-          "frame": {
-            "left": 82,
-            "top": 236,
-            "width": 730,
-            "height": 80
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "大学生长期\n自适应学习智能体",
+          "name": "大学生长期\n自适应学习智能体",
+          "position_emu": [
+            {
+              "x": "685800",
+              "y": "2257425"
+            },
+            {
+              "cx": "5619750",
+              "cy": "1028700"
+            }
+          ]
         },
         {
           "text": "自适应教学 Skill 技能包",
-          "frame": {
-            "left": 82,
-            "top": 357,
-            "width": 700,
-            "height": 52
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "自适应教学 Skill 技能包",
+          "position_emu": [
+            {
+              "x": "695325",
+              "y": "3829050"
+            },
+            {
+              "cx": "5572125",
+              "cy": "590550"
+            }
+          ]
         },
         {
           "text": "重邮FFBond  ·  决赛路演",
-          "frame": {
-            "left": 82,
-            "top": 594,
-            "width": 600,
-            "height": 36
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 924,
-            "top": 195,
-            "width": 234,
-            "height": 82
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "E9F3F4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "重邮FFBond  ·  决赛路演",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "5753100"
+            },
+            {
+              "cx": "5238750",
+              "cy": "381000"
             }
-          }
-        },
-        {
-          "text": "课程",
-          "frame": {
-            "left": 948,
-            "top": 215,
-            "width": 190,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 924,
-            "top": 329,
-            "width": 234,
-            "height": 82
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "9EE5D4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
-            }
-          }
-        },
-        {
-          "text": "作答",
-          "frame": {
-            "left": 948,
-            "top": 349,
-            "width": 190,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 924,
-            "top": 463,
-            "width": 234,
-            "height": 82
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "58D3BF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
-            }
-          }
-        },
-        {
-          "text": "续课",
-          "frame": {
-            "left": 948,
-            "top": 483,
-            "width": 190,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
+          ]
         }
       ]
     },
     {
       "page": 2,
-      "notes": "第2页  45秒\n\nAI让找资料越来越快，我希望进一步把这些资料组织成适合自己的系统学习。我的想法是，有一位学习私教，先了解基础，逐课讲解，再根据练习和疑问调整下一课。要做到这一点，需要持续了解学生的学习情况。因此，我选择直接生成课程网页，把讲解、习题、资料和随时答疑放在一起。学生在学习中留下的回答和提问，成为AI了解学情的依据。围绕这个初衷，我把教学流程、模板和本地工具整理成了学途智伴。\n\n动作提示\n指向资源获取、课程网页和动态续课之间的连接，末句稍停顿。\n\n材料来源\n作者于2026-11-17确认的设计初衷",
+      "title": "设计初衷：把资源组织成持续学习",
+      "notes": "第2页  45秒AI让找资料越来越快，我希望进一步把这些资料组织成适合自己的系统学习。我的期待很具体：有完整的学习路线，有讲解、习题和资料，还能在不理解时随时问问题。更关键的是，下一课能接着我的学习情况往下教。于是我想到，把课程直接做成网页，让学生边学边写答案、记录疑问。教学AI就有了持续了解学情的依据。我把这套流程、课程模板和本地工具整理成Skill，形成了学途智伴。动作提示先讲自己的学习期待，再依次指出系统课程、学情记录和动态安排。以“因此采用Skill交付”连接下一页。材料来源作者于2026-11-17确认的设计初衷assets/skill-learning-motivation.png：内置image_gen生成的场景插画",
       "shapes": [
         {
-          "text": "",
-          "frame": {
-            "left": 802,
-            "top": 387,
-            "width": 64,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 408,
-            "top": 387,
-            "width": 64,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "为什么设计学途智伴",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "设计初衷：把资源组织成持续学习",
+          "name": "设计初衷：把资源组织成持续学习",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
             }
-          }
+          ]
+        },
+        {
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
+            }
+          ]
         },
         {
           "text": "02",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "把快速获取的资料\n组织成适合自己的系统学习",
-          "frame": {
-            "left": 76,
-            "top": 176,
-            "width": 1120,
-            "height": 108
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "课程网页",
-          "frame": {
-            "left": 78,
-            "top": 342,
-            "width": 330,
-            "height": 90
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "02",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
             }
-          }
+          ]
         },
         {
-          "text": "作答与提问",
-          "frame": {
-            "left": 472,
-            "top": 342,
-            "width": 330,
-            "height": 90
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "希望AI像学习私教一样\n接着我的进度继续教",
+          "name": "希望AI像学习私教一样\n接着我的进度继续教",
+          "position_emu": [
+            {
+              "x": "666750",
+              "y": "1704975"
+            },
+            {
+              "cx": "5514975",
+              "cy": "1000125"
             }
-          }
+          ]
         },
         {
-          "text": "动态续课",
-          "frame": {
-            "left": 866,
-            "top": 342,
-            "width": 330,
-            "height": 90
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "B8E9DC"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "01",
+          "name": "01",
+          "position_emu": [
+            {
+              "x": "685800",
+              "y": "3105150"
+            },
+            {
+              "cx": "590550",
+              "cy": "476250"
             }
-          }
+          ]
         },
         {
-          "text": "讲解、习题和资料\n围绕同一个学习目标",
-          "frame": {
-            "left": 80,
-            "top": 460,
-            "width": 330,
-            "height": 100
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "系统课程",
+          "name": "系统课程",
+          "position_emu": [
+            {
+              "x": "1485900",
+              "y": "3105150"
+            },
+            {
+              "cx": "4286250",
+              "cy": "409575"
+            }
+          ]
         },
         {
-          "text": "在学习中留下回答\n持续了解当前学情",
-          "frame": {
-            "left": 474,
-            "top": 460,
-            "width": 330,
-            "height": 100
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "把资料组织成学习路线",
+          "name": "把资料组织成学习路线",
+          "position_emu": [
+            {
+              "x": "1495425",
+              "y": "3533775"
+            },
+            {
+              "cx": "4524375",
+              "cy": "409575"
+            }
+          ]
         },
         {
-          "text": "像学习私教一样\n安排合适的下一步",
-          "frame": {
-            "left": 868,
-            "top": 460,
-            "width": 330,
-            "height": 100
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "02",
+          "name": "02",
+          "position_emu": [
+            {
+              "x": "685800",
+              "y": "4076700"
+            },
+            {
+              "cx": "590550",
+              "cy": "476250"
+            }
+          ]
+        },
+        {
+          "text": "了解学情",
+          "name": "了解学情",
+          "position_emu": [
+            {
+              "x": "1485900",
+              "y": "4076700"
+            },
+            {
+              "cx": "4286250",
+              "cy": "409575"
+            }
+          ]
+        },
+        {
+          "text": "从作答与疑问看当前理解",
+          "name": "从作答与疑问看当前理解",
+          "position_emu": [
+            {
+              "x": "1495425",
+              "y": "4505325"
+            },
+            {
+              "cx": "4524375",
+              "cy": "409575"
+            }
+          ]
+        },
+        {
+          "text": "03",
+          "name": "03",
+          "position_emu": [
+            {
+              "x": "685800",
+              "y": "5048250"
+            },
+            {
+              "cx": "590550",
+              "cy": "476250"
+            }
+          ]
+        },
+        {
+          "text": "动态安排",
+          "name": "动态安排",
+          "position_emu": [
+            {
+              "x": "1485900",
+              "y": "5048250"
+            },
+            {
+              "cx": "4286250",
+              "cy": "409575"
+            }
+          ]
+        },
+        {
+          "text": "根据学习情况决定下一步",
+          "name": "根据学习情况决定下一步",
+          "position_emu": [
+            {
+              "x": "1495425",
+              "y": "5476875"
+            },
+            {
+              "cx": "4524375",
+              "cy": "409575"
+            }
+          ]
         }
       ]
     },
     {
       "page": 3,
-      "notes": "第3页  35秒\n\n学途智伴以Skill技能包交付。在TeleAgent等支持Skill的宿主中导入，学生就可以说，我想学习Agent开发与安全，请先评估我的基础。包里包含三类内容。教学规则告诉AI怎样访谈、评估和续课，课程模板提供图解、练习和答疑入口，本地工具保存作答与聊天。学生得到的是围绕自己目标持续更新的课程工作区。\n\n动作提示\n从调用示例移到三个包内组成，强调Skill技能包。\n\n材料来源\nREADME.md\nteach-pro/README.md",
+      "title": "使用旅程：从一句目标，到逐课学习",
+      "notes": "第3页  35秒学生怎样开始？在TeleAgent等支持Skill的宿主中导入学途智伴，告诉它想学什么。Skill先引导了解基础、目标和时间安排，再完成入门评估，形成路线并生成当前一课。学生打开课程网页，就能看图解、查资料、做题和答疑。学完以后，回到教学AI请求继续。它读取已有记录，安排下一节正式课和按需补充课。这就是学生反复使用的一条学习路径。动作提示沿使用旅程从左向右讲，指向真实课程截图，最后用“背后怎样协作”引出架构。材料来源README.mdteach-pro/README.md",
       "shapes": [
         {
-          "text": "导入一个Skill，建立学习工作区",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "使用旅程：从一句目标，到逐课学习",
+          "name": "使用旅程：从一句目标，到逐课学习",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
           "text": "03",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "在支持 Skill 的宿主中调用",
-          "frame": {
-            "left": 76,
-            "top": 172,
-            "width": 670,
-            "height": 47
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 76,
-            "top": 237,
-            "width": 596,
-            "height": 122
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "102A43"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "03",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
             }
-          }
+          ]
         },
         {
-          "text": "@teach-pro\n我想学Agent开发与安全。\n请先评估我的基础。",
-          "frame": {
-            "left": 100,
-            "top": 255,
-            "width": 540,
-            "height": 84
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "教学规则",
-          "frame": {
-            "left": 78,
-            "top": 399,
-            "width": 164,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "访谈、评估、讲解与续课",
-          "frame": {
-            "left": 258,
-            "top": 399,
-            "width": 410,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 454,
-            "width": 594,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "“我想学习Agent开发与安全，请先评估我的基础。”",
+          "name": "“我想学习Agent开发与安全，请先评估我的基础。”",
+          "position_emu": [
+            {
+              "x": "676275",
+              "y": "1619250"
+            },
+            {
+              "cx": "10572750",
+              "cy": "523875"
             }
-          }
+          ]
         },
         {
-          "text": "课程模板",
-          "frame": {
-            "left": 78,
-            "top": 468,
-            "width": 164,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "图解、练习与答疑入口",
-          "frame": {
-            "left": 258,
-            "top": 468,
-            "width": 410,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 523,
-            "width": 594,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "导入 Skill\n提出学习目标",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "666750",
+              "y": "2466975"
+            },
+            {
+              "cx": "2381250",
+              "cy": "895350"
             }
-          }
+          ]
         },
         {
-          "text": "本地工具",
-          "frame": {
-            "left": 78,
-            "top": 537,
-            "width": 164,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "同步作答，保存学习记录",
-          "frame": {
-            "left": 258,
-            "top": 537,
-            "width": 410,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 592,
-            "width": 594,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "访谈与评估\n明确学习起点",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "3486150",
+              "y": "2466975"
+            },
+            {
+              "cx": "2381250",
+              "cy": "895350"
             }
-          }
+          ]
         },
         {
-          "text": "生成自己的课程工作区",
-          "frame": {
-            "left": 745,
-            "top": 604,
-            "width": 430,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "学习当前课\n阅读、作答、答疑",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "6305550",
+              "y": "2466975"
+            },
+            {
+              "cx": "2381250",
+              "cy": "895350"
+            }
+          ]
+        },
+        {
+          "text": "依据记录续课\n正式课与按需补充",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "9124950",
+              "y": "2466975"
+            },
+            {
+              "cx": "2381250",
+              "cy": "895350"
+            }
+          ]
+        },
+        {
+          "text": "学生得到自己的课程工作区",
+          "name": "学生得到自己的课程工作区",
+          "position_emu": [
+            {
+              "x": "6305550",
+              "y": "3857625"
+            },
+            {
+              "cx": "5124450",
+              "cy": "485775"
+            }
+          ]
+        },
+        {
+          "text": "图解与讲解  ·  题后练习\n一手资料  ·  课内随时答疑",
+          "name": "图解与讲解  ·  题后练习\n一手资料  ·  课内随时答疑",
+          "position_emu": [
+            {
+              "x": "6324600",
+              "y": "4572000"
+            },
+            {
+              "cx": "5000625",
+              "cy": "1009650"
+            }
+          ]
+        },
+        {
+          "text": "学完请求继续，教学按记录接续",
+          "name": "学完请求继续，教学按记录接续",
+          "position_emu": [
+            {
+              "x": "6324600",
+              "y": "5734050"
+            },
+            {
+              "cx": "5000625",
+              "cy": "428625"
+            }
+          ]
         }
       ]
     },
     {
       "page": 4,
-      "notes": "第4页  40秒\n\n这套Skill按一条学习闭环运行。教学AI先了解目标与基础，生成当前一课。学生在网页阅读、做题和提问，本地服务把答案与疑难保存到课程目录。请求继续时，教学AI读取最新记录，再安排下一课。课内答疑模型结合教材和当前问题提供解释。由此，课程生成、课堂讨论和学习记录共同连接起前后两次教学。\n\n动作提示\n沿上方流程从左到右指图，再用下方分工解释连接。\n\n材料来源\nteach-pro/SKILL.md\nteach-pro/LOCAL-TUTOR-SPEC.md",
+      "title": "协作架构：Skill连接教学、课堂与记录",
+      "notes": "第4页  40秒这条路径背后，Skill承担教学组织。它把教学规则、课程模板和本地工具交给宿主中的教学AI。教学AI根据目标和学情生成课程网页，学生在网页中阅读、作答和提问。本地服务同步答案、聊天和疑难，保存到课程工作区。配置课内答疑模型后，模型结合教材、当前课和最新作答解释问题。再次请求继续时，教学AI读取工作区，安排后续教学。接下来，我用三个设计说明这条闭环怎样支持持续学习。动作提示先讲Skill的三种包内资源，再沿生成、学习、记录和读取的闭环讲解。课内答疑单独指出。材料来源teach-pro/SKILL.mdteach-pro/LOCAL-TUTOR-SPEC.md",
       "shapes": [
         {
-          "text": "",
-          "frame": {
-            "left": 1012,
-            "top": 245,
-            "width": 22,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 818,
-            "top": 245,
-            "width": 22,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 624,
-            "top": 245,
-            "width": 22,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 430,
-            "top": 245,
-            "width": 22,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 236,
-            "top": 245,
-            "width": 22,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "一次学习，怎样接到下一次教学",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "协作架构：Skill连接教学、课堂与记录",
+          "name": "协作架构：Skill连接教学、课堂与记录",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
             }
-          }
+          ]
+        },
+        {
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
+            }
+          ]
         },
         {
           "text": "04",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "目标与评估",
-          "frame": {
-            "left": 64,
-            "top": 203,
-            "width": 172,
-            "height": 84
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "04",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
             }
-          }
+          ]
         },
         {
-          "text": "当前一课",
-          "frame": {
-            "left": 258,
-            "top": 203,
-            "width": 172,
-            "height": 84
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "Skill提供：教学规则  ·  课程模板  ·  本地工具",
+          "name": "Skill提供：教学规则  ·  课程模板  ·  本地工具",
+          "position_emu": [
+            {
+              "x": "685800",
+              "y": "1581150"
+            },
+            {
+              "cx": "10763250",
+              "cy": "504825"
             }
-          }
+          ]
         },
         {
-          "text": "作答与提问",
-          "frame": {
-            "left": 452,
-            "top": 203,
-            "width": 172,
-            "height": 84
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "教学 AI\n宿主中调用 Skill",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "2628900"
+            },
+            {
+              "cx": "3000375",
+              "cy": "1028700"
             }
-          }
+          ]
         },
         {
-          "text": "读取记录",
-          "frame": {
-            "left": 646,
-            "top": 203,
-            "width": 172,
-            "height": 84
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "课程网页\n阅读、练习与资料",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4610100",
+              "y": "2628900"
+            },
+            {
+              "cx": "3000375",
+              "cy": "1028700"
             }
-          }
+          ]
         },
         {
-          "text": "续课安排",
-          "frame": {
-            "left": 840,
-            "top": 203,
-            "width": 172,
-            "height": 84
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "B8E9DC"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "课内答疑模型\n结合教材和最新作答",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8515350",
+              "y": "2628900"
+            },
+            {
+              "cx": "2990850",
+              "cy": "1028700"
             }
-          }
+          ]
         },
         {
-          "text": "新正式课\n按需补充课",
-          "frame": {
-            "left": 1034,
-            "top": 203,
-            "width": 172,
-            "height": 84
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "B8E9DC"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "生成",
+          "name": "生成",
+          "position_emu": [
+            {
+              "x": "3743325",
+              "y": "2219325"
+            },
+            {
+              "cx": "838200",
+              "cy": "342900"
             }
-          }
+          ]
         },
         {
-          "text": "学生请求继续，教学 AI 读取记录并安排后续课程",
-          "frame": {
-            "left": 70,
-            "top": 321,
-            "width": 1120,
-            "height": 48
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "教学 AI",
-          "frame": {
-            "left": 78,
-            "top": 414,
-            "width": 340,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "调用 Skill，生成课程与续课",
-          "frame": {
-            "left": 446,
-            "top": 414,
-            "width": 730,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 467,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "问答",
+          "name": "问答",
+          "position_emu": [
+            {
+              "x": "7648575",
+              "y": "2219325"
+            },
+            {
+              "cx": "828675",
+              "cy": "342900"
             }
-          }
+          ]
         },
         {
-          "text": "课程网页与本地服务",
-          "frame": {
-            "left": 78,
-            "top": 482,
-            "width": 340,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "阅读、作答，同步学习记录",
-          "frame": {
-            "left": 446,
-            "top": 482,
-            "width": 730,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 535,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "课程工作区\n目标、课文、答案、聊天与疑难",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4600575",
+              "y": "5010150"
+            },
+            {
+              "cx": "5286375",
+              "cy": "876300"
             }
-          }
+          ]
         },
         {
-          "text": "课内答疑模型",
-          "frame": {
-            "left": 78,
-            "top": 550,
-            "width": 340,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "结合教材、当前课和作答解释问题",
-          "frame": {
-            "left": 446,
-            "top": 550,
-            "width": 730,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 603,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "本地服务同步保存",
+          "name": "本地服务同步保存",
+          "position_emu": [
+            {
+              "x": "8143875",
+              "y": "4171950"
+            },
+            {
+              "cx": "3333750",
+              "cy": "428625"
             }
-          }
+          ]
+        },
+        {
+          "text": "请求继续：教学 AI 读取课程工作区，安排后续教学",
+          "name": "请求继续：教学 AI 读取课程工作区，安排后续教学",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "6172200"
+            },
+            {
+              "cx": "10287000",
+              "cy": "428625"
+            }
+          ]
         }
       ]
     },
     {
       "page": 5,
-      "notes": "第5页  45秒\n\n第一个设计，是把长期学习状态保存在课程工作区。里面有学习目标、当前路线、已生成课程，以及学生写下的回答和疑难。比如这次学完Agent推理循环，学生还想弄清外部文本怎样影响工具决策。过一段时间回来，只要提出继续学习，教学AI就能读取这些记录，从当前进度安排新的讲解。学生可以把精力用在理解和练习上，课程也有了跨会话接续的依据。\n\n动作提示\n先指本次学习，再指课程工作区，最后指再次学习。\n\n材料来源\nteach-pro/COURSE-WORKSPACE-SPEC.md\nteach-pro/LEARNING-RECORD-FORMAT.md",
+      "title": "创新一：课程工作区支持跨会话接续",
+      "notes": "第5页  40秒第一个设计，是把学习过程组织成持续积累的课程工作区。目标、路线、已生成的课文，以及学生写下的答案和疑难，都保存在同一个学习目录。比如今天学完Agent推理循环，还想弄清外部文本怎样影响工具决策。下次回来提出继续，教学AI读取这些记录，就能回应尚未解决的问题，接着安排新的讲解。课程工作区由此成为前后两次教学之间的连接。动作提示沿今天学习、课程工作区、下次继续的时间线讲，指出中间保存的具体信息。材料来源teach-pro/COURSE-WORKSPACE-SPEC.mdteach-pro/LEARNING-RECORD-FORMAT.md",
       "shapes": [
         {
-          "text": "",
-          "frame": {
-            "left": 777,
-            "top": 291,
-            "width": 156,
-            "height": 3
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 347,
-            "top": 291,
-            "width": 156,
-            "height": 3
-          },
-          "fill": null
-        },
-        {
-          "text": "学习记录，让下一次教学接得上",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "创新一：课程工作区支持跨会话接续",
+          "name": "创新一：课程工作区支持跨会话接续",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
             }
-          }
+          ]
+        },
+        {
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
+            }
+          ]
         },
         {
           "text": "05",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "05",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
+            }
+          ]
+        },
+        {
+          "text": "把今天留下的回答与问题，变成下次教学的起点",
+          "name": "把今天留下的回答与问题，变成下次教学的起点",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "1666875"
+            },
+            {
+              "cx": "10382250",
+              "cy": "476250"
+            }
+          ]
         },
         {
           "text": "这一次学习",
-          "frame": {
-            "left": 77,
-            "top": 241,
-            "width": 270,
-            "height": 100
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "695325",
+              "y": "3457575"
+            },
+            {
+              "cx": "2619375",
+              "cy": "876300"
             }
-          }
-        },
-        {
-          "text": "课程工作区",
-          "frame": {
-            "left": 503,
-            "top": 207,
-            "width": 274,
-            "height": 174
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "E3F3EF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
-            }
-          }
-        },
-        {
-          "text": "再次请求继续",
-          "frame": {
-            "left": 933,
-            "top": 241,
-            "width": 270,
-            "height": 100
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
-            }
-          }
-        },
-        {
-          "text": "当前课\n自己的回答\n课末疑难",
-          "frame": {
-            "left": 78,
-            "top": 397,
-            "width": 285,
-            "height": 150
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "目标与路线\n课文与学习记录",
-          "frame": {
-            "left": 493,
-            "top": 411,
-            "width": 310,
-            "height": 135
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "读取当前进度\n回应未解问题\n安排新的讲解",
-          "frame": {
-            "left": 925,
-            "top": 397,
-            "width": 285,
-            "height": 150
-          },
-          "fill": {
-            "type": "none"
-          }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 78,
-            "top": 589,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4619625",
+              "y": "2552700"
+            },
+            {
+              "cx": "1104900",
+              "cy": "247650"
             }
-          }
+          ]
         },
         {
-          "text": "学习记录随课程积累，新会话接着已有进度教学",
-          "frame": {
-            "left": 78,
-            "top": 610,
-            "width": 1100,
-            "height": 43
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4619625",
+              "y": "2781300"
+            },
+            {
+              "cx": "2914650",
+              "cy": "2228850"
+            }
+          ]
+        },
+        {
+          "text": "课程工作区",
+          "name": "课程工作区",
+          "position_emu": [
+            {
+              "x": "4838700",
+              "y": "2924175"
+            },
+            {
+              "cx": "2486025",
+              "cy": "466725"
+            }
+          ]
+        },
+        {
+          "text": "目标与路线",
+          "name": "目标与路线",
+          "position_emu": [
+            {
+              "x": "4895850",
+              "y": "3590925"
+            },
+            {
+              "cx": "2400300",
+              "cy": "361950"
+            }
+          ]
+        },
+        {
+          "text": "已生成的课程",
+          "name": "已生成的课程",
+          "position_emu": [
+            {
+              "x": "4895850",
+              "y": "4000500"
+            },
+            {
+              "cx": "2400300",
+              "cy": "361950"
+            }
+          ]
+        },
+        {
+          "text": "作答、聊天与疑难",
+          "name": "作答、聊天与疑难",
+          "position_emu": [
+            {
+              "x": "4895850",
+              "y": "4410075"
+            },
+            {
+              "cx": "2400300",
+              "cy": "361950"
+            }
+          ]
+        },
+        {
+          "text": "下一次继续",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8858250",
+              "y": "3457575"
+            },
+            {
+              "cx": "2647950",
+              "cy": "876300"
+            }
+          ]
+        },
+        {
+          "text": "理解消息与推理循环\n留下具体疑问",
+          "name": "理解消息与推理循环\n留下具体疑问",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "4638675"
+            },
+            {
+              "cx": "2876550",
+              "cy": "876300"
+            }
+          ]
+        },
+        {
+          "text": "读取已有学习记录\n回应疑问，安排新课",
+          "name": "读取已有学习记录\n回应疑问，安排新课",
+          "position_emu": [
+            {
+              "x": "8839200",
+              "y": "4638675"
+            },
+            {
+              "cx": "2686050",
+              "cy": "876300"
+            }
+          ]
+        },
+        {
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "5667375"
+            },
+            {
+              "cx": "10763250",
+              "cy": "19050"
+            }
+          ]
+        },
+        {
+          "text": "学习目录持续积累，新会话从已有进度接着教",
+          "name": "学习目录持续积累，新会话从已有进度接着教",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "5867400"
+            },
+            {
+              "cx": "10572750",
+              "cy": "438150"
+            }
+          ]
         }
       ]
     },
     {
       "page": 6,
-      "notes": "第6页  35秒\n\n第二个设计，是让学生的回答参与教学决策。教学AI会看解释中的推理、应用和迁移表现，再调整例子、难度与练习支持。解释清楚时，可以增加变式任务。某个关系还需要理解时，就换一个例子，逐步展开。课内答疑同样读取当前页最新作答，学生写完就能直接问，这道题的解释还可以怎样完善。\n\n动作提示\n对照两种表现和对应支持。点出页面答案进入答疑。\n\n材料来源\nteach-pro/EXERCISE-FORMAT.md\nevals/records/2026-10-30-rc18-live-answers.md",
+      "title": "创新二：根据作答表现调整教学支持",
+      "notes": "第6页  40秒有了记录，还需要判断下一步怎样教。第二个设计，是依据学生的实际解释、应用和迁移表现选择教学支持。说清关键关系时，可以进入变式和迁移任务；某个关系还需要理解时，就换例解释，增加分步练习。比如学生写出自己的推理后，可以立即打开课内答疑，直接问这道题怎样完善。最新作答会随提问进入上下文，课内讨论与下一次课程安排就有了具体依据。动作提示先讲真实作答，再讲判断依据，最后比较两条支持路径。强调写完即可围绕本题提问。材料来源teach-pro/EXERCISE-FORMAT.mdevals/records/2026-10-30-rc18-live-answers.md",
       "shapes": [
         {
-          "text": "",
-          "frame": {
-            "left": 517,
-            "top": 498.5000524934383,
-            "width": 227,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 517,
-            "top": 333.5000524934383,
-            "width": 227,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "学生的回答，决定教学支持",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "创新二：根据作答表现调整教学支持",
+          "name": "创新二：根据作答表现调整教学支持",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
             }
-          }
+          ]
+        },
+        {
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
+            }
+          ]
         },
         {
           "text": "06",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "从解释、应用与迁移表现，选择合适的教学支持",
-          "frame": {
-            "left": 77,
-            "top": 177,
-            "width": 1100,
-            "height": 49
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "能说清关键关系",
-          "frame": {
-            "left": 78,
-            "top": 282,
-            "width": 439,
-            "height": 103
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "06",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
             }
-          }
+          ]
         },
         {
-          "text": "增加变式与迁移任务",
-          "frame": {
-            "left": 744,
-            "top": 282,
-            "width": 455,
-            "height": 103
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "E3F3EF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "可观察的学习表现，连接到具体的教学支持",
+          "name": "可观察的学习表现，连接到具体的教学支持",
+          "position_emu": [
+            {
+              "x": "695325",
+              "y": "1666875"
+            },
+            {
+              "cx": "10572750",
+              "cy": "504825"
             }
-          }
+          ]
         },
         {
-          "text": "某个关系需要继续理解",
-          "frame": {
-            "left": 78,
-            "top": 447,
-            "width": 439,
-            "height": 103
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "学生的实际作答\n解释、应用与迁移",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "695325",
+              "y": "3248025"
+            },
+            {
+              "cx": "2762250",
+              "cy": "1095375"
             }
-          }
+          ]
         },
         {
-          "text": "换例解释，逐步展开",
-          "frame": {
-            "left": 744,
-            "top": 447,
-            "width": 455,
-            "height": 103
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "E3F3EF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "学情\n判断",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4295775",
+              "y": "2847975"
+            },
+            {
+              "cx": "2657475",
+              "cy": "1866900"
             }
-          }
+          ]
         },
         {
-          "text": "课内答疑同步读取当前页最新作答，写完即可提问",
-          "frame": {
-            "left": 81,
-            "top": 602,
-            "width": 1110,
-            "height": 50
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "关键关系说清楚\n变式与迁移任务",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8543925",
+              "y": "2533650"
+            },
+            {
+              "cx": "2952750",
+              "cy": "990600"
+            }
+          ]
+        },
+        {
+          "text": "继续理解具体关系\n换例解释与分步练习",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8543925",
+              "y": "4410075"
+            },
+            {
+              "cx": "2952750",
+              "cy": "990600"
+            }
+          ]
+        },
+        {
+          "text": "写完即可围绕本题提问，最新作答随问题进入答疑上下文",
+          "name": "写完即可围绕本题提问，最新作答随问题进入答疑上下文",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "5791200"
+            },
+            {
+              "cx": "10477500",
+              "cy": "447675"
+            }
+          ]
         }
       ]
     },
     {
       "page": 7,
-      "notes": "第7页  35秒\n\n第三个设计，是正式课与补充课协同。在智鉴Agent案例中，新的正式课讲授安全工具调用契约，关联补充课解释外部文本如何影响工具决策。正式课围绕新目标提供完整讲解、示范和练习，补充课集中巩固具体难点。两类课程分别保存作答，教学AI据此继续调整，让主线学习与难点补充一起推进。\n\n动作提示\n沿正式课主线向前，再指关联的补充节点。\n\n材料来源\nteach-pro/LESSON-DELIVERY-POLICY.md\nevals/records/2026-10-05-simulated-college-learning.md",
+      "title": "创新三：正式课与补充课协同推进",
+      "notes": "第7页  35秒第三个设计，是把主线进度和难点支持组织为两类课程。以智鉴Agent为例，正式课从消息调用推进到推理循环，再学习安全工具调用契约。同时，关联补充课集中解释外部文本怎样影响工具决策。正式课围绕新目标提供完整讲解、示范和练习，补充课解决具体疑问。两类课程分别留下作答记录，再共同影响后续教学。这样，系统学习和个人难点就能同步照顾。动作提示先沿横向主线讲正式课，再向下指关联补充，最后回到后续教学。材料来源teach-pro/LESSON-DELIVERY-POLICY.mdevals/records/2026-10-05-simulated-college-learning.md",
       "shapes": [
         {
-          "text": "",
-          "frame": {
-            "left": 622,
-            "top": 395,
-            "width": 77,
-            "height": 85
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 765,
-            "top": 342.5000524934383,
-            "width": 119,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 361,
-            "top": 342.5000524934383,
-            "width": 118,
-            "height": 0
-          },
-          "fill": null
-        },
-        {
-          "text": "正式课与补充课，共同推进",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "创新三：正式课与补充课协同推进",
+          "name": "创新三：正式课与补充课协同推进",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
             }
-          }
+          ]
+        },
+        {
+          "text": "",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
+            }
+          ]
         },
         {
           "text": "07",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "07",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
+            }
+          ]
         },
         {
-          "text": "以智鉴 Agent 的课程安排为例",
-          "frame": {
-            "left": 79,
-            "top": 177,
-            "width": 1090,
-            "height": 46
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "智鉴 Agent：主线学习与具体难点同步照顾",
+          "name": "智鉴 Agent：主线学习与具体难点同步照顾",
+          "position_emu": [
+            {
+              "x": "695325",
+              "y": "1685925"
+            },
+            {
+              "cx": "10572750",
+              "cy": "476250"
+            }
+          ]
         },
         {
           "text": "第 1 课\n消息与调用",
-          "frame": {
-            "left": 78,
-            "top": 290,
-            "width": 283,
-            "height": 105
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "695325",
+              "y": "2724150"
+            },
+            {
+              "cx": "2714625",
+              "cy": "990600"
             }
-          }
+          ]
         },
         {
           "text": "第 2 课\n推理循环",
-          "frame": {
-            "left": 479,
-            "top": 290,
-            "width": 286,
-            "height": 105
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "FFFFFF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4676775",
+              "y": "2724150"
+            },
+            {
+              "cx": "2714625",
+              "cy": "990600"
             }
-          }
+          ]
         },
         {
           "text": "第 3 课\n安全工具调用契约",
-          "frame": {
-            "left": 884,
-            "top": 290,
-            "width": 317,
-            "height": 105
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "E3F3EF"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8639175",
+              "y": "2724150"
+            },
+            {
+              "cx": "2857500",
+              "cy": "990600"
             }
-          }
+          ]
         },
         {
-          "text": "关联补充\n外部文本与工具决策",
-          "frame": {
-            "left": 479,
-            "top": 480,
-            "width": 440,
-            "height": 88
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "F9EBDD"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "text": "关联补充课\n外部文本与工具决策",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4676775",
+              "y": "4676775"
+            },
+            {
+              "cx": "3800475",
+              "cy": "904875"
             }
-          }
+          ]
         },
         {
-          "text": "集中解释\n具体难点",
-          "frame": {
-            "left": 965,
-            "top": 484,
-            "width": 239,
-            "height": 90
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "集中解释\n个人理解中的难点",
+          "name": "集中解释\n个人理解中的难点",
+          "position_emu": [
+            {
+              "x": "8991600",
+              "y": "4686300"
+            },
+            {
+              "cx": "2495550",
+              "cy": "866775"
+            }
+          ]
         },
         {
-          "text": "正式课推进新目标，补充课回应具体疑问",
-          "frame": {
-            "left": 80,
-            "top": 613,
-            "width": 1100,
-            "height": 44
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "正式课推进新目标，补充课回应具体疑难，分别记录学习表现",
+          "name": "正式课推进新目标，补充课回应具体疑难，分别记录学习表现",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "5915025"
+            },
+            {
+              "cx": "10715625",
+              "cy": "409575"
+            }
+          ]
         }
       ]
     },
     {
       "page": 8,
-      "notes": "第8页  80秒\n\n接下来用一分钟，看一位学习Agent开发与安全的同学怎样使用课程。首先填写入门评估，明确基础和目标。进入第一课，先沿图解理解消息怎样传递，再对照代码观察具体步骤。想继续深入时，可以跟随本课资料和视频的导学任务。遇到疑问，打开课内答疑，结合当前教材继续讨论。学生随后把自己的解释写在题目后，在课末记录疑难。向教学AI请求继续，它会读取这些记录。最后看到的，就是向前推进的新正式课，以及回应具体问题的关联补充课。这样，一次学习中留下的回答和疑问，就接到了后续教学。\n\n动作提示\n引入约10秒，播放《学途智伴课程演示_60秒.mp4》并讲解，回到本页收束约10秒。\n\n材料来源\nexample/competition-materials/rc12/dialogue-video-chapters.json\nexample/competition-demo-rc12/PROVENANCE.md",
+      "title": "一分钟演示：走完一次学习闭环",
+      "notes": "第8页  80秒接下来用一分钟，看一位学习Agent开发与安全的同学怎样使用课程。首先填写入门评估，明确基础和目标。进入第一课，先沿图解理解消息怎样传递，再对照代码观察具体步骤。想继续深入时，可以跟随本课资料和视频的导学任务。遇到疑问，打开课内答疑，结合当前教材继续讨论。学生随后把自己的解释写在题目后，在课末记录疑难。向教学AI请求继续，它会读取这些记录。最后看到的，就是向前推进的新正式课，以及回应具体问题的关联补充课。这样，一次学习中留下的回答和疑问，就接到了后续教学。动作提示引入约10秒，播放《学途智伴课程演示_60秒.mp4》并讲解，回到本页收束约10秒。材料来源example/competition-materials/rc12/dialogue-video-chapters.jsonexample/competition-demo-rc12/PROVENANCE.md",
       "shapes": [
         {
-          "text": "看一遍实际学习过程",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "一分钟演示：走完一次学习闭环",
+          "name": "一分钟演示：走完一次学习闭环",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
           "text": "08",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "08",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
+            }
+          ]
         },
         {
-          "text": "先评估",
-          "frame": {
-            "left": 974,
-            "top": 190,
-            "width": 234,
-            "height": 41
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "60秒",
+          "name": "60秒",
+          "position_emu": [
+            {
+              "x": "9753600",
+              "y": "1771650"
+            },
+            {
+              "cx": "1790700",
+              "cy": "771525"
+            }
+          ]
         },
         {
-          "text": "明确基础与目标",
-          "frame": {
-            "left": 974,
-            "top": 234,
-            "width": 234,
-            "height": 48
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "确定起点",
+          "name": "确定起点",
+          "position_emu": [
+            {
+              "x": "9772650",
+              "y": "2971800"
+            },
+            {
+              "cx": "1771650",
+              "cy": "485775"
+            }
+          ]
         },
         {
-          "text": "再学习",
-          "frame": {
-            "left": 974,
-            "top": 302,
-            "width": 234,
-            "height": 41
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "图解与资料",
+          "name": "图解与资料",
+          "position_emu": [
+            {
+              "x": "9772650",
+              "y": "3667125"
+            },
+            {
+              "cx": "1771650",
+              "cy": "485775"
+            }
+          ]
         },
         {
-          "text": "图解、资料与练习",
-          "frame": {
-            "left": 974,
-            "top": 346,
-            "width": 234,
-            "height": 48
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "作答和答疑",
+          "name": "作答和答疑",
+          "position_emu": [
+            {
+              "x": "9772650",
+              "y": "4362450"
+            },
+            {
+              "cx": "1771650",
+              "cy": "485775"
+            }
+          ]
         },
         {
-          "text": "随时问",
-          "frame": {
-            "left": 974,
-            "top": 414,
-            "width": 234,
-            "height": 41
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "结合教材讨论",
-          "frame": {
-            "left": 974,
-            "top": 458,
-            "width": 234,
-            "height": 48
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "接着教",
-          "frame": {
-            "left": 974,
-            "top": 526,
-            "width": 234,
-            "height": 41
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "正式课与补充课",
-          "frame": {
-            "left": 974,
-            "top": 570,
-            "width": 234,
-            "height": 48
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "主线与补充",
+          "name": "主线与补充",
+          "position_emu": [
+            {
+              "x": "9772650",
+              "y": "5057775"
+            },
+            {
+              "cx": "1771650",
+              "cy": "485775"
+            }
+          ]
         },
         {
           "text": "完整操作演示（备用）",
-          "frame": {
-            "left": 80,
-            "top": 641,
-            "width": 840,
-            "height": 30
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "完整操作演示（备用）",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "6067425"
+            },
+            {
+              "cx": "7810500",
+              "cy": "323850"
+            }
+          ]
         }
       ]
     },
     {
       "page": 9,
-      "notes": "第9页  40秒\n\n这套教学流程也可以用于统计学。看这组校园消费作答案例，四个数的中位数是25元。把最大值替换后，中间位置保持原样。新增一条记录后，人数变成五个，中位数变为30元。一份回答说清了这个变化，就安排迁移任务。另一份还需要理解排序位置，就提供补充解释和计算支持。两条路径都继续学习比较分散程度，教学方式随当前理解调整。\n\n动作提示\n指出四人和五人两个排序位置，再对应下方教学支持。\n\n材料来源\nteach-pro/references/examples/statistics-adaptive/cases.json\nteach-pro/references/examples/statistics-adaptive/README.md",
+      "title": "通用性案例：同一机制用于统计学",
+      "notes": "第9页  40秒刚才展示的是Agent课程，同一机制也可以用于统计学。看这组校园消费案例，四个人的数据是10、20、30和100元，中位数为25元。替换最大值时，人数和中间位置保持原样；新增一条记录后，人数变成五个，中位数为30元。学生解释清楚这个区别，就安排迁移任务；还需要理解排序位置，就提供补充解释和计算支持。学习主题改变，依据作答调整教学的机制保持一致。动作提示指向高亮的中间位置，分别讲替换和新增，再对应下方教学支持。材料来源teach-pro/references/examples/statistics-adaptive/cases.jsonteach-pro/references/examples/statistics-adaptive/README.md",
       "shapes": [
         {
-          "text": "同一套流程，适配不同学习主题",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "通用性案例：同一机制用于统计学",
+          "name": "通用性案例：同一机制用于统计学",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
           "text": "09",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "09",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
+            }
+          ]
         },
         {
-          "text": "校园消费作答对照案例",
-          "frame": {
-            "left": 77,
-            "top": 169,
-            "width": 1120,
-            "height": 42
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "校园消费：原始数据 10、20、30、100 元，中位数25元",
+          "name": "校园消费：原始数据 10、20、30、100 元，中位数25元",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "1619250"
+            },
+            {
+              "cx": "10668000",
+              "cy": "495300"
+            }
+          ]
         },
         {
-          "text": "四人消费  10、20、30、100 元    中位数 25 元",
-          "frame": {
-            "left": 79,
-            "top": 227,
-            "width": 1117,
-            "height": 55
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "替换最大值\n仍是4人",
+          "name": "替换最大值\n仍是4人",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "2628900"
+            },
+            {
+              "cx": "2238375",
+              "cy": "933450"
+            }
+          ]
+        },
+        {
+          "text": "10",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "3238500",
+              "y": "2781300"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
+        },
+        {
+          "text": "20",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4429125",
+              "y": "2781300"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
+        },
+        {
+          "text": "30",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "5619750",
+              "y": "2781300"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
+        },
+        {
+          "text": "1000",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "6810375",
+              "y": "2781300"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 78,
-            "top": 310,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4448175",
+              "y": "3590925"
+            },
+            {
+              "cx": "2200275",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
-          "text": "替换最大值",
-          "frame": {
-            "left": 79,
-            "top": 337,
-            "width": 466,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "两个中间值取平均",
+          "name": "两个中间值取平均",
+          "position_emu": [
+            {
+              "x": "4467225",
+              "y": "3705225"
+            },
+            {
+              "cx": "2238375",
+              "cy": "371475"
+            }
+          ]
         },
         {
-          "text": "10、20、30、1000",
-          "frame": {
-            "left": 79,
-            "top": 399,
-            "width": 501,
-            "height": 62
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "仍是 4 人 · 中位数 25 元",
-          "frame": {
-            "left": 80,
-            "top": 490,
-            "width": 446,
-            "height": 60
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "中位数\n25元",
+          "name": "中位数\n25元",
+          "position_emu": [
+            {
+              "x": "9496425",
+              "y": "2686050"
+            },
+            {
+              "cx": "2019300",
+              "cy": "781050"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 631,
-            "top": 335,
-            "width": 2,
-            "height": 222
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "4267200"
+            },
+            {
+              "cx": "10763250",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
-          "text": "新增一条记录",
-          "frame": {
-            "left": 700,
-            "top": 337,
-            "width": 490,
-            "height": 45
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "新增一条记录\n变为5人",
+          "name": "新增一条记录\n变为5人",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "4657725"
+            },
+            {
+              "cx": "2238375",
+              "cy": "942975"
+            }
+          ]
         },
         {
-          "text": "10、20、30、100、1000",
-          "frame": {
-            "left": 700,
-            "top": 399,
-            "width": 504,
-            "height": 62
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "10",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "3238500",
+              "y": "4800600"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
         },
         {
-          "text": "变为 5 人 · 中位数 30 元",
-          "frame": {
-            "left": 700,
-            "top": 490,
-            "width": 496,
-            "height": 60
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "20",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4429125",
+              "y": "4800600"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
         },
         {
-          "text": "解释清楚 → 迁移练习       继续理解排序位置 → 补充讲解与计算支持",
-          "frame": {
-            "left": 79,
-            "top": 596,
-            "width": 1120,
-            "height": 60
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "30",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "5619750",
+              "y": "4800600"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
+        },
+        {
+          "text": "100",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "6810375",
+              "y": "4800600"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
+        },
+        {
+          "text": "1000",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8001000",
+              "y": "4800600"
+            },
+            {
+              "cx": "1047750",
+              "cy": "628650"
+            }
+          ]
+        },
+        {
+          "text": "第3个值",
+          "name": "第3个值",
+          "position_emu": [
+            {
+              "x": "5476875",
+              "y": "5534025"
+            },
+            {
+              "cx": "1400175",
+              "cy": "371475"
+            }
+          ]
+        },
+        {
+          "text": "中位数\n30元",
+          "name": "中位数\n30元",
+          "position_emu": [
+            {
+              "x": "9496425",
+              "y": "4705350"
+            },
+            {
+              "cx": "2019300",
+              "cy": "781050"
+            }
+          ]
+        },
+        {
+          "text": "解释清楚：迁移练习       继续理解排序位置：补充讲解与计算支持",
+          "name": "解释清楚：迁移练习       继续理解排序位置：补充讲解与计算支持",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "6057900"
+            },
+            {
+              "cx": "10572750",
+              "cy": "381000"
+            }
+          ]
         }
       ]
     },
     {
       "page": 10,
-      "notes": "第10页  30秒\n\n围绕这些使用过程，项目已核对作答保存与恢复、最新答案进入答疑，以及正式课和补充课的交付。当前版本配有课程案例、浏览器交互记录和回归检查。评委可以从页面上的一个操作，找到相应的记录与产物，进一步了解这套Skill怎样运行。\n\n动作提示\n依次指保存恢复、作答答疑和续课分流三个结果。\n\n材料来源\nevals/records/2026-10-30-rc18-live-answers.md\nevals/records/2026-10-30-rc18-release.md",
+      "title": "验证路径：从页面操作到教学产物",
+      "notes": "第10页  30秒这些设计已经有对应的操作记录和课程产物。浏览器交互验证了作答保存与恢复，接口检查核对了提问时携带最新答案，续课案例呈现了正式课与补充课的组织方式。当前版本配有相关回归检查和可追溯记录。从页面操作、课程记录到后续产物，可以完整查看这条学习闭环。动作提示依次指保存恢复、作答答疑和续课分流三个结果。材料来源evals/records/2026-10-30-rc18-live-answers.mdevals/records/2026-10-30-rc18-release.md",
       "shapes": [
         {
-          "text": "关键学习流程，已有可复核记录",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "验证路径：从页面操作到教学产物",
+          "name": "验证路径：从页面操作到教学产物",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
           "text": "10",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "10",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6343650"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
+            }
+          ]
         },
         {
-          "text": "作答保存与恢复",
-          "frame": {
-            "left": 78,
-            "top": 213,
-            "width": 285,
-            "height": 46
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "教学机制对应到操作、记录和后续产物",
+          "name": "教学机制对应到操作、记录和后续产物",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "1676400"
+            },
+            {
+              "cx": "10572750",
+              "cy": "466725"
+            }
+          ]
         },
         {
-          "text": "新浏览器会话恢复本地答案",
-          "frame": {
-            "left": 388,
-            "top": 213,
-            "width": 680,
-            "height": 70
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "页面操作",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "2543175"
+            },
+            {
+              "cx": "2857500",
+              "cy": "666750"
+            }
+          ]
         },
         {
-          "text": "交互记录",
-          "frame": {
-            "left": 1078,
-            "top": 213,
-            "width": 120,
-            "height": 40
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "学习记录",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "4667250",
+              "y": "2543175"
+            },
+            {
+              "cx": "2857500",
+              "cy": "666750"
+            }
+          ]
+        },
+        {
+          "text": "课程产物",
+          "name": "",
+          "position_emu": [
+            {
+              "x": "8629650",
+              "y": "2543175"
+            },
+            {
+              "cx": "2857500",
+              "cy": "666750"
+            }
+          ]
+        },
+        {
+          "text": "保存与恢复",
+          "name": "保存与恢复",
+          "position_emu": [
+            {
+              "x": "723900",
+              "y": "3724275"
+            },
+            {
+              "cx": "3286125",
+              "cy": "466725"
+            }
+          ]
+        },
+        {
+          "text": "新浏览器会话恢复本地作答",
+          "name": "新浏览器会话恢复本地作答",
+          "position_emu": [
+            {
+              "x": "4419600",
+              "y": "3724275"
+            },
+            {
+              "cx": "7000875",
+              "cy": "466725"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 78,
-            "top": 313,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "4352925"
+            },
+            {
+              "cx": "10715625",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
           "text": "最新作答进入答疑",
-          "frame": {
-            "left": 78,
-            "top": 365,
-            "width": 285,
-            "height": 46
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "最新作答进入答疑",
+          "position_emu": [
+            {
+              "x": "723900",
+              "y": "4552950"
+            },
+            {
+              "cx": "3286125",
+              "cy": "466725"
+            }
+          ]
         },
         {
-          "text": "提问时带入本题回答与位置",
-          "frame": {
-            "left": 388,
-            "top": 365,
-            "width": 680,
-            "height": 70
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "上下文验证",
-          "frame": {
-            "left": 1078,
-            "top": 365,
-            "width": 120,
-            "height": 40
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "核对提问携带的答案与题目位置",
+          "name": "核对提问携带的答案与题目位置",
+          "position_emu": [
+            {
+              "x": "4419600",
+              "y": "4552950"
+            },
+            {
+              "cx": "7000875",
+              "cy": "466725"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 78,
-            "top": 465,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "5181600"
+            },
+            {
+              "cx": "10715625",
+              "cy": "19050"
             }
-          }
+          ]
         },
         {
           "text": "正式课与补充课",
-          "frame": {
-            "left": 78,
-            "top": 517,
-            "width": 285,
-            "height": 46
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "正式课与补充课",
+          "position_emu": [
+            {
+              "x": "723900",
+              "y": "5381625"
+            },
+            {
+              "cx": "3286125",
+              "cy": "466725"
+            }
+          ]
         },
         {
-          "text": "从具体疑难连接两类教学产物",
-          "frame": {
-            "left": 388,
-            "top": 517,
-            "width": 680,
-            "height": 70
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "续课案例",
-          "frame": {
-            "left": 1078,
-            "top": 517,
-            "width": 120,
-            "height": 40
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "查看具体疑难对应的两类教学产物",
+          "name": "查看具体疑难对应的两类教学产物",
+          "position_emu": [
+            {
+              "x": "4419600",
+              "y": "5381625"
+            },
+            {
+              "cx": "7000875",
+              "cy": "466725"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 78,
-            "top": 617,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "6010275"
+            },
+            {
+              "cx": "10715625",
+              "cy": "19050"
             }
-          }
+          ]
         }
       ]
     },
     {
       "page": 11,
-      "notes": "第11页  30秒\n\n学途智伴首先面向大学生的系统自学、课程备考和项目技能学习。学生可以保留自己的课程工作区，持续积累回答、问题和学习进度。接下来，我会结合更多学科案例和大学生试用，继续打磨评估、讲解与续课体验，让这套Skill更好地服务个人学习目标。\n\n动作提示\n三个场景各停留一瞬，最后落到后续试用。\n\n材料来源\nREADME.md\nteach-pro/TEACHING-MODES.md",
+      "title": "应用价值：支持大学生持续学习",
+      "notes": "第11页  30秒学途智伴面向大学生的系统自学、课程备考和项目技能学习。学生保留自己的课程工作区，在连续学习中积累理解、回答和问题。Skill把教学方法、网页体验和学情接续组织到同一套流程里。下一阶段，我会结合更多学科案例与大学生试用，继续打磨教学体验，让课程更贴合个人目标。动作提示三个场景各停留一瞬，最后落到后续试用。材料来源README.mdteach-pro/TEACHING-MODES.mdassets/skill-campus-scenes.png：内置image_gen生成的校园场景插画",
       "shapes": [
         {
-          "text": "服务大学生持续学习",
-          "frame": {
-            "left": 64,
-            "top": 47,
-            "width": 1150,
-            "height": 68
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "应用价值：支持大学生持续学习",
+          "name": "应用价值：支持大学生持续学习",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "495300"
+            },
+            {
+              "cx": "10953750",
+              "cy": "704850"
+            }
+          ]
         },
         {
           "text": "",
-          "frame": {
-            "left": 64,
-            "top": 138,
-            "width": 1152,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "",
+          "position_emu": [
+            {
+              "x": "609600",
+              "y": "1381125"
+            },
+            {
+              "cx": "10972800",
+              "cy": "19050"
             }
-          }
-        },
-        {
-          "text": "11",
-          "frame": {
-            "left": 1166,
-            "top": 665,
-            "width": 48,
-            "height": 25
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 222,
-            "width": 6,
-            "height": 235
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "087F70"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
-            }
-          }
+          ]
         },
         {
           "text": "系统自学",
-          "frame": {
-            "left": 105,
-            "top": 236,
-            "width": 335,
-            "height": 63
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "从个人基础出发\n逐步建立理解",
-          "frame": {
-            "left": 105,
-            "top": 336,
-            "width": 330,
-            "height": 126
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 473,
-            "top": 222,
-            "width": 6,
-            "height": 235
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "087F70"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "系统自学",
+          "position_emu": [
+            {
+              "x": "666750",
+              "y": "1657350"
+            },
+            {
+              "cx": "2914650",
+              "cy": "495300"
             }
-          }
+          ]
         },
         {
           "text": "课程备考",
-          "frame": {
-            "left": 500,
-            "top": 236,
-            "width": 335,
-            "height": 63
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "围绕目标组织练习\n追踪需要巩固的知识",
-          "frame": {
-            "left": 500,
-            "top": 336,
-            "width": 330,
-            "height": 126
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 868,
-            "top": 222,
-            "width": 6,
-            "height": 235
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "C78330"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "课程备考",
+          "position_emu": [
+            {
+              "x": "4629150",
+              "y": "1657350"
+            },
+            {
+              "cx": "2914650",
+              "cy": "495300"
             }
-          }
+          ]
         },
         {
           "text": "项目技能",
-          "frame": {
-            "left": 895,
-            "top": 236,
-            "width": 335,
-            "height": 63
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "理解原理与代码\n走向具体应用",
-          "frame": {
-            "left": 895,
-            "top": 336,
-            "width": 330,
-            "height": 126
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "",
-          "frame": {
-            "left": 78,
-            "top": 537,
-            "width": 1120,
-            "height": 2
-          },
-          "fill": {
-            "type": "proto",
-            "proto": {
-              "type": 1,
-              "color": {
-                "type": 1,
-                "value": "CDDDE4"
-              },
-              "gradientStops": [],
-              "pictureEffects": []
+          "name": "项目技能",
+          "position_emu": [
+            {
+              "x": "8591550",
+              "y": "1657350"
+            },
+            {
+              "cx": "2914650",
+              "cy": "495300"
             }
-          }
+          ]
         },
         {
-          "text": "下一阶段\n扩展学科案例，结合大学生试用优化教学体验",
-          "frame": {
-            "left": 79,
-            "top": 565,
-            "width": 1100,
-            "height": 81
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "下一阶段：扩展学科案例，结合大学生试用打磨教学体验",
+          "name": "下一阶段：扩展学科案例，结合大学生试用打磨教学体验",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "6524625"
+            },
+            {
+              "cx": "10572750",
+              "cy": "304800"
+            }
+          ]
+        },
+        {
+          "text": "11",
+          "name": "11",
+          "position_emu": [
+            {
+              "x": "11125200",
+              "y": "6534150"
+            },
+            {
+              "cx": "438150",
+              "cy": "266700"
+            }
+          ]
         }
       ]
     },
     {
       "page": 12,
-      "notes": "第12页  25秒\n\n我希望AI能把资料组织成系统学习，像学习私教一样接着学生的进度继续教。学途智伴以Skill交付，通过学习记录、作答反馈和正式课与补充课的配合，支持持续学习。我的介绍结束，欢迎提问。\n\n动作提示\n看向评委，用正常语速收束，结束后停留本页。\n\n材料来源\n作者确认的设计初衷\nteach-pro/SKILL.md",
+      "title": "让下一次教学，接着这一次学习",
+      "notes": "第12页  25秒学途智伴的初衷，是把快速找到的资料组织成系统学习。它以Skill技能包交付，让课程工作区接续学情，让作答参与教学决策，让正式课和补充课共同推进。让下一次教学，接着这一次学习。谢谢各位评委。动作提示看向评委，用正常语速收束，结束后停留本页。材料来源作者确认的设计初衷teach-pro/SKILL.mdassets/skill-learning-journey.png：内置image_gen生成的背景插画",
       "shapes": [
         {
           "text": "学途智伴",
-          "frame": {
-            "left": 79,
-            "top": 93,
-            "width": 1120,
-            "height": 82
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "学途智伴",
+          "position_emu": [
+            {
+              "x": "666750",
+              "y": "828675"
+            },
+            {
+              "cx": "5715000",
+              "cy": "619125"
+            }
+          ]
         },
         {
           "text": "让下一次教学\n接着这一次学习",
-          "frame": {
-            "left": 81,
-            "top": 216,
-            "width": 1100,
-            "height": 130
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "让下一次教学\n接着这一次学习",
+          "position_emu": [
+            {
+              "x": "666750",
+              "y": "1895475"
+            },
+            {
+              "cx": "6096000",
+              "cy": "1476375"
+            }
+          ]
         },
         {
-          "text": "自适应教学 Skill 技能包",
-          "frame": {
-            "left": 82,
-            "top": 400,
-            "width": 1100,
-            "height": 48
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "跨会话接续",
-          "frame": {
-            "left": 82,
-            "top": 515,
-            "width": 362,
-            "height": 54
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "依据作答调整",
-          "frame": {
-            "left": 473,
-            "top": 515,
-            "width": 362,
-            "height": 54
-          },
-          "fill": {
-            "type": "none"
-          }
-        },
-        {
-          "text": "主线与补充协同",
-          "frame": {
-            "left": 864,
-            "top": 515,
-            "width": 362,
-            "height": 54
-          },
-          "fill": {
-            "type": "none"
-          }
+          "text": "课程工作区接续学情\n实际作答参与教学决策\n正式课与补充课协同推进",
+          "name": "课程工作区接续学情\n实际作答参与教学决策\n正式课与补充课协同推进",
+          "position_emu": [
+            {
+              "x": "704850",
+              "y": "3933825"
+            },
+            {
+              "cx": "5248275",
+              "cy": "1000125"
+            }
+          ]
         },
         {
           "text": "重邮FFBond  ·  欢迎提问",
-          "frame": {
-            "left": 83,
-            "top": 628,
-            "width": 700,
-            "height": 34
-          },
-          "fill": {
-            "type": "none"
-          }
+          "name": "重邮FFBond  ·  欢迎提问",
+          "position_emu": [
+            {
+              "x": "714375",
+              "y": "5819775"
+            },
+            {
+              "cx": "4895850",
+              "cy": "371475"
+            }
+          ]
         }
       ]
-    }
-  ],
-  "images": [
-    {
-      "page": 3,
-      "path": "example/competition-materials/rc12/assets/course-home.png"
-    },
-    {
-      "page": 8,
-      "path": "example/competition-pages/assets/tutor-preview.png"
     }
   ]
 }

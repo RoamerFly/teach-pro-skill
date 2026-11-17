@@ -1,0 +1,29 @@
+{
+  "date": "2026-11-17",
+  "edition": "logic-and-visual-v2",
+  "slides": 12,
+  "notes_match_speech": 12,
+  "word_pages": 4,
+  "content_seconds": 460,
+  "buffer_seconds": 20,
+  "spoken_characters": 1851,
+  "illustration_generation_calls": 7,
+  "selected_generated_assets": 3,
+  "embedded_media_parts": 6,
+  "native_diagrams": "architecture, learning records, teaching decision tree, formal/supplementary lessons, median positions, verification flow",
+  "package_integrity": "pass",
+  "geometry": "pass",
+  "artifact_tool_import": "pass",
+  "slide_visual_review": "all 12 slides reviewed at full size; revised illustrations, slide 8 and final overhead slide 11 reviewed again",
+  "word_visual_review": "all 4 pages",
+  "wps_native_open": "not performed",
+  "live_deck": "previous edition; connection unavailable, local PowerPoint delivery used",
+  "duration_basis": "allocated schedule; presenter timed rehearsal pending",
+  "files": {
+    "学途智伴决赛路演_8分钟.pptx": "5cbbfe3347916425de7566985d7705abd1ce02ad7936dec487c5a8273539f8d8",
+    "学途智伴决赛演讲稿_8分钟.docx": "90f2bb6493a70f6fabfc082f3bb45daa0070a7789ce20568d96620672f59fcbe",
+    "学途智伴决赛演讲稿_8分钟.md": "251ebe7cecfb77e8e0bd36a8938162ab0ecbeebc4c2448111756131b69464c98",
+    "路演内容.json": "ce26288fa33959aba9623c00dff3b465a77c83f6c172688fc72c2f8428e43c9a"
+  },
+  "device_orientation_review": "three laptops share one overhead orientation, screen above hinge, keyboard below; no inconsistent seated-user perspective"
+}
