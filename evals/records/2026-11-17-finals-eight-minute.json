@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-17",
+  "artifact_ref": "artifact_external_bf5d5e24-7f8a-4494-a5f4-70b9d4ab8c8d",
+  "page_id": "page_b57b4f8a70008191b27d669fa5d8e24d",
+  "slides": 12,
+  "speaker_notes_match_source": true,
+  "content_seconds": 460,
+  "buffer_seconds": 20,
+  "duration_basis": "allocated schedule; personal timed rehearsal pending",
+  "spoken_characters": 1681,
+  "word_pages": 4,
+  "word_visual_review": "all 4 pages reviewed",
+  "slide_visual_review": "all 12 pages reviewed; slide 8 label revised and rendered",
+  "native_shape_canvas_bounds": "pass",
+  "video_seconds": 60,
+  "video_audio_tracks": 0,
+  "video_review": "full decode and seven representative cut frames",
+  "new_model_requests": 0,
+  "learning_outcome_claims_added": false,
+  "files": {
+    "路演内容.json": "fa756d51c735b5d8f40bdc498cbbe410a46483bf44069b1f46910bc35a72ceca",
+    "学途智伴决赛演讲稿_8分钟.docx": "23d76e96439b70def75c644429bcb0e15600019c42fa0c963ed1e89db3f477d3",
+    "学途智伴决赛演讲稿_8分钟.md": "4a32e4fe7c6d4c7be1dc311de2327ef4adcd520c3749dd2ac9db31f44a40ba4f",
+    "学途智伴课程演示_60秒.mp4": "4f0e91b69c89717834a40675c88fbf78bced8fc78d2a260537218b037c22f296"
+  }
+}
