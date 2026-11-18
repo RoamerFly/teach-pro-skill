@@ -7,5 +7,6 @@
   "secondary_text": "#536C7C",
   "diagram_support_background": "#E1F1EA",
   "supplement_accent": "#AE762D",
-  "rule": "第2至10页统一暖白底；有全幅背景图的封面、应用和结尾页使用既有插画。深蓝用于标题与关键节点，青绿用于流程和重点，金色用于补充课语义。"
+  "rule": "第1、12页深海蓝背景，第2至11页暖白主题场景与统一标题区。标题和关键节点深海蓝，流程与重点青绿，补充内容金色。每页独立配图，避免文字覆盖关键图像。",
+  "per_slide_generated_images": 12
 }

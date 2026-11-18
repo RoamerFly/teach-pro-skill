@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-18",
+  "edition": "twelve-per-slide-generated-illustrations",
+  "slides": 12,
+  "imagegen_calls": 12,
+  "unique_generated_images": 12,
+  "per_page_image_embedding_matches_manifest": true,
+  "media_parts": 13,
+  "speaker_notes_match": 12,
+  "speech_body_unchanged": true,
+  "word_pages": 4,
+  "content_seconds": 460,
+  "buffer_seconds": 20,
+  "package_integrity": "pass",
+  "geometry": "pass",
+  "artifact_tool_import": "pass",
+  "visual_review": "all 12 slides reviewed at full size, including revised connections, contrast bands and final page 11 footer; all 4 Word pages reviewed",
+  "wps_native_open": "not performed",
+  "sha256": "e26a7c6866da4a85587185d1a05c2731e1906ec3de18b3cd20e99c61cf9a153c"
+}

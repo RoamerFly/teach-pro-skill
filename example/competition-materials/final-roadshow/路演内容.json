@@ -2,7 +2,7 @@
   "title": "学途智伴 决赛路演 8分钟版",
   "team": "重邮FFBond",
   "version": "1.1.0-rc.18",
-  "date": "2026-11-17",
+  "date": "2026-11-18",
   "page_id": "page_b57b4f8a70008191b27d669fa5d8e24d",
   "artifact_ref": "artifact_external_bf5d5e24-7f8a-4494-a5f4-70b9d4ab8c8d",
   "total_seconds": 480,
@@ -16,7 +16,7 @@
       "speech": "各位评委好，我带来的是学途智伴，一套面向大学生持续学习的自适应教学Skill技能包。它从学生的学习目标出发，把课程网页、作答和答疑连接起来，像学习私教一样安排下一步。先从我为什么设计它讲起。",
       "sources": [
         "teach-pro/SKILL.md",
-        "assets/skill-learning-journey.png：内置image_gen生成的背景插画"
+        "assets/per-slide/01-cover.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -26,17 +26,18 @@
       "speech": "AI让找资料越来越快，我希望进一步把这些资料组织成适合自己的系统学习。我的期待很具体：有完整的学习路线，有讲解、习题和资料，还能在不理解时随时问问题。更关键的是，下一课能接着我的学习情况往下教。于是我想到，把课程直接做成网页，让学生边学边写答案、记录疑问。教学AI就有了持续了解学情的依据。我把这套流程、课程模板和本地工具整理成Skill，形成了学途智伴。",
       "sources": [
         "作者于2026-11-17确认的设计初衷",
-        "assets/skill-learning-motivation.png：内置image_gen生成的场景插画"
+        "assets/per-slide/02-motivation.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
       "title": "使用旅程：从一句目标，到逐课学习",
       "seconds": 35,
-      "cue": "沿使用旅程从左向右讲，指向真实课程截图，最后用“背后怎样协作”引出架构。",
+      "cue": "沿四个学习站点从左向右讲，最后用“背后怎样协作”引出架构。",
       "speech": "学生怎样开始？在TeleAgent等支持Skill的宿主中导入学途智伴，告诉它想学什么。Skill先引导了解基础、目标和时间安排，再完成入门评估，形成路线并生成当前一课。学生打开课程网页，就能看图解、查资料、做题和答疑。学完以后，回到教学AI请求继续。它读取已有记录，安排下一节正式课和按需补充课。这就是学生反复使用的一条学习路径。",
       "sources": [
         "README.md",
-        "teach-pro/README.md"
+        "teach-pro/README.md",
+        "assets/per-slide/03-journey.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -46,7 +47,8 @@
       "speech": "这条路径背后，Skill承担教学组织。它把教学规则、课程模板和本地工具交给宿主中的教学AI。教学AI根据目标和学情生成课程网页，学生在网页中阅读、作答和提问。本地服务同步答案、聊天和疑难，保存到课程工作区。配置课内答疑模型后，模型结合教材、当前课和最新作答解释问题。再次请求继续时，教学AI读取工作区，安排后续教学。接下来，我用三个设计说明这条闭环怎样支持持续学习。",
       "sources": [
         "teach-pro/SKILL.md",
-        "teach-pro/LOCAL-TUTOR-SPEC.md"
+        "teach-pro/LOCAL-TUTOR-SPEC.md",
+        "assets/per-slide/04-architecture.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -56,7 +58,8 @@
       "speech": "第一个设计，是把学习过程组织成持续积累的课程工作区。目标、路线、已生成的课文，以及学生写下的答案和疑难，都保存在同一个学习目录。比如今天学完Agent推理循环，还想弄清外部文本怎样影响工具决策。下次回来提出继续，教学AI读取这些记录，就能回应尚未解决的问题，接着安排新的讲解。课程工作区由此成为前后两次教学之间的连接。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
-        "teach-pro/LEARNING-RECORD-FORMAT.md"
+        "teach-pro/LEARNING-RECORD-FORMAT.md",
+        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -66,7 +69,8 @@
       "speech": "有了记录，还需要判断下一步怎样教。第二个设计，是依据学生的实际解释、应用和迁移表现选择教学支持。说清关键关系时，可以进入变式和迁移任务；某个关系还需要理解时，就换例解释，增加分步练习。比如学生写出自己的推理后，可以立即打开课内答疑，直接问这道题怎样完善。最新作答会随提问进入上下文，课内讨论与下一次课程安排就有了具体依据。",
       "sources": [
         "teach-pro/EXERCISE-FORMAT.md",
-        "evals/records/2026-10-30-rc18-live-answers.md"
+        "evals/records/2026-10-30-rc18-live-answers.md",
+        "assets/per-slide/06-adaptation.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -76,7 +80,8 @@
       "speech": "第三个设计，是把主线进度和难点支持组织为两类课程。以智鉴Agent为例，正式课从消息调用推进到推理循环，再学习安全工具调用契约。同时，关联补充课集中解释外部文本怎样影响工具决策。正式课围绕新目标提供完整讲解、示范和练习，补充课解决具体疑问。两类课程分别留下作答记录，再共同影响后续教学。这样，系统学习和个人难点就能同步照顾。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
-        "evals/records/2026-10-05-simulated-college-learning.md"
+        "evals/records/2026-10-05-simulated-college-learning.md",
+        "assets/per-slide/07-formal-supplement.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -86,7 +91,8 @@
       "speech": "接下来用一分钟，看一位学习Agent开发与安全的同学怎样使用课程。首先填写入门评估，明确基础和目标。进入第一课，先沿图解理解消息怎样传递，再对照代码观察具体步骤。想继续深入时，可以跟随本课资料和视频的导学任务。遇到疑问，打开课内答疑，结合当前教材继续讨论。学生随后把自己的解释写在题目后，在课末记录疑难。向教学AI请求继续，它会读取这些记录。最后看到的，就是向前推进的新正式课，以及回应具体问题的关联补充课。这样，一次学习中留下的回答和疑问，就接到了后续教学。",
       "sources": [
         "example/competition-materials/rc12/dialogue-video-chapters.json",
-        "example/competition-demo-rc12/PROVENANCE.md"
+        "example/competition-demo-rc12/PROVENANCE.md",
+        "assets/per-slide/08-demo.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -96,7 +102,8 @@
       "speech": "刚才展示的是Agent课程，同一机制也可以用于统计学。看这组校园消费案例，四个人的数据是10、20、30和100元，中位数为25元。替换最大值时，人数和中间位置保持原样；新增一条记录后，人数变成五个，中位数为30元。学生解释清楚这个区别，就安排迁移任务；还需要理解排序位置，就提供补充解释和计算支持。学习主题改变，依据作答调整教学的机制保持一致。",
       "sources": [
         "teach-pro/references/examples/statistics-adaptive/cases.json",
-        "teach-pro/references/examples/statistics-adaptive/README.md"
+        "teach-pro/references/examples/statistics-adaptive/README.md",
+        "assets/per-slide/09-statistics.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -106,7 +113,8 @@
       "speech": "这些设计已经有对应的操作记录和课程产物。浏览器交互验证了作答保存与恢复，接口检查核对了提问时携带最新答案，续课案例呈现了正式课与补充课的组织方式。当前版本配有相关回归检查和可追溯记录。从页面操作、课程记录到后续产物，可以完整查看这条学习闭环。",
       "sources": [
         "evals/records/2026-10-30-rc18-live-answers.md",
-        "evals/records/2026-10-30-rc18-release.md"
+        "evals/records/2026-10-30-rc18-release.md",
+        "assets/per-slide/10-validation.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -117,7 +125,7 @@
       "sources": [
         "README.md",
         "teach-pro/TEACHING-MODES.md",
-        "assets/skill-campus-scenes.png：内置image_gen生成的校园场景插画"
+        "assets/per-slide/11-use-cases.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
@@ -128,11 +136,11 @@
       "sources": [
         "作者确认的设计初衷",
         "teach-pro/SKILL.md",
-        "assets/skill-learning-journey.png：内置image_gen生成的背景插画"
+        "assets/per-slide/12-closing.png：GPT内置image_gen逐页定制概念插画"
       ]
     }
   ],
-  "edition": "逻辑与视觉升级版",
+  "edition": "十二页定制配图版",
   "delivery": "local_pptx",
   "live_artifact_status": "previous edition retained; visual revision delivered as local PowerPoint"
 }
