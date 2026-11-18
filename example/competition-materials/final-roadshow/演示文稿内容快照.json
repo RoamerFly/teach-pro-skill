@@ -1,7 +1,7 @@
 {
-  "edition": "逻辑与视觉升级版",
+  "edition": "主题统一版",
   "delivery": "local_pptx",
-  "sha256": "5cbbfe3347916425de7566985d7705abd1ce02ad7936dec487c5a8273539f8d8",
+  "sha256": "ed6168913857b8851f434a0115452516477ff73f43e5b6c498f38a01a07c9b43",
   "slides": [
     {
       "page": 1,
@@ -1949,5 +1949,16 @@
         }
       ]
     }
-  ]
+  ],
+  "theme": {
+    "name": "学途智伴深海蓝主题",
+    "primary": "#102A43",
+    "accent": "#087F70",
+    "content_background": "#FAF7EF",
+    "body": "#18364B",
+    "secondary_text": "#536C7C",
+    "diagram_support_background": "#E1F1EA",
+    "supplement_accent": "#AE762D",
+    "rule": "第2至10页统一暖白底；有全幅背景图的封面、应用和结尾页使用既有插画。深蓝用于标题与关键节点，青绿用于流程和重点，金色用于补充课语义。"
+  }
 }
