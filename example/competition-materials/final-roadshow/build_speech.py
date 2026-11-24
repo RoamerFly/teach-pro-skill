@@ -16,7 +16,7 @@ def clock(seconds):
 
 def build():
     data=json.loads((ROOT/'路演内容.json').read_text(encoding='utf-8'))
-    assert len(data['slides'])==12 and sum(s['seconds'] for s in data['slides'])==460
+    assert len(data['slides'])==12 and sum(s['seconds'] for s in data['slides'])==data['content_seconds']
     doc=Document()
     section=doc.sections[0]
     section.page_width=Cm(21);section.page_height=Cm(29.7)
@@ -38,15 +38,15 @@ def build():
     footer.add_run('学途智伴  8分钟路演稿  ')
     field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');footer._p.append(field)
     for run in footer.runs:run.font.size=Pt(9)
-    doc.add_paragraph('学途智伴决赛完整演讲稿','Title')
-    doc.add_paragraph('重邮FFBond  一人主讲  12页  内容7分40秒  机动20秒','Subtitle')
+    doc.add_paragraph('学途智伴决赛精简演讲稿','Title')
+    doc.add_paragraph('重邮FFBond  一人主讲  12页  排练目标6分15秒  含60秒演示','Subtitle')
     lead=doc.add_paragraph('第8页配合60秒静音操作片段讲解。时间包含播放、停顿与翻页，排练时按全程计时。')
     for run in lead.runs:run.font.size=Pt(9.5)
-    md=['# 学途智伴决赛完整演讲稿','', '重邮FFBond｜一人主讲｜8分钟工作版','',
-        '正文配合12页幻灯片，内容7分40秒，预留20秒机动。第8页按60秒操作片段配合本人讲解。','']
+    md=['# 学途智伴决赛精简演讲稿','', '重邮FFBond｜一人主讲｜8分钟工作版','',
+        '正文配合12页幻灯片，按6分15秒排练，8分钟场次预留1分45秒。第8页按60秒操作片段配合本人讲解。','']
     elapsed=0
     for index,item in enumerate(data['slides'],1):
-        if index in (4,7,10):doc.add_page_break()
+        if index in (5,9):doc.add_page_break()
         end=elapsed+item['seconds']
         title=f'第{index}页  {item["title"]}'
         doc.add_paragraph(title,'Heading 1')
@@ -59,7 +59,7 @@ def build():
         for run in p.runs:run.font.size=Pt(9);run.font.color.rgb=RGBColor.from_string('526674')
         md.extend([f'## {title}', '',timing,'',item['speech'],'','动作提示  '+item['cue'],''])
         elapsed=end
-    props=doc.core_properties;props.title='学途智伴决赛完整演讲稿';props.author='重邮FFBond';props.last_modified_by='重邮FFBond';props.subject='8分钟单人路演';props.comments=''
+    props=doc.core_properties;props.title='学途智伴决赛精简演讲稿';props.author='重邮FFBond';props.last_modified_by='重邮FFBond';props.subject='8分钟单人路演';props.comments=''
     doc.save(ROOT/'学途智伴决赛演讲稿_8分钟.docx')
     (ROOT/'学途智伴决赛演讲稿_8分钟.md').write_text('\n'.join(md),encoding='utf-8')
     print(json.dumps({'slides':12,'seconds':elapsed,'spoken_characters':sum(len(s['speech']) for s in data['slides'])},ensure_ascii=False))
