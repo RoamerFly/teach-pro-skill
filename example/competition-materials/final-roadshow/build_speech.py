@@ -1,4 +1,4 @@
-"""Generate a speech-only script matching the ten PowerPoint notes."""
+"""Generate a speech-only script matching the sixteen PowerPoint notes."""
 import json
 from pathlib import Path
 from docx import Document

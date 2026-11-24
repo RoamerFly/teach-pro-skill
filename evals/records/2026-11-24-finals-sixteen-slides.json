@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-24",
+  "slides": 16,
+  "chapter_pages": [
+    2,
+    6,
+    11
+  ],
+  "speech_characters": 536,
+  "notes_speech_only": true,
+  "notes_match": true,
+  "word_pages": 1,
+  "sha256": "217ba042cfdef71a74641c693e0f68bb87bd1c2ee7adb878c3019293cabc54b9",
+  "package_integrity": "pass",
+  "layout_findings": 0,
+  "artifact_import": true,
+  "visual_review": "All 16 previews and the one-page speech inspected",
+  "case": "example/competition-demo-calculus",
+  "native_wps_open": false
+}

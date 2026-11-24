@@ -6,13 +6,13 @@
   "page_id": "page_b57b4f8a70008191b27d669fa5d8e24d",
   "artifact_ref": "artifact_external_bf5d5e24-7f8a-4494-a5f4-70b9d4ab8c8d",
   "total_seconds": 480,
-  "content_seconds": 232,
-  "buffer_seconds": 248,
+  "content_seconds": 160,
+  "buffer_seconds": 320,
   "slides": [
     {
       "title": "学途智伴",
-      "seconds": 18,
-      "speech": "各位评委好，我来自重邮FFBond。学途智伴是一套自适应教学Skill，能根据学生的基础和作答，逐课生成网页课程。",
+      "seconds": 14,
+      "speech": "各位评委好，我来自重邮FFBond。学途智伴是一套根据学情逐课生成网页课程的教学Skill。",
       "sources": [
         "teach-pro/SKILL.md",
         "assets/per-slide/01-cover.png：GPT内置image_gen逐页定制概念插画"
@@ -20,17 +20,17 @@
     },
     {
       "title": "第一章 设计初衷",
-      "seconds": 10,
-      "speech": "设计它，是因为AI找资料很快，而系统学习还需要路线、练习和持续反馈。",
+      "seconds": 8,
+      "speech": "我希望AI找到的资料，能够连成适合自己的系统学习。",
       "sources": [
         "作者于2026-11-17确认的设计初衷",
         "assets/per-slide/02-motivation.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
-      "title": "从学习目标到第一课",
-      "seconds": 25,
-      "speech": "学生导入Skill，提出学习目标，AI便会了解基础、安排评估，生成路线和第一课。网页集中提供图解、习题、资料与答疑，学完后可以接着生成下一课。",
+      "title": "从找到资料到持续学习",
+      "seconds": 8,
+      "speech": "这需要学习路线、练习反馈，以及随时能讨论问题的课堂。",
       "sources": [
         "README.md",
         "teach-pro/README.md",
@@ -38,19 +38,19 @@
       ]
     },
     {
-      "title": "第二章 教学机制",
-      "seconds": 10,
-      "speech": "课程要持续贴合学生，就需要把学习记录转化为教学依据。",
+      "title": "学生怎样开始学习",
+      "seconds": 9,
+      "speech": "学生提出目标，Agent了解基础、安排评估，再生成路线和第一课。",
       "sources": [
-        "teach-pro/SKILL.md",
-        "teach-pro/LOCAL-TUTOR-SPEC.md",
-        "assets/per-slide/04-architecture.png：GPT内置image_gen逐页定制概念插画"
+        "README.md",
+        "teach-pro/README.md",
+        "assets/per-slide/03-journey.png：GPT内置image_gen逐页定制概念插画"
       ]
     },
     {
-      "title": "Skill怎样组织持续教学",
-      "seconds": 28,
-      "speech": "Skill包含教学规则、课程模板和本地工具。教学AI生成课程，网页保存答案、聊天和疑难。下次打开课程，AI读取记录，就能接着上次的学习安排教学。",
+      "title": "以Skill技能包交付",
+      "seconds": 10,
+      "speech": "Skill把教学规则、网页模板和本地工具组织起来，导入宿主即可使用。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
         "teach-pro/LEARNING-RECORD-FORMAT.md",
@@ -58,9 +58,49 @@
       ]
     },
     {
-      "title": "作答决定支持方式",
-      "seconds": 28,
-      "speech": "AI结合答案和解释判断理解。掌握清楚，就增加迁移任务；存在疑难，就换例讲解。正式课推进新目标，补充课回应个人难点，两类课程共同支持学习。",
+      "title": "第二章 教学机制",
+      "seconds": 8,
+      "speech": "课程怎样接续，取决于记录怎样保存、作答怎样参与教学。",
+      "sources": [
+        "teach-pro/SKILL.md",
+        "teach-pro/LOCAL-TUTOR-SPEC.md",
+        "assets/per-slide/04-architecture.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "教学与课堂怎样协作",
+      "seconds": 9,
+      "speech": "教学AI备课，网页承载阅读、练习和答疑，本地工具保存学习过程。",
+      "sources": [
+        "teach-pro/COURSE-WORKSPACE-SPEC.md",
+        "teach-pro/LEARNING-RECORD-FORMAT.md",
+        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "课程工作区接续学情",
+      "seconds": 8,
+      "speech": "再次打开课程，AI读取之前的答案和疑问，继续安排教学。",
+      "sources": [
+        "teach-pro/COURSE-WORKSPACE-SPEC.md",
+        "teach-pro/LEARNING-RECORD-FORMAT.md",
+        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "依据作答选择教学支持",
+      "seconds": 9,
+      "speech": "解释清楚，就增加迁移任务；存在疑难，就换例讲解、分步练习。",
+      "sources": [
+        "teach-pro/LESSON-DELIVERY-POLICY.md",
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/COURSE.md"
+      ]
+    },
+    {
+      "title": "正式课与补充课共同推进",
+      "seconds": 9,
+      "speech": "正式课推进新目标，补充课回应个人难点，两类课程都留下作答记录。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
         "example/competition-demo-calculus/实际对话记录.md",
@@ -69,8 +109,8 @@
     },
     {
       "title": "第三章 演示与价值",
-      "seconds": 10,
-      "speech": "接下来，看一位高数零基础大一学生与Agent的实际对话和课程产物。",
+      "seconds": 8,
+      "speech": "接下来，看高数零基础大一学生的实际对话和课程产物。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
         "example/competition-demo-calculus/运行来源.json",
@@ -78,9 +118,9 @@
       ]
     },
     {
-      "title": "从一句需求到第一课",
-      "seconds": 40,
-      "speech": "学生只说想学高数，Agent先追问基础和目标，再生成评估。发现交点遗漏后，首课聚焦函数图像上的点与交点，配有图解、例题和原位练习。",
+      "title": "从一句模糊需求开始",
+      "seconds": 9,
+      "speech": "学生只说想学高数，Agent先询问目标、基础和时间，再安排评估。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
         "example/competition-demo-calculus/运行来源.json",
@@ -88,9 +128,29 @@
       ]
     },
     {
-      "title": "学生作答怎样改变后续课程",
-      "seconds": 45,
-      "speech": "学完首课，学生能找全交点，却仍混淆平移后的对称轴。Agent读取作答，生成对应补充课，同时交付第二节正式课，进入极限直觉。目录里，新目标和个人疑难都有各自的学习页面。",
+      "title": "从评估答案确定起点",
+      "seconds": 9,
+      "speech": "评估发现交点遗漏、坐标混淆，首课便聚焦函数图像上的点与交点。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "生成可以直接学习的课程",
+      "seconds": 11,
+      "speech": "页面有图解、例题、原位练习和资料。学生边学边写答案，疑问也保存在课程中。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "一份作答怎样影响下一课",
+      "seconds": 20,
+      "speech": "学生已能找全交点，却仍混淆平移后的对称轴。Agent据此生成补充课，同时交付第二节正式课，进入极限直觉。这里展示的就是实际更新后的目录。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
         "example/competition-demo-calculus/运行来源.json",
@@ -99,8 +159,8 @@
     },
     {
       "title": "让下一次教学接着这一次学习",
-      "seconds": 18,
-      "speech": "学途智伴把教学、网页和学情记录组织成可复用的Skill，让系统自学、备考和项目学习，都能持续接着个人进度。谢谢各位评委。",
+      "seconds": 11,
+      "speech": "学途智伴让系统自学、课程备考和项目学习，都能持续接着个人进度。谢谢各位评委。",
       "sources": [
         "作者确认的设计初衷",
         "teach-pro/SKILL.md",
@@ -108,7 +168,7 @@
       ]
     }
   ],
-  "edition": "十页三章高数零基础实测版",
+  "edition": "十六页三章高数实测版",
   "delivery": "local_pptx",
   "live_artifact_status": "previous edition retained; visual revision delivered as local PowerPoint"
 }
