@@ -84,7 +84,8 @@
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
         "teach-pro/LEARNING-RECORD-FORMAT.md",
-        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画"
+        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画",
+        "assets/infographics/first-lesson-generation.png：GPT内置生图生成的信息图"
       ]
     },
     {
@@ -94,7 +95,8 @@
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
         "example/competition-demo-calculus/实际对话记录.md",
-        "example/competition-demo-calculus/COURSE.md"
+        "example/competition-demo-calculus/COURSE.md",
+        "assets/infographics/evidence-and-continuation.png：GPT内置生图生成的信息图"
       ]
     },
     {
@@ -104,7 +106,8 @@
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
         "example/competition-demo-calculus/实际对话记录.md",
-        "example/competition-demo-calculus/COURSE.md"
+        "example/competition-demo-calculus/COURSE.md",
+        "assets/infographics/formal-and-supplement.png：GPT内置生图生成的信息图"
       ]
     },
     {
@@ -168,7 +171,7 @@
       ]
     }
   ],
-  "edition": "十六页三章流程详解版",
+  "edition": "十六页三章图文信息版",
   "delivery": "local_pptx",
   "live_artifact_status": "previous edition retained; visual revision delivered as local PowerPoint"
 }

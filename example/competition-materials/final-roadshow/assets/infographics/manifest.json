@@ -1,0 +1,24 @@
+{
+  "mode": "built-in image_gen",
+  "date": "2026-11-24",
+  "images": [
+    {
+      "file": "first-lesson-generation.png",
+      "slide": 8,
+      "purpose": "输入学情、组织当前课、生成产物及高数起点案例",
+      "sha256": "e8793c54c1943858363095760ddb9e32046b9c952de7f98dd88e991be80f8588"
+    },
+    {
+      "file": "evidence-and-continuation.png",
+      "slide": 9,
+      "purpose": "读取记录、判断理解、安排续课及两行作答表现对照表",
+      "sha256": "563adfde62b20ff9062acc81b038d01c75ad3ecee688b3f895ccbb30418da32f"
+    },
+    {
+      "file": "formal-and-supplement.png",
+      "slide": 10,
+      "purpose": "两节正式课、一节补充课的关联关系与教学作用",
+      "sha256": "3b953d40f041ca4a76244abc3962af0293be075d7f974d4818b329aed5796fe9"
+    }
+  ]
+}

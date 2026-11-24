@@ -10,19 +10,49 @@
   "notes_speech_only": true,
   "notes_match": true,
   "word_pages": 1,
-  "sha256": "f40368fa1cb54c61954602aaaafd93e44b928b302e6aa38894b02c149aa6bdd2",
+  "sha256": "78c61b1504fa7709388f25269e89002c789e0a0c79e8bdc24c04afb4bfcbfcf2",
   "package_integrity": "pass",
   "layout_findings": 0,
   "artifact_import": true,
-  "visual_review": "Workflow overview and detailed flows reviewed; punctuation wrapping corrected; all notes match the one-page speech",
+  "visual_review": "All new infographics and revised case paragraphs checked; Chinese labels, table entries, borders and image embedding reviewed",
   "case": "example/competition-demo-calculus",
   "native_wps_open": false,
-  "edition": "十六页三章流程详解版",
-  "display_text_characters": 2016,
+  "edition": "十六页三章图文信息版",
+  "display_text_characters": 1424,
   "readable_front_copy": true,
   "approved_workflow_graph_embedded": true,
   "workflow_graph_sha256": "e556c1046270e45c83b8d8f286b1133b463e49a0c951515701ea4e0f624f4a18",
   "workflow_overview_slide": 7,
   "first_lesson_flow_slide": 8,
-  "continuation_flow_slide": 9
+  "continuation_flow_slide": 9,
+  "generated_information_images": [
+    {
+      "file": "first-lesson-generation.png",
+      "slide": 8,
+      "purpose": "输入学情、组织当前课、生成产物及高数起点案例",
+      "sha256": "e8793c54c1943858363095760ddb9e32046b9c952de7f98dd88e991be80f8588"
+    },
+    {
+      "file": "evidence-and-continuation.png",
+      "slide": 9,
+      "purpose": "读取记录、判断理解、安排续课及两行作答表现对照表",
+      "sha256": "563adfde62b20ff9062acc81b038d01c75ad3ecee688b3f895ccbb30418da32f"
+    },
+    {
+      "file": "formal-and-supplement.png",
+      "slide": 10,
+      "purpose": "两节正式课、一节补充课的关联关系与教学作用",
+      "sha256": "3b953d40f041ca4a76244abc3962af0293be075d7f974d4818b329aed5796fe9"
+    }
+  ],
+  "image_generation_tool": "built-in image_gen",
+  "visually_changed_pages": [
+    "slide-08.png",
+    "slide-09.png",
+    "slide-10.png",
+    "slide-12.png",
+    "slide-13.png",
+    "slide-14.png",
+    "slide-15.png"
+  ]
 }
