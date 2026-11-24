@@ -10,11 +10,14 @@
   "notes_speech_only": true,
   "notes_match": true,
   "word_pages": 1,
-  "sha256": "217ba042cfdef71a74641c693e0f68bb87bd1c2ee7adb878c3019293cabc54b9",
+  "sha256": "bf760051d5f7e71e8653a9e7e812c0761eae31b2c5a812f92dc6c89ae3935f25",
   "package_integrity": "pass",
   "layout_findings": 0,
   "artifact_import": true,
-  "visual_review": "All 16 previews and the one-page speech inspected",
+  "visual_review": "All 16 rendered slides reviewed; long-line wrapping corrected on slides 4, 9 and 12",
   "case": "example/competition-demo-calculus",
-  "native_wps_open": false
+  "native_wps_open": false,
+  "edition": "十六页三章完整讲述版",
+  "display_text_characters": 1934,
+  "readable_front_copy": true
 }
