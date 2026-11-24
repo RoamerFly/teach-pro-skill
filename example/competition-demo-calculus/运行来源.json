@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-24",
+  "host": "Codex CLI",
+  "skill_version": "# Version\n\n- Version: 1.1.0-rc.18\n- Release: Live learner answers in tutor requests, 2026-10-30\n- Edition: Universal Web Tutor · adaptive lessons with local sync\n- Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)\n- Primary output: learner-facing HTML\n- Internal state: Markdown\n- Learning model: Knowledge → Skills → Wisdom\n- Retention model: Fluency Strength ≠ Storage Strength\n- Lesson granularity: one tightly-scoped mission-linked objective → one tangible win\n- Asset policy: reuse-first\n- Layout density: compact default; restrained hero, headings, cards, spacing and sidebar width\n- Resource policy: verified, lesson-specific, high-signal\n- Long-file policy: incremental writes continue in the same logical file\n- Assessment hygiene: semantically equivalent options; equal word count when natural\n- Lesson closure: every lesson explicitly invites learner follow-up questions\n- Generation cadence: one formal lesson per continuation, plus one supplementary lesson when needed; evidence informs both without a blanket supplementary-completion gate\n- Learner input: browser autosave plus workspace-local sync; JSON export remains a fallback",
+  "skill_sha256": "626aeccd113f6249b012e1bd1280aa322bd6bf12d3d83c9496a2ee5c58976e14",
+  "session_id": "01a20c8c-9029-7e52-8ae8-866cb83c122e",
+  "learner": "模拟高等数学零基础大一学生",
+  "turns": 4,
+  "formal_lessons": 2,
+  "supplements": 1,
+  "answers_filled_in_browser": true,
+  "reload_restore_passed": true,
+  "raw_event_logs_location": "E:\\Agent\\projects\\电信天翼AI skill赛事\\competition-work\\2026-11-24-calculus-zero-run",
+  "raw_submissions_included_in_git": false,
+  "evidence_hashes": {
+    "01-events.jsonl": "0451bb54a2cf2e8291e37ec7e1ba10165396680c0db86f2dea534b53b6980424",
+    "02-events.jsonl": "123d0ac993a9d4d1eaf7a51fdb71c8f66ae8299baa84e42270cbc7e058375721",
+    "03-events.jsonl": "7b403e5a8e91e2558080de007e41d6201b13a037185dbb00f0a03b9ea8c1c64b",
+    "04-events.jsonl": "0804fafdd6e4393b8698926f57c2a88da78a51bb577f6b53943a1d0bef92766e"
+  }
+}

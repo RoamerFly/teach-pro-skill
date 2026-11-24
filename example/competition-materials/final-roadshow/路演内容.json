@@ -6,12 +6,12 @@
   "page_id": "page_b57b4f8a70008191b27d669fa5d8e24d",
   "artifact_ref": "artifact_external_bf5d5e24-7f8a-4494-a5f4-70b9d4ab8c8d",
   "total_seconds": 480,
-  "content_seconds": 260,
-  "buffer_seconds": 220,
+  "content_seconds": 232,
+  "buffer_seconds": 248,
   "slides": [
     {
       "title": "学途智伴",
-      "seconds": 17,
+      "seconds": 18,
       "speech": "各位评委好，我来自重邮FFBond。学途智伴是一套自适应教学Skill，能根据学生的基础和作答，逐课生成网页课程。",
       "sources": [
         "teach-pro/SKILL.md",
@@ -20,7 +20,7 @@
     },
     {
       "title": "第一章 设计初衷",
-      "seconds": 12,
+      "seconds": 10,
       "speech": "设计它，是因为AI找资料很快，而系统学习还需要路线、练习和持续反馈。",
       "sources": [
         "作者于2026-11-17确认的设计初衷",
@@ -39,7 +39,7 @@
     },
     {
       "title": "第二章 教学机制",
-      "seconds": 12,
+      "seconds": 10,
       "speech": "课程要持续贴合学生，就需要把学习记录转化为教学依据。",
       "sources": [
         "teach-pro/SKILL.md",
@@ -63,37 +63,38 @@
       "speech": "AI结合答案和解释判断理解。掌握清楚，就增加迁移任务；存在疑难，就换例讲解。正式课推进新目标，补充课回应个人难点，两类课程共同支持学习。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
-        "evals/records/2026-10-05-simulated-college-learning.md",
-        "assets/per-slide/07-formal-supplement.png：GPT内置image_gen逐页定制概念插画"
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/COURSE.md"
       ]
     },
     {
       "title": "第三章 演示与价值",
       "seconds": 10,
-      "speech": "下面通过实际操作和一道高等数学题，看看这套机制。",
+      "speech": "接下来，看一位高数零基础大一学生与Agent的实际对话和课程产物。",
       "sources": [
-        "example/competition-materials/rc12/dialogue-video-chapters.json",
-        "example/competition-demo-rc12/PROVENANCE.md",
-        "assets/per-slide/08-demo.png：GPT内置image_gen逐页定制概念插画"
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
       ]
     },
     {
-      "title": "一分钟看完学习过程",
-      "seconds": 65,
-      "speech": "学生完成评估，进入第一课，阅读图解与资料，遇到问题随时答疑，再写下答案和疑难。请求继续后，教学AI读取记录，生成新正式课和关联补充课。",
+      "title": "从一句需求到第一课",
+      "seconds": 40,
+      "speech": "学生只说想学高数，Agent先追问基础和目标，再生成评估。发现交点遗漏后，首课聚焦函数图像上的点与交点，配有图解、例题和原位练习。",
       "sources": [
-        "example/competition-materials/rc12/dialogue-video-chapters.json",
-        "example/competition-demo-rc12/PROVENANCE.md",
-        "assets/per-slide/08-demo.png：GPT内置image_gen逐页定制概念插画"
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
       ]
     },
     {
-      "title": "高等数学案例 导数为零与极值",
+      "title": "学生作答怎样改变后续课程",
       "seconds": 45,
-      "speech": "例如，导数为零就一定有极值吗？对函数x的三次方，零点两侧导数都为正，没有极值；对x的三次方减三倍x，在x等于一时，导数由负变正，有极小值。若学生只看导数等于零，就补充反例与导数符号分析；能解释变号，再进入极值应用题。",
+      "speech": "学完首课，学生能找全交点，却仍混淆平移后的对称轴。Agent读取作答，生成对应补充课，同时交付第二节正式课，进入极限直觉。目录里，新目标和个人疑难都有各自的学习页面。",
       "sources": [
-        "高等数学教学设计示例：用一阶导数符号比较驻点与极值",
-        "assets/per-slide/09-statistics.png：课程工作区概念插画"
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
       ]
     },
     {
@@ -107,7 +108,7 @@
       ]
     }
   ],
-  "edition": "十页三章紧凑版",
+  "edition": "十页三章高数零基础实测版",
   "delivery": "local_pptx",
   "live_artifact_status": "previous edition retained; visual revision delivered as local PowerPoint"
 }
