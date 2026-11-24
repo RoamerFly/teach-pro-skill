@@ -7,15 +7,18 @@
     4,
     7
   ],
-  "spoken_characters": 782,
-  "planned_seconds": 260,
+  "spoken_characters": 1283,
+  "planned_seconds": 350,
   "word_pages": 2,
   "notes_match": true,
   "visual_review": "10 slide previews and 2 document pages checked",
   "package_integrity": "pass",
   "artifact_import": true,
   "layout_findings": 0,
-  "sha256": "473d32e6a11f2219ac37b82ec7aacade1cff86667c047c077d952f5302399870",
+  "sha256": "74eb60b06eb10fa854becae5eb0b62bfcafd0bbad3594920ba0845adf8164eeb",
   "preview_renderer": "Artifact Tool",
-  "native_wps_open": false
+  "native_wps_open": false,
+  "notes_speech_only": true,
+  "document_speech_only": true,
+  "slide_visual_xml_unchanged": true
 }

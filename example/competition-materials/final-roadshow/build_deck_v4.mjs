@@ -105,11 +105,10 @@ for(let i=1;i<=10;i++){
   vals.forEach((v,k)=>text(s,49+k*402,635,384,40,v,25,C.teal,true));
  }
  const d=data.slides[i-1];
- s.speakerNotes.text='第'+i+'页  '+d.seconds+'秒\n\n'+d.speech+'\n\n动作提示\n'+d.cue;
+ s.speakerNotes.text=d.speech;
 }
 await (await PresentationFile.exportPptx(deck)).save(output);
 console.log(JSON.stringify({slides:deck.slides.items.length,output}));
 
 
 const preview=process.env.PITCH_PREVIEW_DIR;if(preview){await fs.mkdir(preview,{recursive:true});for(let i=0;i<10;i++){const png=await deck.export({slide:deck.slides.items[i],format:'png',scale:1});await fs.writeFile(path.join(preview,'slide-'+String(i+1).padStart(2,'0')+'.png'),new Uint8Array(await png.arrayBuffer()));}}
-
