@@ -6,12 +6,12 @@
   "page_id": "page_b57b4f8a70008191b27d669fa5d8e24d",
   "artifact_ref": "artifact_external_bf5d5e24-7f8a-4494-a5f4-70b9d4ab8c8d",
   "total_seconds": 480,
-  "content_seconds": 160,
-  "buffer_seconds": 320,
+  "content_seconds": 187,
+  "buffer_seconds": 293,
   "slides": [
     {
       "title": "学途智伴",
-      "seconds": 14,
+      "seconds": 15,
       "speech": "各位评委好，我来自重邮FFBond。学途智伴是一套根据学情逐课生成网页课程的教学Skill。",
       "sources": [
         "teach-pro/SKILL.md",
@@ -39,7 +39,7 @@
     },
     {
       "title": "学生怎样开始学习",
-      "seconds": 9,
+      "seconds": 10,
       "speech": "学生提出目标，Agent了解基础、安排评估，再生成路线和第一课。",
       "sources": [
         "README.md",
@@ -49,7 +49,7 @@
     },
     {
       "title": "以Skill技能包交付",
-      "seconds": 10,
+      "seconds": 11,
       "speech": "Skill把教学规则、网页模板和本地工具组织起来，导入宿主即可使用。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
@@ -68,9 +68,19 @@
       ]
     },
     {
-      "title": "教学与课堂怎样协作",
-      "seconds": 9,
-      "speech": "教学AI备课，网页承载阅读、练习和答疑，本地工具保存学习过程。",
+      "title": "Skill的工作流程与系统架构",
+      "seconds": 13,
+      "speech": "上方是学习闭环，下方是数据流。宿主AI生成与续课，本地服务保存记录，课内模型答疑。",
+      "sources": [
+        "assets/workflow/teach-pro-workflow-architecture.png",
+        "teach-pro/SKILL.md",
+        "teach-pro/LOCAL-TUTOR-SPEC.md"
+      ]
+    },
+    {
+      "title": "首次教学怎样生成当前课",
+      "seconds": 15,
+      "speech": "首次教学读取目标、画像和评估，选定当前目标，结合模板生成讲解、图解和练习，并同步首页与路线。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
         "teach-pro/LEARNING-RECORD-FORMAT.md",
@@ -78,19 +88,9 @@
       ]
     },
     {
-      "title": "课程工作区接续学情",
-      "seconds": 8,
-      "speech": "再次打开课程，AI读取之前的答案和疑问，继续安排教学。",
-      "sources": [
-        "teach-pro/COURSE-WORKSPACE-SPEC.md",
-        "teach-pro/LEARNING-RECORD-FORMAT.md",
-        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画"
-      ]
-    },
-    {
-      "title": "依据作答选择教学支持",
-      "seconds": 9,
-      "speech": "解释清楚，就增加迁移任务；存在疑难，就换例讲解、分步练习。",
+      "title": "续课怎样读取证据并作出安排",
+      "seconds": 15,
+      "speech": "续课由学生请求触发。AI读取作答和疑难，判断理解，再交付新正式课与所需补充课，保存新的教学记录。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
         "example/competition-demo-calculus/实际对话记录.md",
@@ -99,7 +99,7 @@
     },
     {
       "title": "正式课与补充课共同推进",
-      "seconds": 9,
+      "seconds": 10,
       "speech": "正式课推进新目标，补充课回应个人难点，两类课程都留下作答记录。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
@@ -119,7 +119,7 @@
     },
     {
       "title": "从一句模糊需求开始",
-      "seconds": 9,
+      "seconds": 10,
       "speech": "学生只说想学高数，Agent先询问目标、基础和时间，再安排评估。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
@@ -129,7 +129,7 @@
     },
     {
       "title": "从评估答案确定起点",
-      "seconds": 9,
+      "seconds": 10,
       "speech": "评估发现交点遗漏、坐标混淆，首课便聚焦函数图像上的点与交点。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
@@ -139,7 +139,7 @@
     },
     {
       "title": "生成可以直接学习的课程",
-      "seconds": 11,
+      "seconds": 12,
       "speech": "页面有图解、例题、原位练习和资料。学生边学边写答案，疑问也保存在课程中。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
@@ -149,7 +149,7 @@
     },
     {
       "title": "一份作答怎样影响下一课",
-      "seconds": 20,
+      "seconds": 22,
       "speech": "学生已能找全交点，却仍混淆平移后的对称轴。Agent据此生成补充课，同时交付第二节正式课，进入极限直觉。这里展示的就是实际更新后的目录。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
@@ -159,7 +159,7 @@
     },
     {
       "title": "让下一次教学接着这一次学习",
-      "seconds": 11,
+      "seconds": 12,
       "speech": "学途智伴让系统自学、课程备考和项目学习，都能持续接着个人进度。谢谢各位评委。",
       "sources": [
         "作者确认的设计初衷",
@@ -168,7 +168,7 @@
       ]
     }
   ],
-  "edition": "十六页三章完整讲述版",
+  "edition": "十六页三章流程详解版",
   "delivery": "local_pptx",
   "live_artifact_status": "previous edition retained; visual revision delivered as local PowerPoint"
 }
