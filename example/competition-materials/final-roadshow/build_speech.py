@@ -24,8 +24,6 @@ def build():
     style.paragraph_format.line_spacing = 1.4
     style.paragraph_format.space_after = Pt(13)
     for index, speech in enumerate(speeches):
-        if index == 5:
-            document.add_page_break()
         paragraph = document.add_paragraph(speech)
         paragraph.paragraph_format.keep_together = True
     document.core_properties.title = '学途智伴决赛演讲稿'

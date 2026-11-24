@@ -7,18 +7,21 @@
     4,
     7
   ],
-  "spoken_characters": 1283,
-  "planned_seconds": 350,
-  "word_pages": 2,
+  "spoken_characters": 587,
+  "planned_seconds": 260,
+  "word_pages": 1,
   "notes_match": true,
-  "visual_review": "10 slide previews and 2 document pages checked",
+  "visual_review": "10 slide previews and one-page speech, with focus on calculus case",
   "package_integrity": "pass",
   "artifact_import": true,
   "layout_findings": 0,
-  "sha256": "74eb60b06eb10fa854becae5eb0b62bfcafd0bbad3594920ba0845adf8164eeb",
+  "sha256": "fec4514f9b9fd84ae9d96b740439579846ee358fbce6141fa2477f91d80243a1",
   "preview_renderer": "Artifact Tool",
   "native_wps_open": false,
   "notes_speech_only": true,
   "document_speech_only": true,
-  "slide_visual_xml_unchanged": true
+  "slide_visual_xml_unchanged": false,
+  "case": "高等数学 驻点与极值",
+  "mathematics_checked": true,
+  "synthetic_teaching_example": true
 }
