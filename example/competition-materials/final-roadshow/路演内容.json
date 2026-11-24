@@ -34,7 +34,7 @@
       "sources": [
         "README.md",
         "teach-pro/README.md",
-        "assets/per-slide/03-journey.png：GPT内置image_gen逐页定制概念插画"
+        "assets/infographics/motivation-and-design.png：GPT内置生图生成的信息图"
       ]
     },
     {
@@ -44,7 +44,7 @@
       "sources": [
         "README.md",
         "teach-pro/README.md",
-        "assets/per-slide/03-journey.png：GPT内置image_gen逐页定制概念插画"
+        "assets/infographics/learner-journey.png：GPT内置生图生成的信息图"
       ]
     },
     {
@@ -54,7 +54,7 @@
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
         "teach-pro/LEARNING-RECORD-FORMAT.md",
-        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画"
+        "assets/infographics/skill-package-components.png：GPT内置生图生成的信息图"
       ]
     },
     {
@@ -171,7 +171,7 @@
       ]
     }
   ],
-  "edition": "十六页三章图文信息版",
+  "edition": "十六页六张信息图版",
   "delivery": "local_pptx",
   "live_artifact_status": "previous edition retained; visual revision delivered as local PowerPoint"
 }

@@ -10,14 +10,14 @@
   "notes_speech_only": true,
   "notes_match": true,
   "word_pages": 1,
-  "sha256": "78c61b1504fa7709388f25269e89002c789e0a0c79e8bdc24c04afb4bfcbfcf2",
+  "sha256": "3b473ddd34bd17e7b82a28f9d42f9161e302853b80b06a63f3025cc3d9511a2a",
   "package_integrity": "pass",
   "layout_findings": 0,
   "artifact_import": true,
-  "visual_review": "All new infographics and revised case paragraphs checked; Chinese labels, table entries, borders and image embedding reviewed",
+  "visual_review": "Chapter one infographic text, examples, table and role-flow checked; other slides pixel-matched to previous version",
   "case": "example/competition-demo-calculus",
   "native_wps_open": false,
-  "edition": "十六页三章图文信息版",
+  "edition": "十六页六张信息图版",
   "display_text_characters": 1424,
   "readable_front_copy": true,
   "approved_workflow_graph_embedded": true,
@@ -43,16 +43,30 @@
       "slide": 10,
       "purpose": "两节正式课、一节补充课的关联关系与教学作用",
       "sha256": "3b953d40f041ca4a76244abc3962af0293be075d7f974d4818b329aed5796fe9"
+    },
+    {
+      "file": "motivation-and-design.png",
+      "slide": 3,
+      "purpose": "资源易得、系统学习、动态陪伴，以及学习诉求与设计回应对照",
+      "sha256": "901a477a78bd795c6f1dd4e77bdf60d45492a2bd76fb56d361ed2cb3549dfe69"
+    },
+    {
+      "file": "learner-journey.png",
+      "slide": 4,
+      "purpose": "从提出目标到请求继续的四阶段流程与循环、示例提示词",
+      "sha256": "25d41ee69b0e81f1f1d3c071e7bab6767ad8dc90b00077826de56960959a4bed"
+    },
+    {
+      "file": "skill-package-components.png",
+      "slide": 5,
+      "purpose": "教学规则、课程模板和本地工具的组成及宿主AI到本地工作区的数据流",
+      "sha256": "52f11d81f968ec3ff0b12e233cfc9867377485911f144671cf32d0720fddf876"
     }
   ],
   "image_generation_tool": "built-in image_gen",
   "visually_changed_pages": [
-    "slide-08.png",
-    "slide-09.png",
-    "slide-10.png",
-    "slide-12.png",
-    "slide-13.png",
-    "slide-14.png",
-    "slide-15.png"
+    "slide-03.png",
+    "slide-04.png",
+    "slide-05.png"
   ]
 }

@@ -50,25 +50,14 @@ for(let i=1;i<=16;i++){
  }else{
   top(s,i,i<6?'第一章 设计初衷':i<11?'第二章 教学机制':'第三章 演示与价值');
   if(i===3){
-   text(s,52,179,650,92,'资料找到之后，\n今天学什么，明天怎样接着学？',33,C.teal,true);
-   const rows=[
-    ['我的学习期待','AI帮助我快速找到资料，我还希望\n这些资料能组织成适合自己的系统课程。'],
-    ['让学习情况可见','把讲解、习题和答疑放进网页，\n让学生在学习时留下答案与疑问。'],
-    ['让后续安排有依据','教学AI读取这些记录，了解哪里已经\n理解、哪里需要支持，再安排下一课。']
-   ];
-   rows.forEach((r,k)=>{text(s,54,303+k*126,635,42,r[0],28,C.navy,true);text(s,54,349+k*126,635,77,r[1],26,C.ink);});
-   await image(s,'03-journey.png',731,214,500,383);
+   await image(s,'../infographics/motivation-and-design.png',80,156,1120,479);
+   text(s,49,650,1182,47,'我的初衷是把快速找到的资料组织成课程，通过作答和疑问，让教学持续贴合学习情况。',24,C.navy,true);
   }else if(i===4){
-   text(s,50,172,1150,48,'从一句学习目标开始，逐步建立课程',31,C.teal,true);
-   await image(s,'03-journey.png',195,225,880,190);
-   const labels=[['说出目标','学生先说想学什么，\n以及希望用来做什么。'],['了解起点','Agent先了解基础，\n再评估学习起点。'],['生成当前课','先提供学习路线，\n再完整讲授当前一课。'],['学习后继续','学生作答并记录疑难，\nAI据此安排后续课程。']];
-   let prev;labels.forEach((r,k)=>{const x=48+k*302,n=rect(s,x,431,278,200,k%2?C.pale:'#F1EADB');text(s,x+16,444,246,40,r[0],29,C.navy,true);text(s,x+16,496,246,116,r[1],23);if(prev)arrow(s,prev,n);prev=n;});
-   text(s,50,649,1150,34,'@teach-pro 我想学习大学课程：高等数学。',25,C.teal,true);
+   await image(s,'../infographics/learner-journey.png',80,156,1120,479);
+   text(s,49,650,1182,47,'从一句学习目标开始，先了解基础、再逐课学习；学完请求继续，AI读取记录安排后续课程。',24,C.navy,true);
   }else if(i===5){
-   await image(s,'04-architecture.png',780,174,452,440);
-   const rows=[['教学规则','宿主教学AI读取SKILL.md和配套教学规范，\n按约定完成评估、选课、讲解和续课。'],['课程模板','把课程首页、图解、原位练习和课内答疑\n放进统一的网页课堂，方便学生连续学习。'],['本地工具','将答案、疑难和聊天保存在课程目录，\n让后续教学可以恢复并参考已有记录。']];
-   rows.forEach((r,k)=>{text(s,52,193+k*144,676,45,r[0],31,C.teal,true);text(s,52,247+k*144,676,82,r[1],25,C.ink);if(k<2)rule(s,52,317+k*144,674);});
-   text(s,52,652,1160,35,'在支持Skill的宿主中导入，按学习目标启动教学流程',26,C.navy,true);
+   await image(s,'../infographics/skill-package-components.png',80,156,1120,479);
+   text(s,49,650,1182,47,'教学规则、课程模板和本地工具共同交付，让宿主AI能够组织教学，并持续接续学情。',24,C.navy,true);
   }else if(i===7){
    await image(s,'../workflow/teach-pro-workflow-architecture.png',120,157,1040,541);
   }else if(i===8){
