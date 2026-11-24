@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-24",
+  "edition": "十页三章紧凑版",
+  "slides": 10,
+  "chapter_pages": [
+    2,
+    4,
+    7
+  ],
+  "spoken_characters": 782,
+  "planned_seconds": 260,
+  "word_pages": 2,
+  "notes_match": true,
+  "visual_review": "10 slide previews and 2 document pages checked",
+  "package_integrity": "pass",
+  "artifact_import": true,
+  "layout_findings": 0,
+  "sha256": "473d32e6a11f2219ac37b82ec7aacade1cff86667c047c077d952f5302399870",
+  "preview_renderer": "Artifact Tool",
+  "native_wps_open": false
+}
