@@ -20,7 +20,6 @@ import re
 import webbrowser
 import subprocess
 import sys
-import venv
 import importlib
 from importlib.metadata import PackageNotFoundError, version
 
@@ -231,6 +230,7 @@ def keyring_ready() -> bool:
 
 
 def install_keyring() -> Path:
+    import venv
     from credential_store import KEYRING_REQUIREMENT
     environment = ROOT / '.teach-runtime'
     if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
