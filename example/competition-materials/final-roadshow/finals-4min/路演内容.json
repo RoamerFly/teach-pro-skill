@@ -1,0 +1,179 @@
+{
+  "title": "学途智伴 决赛四分钟版",
+  "team": "重邮FFBond",
+  "version": "1.1.0-rc.18",
+  "date": "2026-11-26",
+  "total_seconds": 240,
+  "content_seconds": 240,
+  "buffer_seconds": 60,
+  "slides": [
+    {
+      "title": "学途智伴",
+      "seconds": 12,
+      "speech": "各位评委好，学途智伴是一套教学Skill，让AI像私教一样，按学习情况安排网页课程。",
+      "sources": [
+        "teach-pro/SKILL.md",
+        "assets/per-slide/01-cover.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "第一章 设计初衷",
+      "seconds": 5,
+      "speech": "它来自我的自学经历。",
+      "sources": [
+        "作者于2026-11-17确认的设计初衷",
+        "assets/per-slide/02-motivation.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "为什么想到做学途智伴",
+      "seconds": 18,
+      "speech": "AI找资料快，系统学习还需要路线、讲解和练习。我希望做成网页，让学生边学边答，AI据此调整课程。",
+      "sources": [
+        "README.md",
+        "teach-pro/README.md",
+        "assets/infographics/motivation-and-design.png：GPT内置生图生成的信息图"
+      ]
+    },
+    {
+      "title": "从学习目标开始",
+      "seconds": 12,
+      "speech": "学生提出目标，AI先问基础，再做入门评估。",
+      "sources": [
+        "README.md",
+        "teach-pro/README.md",
+        "assets/infographics/learner-journey.png：GPT内置生图生成的信息图"
+      ]
+    },
+    {
+      "title": "把教学方法做成Skill",
+      "seconds": 18,
+      "speech": "Skill里有教学方法、网页模板和保存工具，导入AI后就能开始教学。",
+      "sources": [
+        "teach-pro/COURSE-WORKSPACE-SPEC.md",
+        "teach-pro/LEARNING-RECORD-FORMAT.md",
+        "assets/infographics/skill-package-components.png：GPT内置生图生成的信息图"
+      ]
+    },
+    {
+      "title": "第二章 教学机制",
+      "seconds": 5,
+      "speech": "它具体怎样工作？",
+      "sources": [
+        "teach-pro/SKILL.md",
+        "teach-pro/LOCAL-TUTOR-SPEC.md",
+        "assets/per-slide/04-architecture.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "谁备课，谁学习，记录留在哪里",
+      "seconds": 25,
+      "speech": "教学AI备课，学生在网页上学习、作答和提问。本地文件保存这些记录，供下次教学读取。",
+      "sources": [
+        "assets/workflow/teach-pro-workflow-architecture.png",
+        "teach-pro/SKILL.md",
+        "teach-pro/LOCAL-TUTOR-SPEC.md"
+      ]
+    },
+    {
+      "title": "第一课怎样确定",
+      "seconds": 18,
+      "speech": "首次开课，AI根据目标和评估确定起点，生成图解、例题和练习。",
+      "sources": [
+        "teach-pro/COURSE-WORKSPACE-SPEC.md",
+        "teach-pro/LEARNING-RECORD-FORMAT.md",
+        "assets/per-slide/05-records.png：GPT内置image_gen逐页定制概念插画",
+        "assets/infographics/first-lesson-generation.png：GPT内置生图生成的信息图"
+      ]
+    },
+    {
+      "title": "下一课怎样安排",
+      "seconds": 22,
+      "speech": "学完说继续，AI读取答案和疑问，安排新课。个人难点用补充课讲解，主线也继续推进。",
+      "sources": [
+        "teach-pro/LESSON-DELIVERY-POLICY.md",
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/COURSE.md",
+        "assets/infographics/evidence-and-continuation.png：GPT内置生图生成的信息图"
+      ]
+    },
+    {
+      "title": "让作答改变下一课",
+      "seconds": 20,
+      "speech": "设计重点就是让实际作答影响下一课怎么教。",
+      "sources": [
+        "teach-pro/LESSON-DELIVERY-POLICY.md",
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/COURSE.md",
+        "assets/infographics/formal-and-supplement.png：GPT内置生图生成的信息图"
+      ]
+    },
+    {
+      "title": "第三章 现场演示",
+      "seconds": 5,
+      "speech": "下面演示高数零基础模拟学员的实际课程。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "从一句模糊需求开始",
+      "seconds": 10,
+      "speech": "同学说想学高数，AI先询问基础。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "从评估答案确定起点",
+      "seconds": 10,
+      "speech": "评估漏了一个交点，首课就讲坐标和交点。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "生成可以直接学习的课程",
+      "seconds": 25,
+      "speech": "题后直接作答，答案自动保存；不懂就打开课内答疑。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "一份作答怎样影响下一课",
+      "seconds": 15,
+      "speech": "后来交点找全了，对称轴还不懂，AI便生成对称轴补充课，同时推进极限正式课。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "让学习按个人进度接着走",
+      "seconds": 20,
+      "speech": "已交付两节正式课和一节补充课。我们会继续打磨教学判断，让学习接着个人进度。谢谢。",
+      "sources": [
+        "作者确认的设计初衷",
+        "teach-pro/SKILL.md",
+        "assets/per-slide/12-closing.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    }
+  ],
+  "edition": "四分钟浅显讲解版",
+  "delivery": "local_pptx",
+  "explanation_seconds": 180,
+  "live_demo_seconds": 60,
+  "qa_seconds": 120,
+  "official_rules": "2026 年 “天翼 AI” 杯重庆高校人工智能大赛（重邮赛区）总决赛路演须知.pdf",
+  "formal_presentation_limit_seconds": 300
+}
