@@ -10,7 +10,7 @@
   "supplements": 1,
   "answers_filled_in_browser": true,
   "reload_restore_passed": true,
-  "raw_event_logs_location": "E:\\Agent\\projects\\电信天翼AI skill赛事\\competition-work\\2026-11-24-calculus-zero-run",
+  "raw_event_logs_location": "../../../competition-work/2026-11-24-calculus-zero-run",
   "raw_submissions_included_in_git": false,
   "evidence_hashes": {
     "01-events.jsonl": "0451bb54a2cf2e8291e37ec7e1ba10165396680c0db86f2dea534b53b6980424",

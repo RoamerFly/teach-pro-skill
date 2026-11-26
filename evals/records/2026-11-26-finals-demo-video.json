@@ -35,19 +35,19 @@
   },
   "full": {
     "name": "学途智伴高数完整演示.mp4",
-    "seconds": 176.981016,
+    "seconds": 174.581016,
     "width": 1920,
     "height": 1080,
     "video": "h264",
     "audio": "aac",
-    "sha256": "353720de92b709478cef443f4fff2b267c36a7f4ccd380d8c0a3ba216274c353",
+    "sha256": "2df69ccd765a8c45ad1e9d06a182ef1b945ff08d6be6c8276ec66b90ca5d4630",
     "decode": "pass"
   },
   "short": {
     "name": "学途智伴高数90秒静音演示.mp4",
     "seconds": 90.0,
     "audio": false,
-    "sha256": "2ca27c83f1cc1deaf38335c7dffa6e9912a9292def721276dae731e62c9c60ca",
+    "sha256": "602fce3732db7d29c70be355a5f8f312fc28511070ef5e21a5b142933fae4fc1",
     "decode": "pass"
   },
   "subtitles": "separate lower band outside lesson viewport; SRT also supplied",
@@ -104,22 +104,24 @@
       "id": "continue",
       "title": "请求继续，读取学情安排课程",
       "start": 137.76000000000002,
-      "seconds": 12.68
+      "seconds": 10.28
     },
     {
       "id": "directory",
       "title": "新正式课与补充课一起推进",
-      "start": 150.44000000000003,
+      "start": 148.04000000000002,
       "seconds": 14.48
     },
     {
       "id": "closing",
       "title": "让下一次教学接着这一次学习",
-      "start": 164.92000000000002,
+      "start": 162.52,
       "seconds": 12.04
     }
   ],
-  "visual_review": "All eleven chapter screenshots reviewed; continuation markdown rendered with original reply content preserved",
+  "visual_review": "All eleven chapter screenshots reviewed; continuation links displayed as course-relative paths with rendered Markdown",
+  "display_paths": "./lessons/0001-s01-shifted-symmetry.html and ./lessons/0002-approaching-a-point.html",
+  "absolute_path_text_audit": "pass for public text files and Office XML in delivered bundle",
   "human_listening_review": "user review pending",
   "on_site_projection_and_network": "presenter check pending"
 }
