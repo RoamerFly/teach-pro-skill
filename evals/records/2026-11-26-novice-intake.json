@@ -11,11 +11,13 @@
     "competition_submit": "8f804c67c643a590bd8283cd8187d1ee3e77e8874533742f61208bc3f3c1136c"
   },
   "installed_profile_matches": true,
-  "behavioral_retest": "pending new TeleAgent task",
+  "behavioral_retest": "New task read course implementation templates before learner interview; paused for load diagnosis",
   "prior_recording": "excluded as novice onboarding evidence",
   "validation": {
     "release_profiles": 8,
     "frontmatter": "pass",
-    "behavioral_retest": "pending new task; old task context remains prior revision"
-  }
+    "behavioral_retest": "Not passed; active Skill load content not yet verified"
+  },
+  "reimport_attempt": "TeleAgent UI rejected same-name import: skill already exists; replacement confirmation pending",
+  "recording_check": "Window-title GDI capture produced unusable black frames; rejected. Desktop capture verified for next take."
 }
