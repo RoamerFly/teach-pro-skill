@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-26",
+  "observed_host": "TeleAgent 3.1.1",
+  "loaded_profile": "competition_submit",
+  "before_sha256": "15aba92ec3522f2b35fc66dc38094bf54478a320956b1c7b9160c0f4bb87e7df",
+  "minimal_prompt": "使用 @学途智伴 技能，我想学习大学课程：高等数学。",
+  "observation": "Started building course before collecting learner goals and background",
+  "change": "Make first-turn interview explicit and defer templates until learner replies",
+  "updated_profile_sha256": {
+    "normal_use": "001c456cf7f2d1d775b39847352b10d394116841fddab5b5a5c62eb29057528c",
+    "competition_submit": "8f804c67c643a590bd8283cd8187d1ee3e77e8874533742f61208bc3f3c1136c"
+  },
+  "installed_profile_matches": true,
+  "behavioral_retest": "pending new TeleAgent task",
+  "prior_recording": "excluded as novice onboarding evidence",
+  "validation": {
+    "release_profiles": 8,
+    "frontmatter": "pass",
+    "behavioral_retest": "pending new task; old task context remains prior revision"
+  }
+}
