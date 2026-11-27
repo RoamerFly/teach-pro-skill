@@ -1,4 +1,4 @@
-/** Sixteen-slide, three-chapter finals deck with editable labels and diagrams. */
+/** Seventeen-slide finals deck, including a clickable agenda after the cover. */
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {pathToFileURL,fileURLToPath} from 'node:url';
@@ -19,13 +19,29 @@ function box(s,x,y,w,h,title,sub,fill=C.pale){
  rect(s,x,y,w,h,fill);text(s,x+18,y+12,w-36,40,title,27,C.navy,true);text(s,x+18,y+56,w-36,h-62,sub,23,C.muted);
 }
 function arrow(s,a,b){s.shapes.connect(a,b,{kind:'straight',fromSide:'right',toSide:'left',line:{fill:C.teal,width:3},tail:{type:'triangle',width:'med',length:'med'}});}
-function top(s,i,chapter){
+function top(s,page,chapter){
  text(s,48,22,1100,28,chapter,18,C.teal,true);
- text(s,48,65,1160,62,data.slides[i-1].title,38,C.navy,true);
- rule(s,48,143,1184);text(s,1182,27,46,26,String(i).padStart(2,'0'),17,C.muted,false,'right');
+ text(s,48,65,1160,62,data.slides[page-1].title,38,C.navy,true);
+ rule(s,48,143,1184);text(s,1182,27,46,26,String(page).padStart(2,'0'),17,C.muted,false,'right');
 }
-for(let i=1;i<=16;i++){
+for(let page=1;page<=data.slides.length;page++){
  const s=deck.slides.add({width:1280,height:720});s.background.fill=C.paper;
+ if(page===2){
+  top(s,page,'路演目录');
+  data.navigation.chapters.forEach((chapter,k)=>{
+   const y=176+k*116;
+   text(s,50,y,90,80,String(k+1).padStart(2,'0'),57,C.teal,true);
+   const label=text(s,175,y+10,300,62,chapter.label,36,C.navy,true);
+   label.hyperlink={uri:'teach-pro-chapter-'+(k+1),isExternal:true,action:'ppaction://hlinksldjump'};
+   text(s,510,y+12,650,60,chapter.description,26,C.ink);
+   text(s,1115,y+77,110,28,'第 '+String(chapter.slide).padStart(2,'0')+' 页',20,C.teal,false,'right');
+   rule(s,175,y+113,1053);
+  });
+  text(s,50,650,1180,42,'为什么做 → 怎样工作 → 案例演示 → 学习价值',27,C.teal,true);
+  s.speakerNotes.text=data.slides[page-1].speech;
+  continue;
+ }
+ const i=page>2?page-1:page;
  if(i===1||i===16){
   await image(s,i===1?'01-cover.png':'12-closing.png',0,0,1280,720,'cover');rect(s,0,0,650,720,C.paper);
   if(i===1){
@@ -34,6 +50,7 @@ for(let i=1;i<=16;i++){
    text(s,57,412,555,50,'自适应教学 Skill 技能包',29,C.teal,true);
    text(s,57,615,560,35,'重邮FFBond  总决赛现场路演',23,C.muted);
   }else{
+   text(s,55,32,540,45,'04  第四章 结语',25,C.teal,true);
    text(s,52,95,560,145,'把零散提问连成持续学习\n让每次投入都有积累',42,C.navy,true);
    text(s,55,282,540,47,'学途智伴 · 自适应教学 Skill',28,C.teal,true);
    text(s,55,350,540,100,'从自己的学习目标开始\n依据实际作答安排后续课程',29,C.ink,true);
@@ -44,7 +61,7 @@ for(let i=1;i<=16;i++){
   const art={2:'02-motivation.png',6:'04-architecture.png',11:'11-use-cases.png'}[i];
   await image(s,art,610,90,650,550);rect(s,0,0,610,720,C.paper);
   text(s,53,105,505,100,{2:'01',6:'02',11:'03'}[i],77,C.teal,true);
-  text(s,55,245,520,90,data.slides[i-1].title,43,C.navy,true);
+  text(s,55,245,520,90,data.slides[page-1].title,43,C.navy,true);
   text(s,57,397,500,120,{2:'资料找到以后\n怎样把学习持续下去',6:'目标决定教学起点\n作答影响后续课程',11:'用一位零基础模拟新生\n串起评估、学习与续课'}[i],29,C.ink);
   if(i===11){
    const button=s.shapes.add({name:'Open demo video',geometry:'roundRect',borderRadius:12,position:{left:57,top:539,width:326,height:58},fill:C.teal,line:{fill:'none',width:0},hyperlink:{uri:data.video_button.target,isExternal:true}});
@@ -53,7 +70,7 @@ for(let i=1;i<=16;i++){
   rule(s,55,i===11?622:579,470,C.line);
   text(s,55,i===11?650:608,485,38,i===11?'案例：实际运行记录 · 模拟学员':'学途智伴  自适应教学 Skill',21,C.muted);
  }else{
-  top(s,i,i<6?'第一章 设计初衷':i<11?'第二章 工作流程':'第三章 高数案例');
+  top(s,page,i<6?'第一章 设计初衷':i<11?'第二章 工作流程':'第三章 案例演示');
   if(i===3){
    await image(s,'../infographics/chat-to-course-comparison.png',48,158,1184,477);
    text(s,49,650,1182,47,'让学习目标、课程内容与作答记录接起来，后续教学才有持续参考的学情。',24,C.navy,true);
@@ -100,14 +117,31 @@ for(let i=1;i<=16;i++){
 
   }
  }
- s.speakerNotes.text=data.slides[i-1].speech;
+ s.speakerNotes.text=data.slides[page-1].speech;
 }
 await (await PresentationFile.exportPptx(deck)).save(output);
+
+// Internal slide-jump relationships use the OOXML slide type, not a file link.
+const {default:JSZip}=await import(pathToFileURL(path.join(modules,'jszip/lib/index.js')).href);
+const archive=await JSZip.loadAsync(await fs.readFile(output));
+const relPath='ppt/slides/_rels/slide2.xml.rels';
+let rels=await archive.file(relPath).async('string');
+for(let k=0;k<data.navigation.chapters.length;k++){
+ const marker='teach-pro-chapter-'+(k+1);
+ const node=new RegExp('<Relationship\\b[^>]*Target="'+marker+'"[^>]*/>');
+ const found=rels.match(node);
+ if(!found)throw new Error('Missing navigation relationship '+marker);
+ const id=found[0].match(/\bId="([^"]+)"/)[1];
+ rels=rels.replace(node,'<Relationship Id="'+id+'" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide" Target="slide'+data.navigation.chapters[k].slide+'.xml" />');
+}
+archive.file(relPath,rels);
+await fs.writeFile(output,await archive.generateAsync({type:'nodebuffer',compression:'DEFLATE',compressionOptions:{level:6}}));
+
 console.log(JSON.stringify({slides:deck.slides.items.length,output}));
 const preview=process.env.PITCH_PREVIEW_DIR;
 if(preview){
  await fs.mkdir(preview,{recursive:true});
- for(let i=0;i<16;i++){
+ for(let i=0;i<deck.slides.items.length;i++){
   const png=await deck.export({slide:deck.slides.items[i],format:'png',scale:1});
   await fs.writeFile(path.join(preview,'slide-'+String(i+1).padStart(2,'0')+'.png'),new Uint8Array(await png.arrayBuffer()));
  }

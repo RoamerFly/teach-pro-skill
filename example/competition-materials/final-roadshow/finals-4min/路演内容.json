@@ -9,11 +9,19 @@
   "slides": [
     {
       "title": "学途智伴",
-      "seconds": 18,
+      "seconds": 17,
       "speech": "各位评委好，我是重邮FFBond的刘飞扬。学途智伴是一套面向长期学习的教学Skill技能包，让AI根据个人学习情况，持续安排网页课程。",
       "sources": [
         "teach-pro/SKILL.md",
         "assets/per-slide/01-cover.png：GPT内置image_gen逐页定制概念插画"
+      ]
+    },
+    {
+      "title": "目录导航",
+      "seconds": 6,
+      "speech": "下面从设计初衷、工作流程、案例演示和结语四个部分展开。",
+      "sources": [
+        "本次路演的四章结构"
       ]
     },
     {
@@ -27,7 +35,7 @@
     },
     {
       "title": "单次问答与持续教学",
-      "seconds": 22,
+      "seconds": 21,
       "speech": "今天问Python列表，明天换个会话继续，往往又要说明学到哪里。练习和疑问散落在聊天中，下一课讲什么、讲多难，还需要自己安排。",
       "sources": [
         "Teach-Pro_从零到答辩_完整讲义.md：第一章与第十七章A",
@@ -66,7 +74,7 @@
     },
     {
       "title": "学途智伴的教学闭环",
-      "seconds": 23,
+      "seconds": 22,
       "speech": "图中，课程Agent负责备课和续课；课内AI结合教材与当前作答及时解惑。网页自动保存答案和聊天，形成下次备课可读取的本地学情。",
       "sources": [
         "assets/workflow/teach-pro-workflow-architecture.png",
@@ -76,7 +84,7 @@
     },
     {
       "title": "目标与评估决定第一课",
-      "seconds": 16,
+      "seconds": 15,
       "speech": "首次开课，AI结合目标与评估，选一个适合当前水平的小目标，配好图解、例题、练习和精选资料，让学生学完就有具体收获。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
@@ -87,7 +95,7 @@
     },
     {
       "title": "同一主题，按学习表现调整教学",
-      "seconds": 17,
+      "seconds": 16,
       "speech": "请求继续时，AI读取记录调整教学。比如学Python列表，熟练就少讲重复内容；负数索引有疑问，就补图解；换题出错，就增加变式练习。",
       "sources": [
         "teach-pro/SKILL.md：选择下一课与学习证据",
@@ -107,7 +115,7 @@
       ]
     },
     {
-      "title": "第三章 高数案例",
+      "title": "第三章 案例演示",
       "seconds": 5,
       "speech": "下面用一位零基础模拟新生的高数课程，看看这条闭环怎样落地。",
       "sources": [
@@ -157,8 +165,8 @@
       ]
     },
     {
-      "title": "把零散提问连成持续学习",
-      "seconds": 23,
+      "title": "第四章 结语",
+      "seconds": 22,
       "speech": "这就回应了最初的愿望：找到资料以后，有课可学，有问题可问，学过的内容还能成为下次教学的依据。学途智伴希望帮助大学生把零散提问连成持续学习，让每次投入都有积累。谢谢各位评委。",
       "sources": [
         "作者确认的设计初衷",
@@ -167,14 +175,14 @@
       ]
     }
   ],
-  "edition": "四分钟讲义融合版",
+  "edition": "四分钟四章目录版",
   "delivery": "local_pptx",
   "explanation_seconds": 180,
   "live_demo_seconds": 60,
   "qa_seconds": 120,
   "official_rules": "2026 年 “天翼 AI” 杯重庆高校人工智能大赛（重邮赛区）总决赛路演须知.pdf",
   "formal_presentation_limit_seconds": 300,
-  "spoken_characters": 768,
+  "spoken_characters": 795,
   "narrative": "自学情境与痛点 → Skill解决方案 → 双AI职责与持久学情 → Python自适应对比 → 高数实际案例 → 学习价值",
   "lecture_reference": {
     "name": "Teach-Pro_从零到答辩_完整讲义.md",
@@ -191,7 +199,7 @@
     ]
   },
   "video_button": {
-    "slide": 11,
+    "slide": 12,
     "label": "打开演示视频",
     "target": "学途智伴高数60秒静音演示.mp4",
     "path_mode": "relative_to_pptx"
@@ -199,14 +207,39 @@
   "transition_palette": {
     "slides": [
       1,
-      2,
-      6,
-      11,
-      16
+      3,
+      7,
+      12,
+      17
     ],
     "panel": "#FAF7EF",
     "heading": "#102A43",
     "accent": "#087F70",
     "paper": "#FAF7EF"
+  },
+  "navigation": {
+    "slide": 2,
+    "chapters": [
+      {
+        "label": "设计初衷",
+        "slide": 3,
+        "description": "学习中的断点，以及 Skill 的设计回应"
+      },
+      {
+        "label": "工作流程",
+        "slide": 7,
+        "description": "目标诊断、课程生成与学情驱动的续课"
+      },
+      {
+        "label": "案例演示",
+        "slide": 12,
+        "description": "串起评估、学习与后续安排的实际过程"
+      },
+      {
+        "label": "结语",
+        "slide": 17,
+        "description": "回扣设计初衷与持续学习的价值"
+      }
+    ]
   }
 }
