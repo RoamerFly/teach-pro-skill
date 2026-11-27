@@ -1,0 +1,17 @@
+{
+  "archives": [
+    {
+      "file": "重邮FFBond+刘飞扬_最终路演包.zip",
+      "bytes": 78958811,
+      "sha256": "346ceace51501b78675f5b9a4813e8b1ca203239f718e87abc28ae89e0594ab6"
+    },
+    {
+      "file": "重邮FFBond+刘飞扬_总决赛材料_4分钟.zip",
+      "bytes": 78965531,
+      "sha256": "f64795211bdeb70b1f0d7472329db8a25547a84d948fa2f1812b90a8da7b70b3"
+    }
+  ],
+  "protected_files": 161,
+  "course_files_matched_to_test": 197,
+  "status": "pass"
+}

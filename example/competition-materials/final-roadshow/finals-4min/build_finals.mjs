@@ -64,7 +64,7 @@ for(let page=1;page<=data.slides.length;page++){
   text(s,55,245,520,90,data.slides[page-1].title,43,C.navy,true);
   text(s,57,397,500,120,{2:'资料找到以后\n怎样把学习持续下去',6:'目标决定教学起点\n作答影响后续课程',11:'用一位零基础模拟新生\n串起评估、学习与续课'}[i],29,C.ink);
   if(i===11){
-   const button=s.shapes.add({name:'Open demo video',geometry:'roundRect',borderRadius:12,position:{left:57,top:539,width:326,height:58},fill:C.teal,line:{fill:'none',width:0},hyperlink:{uri:data.video_button.target,isExternal:true}});
+   const button=s.shapes.add({name:'Open demo video',geometry:'roundRect',borderRadius:12,position:{left:57,top:539,width:326,height:58},fill:C.teal,line:{fill:'none',width:0},hyperlink:{uri:data.video_button.target,isExternal:true,action:'ppaction://hlinkfile'}});
    button.text=data.video_button.label;button.text.style={typeface:'Microsoft YaHei',fontSize:26,bold:true,color:C.white,alignment:'center',verticalAlignment:'middle',insets:0};
   }
   rule(s,55,i===11?622:579,470,C.line);
