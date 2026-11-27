@@ -1,0 +1,119 @@
+{
+  "edition": "TeleAgent 3.1.1 actual run; simulated novice learner",
+  "clips": [
+    {
+      "file": "01-teleagent-intake.mkv",
+      "start": 43,
+      "duration": 5,
+      "crop": [
+        1920,
+        1034,
+        0,
+        0
+      ],
+      "caption": "在 TeleAgent 输入：我想学习大学课程：高等数学"
+    },
+    {
+      "file": "01-teleagent-intake.mkv",
+      "start": 63,
+      "duration": 4,
+      "crop": [
+        1920,
+        1034,
+        0,
+        0
+      ],
+      "caption": "Skill 主动了解：学习目标、基础、时间与偏好"
+    },
+    {
+      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
+      "start": 1,
+      "duration": 4,
+      "caption": "课程生成后，打开学习路线和第一课"
+    },
+    {
+      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
+      "start": 20,
+      "duration": 4,
+      "crop": [
+        1440,
+        900,
+        210,
+        100
+      ],
+      "caption": "网页入门评估：学生作答自动保存"
+    },
+    {
+      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
+      "start": 52,
+      "duration": 4,
+      "caption": "第一课：用图像理解函数，再看例题"
+    },
+    {
+      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
+      "start": 62,
+      "duration": 4,
+      "caption": "即时检查给出反馈，帮助理解错误原因"
+    },
+    {
+      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
+      "start": 90,
+      "duration": 4.5,
+      "crop": [
+        1440,
+        420,
+        210,
+        70
+      ],
+      "caption": "练习作答：函数加 3，究竟向哪边移动？"
+    },
+    {
+      "file": "browser-raw/page@75d8980345124b82b5db2c323f0b3b1f.webm",
+      "start": 12.2,
+      "duration": 2.5,
+      "crop": [
+        1440,
+        270,
+        210,
+        500
+      ],
+      "caption": "保存疑问，作为下一次备课的参考"
+    },
+    {
+      "file": "04-teleagent-reading-submissions.mkv",
+      "start": 0.5,
+      "duration": 4,
+      "crop": [
+        800,
+        370,
+        680,
+        665
+      ],
+      "caption": "回到 TeleAgent 请求继续，Agent 读取本地作答"
+    },
+    {
+      "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
+      "start": 1,
+      "duration": 7,
+      "caption": "续课页面已生成：两节正式课，一节补充课"
+    },
+    {
+      "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
+      "start": 14.8,
+      "duration": 4,
+      "caption": "课程目录更新：先补个人难点，再推进新目标"
+    },
+    {
+      "file": "browser-raw/page@2506c85db6871114f2661f95334192ee.webm",
+      "start": 1.5,
+      "duration": 5,
+      "caption": "补充课：左右对照图，讲清两种平移"
+    },
+    {
+      "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
+      "start": 37.5,
+      "duration": 8,
+      "caption": "正式第二课：继续学习极限的直觉"
+    }
+  ]
+}

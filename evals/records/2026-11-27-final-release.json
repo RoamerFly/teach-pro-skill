@@ -2,16 +2,17 @@
   "archives": [
     {
       "file": "重邮FFBond+刘飞扬_最终路演包.zip",
-      "bytes": 78958811,
-      "sha256": "346ceace51501b78675f5b9a4813e8b1ca203239f718e87abc28ae89e0594ab6"
+      "bytes": 79842674,
+      "sha256": "d07d1d8437364ba25de9ce83e366d24378294a87a63ee31ce69f632d5d1da093"
     },
     {
       "file": "重邮FFBond+刘飞扬_总决赛材料_4分钟.zip",
-      "bytes": 78965531,
-      "sha256": "f64795211bdeb70b1f0d7472329db8a25547a84d948fa2f1812b90a8da7b70b3"
+      "bytes": 79849478,
+      "sha256": "74e7def1614dd4104bf39a1859d3b332a2bf1520f6eb10711cde79ccbd889936"
     }
   ],
   "protected_files": 161,
   "course_files_matched_to_test": 197,
-  "status": "pass"
+  "status": "pass",
+  "latest_revision": "TeleAgent actual-run video and two-minute Q&A; existing portable course preserved"
 }

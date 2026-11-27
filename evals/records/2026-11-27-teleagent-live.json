@@ -1,0 +1,131 @@
+{
+  "date": "2026-11-27",
+  "host": "TeleAgent",
+  "host_version": "3.1.1",
+  "model_ui": "智能",
+  "window": "maximized",
+  "workspace": "demo",
+  "course": "demo/gaodeng-shuxue",
+  "installed_profile": "competition_submit",
+  "installed_skill_sha256": "8f804c67c643a590bd8283cd8187d1ee3e77e8874533742f61208bc3f3c1136c",
+  "initial_request": "使用 @学途智伴 技能，我想学习大学课程：高等数学。",
+  "learner": "模拟高等数学零基础大学新生",
+  "intake": [
+    {
+      "question": "你学高等数学主要为了什么？",
+      "answer": "期末/校内考试"
+    },
+    {
+      "question": "你目前的高数基础大概在哪个位置？",
+      "answer": "几乎零基础"
+    },
+    {
+      "question": "你每周大概能投入多少时间学高数？",
+      "answer": "3—5小时"
+    },
+    {
+      "question": "你更喜欢哪种讲课方式？（可多选）",
+      "answer": [
+        "多画图讲直觉",
+        "多例题多练习"
+      ]
+    }
+  ],
+  "novice_intake": "pass; four questions requested before workspace generation",
+  "recordings": [
+    {
+      "file": "01-teleagent-intake.mkv",
+      "width": 1920,
+      "height": 1080,
+      "seconds": 221.833,
+      "content": "actual maximized TeleAgent interface, natural request and intake answers"
+    }
+  ],
+  "status": "video_completed_course_pages_generated_host_validation_running",
+  "formal_lessons": 2,
+  "supplemental_lessons": 1,
+  "continuation_request": "我已在网页做完入门评估和第1课的题，答案和疑问都填好了。最后图像平移还是不太明白，想先补一下这个点，也想继续学下一课。",
+  "teaching_result": {
+    "supplement": "图像平移：加在外面抬高，写在括号里左右移动",
+    "formal_2": "极限的直觉：x 靠近 1 时，f(x) 靠近什么"
+  },
+  "validations": {
+    "course_pages": 6,
+    "structural_issues": 0,
+    "submission_files_unchanged": true,
+    "browser_reload_restored_first_lesson_answers": true,
+    "student_input": "browser form interaction",
+    "video_full_decode": "pass",
+    "duration_seconds": 60,
+    "decoded_frames": 1440,
+    "frame_size": [
+      1920,
+      1080
+    ],
+    "visual_review": "all selected scenes and boundaries reviewed",
+    "display_sources": [
+      "TeleAgent window",
+      "course browser viewport"
+    ]
+  },
+  "video": {
+    "file": "TeleAgent高数学习闭环_60秒.mp4",
+    "sha256": "f8984a1c15c89505700e76ded807ab83b630f48abeca220ebb03ba5871bcbd99",
+    "bytes": 4931579
+  },
+  "source_recordings": [
+    {
+      "file": "01-teleagent-intake.mkv",
+      "sha256": "302914831b50af8888777214f983f6d94ef65e583184b95cbe6c3b9a45ffd1f1"
+    },
+    {
+      "file": "04-teleagent-reading-submissions.mkv",
+      "sha256": "b1bcdd0067b64c7f8de7266e3cdcb5a44999fc8e4cf255af43a62f160c7bbe9c"
+    },
+    {
+      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
+      "sha256": "155bb920b260fed27c4b450b4190d1ffd7f495cb942819047bb4e8a07108d321"
+    },
+    {
+      "file": "browser-raw/page@2506c85db6871114f2661f95334192ee.webm",
+      "sha256": "4d026331979f27286b62c7da7e32a08f02cf70fdebc36d01d49fc9bd70037f3b"
+    },
+    {
+      "file": "browser-raw/page@75d8980345124b82b5db2c323f0b3b1f.webm",
+      "sha256": "e8746f352bcec876ed01bcff4fd37cc14fe865d48fc4ffe15e38744709db4c39"
+    },
+    {
+      "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
+      "sha256": "4cd5cc37af025cff0f86430c8bf1cf3f9583a1d986a35876323a7c0aaf4b93d2"
+    }
+  ],
+  "generated_pages": [
+    {
+      "file": "index.html",
+      "sha256": "76e6d913a8b2cd67e9366c64b8e25020164b5d1b7b4f327a21363336f459feb9"
+    },
+    {
+      "file": "lessons/0001-function-graph.html",
+      "sha256": "c019a5fcf38652558792df5986eb6cc7cc7ff42ab66dbfa0ffe9da88a102364f"
+    },
+    {
+      "file": "lessons/0001-s01-graph-translation.html",
+      "sha256": "6c2e9d8a72af5d17eb052d88328f60253f29980c910f381adcf821408a31f254"
+    },
+    {
+      "file": "lessons/0002-limit-intuition.html",
+      "sha256": "9fa481bd7121a4120b4ed2c5a3b6a42608e126f72c41a1bb5f292e54591420b7"
+    }
+  ],
+  "learner_records": [
+    {
+      "file": "0001-function-graph.json",
+      "sha256": "5f9678e0c9b974b36efb86e4d4cea4c8e572111c4369ba54fb48308e18f33c74"
+    },
+    {
+      "file": "entry-assessment.json",
+      "sha256": "e48871881d20515e5885b362ef2afc171b66205e190b8576134667891e19e50d"
+    }
+  ],
+  "snapshot_at_utc": "2026-11-27T03:45:03.796678+00:00"
+}
