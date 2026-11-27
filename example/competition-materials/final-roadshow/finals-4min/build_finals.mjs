@@ -34,7 +34,7 @@ for(let i=1;i<=16;i++){
    text(s,57,412,555,50,'自适应教学 Skill 技能包',29,'#58D3BF',true);
    text(s,57,615,560,35,'重邮FFBond  总决赛现场路演',23,'#D1E2E5');
   }else{
-   text(s,52,95,560,145,'让每次学习都有积累\n让课程接着个人进度',42,C.white,true);
+   text(s,52,95,560,145,'把零散提问连成持续学习\n让每次投入都有积累',42,C.white,true);
    text(s,55,282,540,47,'学途智伴 · 自适应教学 Skill',28,'#58D3BF',true);
    text(s,55,350,540,100,'从自己的学习目标开始\n依据实际作答安排后续课程',29,'#DCECEB',true);
    text(s,55,489,540,90,'学生专注理解、练习与提问\nAI根据学习记录持续安排教学',25,'#DCECEB');
@@ -51,30 +51,30 @@ for(let i=1;i<=16;i++){
  }else{
   top(s,i,i<6?'第一章 设计初衷':i<11?'第二章 工作流程':'第三章 高数案例');
   if(i===3){
-   await image(s,'../infographics/motivation-and-design.png',80,156,1120,479);
-   text(s,49,650,1182,47,'设计初衷：把资料组织成能学习的课程，再根据作答和疑问，持续调整教学。',24,C.navy,true);
+   await image(s,'../infographics/chat-to-course-comparison.png',48,158,1184,477);
+   text(s,49,650,1182,47,'让学习目标、课程内容与作答记录接起来，后续教学才有持续参考的学情。',24,C.navy,true);
   }else if(i===4){
    await image(s,'../infographics/learner-journey.png',80,156,1120,479);
-   text(s,49,650,1182,47,'学生说出学习愿望，AI主动了解基础；学完请求继续，教学接着本地记录往下走。',24,C.navy,true);
+   text(s,49,650,1182,47,'目标访谈 → 入门诊断 → 规划路线 → 逐课学习 → 依据作答续课',24,C.navy,true);
   }else if(i===5){
    await image(s,'../infographics/skill-package-components.png',80,156,1120,479);
    text(s,49,650,1182,47,'教学规则决定怎样教，网页模板承载怎样学，本地工具保存学过什么、哪里仍有疑问。',24,C.navy,true);
   }else if(i===7){
    await image(s,'../workflow/teach-pro-workflow-architecture.png',120,153,1040,503);
-   text(s,49,658,1182,40,'Agent备课 → 网页学习与作答 → 本地保存学情 → Agent读取记录并安排下一课',24,C.navy,true);
+   text(s,49,658,1182,40,'课程Agent负责备课与续课，课内AI及时答疑，本地文件持续保存学习记录。',24,C.navy,true);
   }else if(i===8){
    await image(s,'../infographics/first-lesson-generation.png',80,156,1120,479);
-   text(s,49,650,1182,47,'首次开课：学习目标与评估作答共同确定起点，生成当前这一课的讲解、图解和练习。',24,C.navy,true);
+   text(s,49,650,1182,47,'目标与评估选定当前一课，图解、例题、练习与精选资料共同服务这一目标。',24,C.navy,true);
   }else if(i===9){
-   await image(s,'../infographics/evidence-and-continuation.png',80,156,1120,479);
-   text(s,49,650,1182,47,'后续续课：读取答案与疑问，正式课继续推进主线，关联补充课回应个人难点。',24,C.navy,true);
+   await image(s,'../infographics/python-adaptive-comparison.png',48,158,1184,477);
+   text(s,49,650,1182,47,'自适应体现在后续怎么教：根据解释、新题表现与疑问，调整内容、难度和提示。',24,C.navy,true);
   }else if(i===10){
    const rows=[
-    ['教学方法成为可复用规则','Skill把目标访谈、评估、逐课讲授与续课决策组织成流程。','Skill → 教学流程'],
-    ['学习表现成为连续记录','题后作答、课末疑难和答疑聊天自动保存，跨会话继续读取。','作答 → 连续学情'],
-    ['后续教学贴合个人进度','按作答选择新正式课的起点，并为具体难点安排关联补充课。','学情 → 教学安排']
+    ['教学流程可复用','将访谈、诊断、讲解与续课组织成Skill，供Agent按流程执行。','教学规则 → Agent行动'],
+    ['学习状态跨会话延续','目标、路线、作答与聊天保存在课程目录，继续学习时重新读取。','本地学情 → 持续教学'],
+    ['学习证据决定怎样教','依据解释与新题表现调整教学，\n正式课推进主线，补充课回应难点。','学习表现 → 课程调整']
    ];
-   rows.forEach((r,k)=>{const y=180+k*157;rect(s,48,y,8,132,C.teal);text(s,78,y+2,330,48,r[0],30,C.teal,true);text(s,78,y+61,775,66,r[1],26,C.ink);text(s,910,y+32,310,62,r[2],24,C.navy,true);if(k<2)rule(s,78,y+145,1150);});
+   rows.forEach((r,k)=>{const y=180+k*157;rect(s,48,y,8,132,C.teal);text(s,78,y+2,775,48,r[0],30,C.teal,true);text(s,78,y+61,775,66,r[1],26,C.ink);text(s,910,y+32,310,62,r[2],23,C.navy,true);if(k<2)rule(s,78,y+145,1150);});
   }else if(i===12){
    await image(s,'../calculus-run/00-dialogue-record.png',48,166,803,516);
    text(s,888,185,341,49,'先了解这位学生',29,C.teal,true);
