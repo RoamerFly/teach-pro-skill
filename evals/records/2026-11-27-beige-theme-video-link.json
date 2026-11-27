@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-27",
+  "changed_slides": [
+    1,
+    2,
+    6,
+    11,
+    16
+  ],
+  "background": "#FAF7EF",
+  "accent": "#087F70",
+  "slide_count": 16,
+  "spoken_characters": 768,
+  "notes_unchanged": true,
+  "button_slide": 11,
+  "button_label": "打开演示视频",
+  "hyperlink_target": "学途智伴高数60秒静音演示.mp4",
+  "hyperlink_relative": true,
+  "relocation_target_resolved": true,
+  "sidecar_video_sha256": "203092723075cfe785eb0da0c6570e78ac0ae51a69d9e413a5c283661b52f9c9",
+  "same_directory_pairs_checked": 3,
+  "layout_findings": 0,
+  "changed_slides_visually_reviewed": true,
+  "native_WPS_click_test": "not run",
+  "portable_and_learner_records_unchanged": 161,
+  "pptx_sha256": "3c7951c0460f952e06fc6b5fec9468fa0e3b17bf0a7d31a3f0b52770d9038ab1"
+}

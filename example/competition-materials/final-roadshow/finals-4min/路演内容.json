@@ -189,5 +189,24 @@
       12,
       16
     ]
+  },
+  "video_button": {
+    "slide": 11,
+    "label": "打开演示视频",
+    "target": "学途智伴高数60秒静音演示.mp4",
+    "path_mode": "relative_to_pptx"
+  },
+  "transition_palette": {
+    "slides": [
+      1,
+      2,
+      6,
+      11,
+      16
+    ],
+    "panel": "#FAF7EF",
+    "heading": "#102A43",
+    "accent": "#087F70",
+    "paper": "#FAF7EF"
   }
 }

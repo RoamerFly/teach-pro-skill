@@ -27,27 +27,31 @@ function top(s,i,chapter){
 for(let i=1;i<=16;i++){
  const s=deck.slides.add({width:1280,height:720});s.background.fill=C.paper;
  if(i===1||i===16){
-  await image(s,i===1?'01-cover.png':'12-closing.png',0,0,1280,720,'cover');rect(s,0,0,650,720,C.navy);
+  await image(s,i===1?'01-cover.png':'12-closing.png',0,0,1280,720,'cover');rect(s,0,0,650,720,C.paper);
   if(i===1){
-   text(s,55,115,570,100,'学途智伴',68,C.white,true);
-   text(s,57,241,555,110,'大学生长期\n自适应学习智能体',37,'#DCECEB',true);
-   text(s,57,412,555,50,'自适应教学 Skill 技能包',29,'#58D3BF',true);
-   text(s,57,615,560,35,'重邮FFBond  总决赛现场路演',23,'#D1E2E5');
+   text(s,55,115,570,100,'学途智伴',68,C.teal,true);
+   text(s,57,241,555,110,'大学生长期\n自适应学习智能体',37,C.navy,true);
+   text(s,57,412,555,50,'自适应教学 Skill 技能包',29,C.teal,true);
+   text(s,57,615,560,35,'重邮FFBond  总决赛现场路演',23,C.muted);
   }else{
-   text(s,52,95,560,145,'把零散提问连成持续学习\n让每次投入都有积累',42,C.white,true);
-   text(s,55,282,540,47,'学途智伴 · 自适应教学 Skill',28,'#58D3BF',true);
-   text(s,55,350,540,100,'从自己的学习目标开始\n依据实际作答安排后续课程',29,'#DCECEB',true);
-   text(s,55,489,540,90,'学生专注理解、练习与提问\nAI根据学习记录持续安排教学',25,'#DCECEB');
-   text(s,55,625,540,35,'重邮FFBond  刘飞扬  谢谢各位评委',23,'#D1E2E5');
+   text(s,52,95,560,145,'把零散提问连成持续学习\n让每次投入都有积累',42,C.navy,true);
+   text(s,55,282,540,47,'学途智伴 · 自适应教学 Skill',28,C.teal,true);
+   text(s,55,350,540,100,'从自己的学习目标开始\n依据实际作答安排后续课程',29,C.ink,true);
+   text(s,55,489,540,90,'学生专注理解、练习与提问\nAI根据学习记录持续安排教学',25,C.muted);
+   text(s,55,625,540,35,'重邮FFBond  刘飞扬  谢谢各位评委',23,C.muted);
   }
  }else if([2,6,11].includes(i)){
   const art={2:'02-motivation.png',6:'04-architecture.png',11:'11-use-cases.png'}[i];
-  await image(s,art,610,90,650,550);rect(s,0,0,610,720,C.navy);
-  text(s,53,105,505,100,{2:'01',6:'02',11:'03'}[i],77,'#58D3BF',true);
-  text(s,55,245,520,90,data.slides[i-1].title,43,C.white,true);
-  text(s,57,397,500,120,{2:'资料找到以后\n怎样把学习持续下去',6:'目标决定教学起点\n作答影响后续课程',11:'用一位零基础模拟新生\n串起评估、学习与续课'}[i],29,'#DCECEB');
-  rule(s,55,579,470,'#3D6375');
-  text(s,55,608,485,45,i===11?'案例：实际运行记录 · 模拟学员':'学途智伴  自适应教学 Skill',21,'#D1E2E5');
+  await image(s,art,610,90,650,550);rect(s,0,0,610,720,C.paper);
+  text(s,53,105,505,100,{2:'01',6:'02',11:'03'}[i],77,C.teal,true);
+  text(s,55,245,520,90,data.slides[i-1].title,43,C.navy,true);
+  text(s,57,397,500,120,{2:'资料找到以后\n怎样把学习持续下去',6:'目标决定教学起点\n作答影响后续课程',11:'用一位零基础模拟新生\n串起评估、学习与续课'}[i],29,C.ink);
+  if(i===11){
+   const button=s.shapes.add({name:'Open demo video',geometry:'roundRect',borderRadius:12,position:{left:57,top:539,width:326,height:58},fill:C.teal,line:{fill:'none',width:0},hyperlink:{uri:data.video_button.target,isExternal:true}});
+   button.text=data.video_button.label;button.text.style={typeface:'Microsoft YaHei',fontSize:26,bold:true,color:C.white,alignment:'center',verticalAlignment:'middle',insets:0};
+  }
+  rule(s,55,i===11?622:579,470,C.line);
+  text(s,55,i===11?650:608,485,38,i===11?'案例：实际运行记录 · 模拟学员':'学途智伴  自适应教学 Skill',21,C.muted);
  }else{
   top(s,i,i<6?'第一章 设计初衷':i<11?'第二章 工作流程':'第三章 高数案例');
   if(i===3){
