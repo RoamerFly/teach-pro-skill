@@ -2,15 +2,15 @@
   "title": "学途智伴 决赛四分钟版",
   "team": "重邮FFBond",
   "version": "1.1.0-rc.18",
-  "date": "2026-11-26",
+  "date": "2026-11-27",
   "total_seconds": 240,
   "content_seconds": 240,
   "buffer_seconds": 60,
   "slides": [
     {
       "title": "学途智伴",
-      "seconds": 12,
-      "speech": "各位评委好，学途智伴是一套教学Skill，让AI像私教一样，按学习情况安排网页课程。",
+      "seconds": 18,
+      "speech": "各位评委好，我是重邮FFBond的刘飞扬。学途智伴是一套教学Skill技能包，让AI按个人学习情况，持续安排网页课程。",
       "sources": [
         "teach-pro/SKILL.md",
         "assets/per-slide/01-cover.png：GPT内置image_gen逐页定制概念插画"
@@ -19,7 +19,7 @@
     {
       "title": "第一章 设计初衷",
       "seconds": 5,
-      "speech": "它来自我的自学经历。",
+      "speech": "这个设计，来自我用AI学习时的一个困惑。",
       "sources": [
         "作者于2026-11-17确认的设计初衷",
         "assets/per-slide/02-motivation.png：GPT内置image_gen逐页定制概念插画"
@@ -27,8 +27,8 @@
     },
     {
       "title": "为什么想到做学途智伴",
-      "seconds": 18,
-      "speech": "AI找资料快，系统学习还需要路线、讲解和练习。我希望做成网页，让学生边学边答，AI据此调整课程。",
+      "seconds": 20,
+      "speech": "资料很快就能找到，但先学什么、是否学会、下次从哪里继续，仍要自己安排。我想让AI把这些环节一起做好。",
       "sources": [
         "README.md",
         "teach-pro/README.md",
@@ -36,9 +36,9 @@
       ]
     },
     {
-      "title": "从学习目标开始",
+      "title": "从学生的学习愿望出发",
       "seconds": 12,
-      "speech": "学生提出目标，AI先问基础，再做入门评估。",
+      "speech": "因此，学生只需说想学什么，AI就先问基础，再用小题确定起点。",
       "sources": [
         "README.md",
         "teach-pro/README.md",
@@ -46,9 +46,9 @@
       ]
     },
     {
-      "title": "把教学方法做成Skill",
+      "title": "一套可复用的教学 Skill",
       "seconds": 18,
-      "speech": "Skill里有教学方法、网页模板和保存工具，导入AI后就能开始教学。",
+      "speech": "我把这套教学方法、网页模板和记录工具封装成Skill，导入Agent后使用。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
         "teach-pro/LEARNING-RECORD-FORMAT.md",
@@ -56,9 +56,9 @@
       ]
     },
     {
-      "title": "第二章 教学机制",
+      "title": "第二章 工作流程",
       "seconds": 5,
-      "speech": "它具体怎样工作？",
+      "speech": "有了教学方法，还要让每次学习都能接上。",
       "sources": [
         "teach-pro/SKILL.md",
         "teach-pro/LOCAL-TUTOR-SPEC.md",
@@ -66,9 +66,9 @@
       ]
     },
     {
-      "title": "谁备课，谁学习，记录留在哪里",
+      "title": "学途智伴的教学闭环",
       "seconds": 25,
-      "speech": "教学AI备课，学生在网页上学习、作答和提问。本地文件保存这些记录，供下次教学读取。",
+      "speech": "图中，Agent生成课程，学生在网页作答，本地文件保存学情。下次开课时，Agent读取记录，接着教。",
       "sources": [
         "assets/workflow/teach-pro-workflow-architecture.png",
         "teach-pro/SKILL.md",
@@ -76,9 +76,9 @@
       ]
     },
     {
-      "title": "第一课怎样确定",
-      "seconds": 18,
-      "speech": "首次开课，AI根据目标和评估确定起点，生成图解、例题和练习。",
+      "title": "目标与评估决定第一课",
+      "seconds": 15,
+      "speech": "第一课根据目标和评估确定内容，配好图解、例题与练习。",
       "sources": [
         "teach-pro/COURSE-WORKSPACE-SPEC.md",
         "teach-pro/LEARNING-RECORD-FORMAT.md",
@@ -87,9 +87,9 @@
       ]
     },
     {
-      "title": "下一课怎样安排",
-      "seconds": 22,
-      "speech": "学完说继续，AI读取答案和疑问，安排新课。个人难点用补充课讲解，主线也继续推进。",
+      "title": "学习记录决定后续安排",
+      "seconds": 18,
+      "speech": "此后每次生成一节正式课；遇到难点，再安排关联补充课，主线继续推进。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
         "example/competition-demo-calculus/实际对话记录.md",
@@ -98,9 +98,9 @@
       ]
     },
     {
-      "title": "让作答改变下一课",
-      "seconds": 20,
-      "speech": "设计重点就是让实际作答影响下一课怎么教。",
+      "title": "核心创新：让学情参与教学",
+      "seconds": 9,
+      "speech": "核心创新就是：教学方法可以复用，作答留下记录，记录改变教学。",
       "sources": [
         "teach-pro/LESSON-DELIVERY-POLICY.md",
         "example/competition-demo-calculus/实际对话记录.md",
@@ -109,9 +109,9 @@
       ]
     },
     {
-      "title": "第三章 现场演示",
+      "title": "第三章 高数案例",
       "seconds": 5,
-      "speech": "下面演示高数零基础模拟学员的实际课程。",
+      "speech": "下面用高数案例，把这个过程连起来看。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
         "example/competition-demo-calculus/运行来源.json",
@@ -119,9 +119,9 @@
       ]
     },
     {
-      "title": "从一句模糊需求开始",
+      "title": "提出需求，形成学习画像",
       "seconds": 10,
-      "speech": "同学说想学高数，AI先询问基础。",
+      "speech": "模拟新生说想学高数，AI先问目标和基础，再生成评估。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
         "example/competition-demo-calculus/运行来源.json",
@@ -129,9 +129,9 @@
       ]
     },
     {
-      "title": "从评估答案确定起点",
-      "seconds": 10,
-      "speech": "评估漏了一个交点，首课就讲坐标和交点。",
+      "title": "评估作答决定首课起点",
+      "seconds": 12,
+      "speech": "他的计算基本正确，却漏掉一个交点。因此，首课先讲函数图像上的点与交点。",
       "sources": [
         "example/competition-demo-calculus/实际对话记录.md",
         "example/competition-demo-calculus/运行来源.json",
@@ -139,29 +139,29 @@
       ]
     },
     {
-      "title": "生成可以直接学习的课程",
-      "seconds": 25,
-      "speech": "题后直接作答，答案自动保存；不懂就打开课内答疑。",
-      "sources": [
-        "example/competition-demo-calculus/实际对话记录.md",
-        "example/competition-demo-calculus/运行来源.json",
-        "assets/calculus-run/：本轮真实页面与对话记录截图"
-      ]
-    },
-    {
-      "title": "一份作答怎样影响下一课",
-      "seconds": 15,
-      "speech": "后来交点找全了，对称轴还不懂，AI便生成对称轴补充课，同时推进极限正式课。",
-      "sources": [
-        "example/competition-demo-calculus/实际对话记录.md",
-        "example/competition-demo-calculus/运行来源.json",
-        "assets/calculus-run/：本轮真实页面与对话记录截图"
-      ]
-    },
-    {
-      "title": "让学习按个人进度接着走",
+      "title": "在课程中学习、作答与提问",
       "seconds": 20,
-      "speech": "已交付两节正式课和一节补充课。我们会继续打磨教学判断，让学习接着个人进度。谢谢。",
+      "speech": "学生看图、做题，也能随时问AI；答案和疑问自动保存。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "难点补充与正式课同步安排",
+      "seconds": 18,
+      "speech": "再说继续时，AI发现交点已掌握，对称轴还不清楚，于是补讲平移对称，同时开启极限正式课。",
+      "sources": [
+        "example/competition-demo-calculus/实际对话记录.md",
+        "example/competition-demo-calculus/运行来源.json",
+        "assets/calculus-run/：本轮真实页面与对话记录截图"
+      ]
+    },
+    {
+      "title": "让每次学习都有积累",
+      "seconds": 30,
+      "speech": "从学习愿望，到适合自己的课，再到按作答继续学习，这就是学途智伴的价值。我希望它让每次学习都有积累，让下一次教学更懂自己。谢谢各位评委。",
       "sources": [
         "作者确认的设计初衷",
         "teach-pro/SKILL.md",
@@ -169,11 +169,13 @@
       ]
     }
   ],
-  "edition": "四分钟浅显讲解版",
+  "edition": "四分钟连贯讲解版",
   "delivery": "local_pptx",
   "explanation_seconds": 180,
   "live_demo_seconds": 60,
   "qa_seconds": 120,
   "official_rules": "2026 年 “天翼 AI” 杯重庆高校人工智能大赛（重邮赛区）总决赛路演须知.pdf",
-  "formal_presentation_limit_seconds": 300
+  "formal_presentation_limit_seconds": 300,
+  "spoken_characters": 570,
+  "narrative": "设计初衷 → Skill封装 → 教学闭环 → 高数案例 → 回扣持续学习价值"
 }

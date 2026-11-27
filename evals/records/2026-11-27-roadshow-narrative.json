@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-27",
+  "slides": 16,
+  "chapters": 3,
+  "spoken_characters": 570,
+  "speech_pages": 1,
+  "notes_match": true,
+  "speech_only_notes": true,
+  "narrative": "motivation -> Skill package -> teaching workflow -> calculus case -> learner value",
+  "target_seconds": 240,
+  "slides_seconds_sum": 240,
+  "live_demo_seconds": 60,
+  "timing_verification": "planning budget; human rehearsal pending",
+  "visual_review": "all 16 slide renders reviewed; slide 12 orphan punctuation repaired and re-rendered; one-page speech reviewed",
+  "layout_findings": 0,
+  "pptx_import_check": true,
+  "docx_render": "canonical renderer unavailable (no bundled Windows LibreOffice); rendered with installed Word PDF export and Poppler",
+  "demo_provenance": "existing actual Codex run with simulated learner; TeleAgent recording not yet accepted",
+  "portable_and_learner_files_unchanged": true,
+  "protected_file_count": 161,
+  "pptx_sha256": "200bd5b26c20e72182002fb7a9a438b2ed7f9d125d3568100978a002d85ded81",
+  "docx_sha256": "066faab0ac5fe375306fa2696296b2b08074a00dc405e8490f9968163af8fa74"
+}
