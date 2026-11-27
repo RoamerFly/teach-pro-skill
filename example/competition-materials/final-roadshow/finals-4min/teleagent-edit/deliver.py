@@ -47,7 +47,7 @@ def main():
     skill_hash = sha(root / 'competition-submission/competition_submit/teach-pro/SKILL.md')
     assert skill_hash == '8f804c67c643a590bd8283cd8187d1ee3e77e8874533742f61208bc3f3c1136c'
     record = json.loads((work / 'run.json').read_text('utf8'))
-    record.update(status='video_completed_course_pages_generated_host_validation_running',
+    record.update(status='video_completed_course_pages_generated',
         snapshot_at_utc=datetime.now(timezone.utc).isoformat(), formal_lessons=2, supplemental_lessons=1,
         continuation_request='我已在网页做完入门评估和第1课的题，答案和疑问都填好了。最后图像平移还是不太明白，想先补一下这个点，也想继续学下一课。',
         teaching_result={'supplement':'图像平移：加在外面抬高，写在括号里左右移动',

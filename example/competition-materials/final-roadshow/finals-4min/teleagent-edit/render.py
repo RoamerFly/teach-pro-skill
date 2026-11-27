@@ -38,9 +38,11 @@ def main():
         filters = []
         if 'crop' in clip:
             filters.append('crop=' + ':'.join(map(str, clip['crop'])))
-        filters += ['fps=24', 'scale=1920:996:force_original_aspect_ratio=decrease:force_divisible_by=2',
+        speed = float(clip.get('speed', 1))
+        assert .5 <= speed <= 2
+        filters += [f'setpts=(PTS-STARTPTS)/{speed}', 'fps=24', 'scale=1920:996:force_original_aspect_ratio=decrease:force_divisible_by=2',
                     'pad=1920:996:(ow-iw)/2:(oh-ih)/2:color=0xFAF7EF',
-                    'pad=1920:1080:0:84:color=0xFAF7EF', 'setsar=1', 'setpts=PTS-STARTPTS']
+                    'pad=1920:1080:0:84:color=0xFAF7EF', 'setsar=1']
         chain = '[0:v]' + ','.join(filters) + '[screen];[screen][1:v]overlay=0:0:eof_action=repeat[v]'
         out = work / f'{i:02}.mp4'
         run([args.ffmpeg, '-hide_banner', '-loglevel', 'error', '-y', '-ss', clip['start'],

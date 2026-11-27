@@ -1,119 +1,176 @@
 {
-  "edition": "TeleAgent 3.1.1 actual run; simulated novice learner",
+  "edition": "TeleAgent actual run with genuine DeepSeek Flash configuration and two-turn Q&A",
   "clips": [
     {
       "file": "01-teleagent-intake.mkv",
       "start": 43,
-      "duration": 5,
+      "duration": 4,
       "crop": [
         1920,
         1034,
         0,
         0
       ],
-      "caption": "在 TeleAgent 输入：我想学习大学课程：高等数学"
+      "caption": "在 TeleAgent 输入：我想学习大学课程：高等数学",
+      "speed": 1.2
     },
     {
       "file": "01-teleagent-intake.mkv",
       "start": 63,
-      "duration": 4,
+      "duration": 3,
       "crop": [
         1920,
         1034,
         0,
         0
       ],
-      "caption": "Skill 主动了解：学习目标、基础、时间与偏好"
+      "caption": "Skill 主动了解：学习目标、基础、时间与偏好",
+      "speed": 1.15
     },
     {
       "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
       "start": 1,
-      "duration": 4,
-      "caption": "课程生成后，打开学习路线和第一课"
+      "duration": 3,
+      "caption": "课程生成后，打开学习路线和第一课",
+      "speed": 1
     },
     {
       "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
       "start": 20,
-      "duration": 4,
+      "duration": 3,
       "crop": [
         1440,
         900,
         210,
         100
       ],
-      "caption": "网页入门评估：学生作答自动保存"
+      "caption": "网页入门评估：学生作答自动保存",
+      "speed": 1.15
     },
     {
       "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
       "start": 52,
-      "duration": 4,
-      "caption": "第一课：用图像理解函数，再看例题"
-    },
-    {
-      "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
-      "start": 62,
-      "duration": 4,
-      "caption": "即时检查给出反馈，帮助理解错误原因"
+      "duration": 3.5,
+      "caption": "第一课：用图像理解函数，再看例题",
+      "speed": 1
     },
     {
       "file": "browser-raw/page@02aa3abcaa3a904a72286b5f7322ed3b.webm",
       "start": 90,
-      "duration": 4.5,
+      "duration": 3.5,
       "crop": [
         1440,
         420,
         210,
         70
       ],
-      "caption": "练习作答：函数加 3，究竟向哪边移动？"
+      "caption": "练习作答：函数加 3，究竟向哪边移动？",
+      "speed": 1
     },
     {
       "file": "browser-raw/page@75d8980345124b82b5db2c323f0b3b1f.webm",
       "start": 12.2,
-      "duration": 2.5,
+      "duration": 2,
       "crop": [
         1440,
         270,
         210,
         500
       ],
-      "caption": "保存疑问，作为下一次备课的参考"
+      "caption": "保存疑问，作为下一次备课的参考",
+      "speed": 1
     },
     {
       "file": "04-teleagent-reading-submissions.mkv",
       "start": 0.5,
-      "duration": 4,
+      "duration": 3,
       "crop": [
         800,
         370,
         680,
         665
       ],
-      "caption": "回到 TeleAgent 请求继续，Agent 读取本地作答"
+      "caption": "回到 TeleAgent 请求继续，Agent 读取本地作答",
+      "speed": 1.2
     },
     {
       "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
       "start": 1,
-      "duration": 7,
-      "caption": "续课页面已生成：两节正式课，一节补充课"
+      "duration": 3,
+      "caption": "续课页面已生成：两节正式课，一节补充课",
+      "speed": 1
     },
     {
       "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
       "start": 14.8,
-      "duration": 4,
-      "caption": "课程目录更新：先补个人难点，再推进新目标"
+      "duration": 3,
+      "caption": "课程目录更新：先补个人难点，再推进新目标",
+      "speed": 1
     },
     {
       "file": "browser-raw/page@2506c85db6871114f2661f95334192ee.webm",
       "start": 1.5,
-      "duration": 5,
-      "caption": "补充课：左右对照图，讲清两种平移"
+      "duration": 4,
+      "caption": "补充课：左右对照图，讲清两种平移",
+      "speed": 1
     },
     {
       "file": "browser-raw/page@a34604b3b63ca3c3e1f328ecb9608e5b.webm",
       "start": 37.5,
-      "duration": 8,
-      "caption": "正式第二课：继续学习极限的直觉"
+      "duration": 7,
+      "caption": "正式第二课：继续学习极限的直觉",
+      "speed": 1
+    },
+    {
+      "file": "browser-raw/page@5fc5f70038073ee704040e4565492a25.webm",
+      "start": 0.4,
+      "duration": 4,
+      "speed": 1.3,
+      "crop": [
+        1100,
+        760,
+        200,
+        180
+      ],
+      "caption": "课程设置：选择 DeepSeek，输入密钥并获取模型"
+    },
+    {
+      "file": "16-connection-success.mp4",
+      "start": 0,
+      "duration": 2,
+      "crop": [
+        1100,
+        820,
+        200,
+        180
+      ],
+      "caption": "选择 DeepSeek Flash，保存并测试连接"
+    },
+    {
+      "file": "browser-raw/page@69441d6cf815d9bf665b0aba05667a5e.webm",
+      "start": 12.2,
+      "duration": 9,
+      "speed": 1.25,
+      "caption": "回到第一课：AI 结合课程和作答，实时解释疑问",
+      "crop": [
+        1920,
+        950,
+        0,
+        0
+      ]
+    },
+    {
+      "file": "browser-raw/page@69441d6cf815d9bf665b0aba05667a5e.webm",
+      "start": 61,
+      "duration": 3,
+      "speed": 1.15,
+      "caption": "继续追问：上下文连贯，对话自动保存",
+      "crop": [
+        1920,
+        950,
+        0,
+        0
+      ]
     }
   ]
 }
