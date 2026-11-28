@@ -42,6 +42,22 @@ Skill 提供教学规则、模板与本地工具；宿主教学 AI 负责生成�
 - **本地学习记录**：自动保存作答、疑难与聊天，供课程生成 AI 参考。
 - **课内 AI 答疑**：冻结标题栏一键打开大弹窗，紧凑输入、真实流式回复、多轮交流与 Markdown 排版。
 
+## 开源来源与二次开发
+
+学途智伴基于 Matt Pocock 的开源项目 [mattpocock/skills](https://github.com/mattpocock/skills) 中的 [teach Skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/teach/SKILL.md) 进行大幅二次开发。我们继承了目标驱动、逐课 HTML 教学、学习记录指导后续课程，以及 Knowledge → Skills → Wisdom 等教学框架，围绕长期学习扩展了交互课程、学习证据同步与本地运行体系。
+
+| 方向 | 上游提供的基础 | 本项目的主要扩展 |
+| --- | --- | --- |
+| 学习规划 | 学习使命与学习记录，依据最近发展区选择下一课 | 主动访谈、学习者画像、入门评估、阶段路线与具体作答证据判断 |
+| 课程与练习 | 逐课生成 HTML，复用样式与互动组件 | 预置页面模板、主题切换、折叠导航、冻结标题栏、题后作答与疑难记录 |
+| 反馈与续课 | 记录理解与误区，指导后续教学 | 网页答案自动同步到本地文件；读取答案、疑难与聊天，协同安排正式课和独立补充课 |
+| 课内答疑 | 向宿主 Agent 追问 | 网页内模型配置与发现、课程及最新作答上下文、流式多轮对话、分支编辑、附件与聊天持久化 |
+| 运行与验证 | 教学规则与记录格式 | Python 本地服务、跨平台启动器、系统凭据存储、结构检查、回归测试与 TeleAgent 行为验证 |
+
+以 **1.1.0-rc.18** 为例，本项目的运行层包含 **9 份 Python / JavaScript / CSS 源码，共 4,176 行**，另提供 **6 份 HTML 页面模板，含课程设置页**。源码行数包含注释，排除第三方库、示例、测试、构建脚本和 HTML 模板。新增实现将教学规则连接到可交互、可保存、可接续的学习流程；[TeleAgent 高数运行记录](./evals/records/2026-11-27-teleagent-live.json)展示了模拟学员访谈、网页作答与后续正式课、补充课的接续过程。
+
+感谢上游作者提供教学框架。上游采用 [MIT 许可证](https://github.com/mattpocock/skills/blob/main/LICENSE)，其版权与许可全文保留在 [UPSTREAM-LICENSE](./teach-pro/UPSTREAM-LICENSE) 中。
+
 ## 快速开始
 
 ### 安装 Skill
