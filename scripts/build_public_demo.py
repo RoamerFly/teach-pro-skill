@@ -13,15 +13,15 @@ from urllib.parse import unquote, urlsplit
 from zipfile import ZIP_DEFLATED, ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE = ROOT / 'example/competition-pages'
-DEMO = 'example/competition-demo-rc12/'
-MATERIALS = 'example/competition-materials/rc12/'
+SOURCE = ROOT / 'example/showcase'
+DEMO = 'example/agent-security/'
+SHOWCASE = 'example/showcase/'
 FORBIDDEN = {'learner-submissions', 'learner-chats', '.teach-runtime', '.git', '__pycache__', '.tutor-settings.json', '.env'}
 SECRET = re.compile(rb'(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_.-]{24,}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|gh[pousr]_[A-Za-z0-9]{32,}')
 
 def snapshot(ref):
     revision = subprocess.check_output(['git', 'rev-parse', ref], cwd=ROOT, text=True).strip()
-    raw = subprocess.check_output(['git', 'archive', '--format=zip', revision, '--', 'teach-pro', DEMO, MATERIALS], cwd=ROOT)
+    raw = subprocess.check_output(['git', 'archive', '--format=zip', revision, '--', 'teach-pro', DEMO, SHOWCASE], cwd=ROOT)
     with ZipFile(io.BytesIO(raw)) as archive:
         files = {i.filename: (i, archive.read(i)) for i in archive.infolist() if not i.is_dir()}
     return revision, files
@@ -53,7 +53,7 @@ def validate(files):
                 raise ValueError('Missing public link: ' + name + ' -> ' + target)
 
 def load_package_module():
-    spec = importlib.util.spec_from_file_location('submission', ROOT / MATERIALS / 'scripts/package_submission.py')
+    spec = importlib.util.spec_from_file_location('release_builder', ROOT / 'scripts/build_release.py')
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
     return module
 
@@ -64,9 +64,9 @@ def build(output, ref='HEAD'):
     revision, source = snapshot(ref)
     package = load_package_module()
     public = {}
-    for path in SOURCE.rglob('*'):
-        if path.is_file() and path.suffix in {'.html', '.css', '.js', '.png'}:
-            public[path.relative_to(SOURCE).as_posix()] = path.read_bytes()
+    for name, (_, data) in source.items():
+        if name.startswith(SHOWCASE) and Path(name).suffix in {'.html', '.css', '.js', '.png', '.jpg', '.mp4'}:
+            public[name.removeprefix(SHOWCASE)] = data
     course_files = {n: (i, d) for n, (i, d) in source.items() if n.startswith(DEMO)}
     for name, (info, data) in course_files.items():
         check_public(name, data)
@@ -103,8 +103,6 @@ def build(output, ref='HEAD'):
         for path in (temp / 'adaptive').rglob('*'):
             if path.is_file() and path.suffix in {'.html', '.css', '.js'}:
                 public['adaptive/' + path.relative_to(temp / 'adaptive').as_posix()] = path.read_bytes()
-    public['assets/workflow.png'] = source[MATERIALS + 'assets/teach-pro-workflow-architecture-v2-connected.png'][1]
-    public['assets/demo.mp4'] = source[MATERIALS + '学途智伴师生演示视频.mp4'][1]
     public['.nojekyll'] = b''
     validate(public)
     report = {'source_revision': revision, 'status': 'pass', 'local_links': 'pass',

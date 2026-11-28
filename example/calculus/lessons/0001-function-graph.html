@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 1 课 · 函数与图像 | 高等数学 · 期末通关</title>
+  <meta name="description" content="用一个二次函数，把函数记号、定义域、图像和单调性串起来，为极限与导数准备第一张图。">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-course-key="gaodeng-shuxue">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <div class="brand-block">
+        <span class="eyebrow">第一阶段 · 函数与极限</span>
+        <a class="course-title" href="../index.html">高等数学 · 期末通关</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本课目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#orientation">今天要解决什么</a></li>
+          <li><a href="#function-rule">函数是输入—输出规则</a></li>
+          <li><a href="#graph">图像与关键点</a></li>
+          <li><a href="#domain">定义域</a></li>
+          <li><a href="#sketch">画二次函数草图</a></li>
+          <li><a href="#read-graph">单调区间与值域</a></li>
+          <li><a href="#variation">条件变化</a></li>
+          <li><a href="#practice">检查与练习</a></li>
+          <li><a href="#mental-model">心智模型</a></li>
+          <li><a href="#review-plan">复习安排</a></li>
+          <li><a href="#learning-input">疑难记录</a></li>
+        </ol>
+      </nav>
+
+      <nav class="sidebar-section" aria-label="相关文件">
+        <h2>相关文件</h2>
+        <ol class="course-list">
+          <li><a href="./0001-s01-graph-translation.html">第 1 课补充 · 图像平移</a></li>
+          <li><a href="../practice/entry-assessment.html">入门评估（已提交）</a></li>
+        </ol>
+      </nav>
+
+      <nav class="sidebar-section" aria-label="全部课程">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          <li><a href="../index.html">课程首页</a></li>
+          <li><a href="./0001-function-graph.html" aria-current="page">第 1 课 · 函数与图像</a>
+            <ul class="lesson-supplements">
+              <li><a href="./0001-s01-graph-translation.html">补充 · 图像平移</a></li>
+            </ul>
+          </li>
+          <li><a href="./0002-limit-intuition.html">第 2 课 · 极限的直觉</a></li>
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content lesson-page" data-lesson-kind="formal" data-related-lesson="">
+      <header id="lesson-tutor" class="lesson-hero lesson-toolbar" data-lesson-number="0001" aria-label="本课工具栏">
+        <div class="lesson-toolbar-actions"><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog" disabled>问 AI</button></div>
+        <div class="lesson-toolbar-context">
+          <span class="eyebrow">0001 · 第一阶段 函数与极限</span>
+          <h1>第 1 课 · 函数与图像：把 f(x) 读成一条曲线</h1>
+          <p class="lead">用一个二次函数，把函数记号、定义域、图像和单调性串起来。这张图也是下一课理解“极限”的地图。</p>
+        </div>
+      </header>
+
+      <dl class="lesson-meta lesson-status">
+        <div><dt>课程类型</dt><dd><span class="lesson-kind-label">正式课</span></dd></div>
+        <div><dt>预计时间</dt><dd>55 分钟</dd></div>
+        <div><dt>当前进度</dt><dd>第 1 课 · 待作答</dd></div>
+      </dl>
+
+      <section id="orientation" class="content-section learning-objectives">
+        <h2>今天要解决什么</h2>
+        <p>题目问“f(2) 等于多少”“这个函数的最小值在哪”“x 从 0 增大时函数怎么变”。这三问看起来分散，其实都在读同一张图：一个输入对应一个输出，所有输入输出配成曲线。</p>
+        <p>今天用 <strong>f(x) = x² − 2x</strong> 做完整示范。学完你能：</p>
+        <ul class="checklist">
+          <li>把 f(a) 算对，并说清“代入”把哪个数放到了哪里。</li>
+          <li>从表达式判断定义域：分母不能为 0，偶次根号内不能为负。</li>
+          <li>用配方法画二次函数草图，读出顶点、单调区间和值域。</li>
+        </ul>
+        <p><strong>先修：</strong>坐标平面上的点 (x, y)，以及把数代进式子的计算。例如 2×3+1=7。课内会从这两件事开始，不熟也能跟上。</p>
+      </section>
+
+      <section id="prerequisite" class="content-section callout note">
+        <h2>开始前只需两件事</h2>
+        <p><strong>坐标平面：</strong>横轴记录输入 x，纵轴记录输出 y；一个点写成 (x, y)。</p>
+        <p><strong>代入：</strong>把括号里的数放到式子里每个 x 的位置，再按先乘除后加减计算。例如 f(x)=2x+1 时，f(3)=2×3+1=7。</p>
+      </section>
+
+      <article class="lesson-body">
+        <section id="function-rule">
+          <h2>函数是输入—输出规则</h2>
+          <p>函数给每个允许的输入配一个输出。写成 f(x)，读作“f 在 x 处的值”。这里的 f 是规则的名字，x 是输入；f(x) 不是 f 乘 x。</p>
+          <div class="formula">f(x) = x² − 2x</div>
+          <p>这条规则说：拿到一个输入 x，先把它平方，再减去它的 2 倍。输入 3 时，先算 3²=9，再算 2×3=6，最后 9−6=3。所以 f(3)=3。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>输入 x</th><th>代入后的计算</th><th>输出 f(x)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>0² − 2×0</td><td>0</td></tr>
+                <tr><td>1</td><td>1² − 2×1</td><td>−1</td></tr>
+                <tr><td>2</td><td>2² − 2×2</td><td>0</td></tr>
+                <tr><td>3</td><td>3² − 2×3</td><td>3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>把括号里的内容整体放进每个 x 的位置，这条规则对任何输入都成立。例如输入 x+1 时，f(x+1)=(x+1)²−2(x+1)，而不是在原来的式子后面加 1。</p>
+          <div class="callout warning">
+            <strong>常见错法：</strong>把 f(3) 读成 f 乘 3，或者把 f(x+1) 写成 f(x)+1。正确做法是先圈出括号里的整体，再把它替换到每个 x 的位置。练习 3 会专门检查这一点。
+          </div>
+        </section>
+
+        <section id="graph">
+          <h2>图像：把每一对输入和输出画成点</h2>
+          <p>每个输入 x 产生一个输出 f(x)，把它们配成点 (x, f(x)) 画在坐标平面上，所有点连起来就是函数的图像。上面的表格给出 5 个点；曲线把它们之间的所有输入也补上了。</p>
+
+          <figure class="visual-figure visual-figure--wide" style="--diagram-min-width: 640px">
+            <svg viewBox="0 0 720 420" role="img" aria-label="抛物线 y 等于 x 平方减 2x 的图像，顶点在 (1, −1)，与 x 轴交于 0 和 2">
+              <defs>
+                <marker id="axis-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text)"/>
+                </marker>
+              </defs>
+              <rect x="0" y="0" width="720" height="420" fill="var(--surface)"/>
+              <g stroke="var(--border)" stroke-width="1" opacity="0.55">
+                <line x1="155.8" y1="60" x2="155.8" y2="277.9"/>
+                <line x1="375.0" y1="60" x2="375.0" y2="277.9"/>
+                <line x1="484.6" y1="60" x2="484.6" y2="277.9"/>
+                <line x1="594.2" y1="60" x2="594.2" y2="277.9"/>
+                <line x1="265.4" y1="107.9" x2="650" y2="107.9"/>
+                <line x1="265.4" y1="164.6" x2="650" y2="164.6"/>
+                <line x1="265.4" y1="221.2" x2="650" y2="221.2"/>
+                <line x1="265.4" y1="334.6" x2="650" y2="334.6"/>
+              </g>
+
+              <line x1="90" y1="277.9" x2="650" y2="277.9" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow)"/>
+              <line x1="265.4" y1="380" x2="265.4" y2="40" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow)"/>
+              <text x="660" y="272" font-size="17" font-weight="700" fill="var(--text)">x</text>
+              <text x="275" y="34" font-size="17" font-weight="700" fill="var(--text)">y</text>
+              <text x="248" y="298" font-size="16" fill="var(--muted)">O</text>
+
+              <path d="M 133.9 60.3 L 155.8 107.9 L 177.7 151.0 L 199.6 189.5 L 221.6 223.5 L 243.5 253.0 L 265.4 277.9 L 287.3 298.3 L 309.2 314.2 L 331.2 325.5 L 353.1 332.3 L 375.0 334.6 L 396.9 332.3 L 418.9 325.5 L 440.8 314.2 L 462.7 298.3 L 484.6 277.9 L 506.6 253.0 L 528.5 223.5 L 550.4 189.5 L 572.3 151.0 L 594.2 107.9 L 616.2 60.3"
+                    fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+              <line x1="375.0" y1="334.6" x2="265.4" y2="334.6" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 5"/>
+              <line x1="375.0" y1="334.6" x2="375.0" y2="277.9" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 5"/>
+              <circle cx="375.0" cy="334.6" r="6" fill="var(--accent)"/>
+              <circle cx="265.4" cy="277.9" r="4.5" fill="var(--accent)"/>
+              <circle cx="484.6" cy="277.9" r="4.5" fill="var(--accent)"/>
+
+              <text x="392" y="360" font-size="16" font-weight="700" fill="var(--accent)">顶点 (1, −1)</text>
+              <text x="432" y="112" font-size="18" font-weight="700" fill="var(--accent)">y = x² − 2x</text>
+
+              <text x="155.8" y="300" text-anchor="middle" font-size="15" fill="var(--muted)">−1</text>
+              <text x="375.0" y="300" text-anchor="middle" font-size="15" fill="var(--muted)">1</text>
+              <text x="484.6" y="300" text-anchor="middle" font-size="15" fill="var(--muted)">2</text>
+              <text x="594.2" y="300" text-anchor="middle" font-size="15" fill="var(--muted)">3</text>
+              <text x="250" y="339" text-anchor="end" font-size="15" fill="var(--muted)">−1</text>
+              <text x="250" y="226" text-anchor="end" font-size="15" fill="var(--muted)">1</text>
+              <text x="250" y="170" text-anchor="end" font-size="15" fill="var(--muted)">2</text>
+              <text x="250" y="113" text-anchor="end" font-size="15" fill="var(--muted)">3</text>
+            </svg>
+            <figcaption>图 1　f(x)=x²−2x 的图像。横轴是输入 x，纵轴是输出 y。曲线最低点在 (1, −1)，与 x 轴交于 x=0 和 x=2。读图时先找顶点，再从顶点向两侧看曲线是上升还是下降。</figcaption>
+          </figure>
+
+          <p>图像把“代入—计算”变成一眼能看出的形状。看到曲线向下弯到底再向上，后面判断最小值、单调区间都会快很多。</p>
+        </section>
+
+        <section id="domain">
+          <h2>定义域：哪些输入允许进入规则</h2>
+          <p>定义域是所有能让式子有意义的输入 x 组成的集合。常见的有两条限制，先分别看，再取交集。</p>
+          <div class="compare-grid">
+            <div class="callout note">
+              <h3>分母不能为 0</h3>
+              <p>f(x)=1/(x−2) 中，x=2 时分母为 0，除法没有结果，所以定义域是 x≠2。其余实数都可以输入。</p>
+            </div>
+            <div class="callout note">
+              <h3>偶次根号内不能为负</h3>
+              <p>f(x)=√(x−1) 中，根号内需要 x−1≥0，所以定义域是 x≥1。x=1 时根号为 0，可以取。</p>
+            </div>
+          </div>
+          <p>两条限制同时出现时，取同时满足的部分。例如 f(x)=√(x−1)/(x−3)：根号要求 x≥1，分母要求 x≠3。把 x=3 从 [1, +∞) 中挖掉，得到 [1, 3) ∪ (3, +∞)。</p>
+          <div class="formula">[1, 3) ∪ (3, +∞)</div>
+          <p>区间记号里，方括号表示端点包含，圆括号表示端点不包含；∪ 表示把两段合在一起。x=3 处函数没有定义，所以两侧分成两段。</p>
+          <div class="callout key">
+            <strong>检查顺序：</strong>先列出每条限制（分母≠0、根号内≥0），再把所有条件同时满足的 x 留下。最后用区间或不等式写出结果。
+          </div>
+        </section>
+
+        <section id="sketch">
+          <h2>画二次函数草图：先配方，找顶点</h2>
+          <p>二次函数 y=ax²+bx+c 的图像是抛物线。a&gt;0 时开口向上，a&lt;0 时开口向下。画草图的关键是找到顶点：把式子配成 a(x−h)²+k 的形式，顶点就是 (h, k)。</p>
+          <div class="formula">x² − 2x = x² − 2x + 1 − 1 = (x − 1)² − 1</div>
+          <p>这里加了 1 又减了 1，式子的值没有变，但前三项凑成了完全平方 (x−1)²。于是 f(x)=(x−1)²−1：平方部分最小为 0，在 x=1 时取到，所以最小值是 −1，顶点为 (1, −1)。</p>
+          <ol class="process-steps">
+            <li><strong>配方：</strong>把 x²+bx 补成完全平方，加上再减去同一个数。</li>
+            <li><strong>读顶点：</strong>写成 (x−h)²+k 后，顶点是 (h, k)，开口方向看 x² 前的系数正负。</li>
+            <li><strong>找与坐标轴的交点：</strong>令 y=0 解方程得 x 轴交点；令 x=0 得 y 轴交点。</li>
+            <li><strong>描点连线：</strong>顶点加两侧各一两个点，按抛物线形状连起来。</li>
+          </ol>
+
+          <div class="example-card">
+            <header>
+              <span class="eyebrow">完整示例</span>
+              <h3>画 f(x)=x²−2x 的草图</h3>
+            </header>
+            <p><strong>第 1 步，配方：</strong>x²−2x=(x−1)²−1。顶点是 (1, −1)，x² 前系数为 1&gt;0，开口向上。</p>
+            <p><strong>第 2 步，找 x 轴交点：</strong>令 f(x)=0，得 x²−2x=0，提公因式 x(x−2)=0，所以 x=0 或 x=2。图像经过 (0, 0) 和 (2, 0)。</p>
+            <p><strong>第 3 步，找 y 轴交点：</strong>令 x=0，得 f(0)=0，与上面的 (0, 0) 是同一个点。</p>
+            <p><strong>第 4 步，补两个点并连线：</strong>x=3 时 f(3)=3，x=−1 时 f(−1)=3。左右对称，连成图 1 的抛物线。</p>
+            <p><strong>结果：</strong>顶点 (1, −1)，与 x 轴交于 0 和 2，开口向上。草图只需要顶点、两个交点和左右各一个辅助点。</p>
+          </div>
+        </section>
+
+        <section id="read-graph">
+          <h2>从图上读出单调区间、最值和值域</h2>
+          <p>单调性描述“x 从左往右增大时，y 是上升还是下降”。看图 1：从顶点左侧走到顶点，曲线下降；从顶点往右走，曲线上升。</p>
+          <div class="compare-grid">
+            <div class="callout note">
+              <h3>x &lt; 1 的一段</h3>
+              <p>x 从左边增大到 1 时，y 从较大的值减小到 −1。函数在 (−∞, 1] 上递减。</p>
+            </div>
+            <div class="callout note">
+              <h3>x &gt; 1 的一段</h3>
+              <p>x 从 1 继续增大时，y 从 −1 开始增大。函数在 [1, +∞) 上递增。</p>
+            </div>
+          </div>
+          <p>顶点给出最小值 −1，在 x=1 处取到。抛物线向上开口且没有最高点，所以值域是所有大于等于 −1 的实数：</p>
+          <div class="formula">值域：[−1, +∞)</div>
+          <p>这里区间端点 −1 能取到，所以用方括号。单调区间与值域都来自同一张图，先找顶点，再向两侧读升降。</p>
+          <p>把目光放到顶点附近：x 从 1 的左侧靠近 1，y 靠近 −1；x 从 1 的右侧靠近 1，y 也靠近 −1。这个“靠近”正是下一课极限要研究的内容。今天先会读图，下一课再把“靠近”写成 lim。</p>
+        </section>
+
+        <section id="variation">
+          <h2>条件变化：分母、根号与上下平移</h2>
+          <p>同一个规则改动一处，定义域或图像就会跟着变。下面三种变化在期末题里经常出现。</p>
+          <ul>
+            <li><strong>加分母：</strong>g(x)=1/(x−1)。定义域变成 x≠1。x 从两侧靠近 1 时，分母绝对值越来越小，函数值绝对值越来越大；图像在 x=1 处断开。</li>
+            <li><strong>加根号：</strong>h(x)=√(x−1)。定义域变成 x≥1，图像从点 (1, 0) 开始向右延伸；x&lt;1 没有实数输出。</li>
+            <li><strong>整体加 3：</strong>f(x)+3=(x−1)²+2。图像整体向上平移 3 个单位，顶点从 (1, −1) 移到 (1, 2)，值域从 [−1, +∞) 变成 [2, +∞)。</li>
+          </ul>
+          <p>这三条变化都指向同一件事：先看表达式允许哪些输入，再看图像的关键点被移到了哪里。</p>
+        </section>
+      </article>
+
+      <section id="practice" class="content-section">
+        <h2>检查与练习</h2>
+        <p>先做两道即时检查，再做四道练习。每题下方直接作答，答案和解析折叠在后面；写完再看，能更准确地发现自己的卡点。</p>
+
+        <h3>即时检查 1：代入与符号</h3>
+        <article class="exercise-card" data-difficulty="easy">
+          <p>已知 f(x)=x²−2x，求 f(−1)。</p>
+          <div data-quiz data-save-key="lesson-0001-check-1" data-correct-answer="3">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-1" value="a" data-correct="true" data-feedback="正确。f(−1)=(−1)²−2×(−1)=1+2=3。负数的平方为正，减去负数等于加正数。">3</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-1" value="b" data-feedback="这里把 −2×(−1) 算成了 −2。负负得正，−2×(−1)=+2，所以结果是 1+2=3。">−3</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-1" value="c" data-feedback="你算到了 (−1)²=1，但漏掉了后面的 −2×(−1)。代入后要把两项都算完。">1</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-1" value="d" data-feedback="把 x=−1 直接加在结果上，等于没有代入。先把 −1 放到每个 x 的位置，再计算。">−1</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <h3>即时检查 2：两类限制同时出现</h3>
+        <article class="exercise-card" data-difficulty="medium">
+          <p>函数 f(x)=1/√(x−2) 的定义域是（ ）。</p>
+          <div data-quiz data-save-key="lesson-0001-check-2" data-correct-answer="x &gt; 2">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-2" value="a" data-correct="true" data-feedback="正确。根号内要 x−2≥0，同时分母不能为 0，所以 x−2&gt;0，即 x&gt;2。">x &gt; 2</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-2" value="b" data-feedback="x=2 时根号内为 0，分母为 0，整个式子没有定义。根号在分母上时，根号内要严格大于 0。">x ≥ 2</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-2" value="c" data-feedback="分母不为 0 只排除了 x=2，但根号还要求 x−2≥0。两条限制要同时满足，取交集。">x ≠ 2</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-check-2" value="d" data-feedback="x&lt;2 时 x−2 为负，根号内没有实数结果。根号内需要非负。">x &lt; 2</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <h3>练习 1：完整画一张草图</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 1 · 引导</span>
+            <h3>把 f(x)=x²−4x+3 画成草图</h3>
+          </header>
+          <p>依次写出：配方后的形式、顶点、与 x 轴的交点、值域、单调区间。最后用一句话说明开口方向。</p>
+          <label for="lesson-0001-exercise-1">你的配方与读图结果</label>
+          <textarea id="lesson-0001-exercise-1" data-save-key="lesson-0001-exercise-1" rows="6" placeholder="配方：…… 顶点：…… 与 x 轴交点：…… 值域：…… 单调区间：……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>先把 x²−4x 补成完全平方：x²−4x+4=(x−2)²。为了不改变式子的值，加上 4 再减去 4。令 y=0 时，尝试把 x²−4x+3 分解成两个一次因式。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>配方：</strong>x²−4x+3=(x−2)²−1。顶点是 (2, −1)，x² 前系数为 1&gt;0，开口向上。</p>
+            <p><strong>x 轴交点：</strong>令 x²−4x+3=0，分解为 (x−1)(x−3)=0，得 x=1 或 x=3。图像经过 (1, 0) 和 (3, 0)。</p>
+            <p><strong>值域：</strong>平方部分最小为 0，所以最小值 −1，值域 [−1, +∞)。</p>
+            <p><strong>单调区间：</strong>在 (−∞, 2] 上递减，在 [2, +∞) 上递增。</p>
+            <p><strong>检查点：</strong>顶点横坐标是否与配方里的 2 一致；两个根是否都写出；值域端点是否用方括号。</p>
+          </details>
+        </article>
+
+        <h3>练习 2：两条限制取交集</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 2 · 独立</span>
+            <h3>求 f(x)=√(x+1)/(x−2) 的定义域</h3>
+          </header>
+          <p>分别写出根号和分母的限制，再取同时满足的部分，用区间表示。</p>
+          <label for="lesson-0001-exercise-2">你的定义域与理由</label>
+          <textarea id="lesson-0001-exercise-2" data-save-key="lesson-0001-exercise-2" rows="4" placeholder="根号要求……；分母要求……；同时满足得到……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>根号内 x+1≥0；分母 x−2≠0。先在数轴上画出 x≥−1，再把 x=2 挖掉。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>根号要求 x+1≥0，即 x≥−1；分母要求 x−2≠0，即 x≠2。两者同时满足：</p>
+            <div class="formula">[−1, 2) ∪ (2, +∞)</div>
+            <p><strong>检查点：</strong>x=−1 时根号为 0，可以取，所以左端用方括号；x=2 时函数没有定义，所以 2 处用圆括号并把区间分成两段。</p>
+          </details>
+        </article>
+
+        <h3>练习 3：整体代入</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 3 · 找错与改正</span>
+            <h3>f(x+1) 应该怎样算</h3>
+          </header>
+          <p>某同学写：因为 f(x)=x²−2x，所以 f(x+1)=x²−2x+1。指出这一步错在哪里，并写出正确的 f(x+1)。</p>
+          <label for="lesson-0001-exercise-3">你的判断与改正</label>
+          <textarea id="lesson-0001-exercise-3" data-save-key="lesson-0001-exercise-3" rows="5" placeholder="错在……；正确写法是……；化简后得到……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>把 x+1 看成一个整体，用括号包住，替换原来式子里的每个 x。替换完再展开、合并同类项。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>错误：</strong>只在式子末尾加了 1，没有把 x+1 代进每个 x。f(x+1) 表示输入是 x+1，不是 f(x) 再加 1。</p>
+            <p><strong>正确写法：</strong>f(x+1)=(x+1)²−2(x+1)=x²+2x+1−2x−2=x²−1。</p>
+            <p><strong>检查点：</strong>两个 x 的位置是否都替换成了 x+1；展开 (x+1)² 时中间项 2x 是否写出；最后是否合并了同类项。</p>
+          </details>
+        </article>
+
+        <h3>练习 4：图像整体平移</h3>
+        <article class="exercise-card" data-difficulty="hard" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 4 · 迁移</span>
+            <h3>把抛物线整体抬高 3 个单位</h3>
+          </header>
+          <p>比较 f(x)=x²−2x 与 g(x)=x²−2x+3。写出 g 的顶点、值域，并说明它与 f 的图像位置关系；再判断 g 与 x 轴有没有交点。</p>
+          <label for="lesson-0001-exercise-4">你的比较与判断</label>
+          <textarea id="lesson-0001-exercise-4" data-save-key="lesson-0001-exercise-4" rows="5" placeholder="g 配方后是……；顶点……；值域……；与 f 的图像相比……；与 x 轴交点……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>g(x)=(x²−2x)+3，先对括号内配方。比较两者的顶点纵坐标。判断与 x 轴交点时，看 g 的最小值是正、零还是负。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>g(x)=x²−2x+3=(x−1)²−1+3=(x−1)²+2。顶点是 (1, 2)，开口向上，值域 [2, +∞)。</p>
+            <p>与 f(x)=(x−1)²−1 相比，每个输出都多了 3，图像整体向上平移 3 个单位，顶点从 (1, −1) 移到 (1, 2)。</p>
+            <p>g 的最小值是 2&gt;0，图像整个在 x 轴上方，所以与 x 轴没有交点。代数上，方程 x²−2x+3=0 的判别式 Δ=(−2)²−4×1×3=4−12=−8&lt;0，没有实数根。</p>
+            <p><strong>检查点：</strong>配方是否得到 (x−1)²+2；值域是否为 [2, +∞)；是否用最小值正负判断了与 x 轴的无交点。</p>
+          </details>
+        </article>
+
+        <aside class="callout note" aria-label="平移补充">
+          <strong>练习 4 的平移还想再看一遍？</strong> 补充课把 f(x)+3 与 f(x−3) 画在同一张图上，专门对照你写下的 (4, −1)。<a href="./0001-s01-graph-translation.html">读第 1 课补充 · 图像平移</a>，再继续第 2 课。
+        </aside>
+      </section>
+
+      <section id="mental-model" class="content-section mental-model">
+        <h2>带走这个心智模型</h2>
+        <p><strong>函数是一条规则，图像是这条规则的全部输入—输出配对。</strong>定义域回答“哪些输入允许进入”，顶点和交点回答“图像的关键位置在哪里”，从左往右看回答“上升还是下降”。</p>
+        <p>下一课把“x 靠近某个数时 y 靠近什么”单独拿出来研究，那就是极限。今天先确保你能把 f(a) 算对、把定义域写对、把一张抛物线草图读对。</p>
+      </section>
+
+      <section id="review-plan" class="content-section">
+        <h2>复习安排</h2>
+        <ul class="checklist">
+          <li><strong>今天晚些时候（5 分钟）：</strong>合上页面，用自己的话复述 f(3) 与 f×3 的区别，以及定义域的两条限制。</li>
+          <li><strong>3 天后（10 分钟）：</strong>重做练习 1，只写配方、顶点、值域三行；再对照答案检查。</li>
+          <li><strong>下一课开始前（5 分钟）：</strong>画 y=x²−4x+3 的草图，标出顶点和两个 x 轴交点，作为极限课的读图热身。</li>
+        </ul>
+      </section>
+
+      <section id="learning-input" class="content-section callout note">
+        <h2>本课疑难记录</h2>
+        <p>记录还想讨论的问题；各题答案已在题后自动保存。</p>
+        <label for="lesson-questions">疑难与希望继续讨论的问题</label>
+        <textarea id="lesson-questions" data-save-key="lesson-0001-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本课记录</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <aside class="callout note" aria-label="向教师追问">
+        <strong>有不清楚的地方？</strong> 你可以随时向教师追问本课任意内容，也可以要求换一种解释、补一个例子、拆解某一步，或继续深入这个主题。
+      </aside>
+
+      <nav class="lesson-pager" aria-label="课程翻页">
+        <a href="./0001-s01-graph-translation.html">图像平移补充 →</a>
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+        <a href="./0002-limit-intuition.html">第 2 课 · 极限的直觉 →</a>
+      </nav>
+    </main>
+  </div>
+
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+  <script src="../assets/tutor.js"></script>
+</body>
+</html>

@@ -4,15 +4,13 @@
 
 以 [mattpocock/skills](https://github.com/mattpocock/skills) 中的 [teach Skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/teach/SKILL.md) 为基座，扩展课程交互、本地作答同步、课内 AI 答疑与正式课、补充课协同续课。上游版权与 MIT 许可见 [UPSTREAM-LICENSE](./teach-pro/UPSTREAM-LICENSE)。
 
-当前版本：**1.1.0-rc.18**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
+当前版本：**1.2.0**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
 
-rc.18 在提问时直接带入当前课最新作答，支持刚填完就问、修改后追问，以及在聊天中保留当时作答。
+支持当前课即时作答、整门教材上下文、多轮流式答疑、分支修改、附件和设备密钥记忆。
 
-此前已支持对话分支、图片与文本附件、思考显示、停止生成，以及聊天内模型与思考程度选择。整门教材、当前提问页与选文定位继续可用。已有课程升级答疑组件后，重启课程服务并刷新网页即可，原作答、聊天和模型配置保留。
+[在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/agent-security/README.md)
 
-[在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/competition-demo-rc12/README.md)
-
-[![学途智伴：自适应教学 Skill 技能包，连接学习目标、课程与本地学习记录](./example/competition-pages/assets/cover.jpg)](https://roamerfly.github.io/teach-pro-skill/)
+[![学途智伴：自适应教学 Skill 技能包，连接学习目标、课程与本地学习记录](./example/showcase/assets/cover.jpg)](https://roamerfly.github.io/teach-pro-skill/)
 
 ## 用途与价值
 
@@ -30,7 +28,7 @@ rc.18 在提问时直接带入当前课最新作答，支持刚填完就问、�
 
 访谈与评估确定起点，网页课程承载讲解与练习，本地记录连接前后两次教学。学员请求继续时，教学 AI 读取作答与疑难，安排下一节正式课及按需补充课。
 
-![学途智伴工作流程架构：学员、教学 AI、网页课程、本地学习记录与续课相互连接](./example/competition-materials/rc12/assets/teach-pro-workflow-architecture-v2-connected.png)
+![学途智伴工作流程架构：学员、教学 AI、网页课程、本地学习记录与续课相互连接](./example/showcase/assets/workflow.png)
 
 Skill 提供教学规则、模板与本地工具；宿主教学 AI 负责生成与续课，课内答疑模型负责当前课的讨论。
 
@@ -48,7 +46,7 @@ Skill 提供教学规则、模板与本地工具；宿主教学 AI 负责生成�
 
 ### 安装 Skill
 
-下载本仓库，将完整的 `teach-pro/` 目录导入 TeleAgent 等支持 Skill 的 Agent 环境，或放入该环境的技能目录。安装后启用“学途智伴”。
+下载 [1.2.0 稳定版](https://github.com/RoamerFly/teach-pro-skill/releases/latest)，或下载本仓库，将完整的 `teach-pro/` 目录导入 TeleAgent 等支持 Skill 的 Agent 环境，或放入该环境的技能目录。安装后启用“学途智伴”。
 
 **快速安装**
 
@@ -96,16 +94,16 @@ Skill 会主动了解学习目标、已有基础、每周时间和学习偏好�
 
 [校园消费统计自适应案例](./teach-pro/references/examples/statistics-adaptive/README.md)展示同一首课的两组模拟作答，以及对应的支持调整与正式／补充交付。在 Skill 根目录运行 `python scripts/build_adaptive_example.py <新目录>`，即可查看完整图解、练习、资源导学和决策依据；这是可复现教学案例，不是模型现场生成。
 
-[比赛 Demo：智鉴 Agent](./example/competition-demo-rc12/README.md) 包含入门评估、三节正式课、一节关联补充课、一手阅读中心与统一模型设置。展示主线推进、按需补充与本地学习记录的衔接。
+[比赛 Demo：智鉴 Agent](./example/agent-security/README.md) 包含入门评估、三节正式课、一节关联补充课、一手阅读中心与统一模型设置。展示主线推进、按需补充与本地学习记录的衔接。
 
 ```sh
-git clone https://github.com/RoamerFly/teach-pro-skill.git
-cd teach-pro-skill/example/competition-demo-rc12
+git clone --depth 1 https://github.com/RoamerFly/teach-pro-skill.git
+cd teach-pro-skill/example/agent-security
 ```
 
-随后使用对应平台的启动器打开课程。此 Demo 使用合成场景，内容经人工校核；后续课节依据新作答生成。[旧版展示](./example/competition-demo-zhi-jian-agent/README.md)保留为历史对照。
+随后使用对应平台的启动器打开课程。示例采用合成学习场景，内容经人工校核。
 
-[早期课程与项目案例](./example/ai-agent-security-intelligence/README.md) 保留字幕视频和安全情报实验代码，供对照使用。
+[高等数学课程示例](./example/calculus/README.md) 来自 TeleAgent 的真实运行，展示零基础访谈、网页学习、作答与正式课、补充课接续。
 
 ## 界面预览
 
@@ -113,20 +111,20 @@ cd teach-pro-skill/example/competition-demo-rc12
 
 课程导航、冻结标题栏、图解和代码围绕当前学习目标组织；理解后通过选择题与开放练习留下作答记录。
 
-![智鉴 Agent 第一课实录：左侧课程导航、顶部课内答疑入口与消息流程图解](./example/competition-pages/assets/course-preview.png)
+![智鉴 Agent 第一课实录：左侧课程导航、顶部课内答疑入口与消息流程图解](./example/showcase/assets/course-preview.png)
 
 ### 多轮课内答疑
 
-围绕当前课连续提问，也可联系之前的课程；正文与提供商返回的思考分别流式显示。支持复制、修改问题、重新生成和左右切换版本，停止生成后保留已收到内容。输入区可选择本次模型与思考程度，并上传、粘贴或拖入图片及文本附件。下图来自演示视频中 DeepSeek 的实际两轮回答。
+围绕当前课连续提问，也可联系之前的课程；正文与提供商返回的思考分别流式显示。支持复制、修改问题、重新生成和左右切换版本，停止生成后保留已收到内容。输入区可选择本次模型与思考程度，并上传、粘贴或拖入图片及文本附件。下图为 DeepSeek 课内答疑的实际两轮回答。
 
-![课内答疑实录：从消息上下文追问多轮聊天与工具型 Agent 的区别](./example/competition-pages/assets/tutor-preview.png)
+![课内答疑实录：从消息上下文追问多轮聊天与工具型 Agent 的区别](./example/showcase/assets/tutor-preview.png)
 
 <details>
 <summary>查看统一模型与上下文设置界面</summary>
 
 服务预设、遮蔽密钥、获取模型、测试连接与设备记忆集中在“课程设置”。上下文设置可选择整门教材或当前课、参考答案、资源导学和对话记忆，连接后回到当前课继续提问。
 
-![统一上下文设置：教材范围、本课记忆轮数、参考答案和资源导学](./example/competition-pages/assets/settings-preview.png)
+![统一上下文设置：教材范围、本课记忆轮数、参考答案和资源导学](./example/showcase/assets/settings-preview.png)
 
 </details>
 
@@ -149,33 +147,36 @@ cd teach-pro-skill/example/competition-demo-rc12
 
 ```text
 teach-pro/     Skill 指令、课程模板与运行资源
-example/       课程案例与实验代码
-evals/         合成案例与可复现检查
+example/       智鉴 Agent、高等数学课程与在线展示
+evals/         教学行为案例与验证记录
+scripts/       Skill 发布包与 Pages 构建
+tests/         运行、页面与发布回归检查
+.github/       跨平台检查与自动发布流程
 ```
 
-在仓库根目录发布 Skill ZIP 时从 Git 归档，保留 macOS/Linux 启动脚本的可执行权限：
+## 构建与发布
+
+从当前 Git 提交构建日常版与赛事版 Skill 包：
 
 ```sh
-git archive --format=zip --prefix=teach-pro/ --output=teach-pro-1.1.0-rc.18.zip HEAD:teach-pro
+python scripts/build_release.py dist --ref HEAD --tag v1.2.0
 ```
 
-### 双版本发布
+输出两个 Skill ZIP、`SHA256SUMS` 与来源清单；两个包共享教学与运行代码，赛事版调整中文元数据及目录布局。打包会检查引用、运行代码一致性和启动器权限。
 
-日常使用版保留当前目录和兼容元数据；赛事提交版使用顶层中文字段，将教学规范归入 `references/specs/`、页面模板归入 `assets/templates/`，面向校园生活赛道。两者由同一 Git 提交构建，教学与运行功能一致，不维护第二套源码。
+[Release Actions](https://github.com/RoamerFly/teach-pro-skill/actions/workflows/release.yml) 在 Windows、macOS、Linux 上检查 Python 3.10 / 3.12，并构建安装包。推送稳定版本标签后自动发布 GitHub Release：
 
 ```sh
-python example/competition-materials/rc12/scripts/package_submission.py <日常版目录> --ref <提交> --profile normal_use --skill-only --extract
-python example/competition-materials/rc12/scripts/package_submission.py <赛事版目录> --ref <提交> --profile competition_submit --extract
+git tag v1.2.0
+git push origin v1.2.0
 ```
 
-输出目录必须位于仓库外且为空或尚不存在。目录中提供可直接导入的 `teach-pro/`、ZIP 与逐文件来源校验；赛事版另附完整参赛材料包。参考评审规则适配不等同于官方成绩。
-
-教学行为验收见[三项稳定化关卡](./evals/competition-gates.md)；展示与发布校核见 [Demo 验收记录](./evals/records/2026-10-01-competition-demo-review.md)和 [在线入口验收记录](./evals/records/2026-10-11-pages-upload-ready.md)。
+后续发布时更新 `teach-pro/VERSION.md`、更新记录及对应的 `docs/releases/<版本>.md`，再推送标签。已有标签也可在 Actions 中手动运行发布。
 
 ## 文档与反馈
 
 - [Skill 使用说明](./teach-pro/README.md)
-- [新版参赛说明与视频制作方案](./example/competition-materials/rc12/README.md)
+- [1.2.0 发布说明](./docs/releases/1.2.0.md)
 - [课程工作区规范](./teach-pro/COURSE-WORKSPACE-SPEC.md)
 - [资源选择策略](./teach-pro/RESOURCE-SELECTION-POLICY.md)
 - [本地同步规范](./teach-pro/LOCAL-SYNC-SPEC.md)

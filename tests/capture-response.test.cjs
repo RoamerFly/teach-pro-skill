@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { validateTutorRecord, readTutorResponse } = require('../example/competition-materials/scripts/capture_response.cjs');
+const { validateTutorRecord, readTutorResponse } = require('./helpers/capture_response.cjs');
 const request = { message: '我的问题' };
 const record = { messages: [{ role: 'user', id: 'question-id', content: '我的问题', status: 'complete' }, { role: 'assistant', reply_to: 'question-id', content: '中文流式正文', status: 'complete' }] };
 test('recording validator accepts only a complete saved answer paired with this question', () => {

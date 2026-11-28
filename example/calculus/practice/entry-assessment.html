@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="用 10—15 分钟定位高等数学起点：函数记号、定义域、图像阅读与代数基础。">
+  <title>入门评估 | 高等数学 · 期末通关</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-course-key="gaodeng-shuxue">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside class="sidebar" id="course-sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <div class="brand-block">
+        <span class="eyebrow">起点诊断</span>
+        <a class="course-title" href="../index.html">高等数学 · 期末通关</a>
+      </div>
+      <nav class="sidebar-section" aria-label="页面目录">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#instructions">使用方法</a></li>
+          <li><a href="#questions">评估任务</a></li>
+          <li><a href="#save">保存与提交</a></li>
+        </ol>
+      </nav>
+      <nav class="sidebar-section" aria-label="相关文件">
+        <h2>相关文件</h2>
+        <ol class="course-list">
+          <li><a href="../lessons/0001-function-graph.html">第 1 课 · 函数与图像</a></li>
+          <li><a href="../lessons/0001-s01-graph-translation.html">第 1 课补充 · 图像平移</a></li>
+          <li><a href="../lessons/0002-limit-intuition.html">第 2 课 · 极限的直觉</a></li>
+        </ol>
+      </nav>
+      <nav class="sidebar-section" aria-label="课程导航">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          <li><a href="../index.html">课程首页</a></li>
+          <li><a href="../lessons/0001-function-graph.html">第 1 课 · 函数与图像</a>
+            <ul class="lesson-supplements">
+              <li><a href="../lessons/0001-s01-graph-translation.html">补充 · 图像平移</a></li>
+            </ul>
+          </li>
+          <li><a href="../lessons/0002-limit-intuition.html">第 2 课 · 极限的直觉</a></li>
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content reference-body">
+      <header class="lesson-hero">
+        <span class="eyebrow">起点诊断</span>
+        <h1>入门评估</h1>
+        <p class="lead">用 10—15 分钟看看你的函数、代数与图像基础，帮助决定第 2 课是直接进入极限，还是先补一小段代数。题目没有分数压力，不会做就写“不确定”。</p>
+      </header>
+
+      <section id="instructions" class="content-section">
+        <h2>使用方法</h2>
+        <p>先作答，再展开每道题的参考标准。评估共 2 道选择题 + 3 道开放题。开放题写下你的思路即可，不必追求标准格式。</p>
+        <p>使用课程启动器时，答案会自动保存到课程目录，教学 AI 在下次对话中可以直接读取。直接双击 HTML 打开时，答案只保存在浏览器，可下载备份或手动粘贴。</p>
+      </section>
+
+      <section id="questions" class="content-section">
+        <h2>评估任务</h2>
+
+        <article class="exercise-card" data-difficulty="easy">
+          <header>
+            <span class="eyebrow">选择题 1 · 函数记号</span>
+            <h3>f(3) 等于多少</h3>
+          </header>
+          <p>已知 f(x) = 2x + 1，求 f(3)。</p>
+          <div data-quiz data-save-key="entry-q1" data-correct-answer="7">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="entry-q1" value="a" data-feedback="先把 x 替换成 3，再算 2×3，最后加 1。这里把乘法算成了加法。">5</label>
+              <label class="quiz-option"><input type="radio" name="entry-q1" value="b" data-feedback="你算到了 2×3，但漏掉后面的 +1。代入后要把整个式子算完。">6</label>
+              <label class="quiz-option"><input type="radio" name="entry-q1" value="c" data-correct="true" data-feedback="正确。f(3)=2×3+1=7。代入就是把括号里的 3 放到每个 x 的位置。">7</label>
+              <label class="quiz-option"><input type="radio" name="entry-q1" value="d" data-feedback="f(3) 只把 x 换成 3，不做 3²。平方是对函数值或另一个表达式才可能出现。">9</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-difficulty="easy">
+          <header>
+            <span class="eyebrow">选择题 2 · 定义域</span>
+            <h3>哪些 x 可以让式子有意义</h3>
+          </header>
+          <p>函数 f(x) = 1 / (x − 2) 的定义域是（ ）。</p>
+          <div data-quiz data-save-key="entry-q2" data-correct-answer="x ≠ 2">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="entry-q2" value="a" data-correct="true" data-feedback="正确。分母 x−2 等于 0 时除法没有定义，所以 x 不能等于 2，其他实数都可以。">x ≠ 2</label>
+              <label class="quiz-option"><input type="radio" name="entry-q2" value="b" data-feedback="x ≥ 2 是偶次根号内表达式的条件。这里的分母只需要不等于 0，x 可以小于 2。">x ≥ 2</label>
+              <label class="quiz-option"><input type="radio" name="entry-q2" value="c" data-feedback="x > 2 只留下大于 2 的一段，漏掉了 x < 2 的输入。分母不为 0 时，两侧都可以取。">x > 2</label>
+              <label class="quiz-option"><input type="radio" name="entry-q2" value="d" data-feedback="这里要看分母 x−2 何时为 0，不是看 x 本身。x=0 时分母为 −2，式子仍然有意义。">x ≠ 0</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <article class="exercise-card" data-difficulty="easy" data-exercise="open">
+          <header>
+            <span class="eyebrow">开放题 1 · 图像阅读</span>
+            <h3>描述 y = x² 的增减</h3>
+          </header>
+          <p>在坐标平面上画出 y = x² 的草图，并用自己的话说明：当 x &lt; 0 时，x 增大，y 怎样变化？当 x &gt; 0 时呢？</p>
+          <label for="entry-q3">你的描述</label>
+          <textarea id="entry-q3" data-save-key="entry-q3" rows="4" placeholder="例如：从左边往右看，曲线先……，再……。"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>从左往右移动 x，观察曲线上的点是在下降还是上升。也可以代入 x = −2、−1、0、1、2 算出对应的 y 值比较。</p>
+          </details>
+          <details class="answer">
+            <summary>查看参考标准</summary>
+            <p>在 x &lt; 0 的一段，x 从负值增大到 0 时，y 从较大的正值减小到 0，曲线下降，所以函数在这一段递减；在 x &gt; 0 的一段，x 增大时 y 增大，曲线上升，所以递增。x = 0 时 y 取得最小值 0。</p>
+            <p><strong>检查点：</strong>是否同时说清了两侧的增减方向，并用“x 增大时 y 怎样变”来描述，而不是只说“曲线像个 U”。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">开放题 2 · 代数基础</span>
+            <h3>解一元二次方程</h3>
+          </header>
+          <p>解方程 x² − 3x + 2 = 0，写出你的过程。能用因式分解就用因式分解，也可以使用求根公式。</p>
+          <label for="entry-q4">你的解题过程</label>
+          <textarea id="entry-q4" data-save-key="entry-q4" rows="5" placeholder="写出每一步：如何分解或代入公式，最后得到哪些根。"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>找两个数，它们的乘积是 2，和是 −3。把 x² − 3x + 2 写成两个一次因式的乘积。</p>
+          </details>
+          <details class="answer">
+            <summary>查看参考标准</summary>
+            <p>x² − 3x + 2 = (x − 1)(x − 2)。两个因式的乘积为 0，说明至少有一个因式为 0，所以 x − 1 = 0 或 x − 2 = 0，得到 x = 1 或 x = 2。</p>
+            <p><strong>检查点：</strong>分解是否正确；是否由“乘积为 0”推出“至少一个因式为 0”；两个根是否都写出。</p>
+          </details>
+        </article>
+
+        <article class="exercise-card" data-difficulty="easy" data-exercise="open">
+          <header>
+            <span class="eyebrow">开放题 3 · 学习起点</span>
+            <h3>你最担心哪一部分</h3>
+          </header>
+          <p>写一个你担心的具体场景，例如“看到 lim 符号不知道从哪下手”“三角函数公式记不住”“积分不知道怎么开始”。这题没有标准答案，用来安排讲解顺序和例题。</p>
+          <label for="entry-q5">你的担心或困惑</label>
+          <textarea id="entry-q5" data-save-key="entry-q5" rows="3" placeholder="写一个具体场景，比只写“都不会”更有帮助。"></textarea>
+        </article>
+      </section>
+
+      <section id="save" class="content-section callout note">
+        <h2>保存与交给 AI</h2>
+        <p>从课程启动器打开时，答案会自动写入课程目录，教学 AI 在下次对话中读取。若仅双击 HTML 打开，则只保存在浏览器，可下载备份，或把答案直接粘贴到对话里。</p>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本页答案</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <nav class="lesson-pager" aria-label="页面导航">
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+        <a href="../lessons/0001-function-graph.html">开始第 1 课</a>
+      </nav>
+    </main>
+  </div>
+
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+</body>
+</html>

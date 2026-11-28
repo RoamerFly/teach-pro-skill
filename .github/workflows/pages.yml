@@ -3,11 +3,12 @@ on:
   push:
     branches: [main]
     paths:
-      - 'example/competition-pages/**'
-      - 'example/competition-demo-rc12/**'
-      - 'example/competition-materials/rc12/**'
+      - 'example/showcase/**'
+      - 'example/agent-security/**'
       - 'teach-pro/**'
       - 'scripts/build_public_demo.py'
+      - 'scripts/build_release.py'
+      - 'scripts/release_profiles.py'
       - 'tests/test_public_demo.py'
       - '.github/workflows/pages.yml'
   workflow_dispatch:

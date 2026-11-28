@@ -1,7 +1,7 @@
 # Version
 
-- Version: 1.1.0-rc.18
-- Release: Live learner answers in tutor requests, 2026-10-30
+- Version: 1.2.0
+- Release: Stable release, 2026-11-28
 - Edition: Universal Web Tutor · adaptive lessons with local sync
 - Invocation: explicit only (`agents/openai.yaml` sets `allow_implicit_invocation: false`)
 - Primary output: learner-facing HTML

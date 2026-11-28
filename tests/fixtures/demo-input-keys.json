@@ -1,0 +1,120 @@
+{
+  "0001-llm-to-agent-api-call.html": {
+    "id": [
+      "arrowBack",
+      "arrowInject",
+      "arrowLoop",
+      "arrowOut",
+      "course-sidebar",
+      "goals",
+      "learning-input",
+      "lesson-0001-evidence-code",
+      "lesson-0001-evidence-explain",
+      "lesson-0001-evidence-predict",
+      "lesson-0001-recall-open",
+      "lesson-0001-troubles",
+      "lesson-tutor",
+      "main-content",
+      "minimal-code",
+      "practice",
+      "recall",
+      "resources",
+      "review",
+      "stateless",
+      "summary",
+      "trust-gap",
+      "video-lee-agent",
+      "what-happens",
+      "whats-missing"
+    ],
+    "data-save-key": [
+      "lesson-0001-check-role",
+      "lesson-0001-check-stateless",
+      "lesson-0001-check-trust",
+      "lesson-0001-evidence-code",
+      "lesson-0001-evidence-explain",
+      "lesson-0001-evidence-predict",
+      "lesson-0001-recall-open",
+      "lesson-0001-troubles"
+    ]
+  },
+  "0002-react-reasoning-loop.html": {
+    "id": [
+      "arrowR2",
+      "course-sidebar",
+      "exercises",
+      "how-llm-speaks",
+      "learning-input",
+      "lesson-evidence",
+      "lesson-questions",
+      "lesson-tutor",
+      "main-content",
+      "mental-model",
+      "react",
+      "recall",
+      "resources",
+      "review-plan",
+      "security",
+      "stopping",
+      "video-datawhale-react",
+      "walkthrough"
+    ],
+    "data-save-key": [
+      "lesson-0002-evidence",
+      "lesson-0002-q1-thought-purpose",
+      "lesson-0002-q2-function-calling",
+      "lesson-0002-q3-injection-target",
+      "lesson-0002-questions"
+    ]
+  },
+  "0002-s01-injection-without-thought.html": {
+    "id": [
+      "authority",
+      "course-sidebar",
+      "exercises",
+      "learning-input",
+      "lesson-evidence",
+      "lesson-questions",
+      "lesson-tutor",
+      "main-content",
+      "mental-model",
+      "no-thought",
+      "orientation",
+      "review-plan"
+    ],
+    "data-save-key": [
+      "lesson-0002-s01-evidence",
+      "lesson-0002-s01-q1-untrusted-content",
+      "lesson-0002-s01-questions"
+    ]
+  },
+  "0003-safe-tool-contract.html": {
+    "id": [
+      "contract",
+      "contract-arrow",
+      "contract-diagram-title",
+      "course-sidebar",
+      "exercises",
+      "implementation",
+      "learning-input",
+      "lesson-evidence",
+      "lesson-questions",
+      "lesson-tutor",
+      "main-content",
+      "mental-model",
+      "orientation",
+      "parsing",
+      "prerequisite",
+      "registration",
+      "resources",
+      "review-plan",
+      "walkthrough"
+    ],
+    "data-save-key": [
+      "lesson-0003-evidence",
+      "lesson-0003-q1-permission",
+      "lesson-0003-q2-type",
+      "lesson-0003-questions"
+    ]
+  }
+}

@@ -7,7 +7,7 @@ const pause=ms=>new Promise(r=>setTimeout(r,ms)),calls=[],streams=[];
 const png=Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/l9sAAAAASUVORK5CYII=','base64');
 (async()=>{
   fs.mkdirSync(qa,{recursive:true});const temp=fs.mkdtempSync(path.join(os.tmpdir(),'teach-conversation-')),course=path.join(temp,'course');fs.mkdirSync(course);
-  const source=path.join(root,'example/competition-demo-rc12');
+  const source=path.join(root,'example/agent-security');
   for(const name of ['assets','lessons','reference','practice','index.html','settings.html','serve_course.py','tutor_chat.py','credential_store.py'])fs.cpSync(path.join(source,name),path.join(course,name),{recursive:true});
   for(const name of ['tutor.js','style.css','tutor_chat.py'])fs.copyFileSync(path.join(root,'teach-pro/assets',name),path.join(course,name.endsWith('.py')?name:'assets/'+name));
   const upstream=http.createServer(async(req,res)=>{

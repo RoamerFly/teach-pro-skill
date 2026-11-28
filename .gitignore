@@ -16,3 +16,10 @@ venv/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+.teach-runtime/
+.teach-portable/
+node_modules/
+dist/
+build/
+_site/

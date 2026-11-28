@@ -9,7 +9,7 @@ const {chromium} = require('playwright');
 const repo = path.resolve(__dirname,'..');
 const qa = process.env.LIMITS_QA_DIR || path.resolve(repo,'../competition-work/2026-10-23-tutor-full-answer-browser');
 const python = process.env.TEACH_PRO_PYTHON || 'C:/Users/浪客飞/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe';
-const source = path.join(repo,'example/competition-demo-rc12');
+const source = path.join(repo,'example/agent-security');
 const slug = '0001-llm-to-agent-api-call';
 const event = (content,finish=null,extra={}) => 'data: '+JSON.stringify({id:'mock-'+ 'm'.repeat(180),model:'loopback-only',choices:[{index:0,delta:content===null?{}:{content},finish_reason:finish}],...extra})+'\n\n';
 (async()=>{

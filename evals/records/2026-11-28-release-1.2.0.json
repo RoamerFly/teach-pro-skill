@@ -1,0 +1,49 @@
+{
+  "date": "2026-11-28",
+  "version": "1.2.0",
+  "before": {
+    "files": 678,
+    "bytes": 205629518
+  },
+  "after_before_audit": {
+    "files": 205,
+    "bytes": 9457580
+  },
+  "cleanup": "Historical presentation production assets and superseded examples archived outside Git; existing Git history preserved",
+  "local_validation": {
+    "python": "3.10.7",
+    "unit_tests": 173,
+    "failures": 0,
+    "errors": 0,
+    "native_keyring_tests_skipped": 9,
+    "response_regressions": 40,
+    "node_checks": 5,
+    "course_structures": {
+      "agent-security": 8,
+      "calculus": 6
+    },
+    "skill_validation": "pass",
+    "workflow_yaml": "pass",
+    "publishable_source_credential_scan": "pass"
+  },
+  "new_release_pipeline": {
+    "platforms": [
+      "Windows",
+      "macOS",
+      "Linux"
+    ],
+    "python": [
+      "3.10",
+      "3.12"
+    ],
+    "profiles": [
+      "normal_use",
+      "competition_submit"
+    ],
+    "assets": [
+      "Skill ZIPs",
+      "SHA256SUMS",
+      "release-manifest.json"
+    ]
+  }
+}

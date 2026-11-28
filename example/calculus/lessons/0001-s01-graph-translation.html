@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 1 课补充 · 图像平移 | 高等数学 · 期末通关</title>
+  <meta name="description" content="用同一张图分清 f(x)+3 与 f(x−3)：加在外面抬高，写在括号里左右移动。">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .translation-figure { --curve-shift: #6b3fa0; }
+    html[data-theme="dark"] .translation-figure { --curve-shift: #d0b0ff; }
+    @media (prefers-color-scheme: dark) {
+      html[data-theme="auto"] .translation-figure { --curve-shift: #d0b0ff; }
+    }
+  </style>
+</head>
+<body data-course-key="gaodeng-shuxue">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <div class="brand-block">
+        <span class="eyebrow">第一阶段 · 函数与极限</span>
+        <a class="course-title" href="../index.html">高等数学 · 期末通关</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本页目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#diagnosis">你卡在哪一步</a></li>
+          <li><a href="#outside">加在外面：输出整体加 3</a></li>
+          <li><a href="#inside">写在括号里：输入减 3</a></li>
+          <li><a href="#compare">两幅图对照</a></li>
+          <li><a href="#exercise4">练习 4 对照</a></li>
+          <li><a href="#rule">一条判断规则</a></li>
+          <li><a href="#practice">练习</a></li>
+          <li><a href="#mental-model">心智模型</a></li>
+          <li><a href="#review-plan">复习安排</a></li>
+          <li><a href="#learning-input">疑难记录</a></li>
+        </ol>
+      </nav>
+
+      <nav class="sidebar-section" aria-label="相关文件">
+        <h2>相关文件</h2>
+        <ol class="course-list">
+          <li><a href="./0001-function-graph.html">第 1 课 · 函数与图像</a></li>
+          <li><a href="../practice/entry-assessment.html">入门评估（已提交）</a></li>
+        </ol>
+      </nav>
+
+      <nav class="sidebar-section" aria-label="全部课程">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          <li><a href="../index.html">课程首页</a></li>
+          <li><a href="./0001-function-graph.html">第 1 课 · 函数与图像</a>
+            <ul class="lesson-supplements">
+              <li><a href="./0001-s01-graph-translation.html" aria-current="page">补充 · 图像平移</a></li>
+            </ul>
+          </li>
+          <li><a href="./0002-limit-intuition.html">第 2 课 · 极限的直觉</a></li>
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content lesson-page" data-lesson-kind="supplement" data-related-lesson="0001">
+      <header id="lesson-tutor" class="lesson-hero lesson-toolbar" data-lesson-number="0001-s01" aria-label="本课工具栏">
+        <div class="lesson-toolbar-actions"><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog" disabled>问 AI</button></div>
+        <div class="lesson-toolbar-context">
+          <span class="eyebrow">0001-s01 · 第 1 课补充</span>
+          <h1>第 1 课补充 · 图像平移：加在外面抬高，写在括号里左右移动</h1>
+          <p class="lead">把你的练习 4 和两种正确写法放在同一张图上：一个是 f(x)+3，一个是 f(x−3)。看清 +3 究竟加在哪里。</p>
+        </div>
+      </header>
+
+      <dl class="lesson-meta lesson-status">
+        <div><dt>课程类型</dt><dd><span class="lesson-kind-label">补充课</span></dd></div>
+        <div><dt>预计时间</dt><dd>30 分钟</dd></div>
+        <div><dt>当前进度</dt><dd>第 1 课补充 · 待作答</dd></div>
+      </dl>
+
+      <section id="orientation" class="content-section learning-objectives">
+        <h2>今天要解决什么</h2>
+        <p>你在练习 4 写下：g 的顶点是 (4, −1)，值域 [−1, +∞)，与 x 轴交于 (3, 0) 和 (5, 0)。这组结果其实属于 <strong>f(x−3)</strong>——括号里减 3，图像向右平移 3。题目要的是 <strong>f(x)+3</strong>，它把图像向上平移 3，顶点是 (1, 2)。</p>
+        <p>学完这一页，你能：</p>
+        <ul class="checklist">
+          <li>看到 f(x)+k，说出图像向上还是向下，顶点怎么变。</li>
+          <li>看到 f(x−h) 或 f(x+h)，说出图像向右还是向左，方向为什么相反。</li>
+          <li>用顶点和表格两种方式检查平移，不再把加在外面和写在括号里混在一起。</li>
+        </ul>
+      </section>
+
+      <article class="lesson-body">
+        <section id="diagnosis">
+          <h2>你卡在哪一步</h2>
+          <p>你的计算过程说明了一个很具体的分歧：<strong>+3 是加给输出 y，还是加给输入 x？</strong></p>
+          <div class="compare-grid">
+            <div class="callout note">
+              <h3>你写的 (4, −1)</h3>
+              <p>这个顶点来自 f(x−3)：原顶点 x=1，向右 3 格变成 x=4；y 仍然是 −1。值域仍是 [−1, +∞)，与 x 轴交点从 0、2 变成 3、5。</p>
+            </div>
+            <div class="callout key">
+              <h3>题目要的 (1, 2)</h3>
+              <p>f(x)+3 给每个输出加 3：原顶点 y=−1 变成 2，x 仍是 1。值域变成 [2, +∞)，图像整个在 x 轴上方，没有 x 轴交点。</p>
+            </div>
+          </div>
+          <p>两种写法只差一个位置：<strong>＋3 在 f(x) 的外面</strong>，还是<strong>−3 在括号里</strong>。下面分别看它们的表格和图像。</p>
+        </section>
+
+        <section id="outside">
+          <h2>加在外面：输出整体加 3</h2>
+          <p>f(x)+3 的计算顺序是：先算 f(x)，再把结果加 3。对同一个输入 x，输出 y 多了 3，所以每个点都向上移动 3 格，x 坐标不变。</p>
+          <div class="formula">f(x) + 3 = (x² − 2x) + 3 = (x − 1)² + 2</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>输入 x</th><th>原来的 f(x)</th><th>f(x)+3</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>0</td><td>3</td></tr>
+                <tr><td>1</td><td>−1</td><td>2</td></tr>
+                <tr><td>2</td><td>0</td><td>3</td></tr>
+                <tr><td>3</td><td>3</td><td>6</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>顶点从 (1, −1) 变成 (1, 2)，最小值从 −1 变成 2，值域是 [2, +∞)。因为最小值 2 &gt; 0，整条曲线在 x 轴上方，与 x 轴没有交点。</p>
+          <div class="callout key">
+            <strong>加在外面的效果：</strong>f(x)+k 把图像向上平移 k 格；f(x)−k 向下平移 k 格。横坐标不变，纵坐标整体加减。
+          </div>
+        </section>
+
+        <section id="inside">
+          <h2>写在括号里：输入减 3</h2>
+          <p>f(x−3) 的计算顺序是：先把输入变成 x−3，再代入 f。它问的是“哪个输入能让原来的规则走到同一个位置”。</p>
+          <div class="formula">f(x − 3) = (x − 3)² − 2(x − 3) = (x − 4)² − 1</div>
+          <p>原来的顶点在输入 1 处；要让 x−3 等于 1，需要 x=4。所以同一个最低点从 x=1 移到了 x=4，图像向右平移 3 格。y 值仍然是 −1，形状没有变。</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>输入 x</th><th>先算 x−3</th><th>f(x−3)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>3</td><td>0</td><td>0</td></tr>
+                <tr><td>4</td><td>1</td><td>−1</td></tr>
+                <tr><td>5</td><td>2</td><td>0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>原来在输入 0、1、2 处出现的 0、−1、0，现在出现在输入 3、4、5 处。整段模式向右搬了 3 格。</p>
+          <div class="callout key">
+            <strong>写在括号里的效果：</strong>f(x−h) 向右平移 h 格；f(x+h) 向左平移 h 格。方向与括号里的符号相反：减号向右，加号向左。
+          </div>
+          <p>f(x+2) 的顶点为什么向左？因为要让 x+2 等于原来的 1，需要 x=−1；输入从 1 退到 −1，图像向左 2 格。</p>
+        </section>
+
+        <section id="compare">
+          <h2>两幅图对照</h2>
+          <p>图 1 用左右两幅对照：左图只做“向上 3”，右图只做“向右 3”。每幅图里的灰色虚线都是原来的 f(x)=x²−2x。先看顶点怎么移动，再看虚线箭头。</p>
+
+          <figure class="visual-figure visual-figure--wide translation-figure" style="--diagram-min-width: 680px">
+<svg viewBox="0 0 720 460" role="img" aria-label="左右两幅同尺度对照图。左图灰色虚线 f 的顶点在 (1,-1)，蓝色实线 f(x)+3 的顶点在 (1,2)，竖直箭头表示向上 3。右图灰色虚线 f 的顶点在 (1,-1)，紫色实线 f(x-3) 的顶点在 (4,-1)，水平箭头表示向右 3。">
+              <defs>
+                <marker id="arrow-up-p" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--muted)"/>
+                </marker>
+                <marker id="arrow-right-p" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--muted)"/>
+                </marker>
+                <marker id="axis-arrow-p" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text)"/>
+                </marker>
+              </defs>
+              <rect x="0" y="0" width="720" height="460" fill="var(--surface)"/>
+              <line x1="365" y1="18" x2="365" y2="445" stroke="var(--border)" stroke-width="1"/>
+
+              <!-- 左图：向上平移 -->
+              <text x="30" y="28" font-size="17" font-weight="700" fill="var(--accent)">f(x)+3：向上平移 3</text>
+              <line x1="30" y1="322" x2="352" y2="322" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow-p)"/>
+              <line x1="74.3" y1="400" x2="74.3" y2="45" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow-p)"/>
+              <text x="357" y="316" font-size="15" fill="var(--text)">x</text>
+              <text x="82" y="42" font-size="15" fill="var(--text)">y</text>
+
+              <path d="M 30.0 220.0 L 38.9 245.8 L 47.7 269.0 L 56.6 289.4 L 65.4 307.0 L 74.3 322.0 L 83.2 334.2 L 92.0 343.8 L 100.9 350.6 L 109.7 354.6 L 118.6 356.0 L 127.4 354.6 L 136.3 350.6 L 145.2 343.8 L 154.0 334.2 L 162.9 322.0 L 171.7 307.0 L 180.6 289.4 L 189.4 269.0 L 198.3 245.8 L 207.2 220.0"
+                    fill="none" stroke="var(--muted)" stroke-width="3" stroke-dasharray="7 5" stroke-linejoin="round" stroke-linecap="round"/>
+              <path d="M 30.0 118.0 L 38.9 143.8 L 47.7 167.0 L 56.6 187.4 L 65.4 205.0 L 74.3 220.0 L 83.2 232.2 L 92.0 241.8 L 100.9 248.6 L 109.7 252.6 L 118.6 254.0 L 127.4 252.6 L 136.3 248.6 L 145.2 241.8 L 154.0 232.2 L 162.9 220.0 L 171.7 205.0 L 180.6 187.4 L 189.4 167.0 L 198.3 143.8 L 207.2 118.0"
+                    fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+              <line x1="118.6" y1="356" x2="118.6" y2="262" stroke="var(--muted)" stroke-width="1.8" stroke-dasharray="5 5" marker-end="url(#arrow-up-p)"/>
+              <circle cx="118.6" cy="356" r="5.5" fill="var(--muted)"/>
+              <circle cx="118.6" cy="254" r="6" fill="var(--accent)"/>
+              <text x="130" y="378" font-size="15" font-weight="700" fill="var(--muted)">f 顶点 (1, −1)</text>
+              <text x="130" y="238" font-size="15" font-weight="700" fill="var(--accent)">f(x)+3 顶点 (1, 2)</text>
+              <text x="64" y="338" text-anchor="end" font-size="14" fill="var(--muted)">O</text>
+              <text x="64" y="362" text-anchor="end" font-size="14" fill="var(--muted)">−1</text>
+              <text x="64" y="260" text-anchor="end" font-size="14" fill="var(--muted)">2</text>
+              <text x="118.6" y="342" text-anchor="middle" font-size="14" fill="var(--muted)">1</text>
+
+              <!-- 右图：向右平移 -->
+              <text x="390" y="28" font-size="17" font-weight="700" fill="var(--curve-shift)">f(x−3)：向右平移 3</text>
+              <line x1="390" y1="322" x2="712" y2="322" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow-p)"/>
+              <line x1="434.3" y1="400" x2="434.3" y2="45" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow-p)"/>
+              <text x="704" y="316" font-size="15" fill="var(--text)">x</text>
+              <text x="442" y="42" font-size="15" fill="var(--text)">y</text>
+
+              <path d="M 390.0 220.0 L 398.9 245.8 L 407.7 269.0 L 416.6 289.4 L 425.4 307.0 L 434.3 322.0 L 443.2 334.2 L 452.0 343.8 L 460.9 350.6 L 469.7 354.6 L 478.6 356.0 L 487.4 354.6 L 496.3 350.6 L 505.2 343.8 L 514.0 334.2 L 522.9 322.0 L 531.7 307.0 L 540.6 289.4 L 549.4 269.0 L 558.3 245.8 L 567.2 220.0"
+                    fill="none" stroke="var(--muted)" stroke-width="3" stroke-dasharray="7 5" stroke-linejoin="round" stroke-linecap="round"/>
+              <path d="M 522.9 220.0 L 531.7 245.8 L 540.6 269.0 L 549.4 289.4 L 558.3 307.0 L 567.2 322.0 L 576.0 334.2 L 584.9 343.8 L 593.7 350.6 L 602.6 354.6 L 611.4 356.0 L 620.3 354.6 L 629.2 350.6 L 638.0 343.8 L 646.9 334.2 L 655.7 322.0 L 664.6 307.0 L 673.4 289.4 L 682.3 269.0 L 691.2 245.8 L 700.0 220.0"
+                    fill="none" stroke="var(--curve-shift)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+
+              <line x1="478.6" y1="356" x2="606" y2="356" stroke="var(--muted)" stroke-width="1.8" stroke-dasharray="5 5" marker-end="url(#arrow-right-p)"/>
+              <circle cx="478.6" cy="356" r="5.5" fill="var(--muted)"/>
+              <circle cx="611.4" cy="356" r="6" fill="var(--curve-shift)"/>
+              <text x="490" y="378" font-size="15" font-weight="700" fill="var(--muted)">f 顶点 (1, −1)</text>
+              <text x="622" y="378" font-size="15" font-weight="700" fill="var(--curve-shift)">(4, −1)</text>
+              <text x="424" y="338" text-anchor="end" font-size="14" fill="var(--muted)">O</text>
+              <text x="424" y="362" text-anchor="end" font-size="14" fill="var(--muted)">−1</text>
+              <text x="478.6" y="342" text-anchor="middle" font-size="14" fill="var(--muted)">1</text>
+              <text x="611.4" y="342" text-anchor="middle" font-size="14" fill="var(--muted)">4</text>
+
+              <text x="30" y="432" font-size="14" fill="var(--muted)">灰色虚线：f(x)；蓝色实线：f(x)+3</text>
+              <text x="390" y="432" font-size="14" fill="var(--muted)">灰色虚线：f(x)；紫色实线：f(x−3)</text>
+            </svg>
+            <figcaption>图 1　左：f(x)+3 把每个输出抬高 3，顶点从 (1, −1) 移到 (1, 2)。右：f(x−3) 要让括号里回到原来的输入，x 必须大 3，图像向右，顶点从 (1, −1) 移到 (4, −1)。灰色虚线在两幅图中都是原函数 f(x)。</figcaption>
+          </figure>
+        </section>
+
+        <section id="exercise4">
+          <h2>练习 4 对照</h2>
+          <p>回到原题：f(x)=x²−2x，g(x)=x²−2x+3。</p>
+          <div class="example-card">
+            <header>
+              <span class="eyebrow">完整示例</span>
+              <h3>g(x)=f(x)+3 的正确读法</h3>
+            </header>
+            <p><strong>第 1 步，认出结构：</strong>g 是在 f(x) 算完之后整体加 3，属于“加在外面”。</p>
+            <p><strong>第 2 步，配方：</strong>g(x)=(x²−2x)+3=(x−1)²−1+3=(x−1)²+2。</p>
+            <p><strong>第 3 步，读顶点：</strong>顶点是 (1, 2)，开口向上。</p>
+            <p><strong>第 4 步，值域与交点：</strong>平方部分最小为 0，所以最小值 2，值域 [2, +∞)。最小值大于 0，图像在 x 轴上方，与 x 轴没有交点。</p>
+            <p><strong>对照你的答案：</strong>(4, −1)、(3, 0)、(5, 0) 属于 f(x−3)，因为括号里减 3 才把图像向右推 3 格。g(x) 的 +3 在括号外，只改 y。</p>
+          </div>
+          <p>再检查一次：f(x−3)=((x−3)−1)²−1=(x−4)²−1，顶点 (4, −1)，令 y=0 得 (x−4)²=1，x=3 或 5。你算出的交点正好对应这条式子。</p>
+        </section>
+
+        <section id="rule">
+          <h2>一条判断规则</h2>
+          <p>拿到一个变形，先看“变化加在哪一层”：</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>写法</th><th>变化作用在</th><th>原顶点 (x₀, y₀) 怎么变</th><th>例子</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>f(x)+3</td><td>输出 y</td><td>向上 3：(x₀, y₀+3)</td><td>f+3 → (1, 2)</td></tr>
+                <tr><td>f(x)−2</td><td>输出 y</td><td>向下 2：(x₀, y₀−2)</td><td>f−2 → (1, −3)</td></tr>
+                <tr><td>f(x−3)</td><td>输入 x</td><td>向右 3：(x₀+3, y₀)</td><td>f(x−3) → (4, −1)</td></tr>
+                <tr><td>f(x+2)</td><td>输入 x</td><td>向左 2：(x₀−2, y₀)</td><td>f(x+2) → (−1, −1)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>表格用 (x₀, y₀) 表示原顶点。更快的检查法：<strong>加在外面，代同一个 x 看 y 多了多少；写在括号里，看哪个 x 能让括号里的值回到原来的输入。</strong></p>
+          <div class="callout warning">
+            <strong>最容易混的一步：</strong>括号里是 x−3 时，图像向右，不是向左。因为要补偿 −3，输入必须变大 3，点才回到原来的高度。括号里是 x+2 时方向相反，向左。
+          </div>
+        </section>
+      </article>
+
+      <section id="practice" class="content-section">
+        <h2>练习</h2>
+        <p>先做两道判断，再做两道写式子的题。每题下方直接作答，写完再展开答案。</p>
+
+        <h3>检查 1：先认位置</h3>
+        <article class="exercise-card" data-difficulty="easy">
+          <p>已知 y=f(x) 的图像。g(x)=f(x)+3 的图像由 f 的图像怎样得到？</p>
+          <div data-quiz data-save-key="lesson-0001-s01-check-1" data-correct-answer="向上平移 3 格">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-1" value="a" data-correct="true" data-feedback="正确。+3 加在 f(x) 外面，给每个输出加 3，所以整条曲线向上。">向上平移 3 格</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-1" value="b" data-feedback="向右是 f(x−3) 的效果：括号里减 3，输入要补偿，图像向右。这里 +3 在括号外，改的是 y。">向右平移 3 格</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-1" value="c" data-feedback="向左是 f(x+3) 的效果：括号里加 3，方向相反。这里 +3 在括号外，只改 y。">向左平移 3 格</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-1" value="d" data-feedback="向下需要 f(x)−3。这里的 +3 给输出加 3，y 变大，图像向上。">向下平移 3 格</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <h3>检查 2：括号里的方向</h3>
+        <article class="exercise-card" data-difficulty="easy">
+          <p>h(x)=f(x−3) 的图像由 f 的图像怎样得到？</p>
+          <div data-quiz data-save-key="lesson-0001-s01-check-2" data-correct-answer="向右平移 3 格">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-2" value="a" data-feedback="向上是 f(x)+3 的效果，改的是输出 y。这里减 3 在括号里，改的是输入 x。">向上平移 3 格</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-2" value="b" data-correct="true" data-feedback="正确。括号里 x−3，要让括号内的值回到原来的输入，x 必须大 3，所以图像向右。">向右平移 3 格</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-2" value="c" data-feedback="向左是 f(x+3)。x−3 需要 x 变大来补偿，方向向右。">向左平移 3 格</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0001-s01-check-2" value="d" data-feedback="向下是 f(x)−3。这里的变化在输入括号里，不是给输出减 3。">向下平移 3 格</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <h3>练习 1：从平移写式子</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 1 · 基础</span>
+            <h3>把 y=x² 移到指定位置</h3>
+          </header>
+          <p>已知 f(x)=x²。分别写出：g 的图像由 f 向上平移 2 格；h 的图像由 f 向右平移 3 格；k 的图像由 f 向左平移 2 格、再向下平移 1 格。</p>
+          <label for="lesson-0001-s01-exercise-1">你的三个式子</label>
+          <textarea id="lesson-0001-s01-exercise-1" data-save-key="lesson-0001-s01-exercise-1" rows="4" placeholder="g(x)=……；h(x)=……；k(x)=……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>加在外面改 y：向上 +2 写成 f(x)+2。写在括号里改 x：向右 3 写成 f(x−3)；向左 2 写成 f(x+2)。最后再整体减 1。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>g(x)=x²+2；h(x)=(x−3)²；k(x)=(x+2)²−1。</p>
+            <p><strong>检查点：</strong>g 的 +2 在括号外；h 的 −3 在括号里；k 同时有“左 2”和“下 1”，左 2 对应 (x+2)，下 1 对应最后的 −1。</p>
+          </details>
+        </article>
+
+        <h3>练习 2：从顶点反推式子</h3>
+        <article class="exercise-card" data-difficulty="hard" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 2 · 迁移</span>
+            <h3>用顶点写 g 和 h</h3>
+          </header>
+          <p>已知 f(x)=x²−2x，顶点 (1, −1)。写出两个新函数：g 的图像由 f 向上平移 4 格；h 的图像由 f 向右平移 3 格。分别写出式子和新顶点。</p>
+          <label for="lesson-0001-s01-exercise-2">你的两个式子与顶点</label>
+          <textarea id="lesson-0001-s01-exercise-2" data-save-key="lesson-0001-s01-exercise-2" rows="5" placeholder="g(x)=……，顶点……；h(x)=……，顶点……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>g 用 f(x)+4；h 用 f(x−3)。写完把括号展开，或者直接把顶点坐标平移后代入顶点式 (x−h)²+k 检查。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>g(x)=f(x)+4=(x−1)²−1+4=(x−1)²+3，顶点 (1, 3)。</p>
+            <p>h(x)=f(x−3)=((x−3)−1)²−1=(x−4)²−1，顶点 (4, −1)。</p>
+            <p><strong>检查点：</strong>g 的顶点只变 y（−1→3），h 的顶点只变 x（1→4）。如果 h 的顶点变成了 (1, −4)，说明把括号里的平移当成了外面。</p>
+          </details>
+        </article>
+
+        <h3>练习 3：找错与改正</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 3 · 找错</span>
+            <h3>向右平移 2 格写成了什么</h3>
+          </header>
+          <p>某同学写：“f(x)=x²−2x，把图像向右平移 2 格，得到 f(x)+2=x²−2x+2。”指出错误，并写出正确的式子和新顶点。</p>
+          <label for="lesson-0001-s01-exercise-3">你的判断与改正</label>
+          <textarea id="lesson-0001-s01-exercise-3" data-save-key="lesson-0001-s01-exercise-3" rows="5" placeholder="错在……；正确式子是……；新顶点是……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>向右平移要改输入，不是给输出加 2。把每个 x 换成 x−2，再化简；原顶点 (1, −1) 向右 2 格应为 (3, −1)。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p><strong>错误：</strong>f(x)+2 是把图像向上平移 2 格，不是向右。向右 2 格应写成 f(x−2)。</p>
+            <p><strong>正确式子：</strong>f(x−2)=(x−2)²−2(x−2)=x²−4x+4−2x+4=x²−6x+8=(x−3)²−1。</p>
+            <p><strong>新顶点：</strong>(3, −1)。原顶点 (1, −1) 向右 2 格，y 不变。</p>
+            <p><strong>检查点：</strong>向右时，括号里是减号；新顶点横坐标变大，纵坐标不变。</p>
+          </details>
+        </article>
+      </section>
+
+      <section id="mental-model" class="content-section mental-model">
+        <h2>带走这个心智模型</h2>
+        <p><strong>加在外面，改的是 y；写在括号里，改的是 x。</strong>f(x)+k 上下移动，k 为正向上；f(x−h) 左右移动，减号向右、加号向左。判断时先看变化在哪一层，再用顶点坐标检查：外面只动纵坐标，括号里只动横坐标。</p>
+        <p>下一课把“x 靠近某个数”单独拿出来研究，就是极限。平移让你看到“输入改变，图像整体搬家”；极限看的是“输入靠近，输出靠近哪个数”。</p>
+      </section>
+
+      <section id="review-plan" class="content-section">
+        <h2>复习安排</h2>
+        <ul class="checklist">
+          <li><strong>今天晚些时候（5 分钟）：</strong>合上页面，写出 f(x)=x²−2x 上移 3、右移 3、左移 2 的三个式子，并标出顶点。</li>
+          <li><strong>2 天后（8 分钟）：</strong>重做练习 2 和练习 3；只看题目，不先看答案。</li>
+          <li><strong>下一课开始前（3 分钟）：</strong>用一句话说出 f(x)+3 与 f(x−3) 的区别，再进入极限。</li>
+        </ul>
+      </section>
+
+      <section id="learning-input" class="content-section callout note">
+        <h2>本课疑难记录</h2>
+        <p>记录还想讨论的问题；各题答案已在题后自动保存。</p>
+        <label for="lesson-questions">疑难与希望继续讨论的问题</label>
+        <textarea id="lesson-questions" data-save-key="lesson-0001-s01-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本课记录</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <aside class="callout note" aria-label="向教师追问">
+        <strong>有不清楚的地方？</strong> 你可以随时向教师追问本课任意内容，也可以要求换一种解释、补一个例子、拆解某一步，或继续深入这个主题。
+      </aside>
+
+      <nav class="lesson-pager" aria-label="课程翻页">
+        <a href="./0001-function-graph.html">← 回到第 1 课</a>
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+        <a href="./0002-limit-intuition.html">继续第 2 课 →</a>
+      </nav>
+    </main>
+  </div>
+
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+  <script src="../assets/tutor.js"></script>
+</body>
+</html>

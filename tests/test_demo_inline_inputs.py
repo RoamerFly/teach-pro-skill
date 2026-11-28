@@ -1,4 +1,5 @@
 import re
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -7,7 +8,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'teach-pro/scripts'))
 from check_course import inspect_html, check_course
-DEMO = ROOT / 'example/competition-demo-rc12'
+DEMO = ROOT / 'example/agent-security'
 
 class DemoInlineInputTests(unittest.TestCase):
     def test_all_four_lessons_are_valid_without_grouped_footer_answers(self):
@@ -24,11 +25,11 @@ class DemoInlineInputTests(unittest.TestCase):
 
     def test_pre_migration_ids_and_keys_survive(self):
         for file in (DEMO / 'lessons').glob('*.html'):
-            before = subprocess.check_output(['git', 'show', 'd72deb6:' + file.relative_to(ROOT).as_posix()], cwd=ROOT).decode('utf-8')
+            baseline = json.loads((ROOT / 'tests/fixtures/demo-input-keys.json').read_text(encoding='utf-8'))[file.name]
             after = file.read_text(encoding='utf-8')
             for attribute in ('id', 'data-save-key'):
                 pattern = attribute + r'="([^"]+)"'
-                self.assertLessEqual(set(re.findall(pattern, before)), set(re.findall(pattern, after)))
+                self.assertLessEqual(set(baseline[attribute]), set(re.findall(pattern, after)))
 
     def test_open_cards_have_individual_answer_fields(self):
         for file in (DEMO / 'lessons').glob('*.html'):

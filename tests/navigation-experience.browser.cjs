@@ -7,7 +7,7 @@ const {pathToFileURL}=require('node:url');
 const {chromium} = require('playwright');
 
 (async () => {
- const root=path.resolve('example/competition-demo-rc12');
+ const root=path.resolve('example/agent-security');
  const output=path.resolve(process.argv[2] || '../competition-work/2026-10-06-navigation-qa');
  await fs.mkdir(output,{recursive:true});
  const server=http.createServer(async(req,res)=>{

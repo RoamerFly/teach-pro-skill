@@ -25,6 +25,6 @@ class PublicDemoTests(unittest.TestCase):
         MODULE.validate({'index.html': b'<a href="https://example.com/">go</a>'})
     def test_adapter_is_only_in_showcase(self):
         self.assertFalse((ROOT / 'teach-pro/assets/preview.js').exists())
-        self.assertIn('downloaded course retains its original runtime', (ROOT / 'example/competition-pages/assets/preview.js').read_text(encoding='utf-8'))
+        self.assertIn('downloaded course retains its original runtime', (ROOT / 'example/showcase/assets/preview.js').read_text(encoding='utf-8'))
 
 if __name__ == '__main__': unittest.main()

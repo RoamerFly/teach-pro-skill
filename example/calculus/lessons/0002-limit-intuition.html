@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="auto" data-visual-theme="systems">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>第 2 课 · 极限的直觉 | 高等数学 · 期末通关</title>
+  <meta name="description" content="用表格和图像理解 lim：x 靠近 a 时 f(x) 靠近什么，以及极限为什么可以与函数值不同。">
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body data-course-key="gaodeng-shuxue">
+  <a class="skip-link" href="#main-content">跳到正文</a>
+  <button class="nav-toggle" type="button" aria-controls="course-sidebar" aria-expanded="false">课程导航</button>
+
+  <div class="page-shell">
+    <aside id="course-sidebar" class="sidebar" aria-label="课程导航">
+      <nav class="course-settings-nav" aria-label="课程设置"><a href="../settings.html">课程设置</a></nav>
+      <div class="brand-block">
+        <span class="eyebrow">第一阶段 · 函数与极限</span>
+        <a class="course-title" href="../index.html">高等数学 · 期末通关</a>
+      </div>
+
+      <nav class="sidebar-section" aria-label="当前页面导航">
+        <h2>本课目录</h2>
+        <ol class="toc-list" data-toc>
+          <li><a href="#orientation">今天要解决什么</a></li>
+          <li><a href="#approach">先把 x 逼近 1</a></li>
+          <li><a href="#notation">极限记号怎么读</a></li>
+          <li><a href="#graph">图像上的靠近</a></li>
+          <li><a href="#hole">洞：函数没定义，极限还在</a></li>
+          <li><a href="#break">断点：两侧不靠近同一个数</a></li>
+          <li><a href="#value">极限值与函数值</a></li>
+          <li><a href="#practice">检查与练习</a></li>
+          <li><a href="#mental-model">心智模型</a></li>
+          <li><a href="#review-plan">复习安排</a></li>
+          <li><a href="#learning-input">疑难记录</a></li>
+        </ol>
+      </nav>
+
+      <nav class="sidebar-section" aria-label="相关文件">
+        <h2>相关文件</h2>
+        <ol class="course-list">
+          <li><a href="./0001-function-graph.html">第 1 课 · 函数与图像</a></li>
+          <li><a href="./0001-s01-graph-translation.html">第 1 课补充 · 图像平移</a></li>
+        </ol>
+      </nav>
+
+      <nav class="sidebar-section" aria-label="全部课程">
+        <h2>课程目录</h2>
+        <ol class="course-list">
+          <li><a href="../index.html">课程首页</a></li>
+          <li><a href="./0001-function-graph.html">第 1 课 · 函数与图像</a>
+            <ul class="lesson-supplements">
+              <li><a href="./0001-s01-graph-translation.html">补充 · 图像平移</a></li>
+            </ul>
+          </li>
+          <li><a href="./0002-limit-intuition.html" aria-current="page">第 2 课 · 极限的直觉</a></li>
+        </ol>
+      </nav>
+    </aside>
+
+    <main id="main-content" class="content lesson-page" data-lesson-kind="formal" data-related-lesson="">
+      <header id="lesson-tutor" class="lesson-hero lesson-toolbar" data-lesson-number="0002" aria-label="本课工具栏">
+        <div class="lesson-toolbar-actions"><button type="button" class="tutor-open" aria-haspopup="dialog" aria-controls="tutor-dialog" disabled>问 AI</button></div>
+        <div class="lesson-toolbar-context">
+          <span class="eyebrow">0002 · 第一阶段 函数与极限</span>
+          <h1>第 2 课 · 极限的直觉：x 靠近 1 时，f(x) 靠近什么</h1>
+          <p class="lead">把 x 取成 0.9、0.99、0.999、1.001，观察 f(x)=x²−2x 的输出都聚到 −1。这个共同的靠近值，就是极限。</p>
+        </div>
+      </header>
+
+      <dl class="lesson-meta lesson-status">
+        <div><dt>课程类型</dt><dd><span class="lesson-kind-label">正式课</span></dd></div>
+        <div><dt>预计时间</dt><dd>60 分钟</dd></div>
+        <div><dt>当前进度</dt><dd>第 2 课 · 待作答</dd></div>
+      </dl>
+
+      <section id="orientation" class="content-section learning-objectives">
+        <h2>今天要解决什么</h2>
+        <p>第 1 课你会读一张图：x 在某个位置时，y 是多少。极限换了一个问法：<strong>x 还没到 a，只是越来越靠近 a，y 会靠近哪个数？</strong>这个问题决定了后面导数、积分能不能开始。</p>
+        <p>学完这一课，你能：</p>
+        <ul class="checklist">
+          <li>用一张数值表说明 x→a 时 f(x)→L，并从图像指出靠近方向。</li>
+          <li>区分“函数在 a 点的值 f(a)”与“极限 L”：极限看 a 附近，不读 a 点本身。</li>
+          <li>判断简单函数在一点的极限是否存在：洞可以补，断点或两侧分叉不行。</li>
+        </ul>
+        <p><strong>先修：</strong>第 1 课的代入与读图；把分式约分，例如 (x²−1)/(x−1)=x+1（x≠1）。这两步会在课内重新演示。</p>
+      </section>
+
+      <article class="lesson-body">
+        <section id="approach">
+          <h2>先把 x 逼近 1</h2>
+          <p>取 f(x)=x²−2x，让 x 从 1 的左边和右边同时靠近 1。把 x 取到小数点后三位，算出对应的 f(x)：</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>x（从左侧靠近）</th><th>0.9</th><th>0.99</th><th>0.999</th><th>1.001</th><th>1.01</th><th>1.1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>f(x)=x²−2x</td><td>−0.990000</td><td>−0.999900</td><td>−0.999999</td><td>−0.999999</td><td>−0.999900</td><td>−0.990000</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>左侧三个输出从 −0.99 向 −1 靠，右侧三个输出也从 −0.99 向 −1 靠。两侧靠到同一个数 −1。这个共同的靠近值记作：</p>
+          <div class="formula">lim<sub>x→1</sub> (x² − 2x) = −1</div>
+          <p>读作“当 x 趋近 1 时，x²−2x 的极限是 −1”。<strong>→</strong> 表示靠近的过程，不表示 x 已经等于 1。表格里的 x 始终没有取 1，输出却已经稳定地靠近 −1。</p>
+          <div class="callout key">
+            <strong>极限看的是趋势：</strong>让 x 从两侧足够靠近 a，如果 f(x) 都靠近同一个有限数 L，就说极限存在，并且等于 L。
+          </div>
+        </section>
+
+        <section id="notation">
+          <h2>极限记号怎么读</h2>
+          <div class="formula">lim<sub>x→a</sub> f(x) = L</div>
+          <p>逐项读：<strong>lim</strong> 是极限的记号；<strong>x→a</strong> 表示 x 从两侧趋近 a；<strong>f(x)</strong> 是对应的输出；<strong>L</strong> 是输出靠近的那个数。整句读作“当 x 趋近 a 时，f(x) 的极限是 L”。</p>
+          <p>有的教材会在 a 的右上角写 − 或 +，例如 x→a⁻ 表示从左侧靠近，x→a⁺ 表示从右侧靠近。两侧都靠近同一个 L 时，双侧极限才存在；两侧靠近不同的数，双侧极限就不存在。</p>
+          <div class="callout note">
+            <strong>两种常见写法：</strong>lim<sub>x→a</sub> f(x) 与 f(x)→L（当 x→a）。它们描述同一件事：输入靠近 a，输出靠近 L。
+          </div>
+        </section>
+
+        <section id="graph">
+          <h2>图像上的靠近</h2>
+          <p>把第 1 课的抛物线放大到顶点附近：x 从左边滑向 1，曲线上的点向下靠近顶点；x 从右边滑向 1，点也向下靠近同一个顶点。图 1 的两个箭头分别表示这两条靠近路线。</p>
+
+          <figure class="visual-figure visual-figure--wide" style="--diagram-min-width: 640px">
+            <svg viewBox="0 0 720 420" role="img" aria-label="抛物线 y 等于 x 平方减 2x，两个箭头从左右两侧指向顶点 (1, -1)，表示 x 趋近 1 时 y 趋近 -1">
+              <defs>
+                <marker id="approach-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"/>
+                </marker>
+                <marker id="axis-arrow-l2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text)"/>
+                </marker>
+              </defs>
+              <rect x="0" y="0" width="720" height="420" fill="var(--surface)"/>
+              <g stroke="var(--border)" stroke-width="1" opacity="0.55">
+                <line x1="155.8" y1="60" x2="155.8" y2="277.9"/>
+                <line x1="375.0" y1="60" x2="375.0" y2="277.9"/>
+                <line x1="484.6" y1="60" x2="484.6" y2="277.9"/>
+                <line x1="594.2" y1="60" x2="594.2" y2="277.9"/>
+                <line x1="265.4" y1="107.9" x2="650" y2="107.9"/>
+                <line x1="265.4" y1="164.6" x2="650" y2="164.6"/>
+                <line x1="265.4" y1="221.2" x2="650" y2="221.2"/>
+                <line x1="265.4" y1="334.6" x2="650" y2="334.6"/>
+              </g>
+
+              <line x1="90" y1="277.9" x2="650" y2="277.9" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow-l2)"/>
+              <line x1="265.4" y1="380" x2="265.4" y2="40" stroke="var(--text)" stroke-width="2" marker-end="url(#axis-arrow-l2)"/>
+              <text x="660" y="272" font-size="17" font-weight="700" fill="var(--text)">x</text>
+              <text x="275" y="34" font-size="17" font-weight="700" fill="var(--text)">y</text>
+              <text x="248" y="298" font-size="16" fill="var(--muted)">O</text>
+
+              <path d="M 133.9 60.3 L 155.8 107.9 L 177.7 151.0 L 199.6 189.5 L 221.6 223.5 L 243.5 253.0 L 265.4 277.9 L 287.3 298.3 L 309.2 314.2 L 331.2 325.5 L 353.1 332.3 L 375.0 334.6 L 396.9 332.3 L 418.9 325.5 L 440.8 314.2 L 462.7 298.3 L 484.6 277.9 L 506.6 253.0 L 528.5 223.5 L 550.4 189.5 L 572.3 151.0 L 594.2 107.9 L 616.2 60.3"
+                    fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+
+              <line x1="340" y1="328" x2="367" y2="334.2" stroke="var(--accent)" stroke-width="3" marker-end="url(#approach-arrow)"/>
+              <line x1="410" y1="328" x2="383" y2="334.2" stroke="var(--accent)" stroke-width="3" marker-end="url(#approach-arrow)"/>
+              <line x1="375.0" y1="334.6" x2="265.4" y2="334.6" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 5"/>
+              <circle cx="375.0" cy="334.6" r="6" fill="var(--accent)"/>
+
+              <text x="310" y="316" font-size="16" font-weight="700" fill="var(--accent)">x→1⁻</text>
+              <text x="398" y="316" font-size="16" font-weight="700" fill="var(--accent)">x→1⁺</text>
+              <text x="288" y="356" font-size="16" font-weight="700" fill="var(--muted)">y→−1</text>
+              <text x="390" y="360" font-size="16" font-weight="700" fill="var(--accent)">(1, −1)</text>
+
+              <text x="375.0" y="300" text-anchor="middle" font-size="15" fill="var(--muted)">1</text>
+              <text x="250" y="339" text-anchor="end" font-size="15" fill="var(--muted)">−1</text>
+            </svg>
+            <figcaption>图 1　x 从左侧（x→1⁻）和右侧（x→1⁺）靠近 1 时，曲线上的点都滑向顶点 (1, −1)。两条箭头最终指向同一个 y 值 −1，所以双侧极限存在，等于 −1。</figcaption>
+          </figure>
+        </section>
+
+        <section id="hole">
+          <h2>洞：函数没定义，极限还在</h2>
+          <p>换一个函数：g(x)=(x²−1)/(x−1)。直接代 x=1 会得到 0/0，函数在 x=1 处没有定义。但在 x≠1 时，分子可以分解成 (x−1)(x+1)，约掉 x−1 后得到 g(x)=x+1。</p>
+          <div class="formula">g(x) = (x² − 1) / (x − 1) = x + 1　（x ≠ 1）</div>
+          <p>所以 g 的图像是一条直线 y=x+1，只在 x=1 处挖掉一个点 (1, 2)，形成一个“洞”。让 x 靠近 1 时，g(x)=x+1 的值靠近 2：</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>x</th><th>0.9</th><th>0.99</th><th>0.999</th><th>1.001</th><th>1.01</th><th>1.1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>g(x)=x+1</td><td>1.9</td><td>1.99</td><td>1.999</td><td>2.001</td><td>2.01</td><td>2.1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>两侧都靠近 2，所以 lim<sub>x→1</sub> g(x)=2。尽管 g(1) 不存在，极限仍然存在。极限描述的是 x 靠近 1 时的输出趋势，不是 x=1 这一点的值。</p>
+          <div class="callout key">
+            <strong>洞的结论：</strong>函数在 a 点没有定义，极限仍可能存在。约分后得到的表达式在 a 点的值，就是洞的“目标高度”。
+          </div>
+        </section>
+
+        <section id="break">
+          <h2>断点：两侧不靠近同一个数</h2>
+          <p>再看 h(x)=1/(x−1)。它在 x=1 处也没有定义，但图像不是洞，而是一条被 x=1 分开的曲线。把 x 从两侧靠近 1：</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>x</th><th>0.9</th><th>0.99</th><th>0.999</th><th>1.001</th><th>1.01</th><th>1.1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>h(x)=1/(x−1)</td><td>−10</td><td>−100</td><td>−1000</td><td>1000</td><td>100</td><td>10</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>从左侧靠近时，分母是小的负数，h(x) 越来越小，向 −∞ 走；从右侧靠近时，分母是小的正数，h(x) 越来越大，向 +∞ 走。两侧没有靠近同一个有限数，所以 lim<sub>x→1</sub> h(x) 不存在。</p>
+
+          <figure class="visual-figure visual-figure--wide" style="--diagram-min-width: 700px">
+<svg viewBox="0 0 720 380" role="img" aria-label="左右两幅图：左边 g(x)=x+1 在 (1,2) 有一个洞，两侧输出都靠近 2；右边 h(x)=1/(x−1) 以 x=1 为竖直渐近线，左侧趋向负无穷，右侧趋向正无穷，极限不存在">
+              <defs>
+                <clipPath id="clip-hole-panel"><rect x="40" y="30" width="310" height="300"/></clipPath>
+                <clipPath id="clip-break-panel"><rect x="390" y="30" width="310" height="300"/></clipPath>
+                <marker id="mini-axis-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--text)"/>
+                </marker>
+              </defs>
+              <rect x="0" y="0" width="720" height="380" fill="var(--surface)"/>
+              <line x1="370" y1="18" x2="370" y2="360" stroke="var(--border)" stroke-width="1"/>
+
+              <!-- 左图：洞 -->
+              <text x="40" y="22" font-size="17" font-weight="700" fill="var(--accent)">g(x) = x + 1（x ≠ 1）</text>
+              <line x1="40" y1="330" x2="355" y2="330" stroke="var(--text)" stroke-width="2" marker-end="url(#mini-axis-arrow)"/>
+              <line x1="40" y1="330" x2="40" y2="22" stroke="var(--text)" stroke-width="2" marker-end="url(#mini-axis-arrow)"/>
+              <text x="358" y="324" font-size="15" fill="var(--text)">x</text>
+              <text x="26" y="40" font-size="15" fill="var(--text)">y</text>
+              <text x="50" y="65" font-size="15" font-weight="700" fill="var(--accent)">两侧 y 都靠近 2</text>
+              <g clip-path="url(#clip-hole-panel)">
+                <line x1="40" y1="241.8" x2="164" y2="157.1" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"/>
+                <line x1="174.3" y1="152.1" x2="324.2" y2="47.6" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round"/>
+              </g>
+              <circle cx="169.2" cy="153.5" r="6" fill="var(--surface)" stroke="var(--accent)" stroke-width="3"/>
+              <text x="185" y="146" font-size="15" font-weight="700" fill="var(--accent)">洞 (1, 2)</text>
+              <text x="169.2" y="348" text-anchor="middle" font-size="15" fill="var(--muted)">1</text>
+              <text x="298.3" y="348" text-anchor="middle" font-size="15" fill="var(--muted)">2</text>
+              <text x="32" y="245" text-anchor="end" font-size="15" fill="var(--muted)">1</text>
+              <text x="32" y="157" text-anchor="end" font-size="15" fill="var(--muted)">2</text>
+              <text x="30" y="334" font-size="14" fill="var(--muted)">O</text>
+
+              <!-- 右图：断点 -->
+              <text x="390" y="22" font-size="17" font-weight="700" fill="var(--warning)">h(x) = 1/(x−1)</text>
+              <line x1="390" y1="180" x2="710" y2="180" stroke="var(--text)" stroke-width="2" marker-end="url(#mini-axis-arrow)"/>
+              <line x1="390" y1="330" x2="390" y2="22" stroke="var(--text)" stroke-width="2" marker-end="url(#mini-axis-arrow)"/>
+              <text x="714" y="174" font-size="15" fill="var(--text)">x</text>
+              <text x="398" y="40" font-size="15" fill="var(--text)">y</text>
+              <text x="380" y="198" text-anchor="end" font-size="14" fill="var(--muted)">O</text>
+              <text x="562.2" y="198" text-anchor="middle" font-size="14" fill="var(--muted)">1</text>
+              <line x1="562.2" y1="22" x2="562.2" y2="340" stroke="var(--warning)" stroke-width="2" stroke-dasharray="6 5"/>
+              <g clip-path="url(#clip-break-panel)">
+                <path d="M 390 195 L 424.4 198.8 L 458.9 205 L 493.3 217.5 L 527.8 255 L 545 330" fill="none" stroke="var(--warning)" stroke-width="3.5" stroke-linecap="round"/>
+                <path d="M 579.4 30 L 596.7 105 L 631.1 142.5 L 665.6 155 L 700 161.25" fill="none" stroke="var(--warning)" stroke-width="3.5" stroke-linecap="round"/>
+              </g>
+              <text x="568" y="52" font-size="15" font-weight="700" fill="var(--warning)">x = 1</text>
+              <text x="396" y="318" font-size="15" fill="var(--warning)">左：y → −∞</text>
+              <text x="610" y="70" font-size="15" fill="var(--warning)">右：y → +∞</text>
+              <text x="500" y="350" font-size="15" font-weight="700" fill="var(--warning)">极限不存在</text>
+            </svg>
+            <figcaption>图 2　左：g(x)=x+1 在 x=1 处挖去一个洞 (1, 2)，两侧都靠近 2，极限是 2。右：h(x)=1/(x−1) 以 x=1 为竖直渐近线，左侧向 −∞、右侧向 +∞，两侧不共享同一个有限数，极限不存在。</figcaption>
+          </figure>
+        </section>
+
+        <section id="value">
+          <h2>极限值与函数值</h2>
+          <p>把 g 的洞补上一个别的值：规定 g(1)=5，其余不变。这时函数在 x=1 处有定义了，但靠近 1 时的输出仍然靠近 2。把 x=1 也放进表格：</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr><th>x</th><th>0.9</th><th>0.99</th><th>0.999</th><th>1</th><th>1.001</th><th>1.01</th><th>1.1</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>g(x)</td><td>1.9</td><td>1.99</td><td>1.999</td><td>5</td><td>2.001</td><td>2.01</td><td>2.1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>除 x=1 以外，所有值都靠近 2；x=1 的那个 5 是单独一个点，不影响两侧的趋势。所以：</p>
+          <div class="formula">lim<sub>x→1</sub> g(x) = 2，而 g(1) = 5</div>
+          <p>极限值 2 与函数值 5 可以不同。极限只看 x 靠近 1 的过程，不读 x=1 这一格。若函数在 a 点连续，则极限恰好等于 f(a)；这里在 1 处被单独改成了 5，连续性被破坏，两者就分开了。</p>
+          <div class="callout warning">
+            <strong>常见错法：</strong>看到 lim<sub>x→1</sub> g(x)=2 就写 g(1)=2。极限是靠近时的目标值；函数在 1 处的实际值要单独看定义。反过来，g(1) 不存在也不说明极限不存在。
+          </div>
+        </section>
+
+        <section id="summary-rule" class="content-section callout key">
+          <h2>判断极限是否存在的三步</h2>
+          <ol class="process-steps">
+            <li><strong>看附近：</strong>先确认 x 在 a 的两侧都有定义（可以挖掉 a 点本身）。</li>
+            <li><strong>看两侧：</strong>用表格或图像比较 x 从左边、右边靠近 a 时，f(x) 是否靠近同一个有限数 L。</li>
+            <li><strong>下结论：</strong>两侧都靠近 L，极限为 L；两侧不同或趋于无穷，极限不存在。最后再单独看 f(a)，它不影响极限。</li>
+          </ol>
+        </section>
+      </article>
+
+      <section id="practice" class="content-section">
+        <h2>检查与练习</h2>
+        <p>先做一道即时检查，再做四道练习。每题下方直接作答，答案和解析折叠在后面。</p>
+
+        <h3>即时检查：先代入再判断</h3>
+        <article class="exercise-card" data-difficulty="easy">
+          <p>lim<sub>x→2</sub> (x² + 1) 等于（ ）。</p>
+          <div data-quiz data-save-key="lesson-0002-check-1" data-correct-answer="5">
+            <div class="quiz-options">
+              <label class="quiz-option"><input type="radio" name="lesson-0002-check-1" value="a" data-correct="true" data-feedback="正确。x 靠近 2 时，x² 靠近 4，再加 1 靠近 5。这里函数在 2 处连续，极限等于 f(2)。">5</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0002-check-1" value="b" data-feedback="你只算了 2²=4，漏掉后面的 +1。代入后要把整个式子算完。">4</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0002-check-1" value="c" data-feedback="把 x+1 的规则套到了 x²+1 上。先算 x²，再加 1。">3</label>
+              <label class="quiz-option"><input type="radio" name="lesson-0002-check-1" value="d" data-feedback="0 表示把输出当成 0。代入 x=2 后先算 2²=4，再加 1，得到 5；可以再用 1.9、2.1 验证。">0</label>
+            </div>
+            <button type="button" class="quiz-submit" data-quiz-submit>检查回答</button>
+            <div data-quiz-feedback aria-live="polite"></div>
+          </div>
+        </article>
+
+        <h3>练习 1：用表格估极限</h3>
+        <article class="exercise-card" data-difficulty="easy" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 1 · 基础</span>
+            <h3>f(x)=x²+1 在 x→2 时靠近什么</h3>
+          </header>
+          <p>取 x=1.9、1.99、1.999、2.001、2.01、2.1，算出 f(x)=x²+1 的对应值，估计 lim<sub>x→2</sub> f(x)，并说明 f(2) 是否等于这个极限。</p>
+          <label for="lesson-0002-exercise-1">你的表格与结论</label>
+          <textarea id="lesson-0002-exercise-1" data-save-key="lesson-0002-exercise-1" rows="5" placeholder="列出 6 个输出；我估计极限是……；f(2)=……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>先算 x²：1.9²=3.61，1.99²=3.9601。再加 1。观察两侧的输出是否都靠近同一个数。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>输出约为 4.61、4.9601、4.996001、5.004001、5.0401、5.41，两侧都靠近 5，所以极限是 5。f(2)=2²+1=5，与极限相同。</p>
+            <p><strong>检查点：</strong>是否列出了两侧的值；是否看到 1.999 与 2.001 的输出都比 5 多一点点或少一点点，但都贴近 5。</p>
+          </details>
+        </article>
+
+        <h3>练习 2：洞函数的极限</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 2 · 约分</span>
+            <h3>g(x)=(x²−4)/(x−2) 在 x→2 时</h3>
+          </header>
+          <p>先约分，再求 lim<sub>x→2</sub> g(x)。说明 g(2) 是否存在，以及极限与 g(2) 的关系。</p>
+          <label for="lesson-0002-exercise-2">你的约分、极限与判断</label>
+          <textarea id="lesson-0002-exercise-2" data-save-key="lesson-0002-exercise-2" rows="5" placeholder="约分后 g(x)=……（x≠2）；极限是……；g(2)……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>分子 x²−4 是平方差，分解成 (x−2)(x+2)。约掉 x−2 时注明 x≠2，再代入 x=2 看约分后的式子。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>g(x)=(x−2)(x+2)/(x−2)=x+2（x≠2）。x 靠近 2 时，x+2 靠近 4，所以极限是 4。g(2) 代入原式得到 0/0，没有定义；极限 4 仍然存在，图像在 (2, 4) 处有一个洞。</p>
+            <p><strong>检查点：</strong>约分后是否写了 x≠2；极限是否用约分后的 x+2 计算；是否区分了“g(2) 不存在”和“极限不存在”。</p>
+          </details>
+        </article>
+
+        <h3>练习 3：两侧不一样</h3>
+        <article class="exercise-card" data-difficulty="hard" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 3 · 迁移</span>
+            <h3>h(x)=|x|/x 在 x→0 时</h3>
+          </header>
+          <p>分别取 x=−0.1、−0.01、0.01、0.1，算出 h(x)=|x|/x 的值。判断 lim<sub>x→0</sub> h(x) 是否存在，并解释理由。</p>
+          <label for="lesson-0002-exercise-3">你的数值与判断</label>
+          <textarea id="lesson-0002-exercise-3" data-save-key="lesson-0002-exercise-3" rows="5" placeholder="负数的 |x|=……；正数的 |x|=……；四个值分别是……；结论……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>当 x&lt;0 时，|x|=−x，所以 h(x)=−x/x=−1；当 x&gt;0 时，|x|=x，所以 h(x)=x/x=1。看两侧是否靠近同一个数。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>x=−0.1 与 −0.01 时 h(x)=−1；x=0.1 与 0.01 时 h(x)=1。左侧一直靠近 −1，右侧一直靠近 1，两侧不共享同一个数，所以 lim<sub>x→0</sub> h(x) 不存在。</p>
+            <p><strong>检查点：</strong>是否写出了 |x| 在正负两侧的表达式；是否用“两侧靠近不同的数”说明不存在，而不是只说“分母为 0”。</p>
+          </details>
+        </article>
+
+        <h3>练习 4：极限值与函数值分开</h3>
+        <article class="exercise-card" data-difficulty="medium" data-exercise="open">
+          <header>
+            <span class="eyebrow">练习 4 · 辨析</span>
+            <h3>补上一个跳跃点</h3>
+          </header>
+          <p>设 f(x)=x+1（x≠1），f(1)=5。求 lim<sub>x→1</sub> f(x) 与 f(1)，并说明为什么两个数可以不同。</p>
+          <label for="lesson-0002-exercise-4">你的极限、函数值与解释</label>
+          <textarea id="lesson-0002-exercise-4" data-save-key="lesson-0002-exercise-4" rows="4" placeholder="极限是……；f(1)=……；因为极限看……，函数值看……"></textarea>
+          <details>
+            <summary>查看提示</summary>
+            <p>极限只看 x 靠近 1 时 x+1 的输出；f(1) 直接读定义里单独规定的值。</p>
+          </details>
+          <details class="answer">
+            <summary>查看答案与解析</summary>
+            <p>lim<sub>x→1</sub> f(x)=1+1=2，因为 x 靠近 1 时，函数按 x+1 的规则输出，靠近 2。f(1)=5，是定义单独规定的。极限描述 1 附近的趋势，函数值描述 1 这一格，两者可以不同。</p>
+            <p><strong>检查点：</strong>是否把两个数分开写；解释中是否提到“附近”与“这一格”的区别。</p>
+          </details>
+        </article>
+      </section>
+
+      <section id="mental-model" class="content-section mental-model">
+        <h2>带走这个心智模型</h2>
+        <p><strong>极限是“两侧一起靠近的那个数”。</strong>让 x 从左右两边越来越靠近 a，如果 f(x) 都靠近同一个有限数 L，就写 lim<sub>x→a</sub> f(x)=L。它看 a 附近，不读 a 点本身；所以洞可以补，断点或两侧分叉不行。</p>
+        <p>下一课把“靠近”变成可计算的步骤：先代入，遇到 0/0 就因式分解或有理化，再代一次。今天的表格和图像是判断依据，下一课加上代数工具。</p>
+      </section>
+
+      <section id="review-plan" class="content-section">
+        <h2>复习安排</h2>
+        <ul class="checklist">
+          <li><strong>今天晚些时候（5 分钟）：</strong>合上页面，用自己的话复述“极限与 f(a) 的区别”，并举一个洞的例子。</li>
+          <li><strong>2 天后（10 分钟）：</strong>重做练习 2 和练习 4，只看题目；重点检查有没有把极限写成函数值。</li>
+          <li><strong>下一课开始前（5 分钟）：</strong>写一张小表：x=1.9、1.99、2.01、2.1 时 (x²−4)/(x−2) 的值，预热约分求极限。</li>
+        </ul>
+      </section>
+
+      <section id="learning-input" class="content-section callout note">
+        <h2>本课疑难记录</h2>
+        <p>记录还想讨论的问题；各题答案已在题后自动保存。</p>
+        <label for="lesson-questions">疑难与希望继续讨论的问题</label>
+        <textarea id="lesson-questions" data-save-key="lesson-0002-questions" placeholder="记录没理解的地方、错误原因和下节课希望回答的问题。"></textarea>
+        <div class="learning-input-actions">
+          <button type="button" data-save-export>下载备份（可选）</button>
+          <button type="button" data-save-clear>清空本课记录</button>
+          <span class="save-status" data-save-status aria-live="polite">尚未填写</span>
+        </div>
+      </section>
+
+      <aside class="callout note" aria-label="向教师追问">
+        <strong>有不清楚的地方？</strong> 你可以随时向教师追问本课任意内容，也可以要求换一种解释、补一个例子、拆解某一步，或继续深入这个主题。
+      </aside>
+
+      <nav class="lesson-pager" aria-label="课程翻页">
+        <a href="./0001-function-graph.html">← 第 1 课 · 函数与图像</a>
+        <a class="pager-home" href="../index.html">返回课程首页</a>
+        <span class="pager-pending">第 3 课 · 极限的计算（待本课作答后生成）</span>
+      </nav>
+    </main>
+  </div>
+
+  <script src="../assets/course.js"></script>
+  <script src="../assets/sync.js"></script>
+  <script src="../assets/tutor.js"></script>
+</body>
+</html>

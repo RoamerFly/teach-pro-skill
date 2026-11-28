@@ -7,7 +7,7 @@ const path = require('node:path');
 const http = require('node:http');
 const { spawn } = require('node:child_process');
 const { chromium } = require('playwright');
-const { readTutorResponse } = require('../example/competition-materials/scripts/capture_response.cjs');
+const { readTutorResponse } = require('./helpers/capture_response.cjs');
 const repo = path.resolve(__dirname, '..');
 const python = process.env.TEACH_PYTHON || 'C:/Users/浪客飞/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe';
 const qa = process.env.TUTOR_QA_DIR || path.resolve(repo, '../competition-work/2026-10-02-tutor-ui-qa');
@@ -16,7 +16,7 @@ const wait = (page, fn) => page.waitForFunction(fn, undefined, { timeout: 15000 
 test('Tutor modal, configuration, retries and local history work through the runtime', { timeout: 180000 }, async () => {
   fs.mkdirSync(qa, { recursive: true });
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'teach-tutor-ui-'));
-  const demo = path.join(repo, 'example/competition-demo-rc12');
+  const demo = path.join(repo, 'example/agent-security');
   fs.cpSync(demo, root, { recursive: true, filter: file => !['learner-chats', 'learner-submissions', '.tutor-settings.json', '.teach-runtime', '__pycache__'].includes(path.relative(demo, file).split(path.sep)[0]) });
   const calls = [], attempts = new Map(), settingsMeasurements = [], composerMeasurements = [];
   const upstream = http.createServer((request, response) => {

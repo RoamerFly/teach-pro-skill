@@ -9,7 +9,7 @@ import unittest
 from zipfile import ZipFile, ZipInfo
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / 'example/competition-materials/rc12/scripts/package_submission.py'
+SCRIPT = ROOT / 'scripts/build_release.py'
 spec = importlib.util.spec_from_file_location('release_profiles', SCRIPT)
 module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(module)
@@ -77,11 +77,11 @@ class ReleaseProfileTests(unittest.TestCase):
             marker = root / 'keep.txt'
             marker.write_bytes(b'user-owned-delivery')
             with self.assertRaises(FileExistsError):
-                module.build(root, profile='normal_use')
+                module.build_files(self.files, root, 'test-source')
             self.assertEqual(marker.read_bytes(), b'user-owned-delivery')
-        with self.assertRaisesRegex(ValueError, 'outside the Git repository'):
-            module.build(ROOT / 'never-create-profile', profile='competition_submit')
-        self.assertFalse((ROOT / 'never-create-profile').exists())
+        with self.assertRaisesRegex(ValueError, 'outside the Skill'):
+            module.build_files(self.files, ROOT / 'teach-pro/never-create-profile', 'test-source')
+        self.assertFalse((ROOT / 'teach-pro/never-create-profile').exists())
 
     def test_competition_example_builds_both_stages_after_relocation(self):
         actual, _ = module.profile_files(self.files, 'competition_submit')
@@ -128,17 +128,6 @@ class ReleaseProfileTests(unittest.TestCase):
                 self.assertEqual(check.returncode, 0, check.stdout + check.stderr)
                 self.assertEqual(len(list(course.rglob('*.html'))), pages)
                 self.assertEqual((course / 'assets/style.css').read_bytes(), self.files['teach-pro/assets/style.css'][1])
-
-    def test_packaged_showcase_is_ready_to_open_and_has_no_runtime_data(self):
-        actual, _ = module.profile_files(self.files, 'competition_submit')
-        members = module.build_showcase_members(actual)
-        self.assertEqual(sum(name.endswith('.html') for name, _, _ in members), 19)
-        self.assertIn('自适应教学案例/index.html', {name for name, _, _ in members})
-        self.assertIn('自适应教学案例/case-b/synthetic-inputs/0001-answer.json', {name for name, _, _ in members})
-        for name, info, data in members:
-            module.check_member(name, data)
-            if name.endswith(('.sh', '.command')):
-                self.assertEqual(info.external_attr >> 16 & 0o777, 0o755)
 
 
 if __name__ == '__main__':
