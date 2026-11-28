@@ -50,6 +50,24 @@ Skill 提供教学规则、模板与本地工具；宿主教学 AI 负责生成�
 
 下载本仓库，将完整的 `teach-pro/` 目录导入 TeleAgent 等支持 Skill 的 Agent 环境，或放入该环境的技能目录。安装后启用“学途智伴”。
 
+**快速安装**
+
+在支持 [Skills CLI](https://github.com/vercel-labs/skills) 的 Agent 环境中，安装 Node.js 22.20+ 后运行：
+
+```sh
+npx skills add RoamerFly/teach-pro-skill --skill teach-pro
+```
+
+按提示选择目标 Agent，默认安装到当前项目。
+
+**让 AI 帮你安装**
+
+也可以向具备文件操作与命令执行能力的 AI 发送：
+
+```text
+帮我安装“学途智伴”Skill，仓库地址是 https://github.com/RoamerFly/teach-pro-skill，技能目录是 teach-pro/。请安装到当前 Agent 的技能目录，并确认可以识别和调用 teach-pro。
+```
+
 ### 创建课程
 
 在对话中选择“学途智伴”技能，直接说出想学的内容：
