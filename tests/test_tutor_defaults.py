@@ -124,7 +124,7 @@ class DefaultTutorTests(unittest.TestCase):
 
     def test_optional_installer_failure_does_not_start_model_or_claim_success(self):
         with patch.object(sys, 'argv', ['serve_course.py', '--install-keyring']), \
-                patch.object(server.venv, 'EnvBuilder') as builder, \
+                patch('venv.EnvBuilder') as builder, \
                 patch.object(server.subprocess, 'run', side_effect=subprocess.CalledProcessError(1, 'synthetic-pip')), \
                 self.assertRaises(SystemExit) as error:
             server.main()

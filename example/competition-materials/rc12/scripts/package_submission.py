@@ -314,7 +314,7 @@ Skill 版本：Teach Pro {VERSION}
 
 在支持该 Skill 文件结构的宿主中导入 `Skill技能包/teach-pro`，显式调用 `@teach-pro`，先评估基础再开课。
 
-Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内答疑需要 Python 3.11 或更新版本。Windows 双击 `start-course.cmd`；macOS 双击 `start-course.command`；Linux 在课程目录执行 `sh start-course.sh`。启动器检查运行环境并准备设备密钥依赖。可选答疑在课程设置中填写自己的 API Key，选择模型并测试连接。
+Demo 可直接打开 `课程Demo/index.html` 阅读；自动写文件与课内答疑需要 Python 3.10 或更新版本。Windows 双击 `start-course.cmd`；macOS 双击 `start-course.command`；Linux 在课程目录执行 `sh start-course.sh`。启动器检查运行环境并准备设备密钥依赖。可选答疑在课程设置中填写自己的 API Key，选择模型并测试连接。
 
 继续学习时，让宿主中的教学 AI 读取该课程目录的学习记录，再生成下一课。浏览器 Tutor 专注本课答疑，帮助学员理解内容、讨论问题。
 

@@ -1,11 +1,11 @@
 # Lesson Tutor · 默认入口，按需使用
 
-每门课程部署设置页与课内答疑。未配置不阻碍静态阅读、练习和浏览器保存；配置、答疑及文件同步需要 Python 3.11+ 本地服务。逐课教学协议不因 Tutor 改变。
+每门课程部署设置页与课内答疑。未配置不阻碍静态阅读、练习和浏览器保存；配置、答疑及文件同步需要 Python 3.10+ 本地服务。逐课教学协议不因 Tutor 改变。
 
 ## 部署与更新
 
 - 课程根目录：复制 assets 中的 `serve_course.py`、`tutor_chat.py`、`credential_store.py` 和三个 `start-course.*` 启动器。Windows 双击 cmd，macOS 双击 command，Linux 用 `sh start-course.sh`；无图形浏览器时用 `python3 serve_course.py --no-browser`。发布保留 sh/command 的可执行权限。
-- 自适应启动：三端启动器自动选择 Python 3.11+；服务统一检测固定版本 keyring，缺少或导入失败时自动在当前课程 `.teach-runtime/` 创建隔离环境、安装并核验，再继续启动。已有环境优先复用，依赖就绪不重复安装；直接运行服务走同一流程，不要求学员输入安装命令或再启动一次。不改全局 Python，不在浏览器请求中安装包。pip 安装限时 60 秒、导入核验 10 秒；网络、venv/pip 或安装失败明确显示简短结果并继续打开课程，下次启动可重新准备。离线可用 `--session-only` 跳过准备；`--install-keyring` 仅保留为兼容的维护入口。
+- 自适应启动：三端启动器自动选择 Python 3.10+；服务统一检测固定版本 keyring，缺少或导入失败时自动在当前课程 `.teach-runtime/` 创建隔离环境、安装并核验，再继续启动。已有环境优先复用，依赖就绪不重复安装；直接运行服务走同一流程，不要求学员输入安装命令或再启动一次。不改全局 Python，不在浏览器请求中安装包。pip 安装限时 60 秒、导入核验 10 秒；网络、venv/pip 或安装失败明确显示简短结果并继续打开课程，下次启动可重新准备。离线可用 `--session-only` 跳过准备；`--install-keyring` 仅保留为兼容的维护入口。
 - 网页 assets：复制 `style.css`、`course.js`、`sync.js`、`tutor.js`、`tutor-settings.js`、`tutor-markdown.js` 和完整 `vendor/`，包括固定发行脚本与许可证。课页底部仍只需加载 `../assets/tutor.js`；它加载本地排版组件，不依赖 CDN 或 npm。
 - 将 `assets/course-settings.html` 复制为根目录 `settings.html`，沿用课程名称、`data-course-key` 和 `data-visual-theme`。所有页左侧置顶设置入口：根页 `./settings.html`，子页 `../settings.html`。正式课与补充课均保留 `#learning-input`，标题栏使用模板的 `.lesson-toolbar`；按分类显示编号，旧课原位兼容，不改页面保存 ID、不重复创建课末入口。
 - 未配置时不自动获取模型、测试或请求回答；仅恢复同源设置与本课历史，没有聊天不创建空文件。file:// 时保留入口与启动提示，请求控件不可用。

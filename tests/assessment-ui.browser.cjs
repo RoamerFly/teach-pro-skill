@@ -1,4 +1,4 @@
-// Isolated browser regression. Requires Playwright, a browser and Python 3.11+.
+// Isolated browser regression. Requires Playwright, a browser and Python 3.10+.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');

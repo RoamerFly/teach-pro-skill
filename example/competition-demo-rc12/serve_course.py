@@ -20,7 +20,6 @@ import re
 import webbrowser
 import subprocess
 import sys
-import venv
 import importlib
 from importlib.metadata import PackageNotFoundError, version
 
@@ -208,6 +207,14 @@ class CourseHandler(BaseHTTPRequestHandler):
         self.send_error(403)
 
 
+def restart_course(executable: Path) -> None:
+    command = [str(executable), '-X', 'utf8', '-B', str(ROOT / 'serve_course.py'), *sys.argv[1:]]
+    if os.name == 'nt':
+        # Windows execv joins argv without quoting paths or arguments that contain spaces.
+        command = [subprocess.list2cmdline([argument]) for argument in command]
+    os.execv(str(executable), command)
+
+
 def use_course_environment() -> None:
     """Reuse an installed course environment even when launched with system Python."""
     environment = ROOT / '.teach-runtime'
@@ -216,7 +223,7 @@ def use_course_environment() -> None:
         return
     if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
         raise ValueError('Invalid course runtime path')
-    os.execv(str(executable), [str(executable), '-X', 'utf8', '-B', str(ROOT / 'serve_course.py'), *sys.argv[1:]])
+    restart_course(executable)
 
 
 def keyring_ready() -> bool:
@@ -231,6 +238,7 @@ def keyring_ready() -> bool:
 
 
 def install_keyring() -> Path:
+    import venv
     from credential_store import KEYRING_REQUIREMENT
     environment = ROOT / '.teach-runtime'
     if environment.is_symlink() or not environment.resolve().is_relative_to(ROOT):
@@ -258,7 +266,7 @@ def prepare_runtime() -> None:
         return
     print('Course runtime ready. Continuing startup...', flush=True)
     # Fresh imports after installation; arguments and chosen port are preserved.
-    os.execv(str(executable), [str(executable), '-X', 'utf8', '-B', str(ROOT / 'serve_course.py'), *sys.argv[1:]])
+    restart_course(executable)
 
 
 def main() -> None:

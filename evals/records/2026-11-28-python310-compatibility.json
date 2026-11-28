@@ -1,0 +1,95 @@
+{
+  "date": "2026-11-28",
+  "skill_version": "1.1.0-rc.18",
+  "minimum_python": "3.10",
+  "changes": [
+    "Three platform launchers accept Python 3.10+",
+    "Documentation, release notes and public demo launchers updated",
+    "Windows runtime restarts quote paths and arguments containing spaces",
+    "Existing venv and license packaging tests aligned with current source"
+  ],
+  "host_platform": "Windows",
+  "checks": [
+    {
+      "python": "3.10.7",
+      "tests": 176,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "patterns": [
+        "test_runtime_launchers.py",
+        "test_tutor*.py",
+        "test_credentials.py",
+        "test_course_check.py",
+        "test_skill_example.py",
+        "test_adaptive_example.py",
+        "test_release_profiles.py",
+        "test_submission_package.py",
+        "test_readme_visuals.py",
+        "test_public_demo.py"
+      ],
+      "all_skill_sources_compile": true,
+      "response_regressions_passed": true
+    },
+    {
+      "python": "3.11.9",
+      "tests": 176,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 9,
+      "patterns": [
+        "test_runtime_launchers.py",
+        "test_tutor*.py",
+        "test_credentials.py",
+        "test_course_check.py",
+        "test_skill_example.py",
+        "test_adaptive_example.py",
+        "test_release_profiles.py",
+        "test_submission_package.py",
+        "test_readme_visuals.py",
+        "test_public_demo.py"
+      ],
+      "all_skill_sources_compile": true,
+      "response_regressions_passed": true
+    }
+  ],
+  "response_regression_tests_per_python": 40,
+  "smoke": {
+    "date": "2026-11-28",
+    "runtime": {
+      "python": "3.10.7",
+      "keyring": "25.7.0"
+    },
+    "native_credential_tests": {
+      "status": "passed",
+      "log": "native-credentials.log",
+      "synthetic_only": true
+    },
+    "http_smoke": {
+      "pages": "passed",
+      "health": "passed",
+      "tutor_bootstrap": "passed",
+      "answer_write": "passed",
+      "restart_restore": "passed"
+    }
+  },
+  "native_credentials": {
+    "python": "3.10.7",
+    "keyring": "25.7.0",
+    "tests": 17,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "synthetic_credentials_only": true
+  },
+  "launchers": {
+    "windows_cmd": "executed with Python 3.10.7 and 3.11.9",
+    "macos_command": "minimum updated; native execution not performed",
+    "linux_sh": "minimum updated; native execution not performed"
+  },
+  "windows_spaced_path_regression": "Real interpreter subprocess with a course venv and a path containing spaces passed on Python 3.10 and 3.11",
+  "skill_validation": "passed",
+  "paid_provider_requests": 0,
+  "real_learner_data_modified": false,
+  "raw_artifact_directory": "competition-work/2026-11-28-python310"
+}

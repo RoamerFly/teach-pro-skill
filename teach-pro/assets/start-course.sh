@@ -5,9 +5,9 @@ if [ -x .teach-runtime/bin/python ]; then
 fi
 for candidate in python3 python; do
   if command -v "$candidate" >/dev/null 2>&1 &&
-    "$candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 11) else 1)' >/dev/null 2>&1; then
+    "$candidate" -c 'import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)' >/dev/null 2>&1; then
     exec "$candidate" -X utf8 -B serve_course.py "$@"
   fi
 done
-printf '%s\n' 'Python 3.11 or newer is required. Install it and try again.' >&2
+printf '%s\n' 'Python 3.10 or newer is required. Install it and try again.' >&2
 exit 1

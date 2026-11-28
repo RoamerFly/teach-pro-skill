@@ -34,7 +34,8 @@ class ReleaseProfileTests(unittest.TestCase):
         self.assertEqual(fields, {'name', 'description', 'name_cn', 'description_cn'})
         self.assertIn('面向大学生课程学习', header)
         self.assertEqual({name for name in actual if '/' not in name.removeprefix('teach-pro/')},
-                         {'teach-pro/SKILL.md', 'teach-pro/README.md', 'teach-pro/CHANGELOG.md'})
+                         {'teach-pro/SKILL.md', 'teach-pro/README.md', 'teach-pro/CHANGELOG.md', 'teach-pro/UPSTREAM-LICENSE'})
+        self.assertEqual(actual['teach-pro/UPSTREAM-LICENSE'][1], self.files['teach-pro/UPSTREAM-LICENSE'][1])
         self.assertIn('teach-pro/references/specs/VERSION.md', actual)
         self.assertIn('teach-pro/assets/templates/quiz.html', actual)
         self.assertEqual(actual['teach-pro/agents/openai.yaml'], self.files['teach-pro/agents/openai.yaml'])

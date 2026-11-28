@@ -1,4 +1,4 @@
-// Isolated showcase QA. Node + Playwright and Chromium/Edge; Python 3.11+ for the local server.
+// Isolated showcase QA. Node + Playwright and Chromium/Edge; Python 3.10+ for the local server.
 // Only synthetic answers are entered. No model connection, listing or chat requests.
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';

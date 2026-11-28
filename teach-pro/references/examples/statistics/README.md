@@ -39,7 +39,7 @@
 
 ## 离线复现与检查
 
-在 Skill 根目录运行，需要 Python 3.11+，输出目录必须尚不存在：
+在 Skill 根目录运行，需要 Python 3.10+，输出目录必须尚不存在：
 
 ```sh
 python scripts/build_example.py <新的输出目录> --stage assessment
