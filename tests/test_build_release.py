@@ -19,12 +19,14 @@ class BuildReleaseTests(unittest.TestCase):
     def setUpClass(cls):
         names = subprocess.check_output(['git','ls-files','-z','teach-pro'], cwd=ROOT).decode().split('\0')
         cls.files = {name: (ZipInfo(name), (ROOT/name).read_bytes()) for name in names if name}
+        cls.version = next(line.split(':', 1)[1].strip() for line in
+                           cls.files['teach-pro/VERSION.md'][1].decode().splitlines() if line.startswith('- Version:'))
 
     def test_packages_have_same_runtime_licenses_modes_and_verifiable_checksums(self):
         with tempfile.TemporaryDirectory() as temporary:
             output = Path(temporary) / 'release'
-            manifest = release.build_files(self.files, output, 'test-source', 'v1.2.0', extract=True)
-            self.assertEqual(manifest['version'], '1.2.0')
+            manifest = release.build_files(self.files, output, 'test-source', 'v'+self.version, extract=True)
+            self.assertEqual(manifest['version'], self.version)
             for entry in manifest['archives']:
                 archive_path = output / entry['file']
                 self.assertEqual(entry['sha256'], hashlib.sha256(archive_path.read_bytes()).hexdigest())
@@ -50,13 +52,13 @@ class BuildReleaseTests(unittest.TestCase):
     def test_tag_mismatch_is_rejected_before_writing(self):
         with tempfile.TemporaryDirectory() as temporary:
             target=Path(temporary)/'release'
-            with self.assertRaises(ValueError): release.build_files(self.files,target,'source','v1.2.1')
+            with self.assertRaises(ValueError): release.build_files(self.files,target,'source','v9999.0.0')
             self.assertFalse(target.exists())
 
     def test_prerelease_version_is_rejected(self):
         files=dict(self.files)
         info,data=files['teach-pro/VERSION.md']
-        files['teach-pro/VERSION.md']=(info,data.replace(b'1.2.0',b'1.2.0-preview.1'))
+        files['teach-pro/VERSION.md']=(info,data.replace(self.version.encode(),(self.version+'-preview.1').encode()))
         with tempfile.TemporaryDirectory() as temporary, self.assertRaises(ValueError):
             release.build_files(files,Path(temporary)/'release','source')
 

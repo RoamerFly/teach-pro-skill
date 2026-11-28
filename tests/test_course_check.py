@@ -29,7 +29,7 @@ def quiz(index=1):
 class CourseCheckTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         for name in checker.REQUIRED:
             file = self.root / name
             file.parent.mkdir(exist_ok=True)

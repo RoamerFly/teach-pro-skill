@@ -32,7 +32,7 @@ server.tutor_chat = tutor
 class DefaultTutorTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
-        self.root = Path(self.temp.name)
+        self.root = Path(self.temp.name).resolve()
         (self.root / 'lessons').mkdir()
         (self.root / 'practice').mkdir()
         (self.root / 'lessons/0001-intro.html').write_text(
