@@ -1,0 +1,182 @@
+{
+  "date": "2026-11-28",
+  "baseline": {
+    "repository": "https://github.com/mattpocock/skills",
+    "commit": "6f7f7831a625f040a8e06a0e7954826b87ce775a",
+    "directory": "skills/productivity/teach",
+    "note": "Pinned comparison snapshot; the original imported revision has not been established."
+  },
+  "project": {
+    "repository": "https://github.com/RoamerFly/teach-pro-skill",
+    "ref": "v1.2.0",
+    "commit": "a6142ad498e6b63a2827dffe9a71c75d8b9d1b36",
+    "directory": "teach-pro"
+  },
+  "metrics": {
+    "skill_files": {
+      "baseline": 6,
+      "project": 63,
+      "added": 57,
+      "multiple": 10.5
+    },
+    "entry_and_teaching_specs": {
+      "baseline": 5,
+      "project": 20,
+      "multiple": 4.0
+    },
+    "runtime_source_files": {
+      "baseline": 0,
+      "project": 9
+    },
+    "runtime_physical_lines": 4184,
+    "runtime_nonblank_lines": 3989,
+    "html_templates": 6
+  },
+  "counting_rules": {
+    "skill_files": "All Git-tracked files in the named Skill directory, including bundled dependencies and license notices.",
+    "entry_and_teaching_specs": "Top-level Markdown files excluding README.md, CHANGELOG.md and VERSION.md.",
+    "runtime_source": "Only .py/.js/.css files directly under assets/, excluding vendor libraries, examples, tests, build scripts, startup scripts and HTML templates.",
+    "physical_lines": "splitlines() count, including comments and blank lines; nonblank lines also include nonblank comments."
+  },
+  "baseline_files": [
+    "skills/productivity/teach/GLOSSARY-FORMAT.md",
+    "skills/productivity/teach/LEARNING-RECORD-FORMAT.md",
+    "skills/productivity/teach/MISSION-FORMAT.md",
+    "skills/productivity/teach/RESOURCES-FORMAT.md",
+    "skills/productivity/teach/SKILL.md",
+    "skills/productivity/teach/agents/openai.yaml"
+  ],
+  "teaching_spec_files": [
+    "teach-pro/COURSE-WORKSPACE-SPEC.md",
+    "teach-pro/DAILY-LESSON-FORMAT.md",
+    "teach-pro/ENTRY-ASSESSMENT-FORMAT.md",
+    "teach-pro/EXERCISE-FORMAT.md",
+    "teach-pro/GLOSSARY-FORMAT.md",
+    "teach-pro/HTML-OUTPUT-SPEC.md",
+    "teach-pro/LEARNER-PROFILE-FORMAT.md",
+    "teach-pro/LEARNING-RECORD-FORMAT.md",
+    "teach-pro/LESSON-DELIVERY-POLICY.md",
+    "teach-pro/LOCAL-SYNC-SPEC.md",
+    "teach-pro/LOCAL-TUTOR-SPEC.md",
+    "teach-pro/MISSION-FORMAT.md",
+    "teach-pro/QUALITY-CHECKLIST.md",
+    "teach-pro/RESOURCE-SELECTION-POLICY.md",
+    "teach-pro/RESOURCES-FORMAT.md",
+    "teach-pro/ROADMAP-FORMAT.md",
+    "teach-pro/SKILL.md",
+    "teach-pro/TEACHING-MODES.md",
+    "teach-pro/WEEKLY-REVIEW-FORMAT.md",
+    "teach-pro/WRITING-POLICY.md"
+  ],
+  "runtime_files": [
+    {
+      "path": "teach-pro/assets/course.js",
+      "physical_lines": 392
+    },
+    {
+      "path": "teach-pro/assets/credential_store.py",
+      "physical_lines": 93
+    },
+    {
+      "path": "teach-pro/assets/serve_course.py",
+      "physical_lines": 305
+    },
+    {
+      "path": "teach-pro/assets/style.css",
+      "physical_lines": 1514
+    },
+    {
+      "path": "teach-pro/assets/sync.js",
+      "physical_lines": 132
+    },
+    {
+      "path": "teach-pro/assets/tutor-markdown.js",
+      "physical_lines": 62
+    },
+    {
+      "path": "teach-pro/assets/tutor-settings.js",
+      "physical_lines": 197
+    },
+    {
+      "path": "teach-pro/assets/tutor.js",
+      "physical_lines": 220
+    },
+    {
+      "path": "teach-pro/assets/tutor_chat.py",
+      "physical_lines": 1269
+    }
+  ],
+  "html_template_files": [
+    "teach-pro/assets/course-settings.html",
+    "teach-pro/templates/course-index.html",
+    "teach-pro/templates/entry-assessment.html",
+    "teach-pro/templates/lesson.html",
+    "teach-pro/templates/quiz.html",
+    "teach-pro/templates/reference.html"
+  ],
+  "project_files": [
+    "teach-pro/CHANGELOG.md",
+    "teach-pro/COURSE-WORKSPACE-SPEC.md",
+    "teach-pro/DAILY-LESSON-FORMAT.md",
+    "teach-pro/ENTRY-ASSESSMENT-FORMAT.md",
+    "teach-pro/EXERCISE-FORMAT.md",
+    "teach-pro/GLOSSARY-FORMAT.md",
+    "teach-pro/HTML-OUTPUT-SPEC.md",
+    "teach-pro/LEARNER-PROFILE-FORMAT.md",
+    "teach-pro/LEARNING-RECORD-FORMAT.md",
+    "teach-pro/LESSON-DELIVERY-POLICY.md",
+    "teach-pro/LOCAL-SYNC-SPEC.md",
+    "teach-pro/LOCAL-TUTOR-SPEC.md",
+    "teach-pro/MISSION-FORMAT.md",
+    "teach-pro/QUALITY-CHECKLIST.md",
+    "teach-pro/README.md",
+    "teach-pro/RESOURCE-SELECTION-POLICY.md",
+    "teach-pro/RESOURCES-FORMAT.md",
+    "teach-pro/ROADMAP-FORMAT.md",
+    "teach-pro/SKILL.md",
+    "teach-pro/TEACHING-MODES.md",
+    "teach-pro/UPSTREAM-LICENSE",
+    "teach-pro/VERSION.md",
+    "teach-pro/WEEKLY-REVIEW-FORMAT.md",
+    "teach-pro/WRITING-POLICY.md",
+    "teach-pro/agents/openai.yaml",
+    "teach-pro/assets/course-settings.html",
+    "teach-pro/assets/course.js",
+    "teach-pro/assets/credential_store.py",
+    "teach-pro/assets/serve_course.py",
+    "teach-pro/assets/start-course.cmd",
+    "teach-pro/assets/start-course.command",
+    "teach-pro/assets/start-course.sh",
+    "teach-pro/assets/style.css",
+    "teach-pro/assets/sync.js",
+    "teach-pro/assets/tutor-markdown.js",
+    "teach-pro/assets/tutor-settings.js",
+    "teach-pro/assets/tutor.js",
+    "teach-pro/assets/tutor_chat.py",
+    "teach-pro/assets/vendor/README.md",
+    "teach-pro/assets/vendor/dompurify.LICENSE",
+    "teach-pro/assets/vendor/dompurify.LICENSE-MPL",
+    "teach-pro/assets/vendor/marked.LICENSE",
+    "teach-pro/assets/vendor/marked.umd.js",
+    "teach-pro/assets/vendor/purify.min.js",
+    "teach-pro/references/examples/statistics-adaptive/README.md",
+    "teach-pro/references/examples/statistics-adaptive/cases.json",
+    "teach-pro/references/examples/statistics-adaptive/first-lesson.html",
+    "teach-pro/references/examples/statistics-adaptive/resources.json",
+    "teach-pro/references/examples/statistics-adaptive/second-lesson.html",
+    "teach-pro/references/examples/statistics-adaptive/supplement.html",
+    "teach-pro/references/examples/statistics/README.md",
+    "teach-pro/references/examples/statistics/assessment-questions.html",
+    "teach-pro/references/examples/statistics/lesson-body.html",
+    "teach-pro/scripts/build_adaptive_example.py",
+    "teach-pro/scripts/build_example.py",
+    "teach-pro/scripts/check_course.py",
+    "teach-pro/scripts/test_response_limits.py",
+    "teach-pro/templates/course-index.html",
+    "teach-pro/templates/course.gitignore",
+    "teach-pro/templates/entry-assessment.html",
+    "teach-pro/templates/lesson.html",
+    "teach-pro/templates/quiz.html",
+    "teach-pro/templates/reference.html"
+  ]
+}

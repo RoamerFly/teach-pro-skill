@@ -6,6 +6,8 @@
 
 我们进一步实现了可复用的主题化课程模板、题后原位作答、疑难记录及本地自动同步，让教学 Agent 在学员请求继续时直接读取学习记录，接续安排课程。课程网页内新增独立的 **AI 答疑运行层**，集成模型配置与发现、当前课及整门教材上下文、即时作答快照、多轮流式排版、消息修改与分支切换、图片和文本附件，以及系统凭据存储；聊天按课保存，供后续教学参考。配套 Python 3.10+ 本地服务、三端启动器、课程结构检查与跨平台自动发布，将教学规则连接成**可交互、可保存、可恢复的持续学习流程**。上游版权与 MIT 许可见 [UPSTREAM-LICENSE](./teach-pro/UPSTREAM-LICENSE)。
 
+以上游 [6f7f783 快照](https://github.com/mattpocock/skills/tree/6f7f7831a625f040a8e06a0e7954826b87ce775a/skills/productivity/teach) 与本项目 [v1.2.0](https://github.com/RoamerFly/teach-pro-skill/tree/v1.2.0/teach-pro) 的 Skill 目录为统计范围，文件总数由 **6 份扩展至 63 份，净增 57 份，达到基座的 10.5 倍**；教学主入口与规范文档由 **5 份扩展至 20 份**。新增 **9 份 Python / JavaScript / CSS 运行源码，共 4,184 行**，并提供 **6 份 HTML 页面模板**。文件总数包含随包依赖与许可；运行源码排除第三方库、示例、测试和构建脚本，行数含注释与空行。逐文件统计见 [改造规模记录](./evals/records/2026-11-28-upstream-comparison.json)。
+
 当前版本：**1.2.0**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
 
 [在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/agent-security/README.md)
