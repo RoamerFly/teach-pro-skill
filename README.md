@@ -2,11 +2,11 @@
 
 面向长期学习的自适应教学 Skill。把学习目标、课程与本地学习记录连接起来，先评估基础，再逐课教学，依据作答与疑难安排下一步。
 
-以 [mattpocock/skills](https://github.com/mattpocock/skills) 中的 [teach Skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/teach/SKILL.md) 为基座，扩展课程交互、本地作答同步、课内 AI 答疑与正式课、补充课协同续课。上游版权与 MIT 许可见 [UPSTREAM-LICENSE](./teach-pro/UPSTREAM-LICENSE)。
+学途智伴以 [mattpocock/skills](https://github.com/mattpocock/skills) 中的 [teach Skill](https://github.com/mattpocock/skills/blob/main/skills/productivity/teach/SKILL.md) 为基座，沿用其目标驱动、逐课 HTML 教学与学习记录指导后续课程的框架。在此基础上，我们完善了**主动访谈、学员画像、入门评估与阶段路线**，将续课细化为**正式课推进新目标、关联补充课巩固具体难点**，并依据解释、应用和迁移等作答证据调整讲解、难度与练习支架。
+
+我们进一步实现了可复用的主题化课程模板、题后原位作答、疑难记录及本地自动同步，让教学 Agent 在学员请求继续时直接读取学习记录，接续安排课程。课程网页内新增独立的 **AI 答疑运行层**，集成模型配置与发现、当前课及整门教材上下文、即时作答快照、多轮流式排版、消息修改与分支切换、图片和文本附件，以及系统凭据存储；聊天按课保存，供后续教学参考。配套 Python 3.10+ 本地服务、三端启动器、课程结构检查与跨平台自动发布，将教学规则连接成**可交互、可保存、可恢复的持续学习流程**。上游版权与 MIT 许可见 [UPSTREAM-LICENSE](./teach-pro/UPSTREAM-LICENSE)。
 
 当前版本：**1.2.0**。正式课逐节推进，独立补充课巩固难点，课内答疑辅助理解。
-
-支持当前课即时作答、整门教材上下文、多轮流式答疑、分支修改、附件和设备密钥记忆。
 
 [在线课程与操作演示](https://roamerfly.github.io/teach-pro-skill/) · [完整示例课程](./example/agent-security/README.md)
 
